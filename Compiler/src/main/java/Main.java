@@ -1,7 +1,11 @@
 import Exceptions.NoArgsException;
-import FileManager.FileManager;
+import LexicalAnalyzer.Executor;
 
-import java.io.*;
+/**
+ * Clase que recibe los argumentos de archivo de entrada y salida
+ * @throws NoArgsException si no se recibe ningun argumento de entrada
+ * @author Yeumen Silva
+ */
 
 public class Main {
 
@@ -9,7 +13,10 @@ public class Main {
 
         String inputPath;
         String outputPath;
-        FileManager fileManager;
+
+        /* Verifica si hay algun argumento de entrada, de otro moddo
+        lanza un error
+         */
 
         try {
             if (args.length == 0) {
@@ -21,23 +28,19 @@ public class Main {
             return;
         }
 
-
+        /* Dependiendo si la salida es por consola o no, llama a una función
+        u otra de la clase Executor
+         */
 
         if (args.length < 2){
 
-            fileManager = new FileManager(inputPath);
+            Executor.startExecution(inputPath);
+
         }
         else    {
 
             outputPath = args[1];
-            fileManager = new FileManager(inputPath, outputPath);
-            File file = new File(inputPath);
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
+            Executor.startExecution(inputPath,outputPath);
 
         };
 

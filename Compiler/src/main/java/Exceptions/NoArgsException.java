@@ -2,6 +2,7 @@ package Exceptions;
 
 /**
  * Error no se proporciono ningun argumento de entrada
+ * @author Yeumen Silva
  */
 public class NoArgsException extends RuntimeException {
 
