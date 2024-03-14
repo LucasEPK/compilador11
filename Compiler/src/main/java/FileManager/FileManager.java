@@ -53,20 +53,20 @@ public class FileManager {
      */
     private String convertFiletoString(String path){
 
-        StringBuilder contenido = new StringBuilder();
+        StringBuilder content = new StringBuilder();
         try {
             File file = new File(path);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
-                contenido.append(line).append("\n");
+                content.append(line).append("\n");
             }
             reader.close();
-            contenido.append("[EOF]");
+            content.append("[EOF]");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return contenido.toString();
+        return content.toString();
     }
 }
 
