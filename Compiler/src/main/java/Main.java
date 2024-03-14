@@ -1,3 +1,4 @@
+import Exceptions.NoArgsException;
 import FileManager.FileManager;
 
 import java.io.*;
@@ -11,14 +12,13 @@ public class Main {
         FileManager fileManager;
 
         try {
+            if (args.length == 0) {
+                throw new NoArgsException();
+            }
             inputPath = args[0];
-        }
-        catch (Exception e){
-            //System.err.println("Sin argumentos de entrada");
-            //e.printStackTrace();
-            //System.exit(-1);
-            //return;
-            throw new RuntimeException("No tenes argumentos", e);
+        } catch (NoArgsException e) {
+            System.err.println(e.getExceptionType());
+            return;
         }
 
 
