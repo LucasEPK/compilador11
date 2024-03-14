@@ -30,11 +30,39 @@ public class LexicalAnalyzer {
      * */
     private String s0(String file){
         String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        // TODO: hacerlo con switch e if me parece va a ser la mejor forma
+        if (currentChar == '\\') {
+            currentPos += 1;
+            token = s1(file);
+        }
+        else {
+            if(currentChar >= 'A' && currentChar <= 'Z'){
+                int bruh;
+            }
+            else {
+                if(currentChar >= 'a' && currentChar <= 'z'){
+                    int bruh;
+                }
+                else {
+                    if(currentChar >= '0' && currentChar <= '9'){
+                        int bruh;
+                    }
+                }
+            }
+        }
         switch (file.charAt(currentPos)) {
             case '\\':
                 currentPos += 1;
                 token = s1(file);
                 break;
+            case 'A':
+                break;
+            case 'B':
+                break;
+            case 'C':
+
             case '$':
                 currentPos += 1;
                 token = s50(file);
