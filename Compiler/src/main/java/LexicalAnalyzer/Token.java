@@ -2,10 +2,10 @@ package LexicalAnalyzer;
 
 public class Token {
 
-    private int row;
-    private int column;
+    private int row, column;
 
-    private String token;
+    private String token, lexeme;
 
-    private String lexeme;
+
+
 }
