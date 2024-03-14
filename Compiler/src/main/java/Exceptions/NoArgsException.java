@@ -15,7 +15,7 @@ public class NoArgsException extends RuntimeException {
      * @author Yeumen Silva
      */
     public String getExceptionType(){
-        return "NO ARGS EXCEPTION: No se ingresó ningun argumento por consola";
+        return "ERROR, FALTA DE ARGUMENTOS: NO SE INGRESÓ NINGUN ARGUMENTO POR CONSOLA";
     }
 
 
