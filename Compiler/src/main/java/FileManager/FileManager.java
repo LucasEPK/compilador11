@@ -12,8 +12,7 @@ import java.io.IOException;
  */
 public class FileManager {
 
-    private String inputFile;
-    private String outputFile;
+    private String inputFile, outputFile;
 
     private boolean byConsole = false;
 
