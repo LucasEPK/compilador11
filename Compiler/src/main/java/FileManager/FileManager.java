@@ -1,6 +1,8 @@
 package FileManager;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -10,8 +12,10 @@ import java.io.IOException;
  */
 public class FileManager {
 
-    private File inputFile;
-    private File outputFile;
+    private String inputFile;
+    private String outputFile;
+
+    private boolean byConsole = false;
 
 
     /**
@@ -20,8 +24,52 @@ public class FileManager {
      * @author Yeumen Silva
      */
     public FileManager(String inputPath){
-        this.inputFile = new File(inputPath);
+
+        this.inputFile = convertFiletoString(inputPath);
+        this.byConsole = true;
+
     }
 
+    /**
+     * Constructor de FileMannager
+     * @param inputPath indica la ruta del archivo de entrada
+     * @param outputPath indica la ruta del archivo de salida
+     * @author Yeumen Silva
+     */
 
+    public FileManager(String inputPath, String outputPath){
+
+        this.inputFile = convertFiletoString(inputPath);
+        this.outputFile = outputPath;
+
+    }
+
+    /**
+     * Método que dado el path del archivo de entrada, lo convierte en un
+     * archivo, lo lee linea por linea, lo devuelve como un solo string y
+     * le agrega un EOF
+     * @param path es el String con el path al archivo
+     * @author Yeumen Silva
+     */
+    private String convertFiletoString(String path){
+
+        StringBuilder contenido = new StringBuilder();
+        try {
+            File file = new File(path);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                contenido.append(line).append("\n");
+            }
+            reader.close();
+            contenido.append("[EOF]");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contenido.toString();
+    }
 }
+
+
+
+
