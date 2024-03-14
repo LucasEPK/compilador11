@@ -62,7 +62,7 @@ public class FileManager {
                 content.append(line).append("\n");
             }
             reader.close();
-            content.append("[EOF]");
+            content.append("$EOF$");
         } catch (IOException e) {
             e.printStackTrace();
         }
