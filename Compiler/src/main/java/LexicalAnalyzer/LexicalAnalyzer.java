@@ -13,6 +13,7 @@ public class LexicalAnalyzer {
     private final String OBJ_ID = "ObjID";
     private final String INT_LITERAL = "IntLiteral";
     private final String STR_LITERAL = "StrLiteral";
+    private final String CHAR_LITERAL = "CharLiteral";
     private final String OP_MUL = "OpMul";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
@@ -91,6 +92,8 @@ public class LexicalAnalyzer {
                 token = s3(file);
                 break;
             case '\'':
+                currentPos += 1;
+                token = s5(file);
                 break;
             case '=':
                 break;
@@ -304,6 +307,69 @@ public class LexicalAnalyzer {
             else {
                 // TODO: tirar error
             }
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado donde empieza un character literal
+     * @author Lucas Moyano
+     * */
+    private String s5(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '\\'){
+            currentPos += 1;
+            token = s7(file);
+        }
+        else {
+            if (belongsToTheAlphabet(currentChar, '\'')) {
+                currentPos += 1;
+                token = s6(file);
+            }
+            else {
+                // TODO: tirar error
+            }
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado donde termina un character literal
+     * @author Lucas Moyano
+     * */
+    private String s6(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '\''){
+            currentPos += 1;
+            token = CHAR_LITERAL;
+        }
+        else {
+            // TODO: tirar error
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado intermedio de un character literal
+     * @author Lucas Moyano
+     * */
+    private String s7(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (belongsToTheAlphabet(currentChar, '0')){
+            currentPos += 1;
+            token = s6(file);
+        }
+        else {
+            // TODO: tirar error
         }
 
         return token;

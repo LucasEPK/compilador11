@@ -6,6 +6,7 @@ public class xd {
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;aAbj0_$EOF$"); // StructID test deberia reconocerlo
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;012a8$EOF$"); // IntLiteral test deberia reconocerlo
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;*/%$EOF$"); // OpMul test debería reconocerlo
-        LexicalAnalyzer xd = new LexicalAnalyzer("\\n;\"hola@\"xd$EOF$"); //StrLiteral test, debería reconocerlo
+        //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;\"hola@\"xd$EOF$"); //StrLiteral test, debería reconocerlo
+        LexicalAnalyzer xd = new LexicalAnalyzer("\\n;'x''\\t'$EOF$"); //CharLiteral test, debería reconocerlo
     }
 }
