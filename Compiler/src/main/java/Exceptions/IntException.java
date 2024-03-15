@@ -1,12 +1,14 @@
 package Exceptions;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase que representa los errores de enteros mal formados
  * @author Yeumen Silva
  */
 public class IntException extends  LexicalException{
-    public IntException(int line, int column, String lexeme){
-        super(line,column,lexeme);
+    public IntException(Token token){
+        super(token);
     }
 
     @Override

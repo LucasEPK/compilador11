@@ -1,12 +1,14 @@
 package Exceptions;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase que representa los errores de simbolos no validos
  * @author Yeumen Silva
  */
 public class SymbolException extends LexicalException{
-    public SymbolException(int line, int column, String lexeme){
-        super(line,column,lexeme);
+    public SymbolException(Token token){
+        super(token);
     }
 
     @Override

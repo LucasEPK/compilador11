@@ -1,5 +1,7 @@
 package Exceptions;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase que representa los errores de comparación: el operador de comparación
  * no es valido
@@ -7,8 +9,8 @@ package Exceptions;
  */
 public class InvalidComparation extends LexicalException{
 
-    public InvalidComparation(int line, int column, String lexeme){
-        super(line,column,lexeme);
+    public InvalidComparation(Token token){
+        super(token);
     }
 
     @Override

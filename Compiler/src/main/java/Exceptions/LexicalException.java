@@ -1,5 +1,7 @@
 package Exceptions;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase abstracta que define los tipos de errores lexicos
  * de nuestro compilador
@@ -8,22 +10,17 @@ package Exceptions;
 
 public abstract class LexicalException extends RuntimeException {
 
-    private int line, column;
-
-    private String lexeme;
+    private Token token;
 
     /**
      * Constructor de clase LexicalException
-     * @param line número de linea del error
-     * @param column número de columna del error
-     * @param lexeme lexema que genera el error
+     * @param token es una instancia de la clase Token con la
+     * informaciòn del error
      * @author Yeumen Silva
      */
-    public LexicalException(int line, int column, String lexeme){
+    public LexicalException(Token token){
         super();
-        this.line = line;
-        this.column = column;
-        this.lexeme = lexeme;
+        this.token = token;
     }
 
     /**
@@ -32,6 +29,10 @@ public abstract class LexicalException extends RuntimeException {
      */
 
     public abstract String getExceptionType();
+
+    public Token getToken(){
+        return this.token;
+    }
 
 
 

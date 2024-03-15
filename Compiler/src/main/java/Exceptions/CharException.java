@@ -1,13 +1,15 @@
 package Exceptions;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase que representa los errores de caracteres mal formados
  * @author Yeumen Silva
  */
 public class CharException extends LexicalException{
 
-    public CharException(int line, int column, String lexeme){
-        super(line,column,lexeme);
+    public CharException(Token token){
+        super(token);
     }
 
     @Override

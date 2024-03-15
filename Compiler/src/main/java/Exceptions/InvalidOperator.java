@@ -1,13 +1,15 @@
 package Exceptions;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase que representa los errores de caracteres mal formados (ej: +, -, ++)
  * @author Yeumen Silva
  */
 public class InvalidOperator extends LexicalException{
 
-    public InvalidOperator(int line, int column, String lexeme){
-        super(line,column,lexeme);
+    public InvalidOperator(Token token){
+        super(token);
     }
 
     @Override
