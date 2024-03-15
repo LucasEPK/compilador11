@@ -9,6 +9,9 @@ import java.util.Set;
 public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
     private final String NEW_LINE = "NewLine";
+    private final String CARRIAGE_RETURN = "CarriageReturn";
+    private final String TAB = "Tab";
+    private final String VERTICAL_TAB = "VerticalTab";
     private final String STRUCT_ID = "StructID";
     private final String OBJ_ID = "ObjID";
     private final String INT_LITERAL = "IntLiteral";
@@ -252,6 +255,20 @@ public class LexicalAnalyzer {
             case 'n':
                 token = NEW_LINE;
                 currentPos += 1;
+                break;
+            case 'r':
+                token = CARRIAGE_RETURN;
+                currentPos += 1;
+                break;
+            case 't':
+                token = TAB;
+                currentPos += 1;
+                break;
+            case 'v':
+                token = VERTICAL_TAB;
+                currentPos += 1;
+                break;
+            case '?':
                 break;
             default:
                 // TODO: acá debería arrojar error

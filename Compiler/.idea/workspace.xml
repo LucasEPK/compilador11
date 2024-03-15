@@ -101,12 +101,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>344</line>
+          <line>361</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>328</line>
+          <line>345</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
