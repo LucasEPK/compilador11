@@ -9,6 +9,7 @@ public class LexicalAnalyzer {
     private final String STRUCT_ID = "StructID";
     private final String OBJ_ID = "ObjID";
     private final String INT_LITERAL = "IntLiteral";
+    private final String OP_MUL = "OpMul";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
     private final String CLOSE_PARENTHESIS = "CloseParenthesis";
@@ -68,7 +69,9 @@ public class LexicalAnalyzer {
                 }
                 else {
                     if(currentChar == '*' || currentChar == '/' || currentChar == '%'){
-                        return "bruh";
+                        token = OP_MUL;
+                        currentPos += 1;
+                        return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                     }
                 }
             }
