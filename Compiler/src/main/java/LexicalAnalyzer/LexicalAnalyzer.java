@@ -22,6 +22,9 @@ public class LexicalAnalyzer {
     private final String EQUAL = "Equal";
     private final String LOGICAL = "Logical";
     private final String COMPARISON = "Comparison";
+    private final String OP_AD = "OpAd";
+    private final String OP_UNARY = "OpUnary";
+    private final String ARROW = "Arrow";
     private final String OP_MUL = "OpMul";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
@@ -128,8 +131,12 @@ public class LexicalAnalyzer {
                 token = comparison(file);
                 break;
             case '+':
+                currentPos += 1;
+                token = opAd(file);
                 break;
             case '-':
+                currentPos += 1;
+                token = opAd2(file);
                 break;
             case ']':
                 token = CLOSE_BRACKET;
@@ -307,7 +314,7 @@ public class LexicalAnalyzer {
 
     /**
      * Estado aceptador del automata tiene 2 casos
-     * 1. Le sigue un = (en este caso es aceptado como un token Equal)
+     * 1. Le sigue un = (en este caso es aceptado como un token Comparison)
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
@@ -323,6 +330,59 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado aceptador del automata tiene 2 casos
+     * 1. Le sigue un + (en este caso es aceptado como un token OpUnary)
+     * 2. Ninguno de los anteriores (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
+     * @author Lucas Moyano
+     * */
+    private String opAd(String file){
+        String token = OP_AD; // Esto es porque es un estado aceptador
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '+'){
+            currentPos += 1;
+            token = OP_UNARY;
+        }
+        else {
+            // Este es el caso donde miramos más caracteres de lo que deberiamos,
+            // por ende no tiramos error ni aumentamos el currentPos
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado aceptador del automata tiene 3 casos
+     * 1. Le sigue un - (en este caso es aceptado como un token OpUnary)
+     * 2. Le sigue un > (es un token Arrow)
+     * 3. Ninguno de los anteriores (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
+     * @author Lucas Moyano
+     * */
+    private String opAd2(String file){
+        String token = OP_AD; // Esto es porque es un estado aceptador
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '-'){
+            currentPos += 1;
+            token = OP_UNARY;
+        }
+        else {
+            if (currentChar == '>'){
+                currentPos += 1;
+                token = ARROW;
+            }
+            else {
+                // Este es el caso donde miramos más caracteres de lo que deberiamos,
+                // por ende no tiramos error ni aumentamos el currentPos
+            }
         }
 
         return token;
