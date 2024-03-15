@@ -6,6 +6,16 @@ import java.util.List;
 public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
     private final String NEW_LINE = "NewLine";
+    private final String CLOSE_BRACKET = "CloseBracket";
+    private final String OPEN_BRACKET = "OpenBracket";
+    private final String CLOSE_PARENTHESIS = "CloseParenthesis";
+    private final String OPEN_PARENTHESIS = "OpenParenthesis";
+    private final String CLOSE_BRACES = "CloseBraces";
+    private final String OPEN_BRACES = "OpenBraces";
+    private final String SEMI_COLON = "SemiColon";
+    private final String COLON = "Colon";
+    private final String COMMA = "Comma";
+    private final String PERIOD = "Period";
     private final String EOF = "$EOF$";
 
     private int currentPos = 0;
@@ -33,36 +43,93 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
 
         // TODO: hacerlo con switch e if me parece va a ser la mejor forma
-        if (currentChar == '\\') {
-            currentPos += 1;
-            token = s1(file);
+
+        // Acá se hace return en vez de darle valor al token y esperar el ultimo return
+        // para evitar que tire error al no matchear en el switch
+        if (currentChar >= 'A' && currentChar <= 'Z'){
+            return "bruh";
         }
         else {
-            if(currentChar >= 'A' && currentChar <= 'Z'){
-                int bruh;
+            if(currentChar >= 'a' && currentChar <= 'z'){
+                return "bruh";
             }
             else {
-                if(currentChar >= 'a' && currentChar <= 'z'){
-                    int bruh;
+                if(currentChar >= '0' && currentChar <= '9'){
+                    return "bruh";
                 }
                 else {
-                    if(currentChar >= '0' && currentChar <= '9'){
-                        int bruh;
+                    if(currentChar == '*' || currentChar == '/' || currentChar == '%'){
+                        return "bruh";
                     }
                 }
             }
         }
-        switch (file.charAt(currentPos)) {
+
+        switch (currentChar) {
             case '\\':
                 currentPos += 1;
                 token = s1(file);
                 break;
-            case 'A':
+            case '\"':
                 break;
-            case 'B':
+            case '\'':
                 break;
-            case 'C':
-
+            case '=':
+                break;
+            case '!':
+                break;
+            case '&':
+                break;
+            case '|':
+                break;
+            case '<':
+                break;
+            case '>':
+                break;
+            case '+':
+                break;
+            case '-':
+                break;
+            case ']':
+                token = CLOSE_BRACKET;
+                currentPos += 1;
+                break;
+            case '[':
+                token = OPEN_BRACKET;
+                currentPos += 1;
+                break;
+            case ')':
+                token = CLOSE_PARENTHESIS;
+                currentPos += 1;
+                break;
+            case '(':
+                token = OPEN_PARENTHESIS;
+                currentPos += 1;
+                break;
+            case '}':
+                token = CLOSE_BRACES;
+                currentPos += 1;
+                break;
+            case '{':
+                token = OPEN_BRACES;
+                currentPos += 1;
+                break;
+            case ';':
+                token = SEMI_COLON;
+                currentPos += 1;
+                break;
+            case ',':
+                token = COMMA;
+                currentPos += 1;
+                break;
+            case '.':
+                token = PERIOD;
+                currentPos += 1;
+                break;
+            case ':':
+                token = COLON;
+                currentPos += 1;
+                break;
             case '$':
                 currentPos += 1;
                 token = s50(file);
@@ -70,6 +137,7 @@ public class LexicalAnalyzer {
             default:
                 //TODO: Acá tendria que largar error porque no se encontró un caracter valido
         }
+
         return token;
     }
 
@@ -80,7 +148,9 @@ public class LexicalAnalyzer {
      * */
     private String s1(String file){
         String token = null;
-        switch (file.charAt(currentPos)) {
+        char currentChar = file.charAt(currentPos);
+
+        switch (currentChar) {
             case 'n':
                 token = NEW_LINE;
                 currentPos += 1;
@@ -99,7 +169,9 @@ public class LexicalAnalyzer {
      * */
     private String s50(String file) {
         String token = null;
-        switch (file.charAt(currentPos)) {
+        char currentChar = file.charAt(currentPos);
+
+        switch (currentChar) {
             case 'E':
                 currentPos += 1;
                 token = s51(file);
@@ -117,7 +189,9 @@ public class LexicalAnalyzer {
      * */
     private String s51(String file) {
         String token = null;
-        switch (file.charAt(currentPos)) {
+        char currentChar = file.charAt(currentPos);
+
+        switch (currentChar) {
             case 'O':
                 currentPos += 1;
                 token = s52(file);
@@ -135,7 +209,9 @@ public class LexicalAnalyzer {
      * */
     private String s52(String file) {
         String token = null;
-        switch (file.charAt(currentPos)) {
+        char currentChar = file.charAt(currentPos);
+
+        switch (currentChar) {
             case 'F':
                 currentPos += 1;
                 token = s53(file);
@@ -153,7 +229,9 @@ public class LexicalAnalyzer {
      * */
     private String s53(String file) {
         String token = null;
-        switch (file.charAt(currentPos)) {
+        char currentChar = file.charAt(currentPos);
+
+        switch (currentChar) {
             case '$':
                 token = EOF;
                 currentPos += 1;
