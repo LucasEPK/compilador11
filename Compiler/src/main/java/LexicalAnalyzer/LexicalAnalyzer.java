@@ -2,6 +2,9 @@ package LexicalAnalyzer;
 
 import java.util.ArrayList;
 import java.util.List;
+// Estos 2 import sirven para crear el alfabeto como conjunto
+import java.util.HashSet;
+import java.util.Set;
 
 public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
@@ -9,6 +12,7 @@ public class LexicalAnalyzer {
     private final String STRUCT_ID = "StructID";
     private final String OBJ_ID = "ObjID";
     private final String INT_LITERAL = "IntLiteral";
+    private final String STR_LITERAL = "StrLiteral";
     private final String OP_MUL = "OpMul";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
@@ -83,6 +87,8 @@ public class LexicalAnalyzer {
                 token = s1(file);
                 break;
             case '\"':
+                currentPos += 1;
+                token = s3(file);
                 break;
             case '\'':
                 break;
@@ -278,6 +284,32 @@ public class LexicalAnalyzer {
     }
 
     /**
+     * Estado donde empieza, hace bucle y termina un string literal
+     * @author Lucas Moyano
+     * */
+    private String s3(String file){
+        //TODO: tiene que tener un limite de 1024 caracteres
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '"'){
+            currentPos += 1;
+            token = STR_LITERAL;
+        }
+        else {
+            if (belongsToTheAlphabet(currentChar, '"')) { // bucle
+                currentPos += 1;
+                token = s3(file);
+            }
+            else {
+                // TODO: tirar error
+            }
+        }
+
+        return token;
+    }
+
+    /**
      * Con este metodo se entra en los nodos del automata
      * que van a terminar en $EOF$
      * @author Lucas Moyano
@@ -358,4 +390,84 @@ public class LexicalAnalyzer {
         return token;
     }
 
+    // ----------------------- FUNCIONES AUXILIARES --------------------------------------
+
+    /**
+     * Este metodo nos dice si un caracter pertenece o no a nuestro alfabeto
+     * @param element este es el caracter del cual queremos saber si pertenece o no al alfabeto
+     * @author Lucas Moyano
+     * */
+    private boolean belongsToTheAlphabet(char element) {
+        // Crea un conjunto para almacenar los caracteres del alfabeto
+        Set<Character> sigma = new HashSet<>();
+
+        // Esta variable trackea si el element pertenece o no al conjunto
+        boolean belongs = false;
+
+        // Agrega los caracteres al conjunto
+        for (char c = 'a'; c <= 'z'; c++) {
+            sigma.add(c);
+        }
+        for (char c = 'A'; c <= 'Z'; c++) {
+            sigma.add(c);
+        }
+        for (char c = '0'; c <= '9'; c++) {
+            sigma.add(c);
+        }
+
+        // Agregar los caracteres especiales al conjunto
+        char[] caracteresEspeciales = {'\\', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        for (char c : caracteresEspeciales) {
+            sigma.add(c);
+        }
+
+        // Verifica si un elemento pertenece al conjunto
+        if (sigma.contains(element)) {
+            belongs = true;
+        }
+
+        return belongs;
+    }
+
+    /**
+     * Este metodo nos dice si un caracter pertenece o no a nuestro alfabeto
+     * con un caracter de excepción
+     * @param element este es el caracter del cual queremos saber si pertenece o no al alfabeto
+     * @param exception este es el caracter que queremos excluir del alfabeto
+     * @author Lucas Moyano
+     * */
+    private boolean belongsToTheAlphabet(char element, char exception) {
+        // Crea un conjunto para almacenar los caracteres del alfabeto
+        Set<Character> sigma = new HashSet<>();
+
+        // Esta variable trackea si el element pertenece o no al conjunto
+        boolean belongs = false;
+
+        // Agrega los caracteres al conjunto
+        for (char c = 'a'; c <= 'z'; c++) {
+            sigma.add(c);
+        }
+        for (char c = 'A'; c <= 'Z'; c++) {
+            sigma.add(c);
+        }
+        for (char c = '0'; c <= '9'; c++) {
+            sigma.add(c);
+        }
+
+        // Agregar los caracteres especiales al conjunto
+        char[] caracteresEspeciales = {'\\', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        for (char c : caracteresEspeciales) {
+            sigma.add(c);
+        }
+
+        // Removemos la excepcion del conjunto
+        sigma.remove(exception);
+
+        // Verifica si un elemento pertenece al conjunto
+        if (sigma.contains(element)) {
+            belongs = true;
+        }
+
+        return belongs;
+    }
 }
