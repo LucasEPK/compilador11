@@ -12,6 +12,7 @@ public class LexicalAnalyzer {
     private final String CARRIAGE_RETURN = "CarriageReturn";
     private final String TAB = "Tab";
     private final String VERTICAL_TAB = "VerticalTab";
+    private final String SIMPLE_COMMENT = "SimpleComment";
     private final String STRUCT_ID = "StructID";
     private final String OBJ_ID = "ObjID";
     private final String INT_LITERAL = "IntLiteral";
@@ -242,6 +243,7 @@ public class LexicalAnalyzer {
         return token;
     }
 
+
     /**
      * Con este metodo se entra en los nodos del automata que corresponden
      * a lexemas que empiezan con \
@@ -269,6 +271,8 @@ public class LexicalAnalyzer {
                 currentPos += 1;
                 break;
             case '?':
+                currentPos += 1;
+                token = s54(file);
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -468,6 +472,62 @@ public class LexicalAnalyzer {
                 break;
             default:
                 // TODO: acá debería arrojar error
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado donde empieza un comentario
+     * @author Lucas Moyano
+     * */
+    private String s54(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '\\'){
+            currentPos += 1;
+            token = s55(file);
+        }
+        else {
+            if (belongsToTheAlphabet(currentChar)) { // bucle
+                currentPos += 1;
+                token = s54(file);
+            }
+            else {
+                // TODO: tirar error
+            }
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado intermedio y donde termina un comentario
+     * @author Lucas Moyano
+     * */
+    private String s55(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '\\'){
+            currentPos += 1;
+            token = s55(file);
+        }
+        else {
+            if (currentChar == 'n'){
+                currentPos += 1;
+                token = SIMPLE_COMMENT;
+            }
+            else {
+                if (belongsToTheAlphabet(currentChar)) { // bucle
+                    currentPos += 1;
+                    token = s54(file);
+                }
+                else {
+                    // TODO: tirar error
+                }
+            }
         }
 
         return token;

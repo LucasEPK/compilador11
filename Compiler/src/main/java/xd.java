@@ -8,6 +8,8 @@ public class xd {
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;*/%$EOF$"); // OpMul test debería reconocerlo
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;\"hola@\"xd$EOF$"); //StrLiteral test, debería reconocerlo
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;'x''\\t'$EOF$"); //CharLiteral test, debería reconocerlo
-        LexicalAnalyzer xd = new LexicalAnalyzer("\\n;\\r\\t\\v$EOF$"); // CarriageReturn, Tab y VerticalTab test, debería reconocerlos
+        //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;\\r\\t\\v$EOF$"); // CarriageReturn, Tab y VerticalTab test, debería reconocerlos
+        LexicalAnalyzer xd = new LexicalAnalyzer("\\n;\\?holaYeuEstasLeyendoEsto?\\nxd$EOF$"); // SimpleComment test, debería reconocerlo
+
     }
 }
