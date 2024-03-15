@@ -7,6 +7,8 @@ public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
     private final String NEW_LINE = "NewLine";
     private final String STRUCT_ID = "StructID";
+    private final String OBJ_ID = "ObjID";
+    private final String INT_LITERAL = "IntLiteral";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
     private final String CLOSE_PARENTHESIS = "CloseParenthesis";
@@ -44,22 +46,25 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
 
-        // TODO: hacerlo con switch e if me parece va a ser la mejor forma
 
         // Acá se hace return en vez de darle valor al token y esperar el ultimo return
         // para evitar que tire error al no matchear en el switch
         if (currentChar >= 'A' && currentChar <= 'Z'){
             currentPos += 1;
             token = structID(file);
-            return token;
+            return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
         }
         else {
             if(currentChar >= 'a' && currentChar <= 'z'){
-                return "bruh";
+                currentPos += 1;
+                token = objID(file);
+                return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
             }
             else {
                 if(currentChar >= '0' && currentChar <= '9'){
-                    return "bruh";
+                    currentPos += 1;
+                    token = intLiteral(file);
+                    return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                 }
                 else {
                     if(currentChar == '*' || currentChar == '/' || currentChar == '%'){
@@ -167,8 +172,56 @@ public class LexicalAnalyzer {
                 token = s2(file);
             }
             else{
-                // Este es el caso donde miramos más caracteres de lo que deberiamos, por ende no tiramos error ni aumentamos el currentPos
+                // Este es el caso donde miramos más caracteres de lo que deberiamos,
+                // por ende no tiramos error ni aumentamos el currentPos
             }
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado aceptador del automata tiene 2 casos
+     * 1. Le sigue una letra mayuscula, minuscula, un numero o un guión bajo
+     * 2. Ninguno de los anteriores (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
+     * @author Lucas Moyano
+     * */
+    private String objID(String file){
+        String token = OBJ_ID; // Esto es porque es un estado aceptador
+        char currentChar = file.charAt(currentPos);
+
+        if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')
+                || (currentChar >= '0' && currentChar <= '9') || currentChar == '_'){
+            currentPos += 1;
+            token = objID(file);
+        }
+        else {
+            // Este es el caso donde miramos más caracteres de lo que deberiamos,
+            // por ende no tiramos error ni aumentamos el currentPos
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado aceptador del automata tiene 2 casos
+     * 1. Le sigue un numero
+     * 2. Ninguno de los anteriores (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
+     * @author Lucas Moyano
+     * */
+    private String intLiteral(String file){
+        String token = INT_LITERAL; // Esto es porque es un estado aceptador
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar >= '0' && currentChar <= '9'){
+            currentPos += 1;
+            token = intLiteral(file);
+        }
+        else {
+            // Este es el caso donde miramos más caracteres de lo que deberiamos,
+            // por ende no tiramos error ni aumentamos el currentPos
         }
 
         return token;
@@ -196,7 +249,8 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Estado donde un structID tiene numeros o guión bajo, como no puede terminar en estos no es aceptador
+     * Estado donde un structID tiene numeros o guión bajo,
+     * como no puede terminar en estos no es aceptador
      * @author Lucas Moyano
      * */
     private String s2(String file){
