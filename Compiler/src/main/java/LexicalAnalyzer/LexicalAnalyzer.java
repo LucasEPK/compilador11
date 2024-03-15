@@ -6,6 +6,7 @@ import java.util.List;
 public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
     private final String NEW_LINE = "NewLine";
+    private final String STRUCT_ID = "StructID";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
     private final String CLOSE_PARENTHESIS = "CloseParenthesis";
@@ -31,6 +32,7 @@ public class LexicalAnalyzer {
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens
+        System.out.println(tokens);
     }
 
     /**
@@ -47,7 +49,9 @@ public class LexicalAnalyzer {
         // Acá se hace return en vez de darle valor al token y esperar el ultimo return
         // para evitar que tire error al no matchear en el switch
         if (currentChar >= 'A' && currentChar <= 'Z'){
-            return "bruh";
+            currentPos += 1;
+            token = structID(file);
+            return token;
         }
         else {
             if(currentChar >= 'a' && currentChar <= 'z'){
@@ -142,6 +146,35 @@ public class LexicalAnalyzer {
     }
 
     /**
+     * Estado aceptador del automata tiene 3 casos
+     * 1. Le sigue una letra mayuscula o minuscula
+     * 2. Le sigue un numero o un guión bajo
+     * 3. Ninguno de los anteriores (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
+     * @author Lucas Moyano
+     * */
+    private String structID(String file){
+        String token = STRUCT_ID; // Esto es porque es un estado aceptador
+        char currentChar = file.charAt(currentPos);
+
+        if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
+            currentPos += 1;
+            token = structID(file);
+        }
+        else {
+            if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') {
+                currentPos += 1;
+                token = s2(file);
+            }
+            else{
+                // Este es el caso donde miramos más caracteres de lo que deberiamos, por ende no tiramos error ni aumentamos el currentPos
+            }
+        }
+
+        return token;
+    }
+
+    /**
      * Con este metodo se entra en los nodos del automata que corresponden
      * a lexemas que empiezan con \
      * @author Lucas Moyano
@@ -157,6 +190,31 @@ public class LexicalAnalyzer {
                 break;
             default:
                 // TODO: acá debería arrojar error
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado donde un structID tiene numeros o guión bajo, como no puede terminar en estos no es aceptador
+     * @author Lucas Moyano
+     * */
+    private String s2(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
+            currentPos += 1;
+            token = structID(file);
+        }
+        else {
+            if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') { // bucle
+                currentPos += 1;
+                token = s2(file);
+            }
+            else {
+                // TODO: tirar error
+            }
         }
 
         return token;

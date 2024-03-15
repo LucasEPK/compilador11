@@ -35,7 +35,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.xd.executor": "Debug",
+    "Application.xd.executor": "Run",
     "JUnit.MiClaseTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -106,7 +106,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>42</line>
+          <line>44</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
