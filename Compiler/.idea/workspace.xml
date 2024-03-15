@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="" />
+    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,12 +99,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>392</line>
+          <line>422</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>376</line>
+          <line>406</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>

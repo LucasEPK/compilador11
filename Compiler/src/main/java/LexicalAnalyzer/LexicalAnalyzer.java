@@ -111,8 +111,12 @@ public class LexicalAnalyzer {
                 token = logical(file);
                 break;
             case '&':
+                currentPos += 1;
+                token = s34(file);
                 break;
             case '|':
+                currentPos += 1;
+                token = s35(file);
                 break;
             case '<':
                 break;
@@ -441,6 +445,44 @@ public class LexicalAnalyzer {
         if (belongsToTheAlphabet(currentChar, '0')){
             currentPos += 1;
             token = s6(file);
+        }
+        else {
+            // TODO: tirar error
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado de entrada de un Logical2
+     * @author Lucas Moyano
+     * */
+    private String s34(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '&'){
+            currentPos += 1;
+            token = LOGICAL;
+        }
+        else {
+            // TODO: tirar error
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado de entrada de un Logical2
+     * @author Lucas Moyano
+     * */
+    private String s35(String file){
+        String token = null;
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '|'){
+            currentPos += 1;
+            token = LOGICAL;
         }
         else {
             // TODO: tirar error
