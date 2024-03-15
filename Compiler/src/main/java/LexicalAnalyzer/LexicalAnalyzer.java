@@ -21,6 +21,7 @@ public class LexicalAnalyzer {
     private final String ASSIGNMENT = "Assignment";
     private final String EQUAL = "Equal";
     private final String LOGICAL = "Logical";
+    private final String COMPARISON = "Comparison";
     private final String OP_MUL = "OpMul";
     private final String CLOSE_BRACKET = "CloseBracket";
     private final String OPEN_BRACKET = "OpenBracket";
@@ -119,8 +120,12 @@ public class LexicalAnalyzer {
                 token = s35(file);
                 break;
             case '<':
+                currentPos += 1;
+                token = comparison(file);
                 break;
             case '>':
+                currentPos += 1;
+                token = comparison(file);
                 break;
             case '+':
                 break;
@@ -291,6 +296,29 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             token = EQUAL;
+        }
+        else {
+            // Este es el caso donde miramos más caracteres de lo que deberiamos,
+            // por ende no tiramos error ni aumentamos el currentPos
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado aceptador del automata tiene 2 casos
+     * 1. Le sigue un = (en este caso es aceptado como un token Equal)
+     * 2. Ninguno de los anteriores (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
+     * @author Lucas Moyano
+     * */
+    private String comparison(String file){
+        String token = COMPARISON; // Esto es porque es un estado aceptador
+        char currentChar = file.charAt(currentPos);
+
+        if (currentChar == '='){
+            currentPos += 1;
+            token = COMPARISON;
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
