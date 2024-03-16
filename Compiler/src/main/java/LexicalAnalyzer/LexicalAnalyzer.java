@@ -66,13 +66,14 @@ public class LexicalAnalyzer {
     private String s0(){
         String token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = Character.toString(currentChar);
 
 
         // Acá se hace return en vez de darle valor al token y esperar el ultimo return
         // para evitar que tire error al no matchear en el switch
         if (currentChar >= 'A' && currentChar <= 'Z'){
             currentPos += 1;
-            token = structID();
+            token = structID(currentLexeme);
             return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
         }
         else {
@@ -220,23 +221,29 @@ public class LexicalAnalyzer {
      * 3. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String structID(){
+    private String structID(String lexeme){
         String token = STRUCT_ID; // Esto es porque es un estado aceptador
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
-            token = structID();
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = structID(currentLexeme);
         }
         else {
             if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') {
                 currentPos += 1;
-                token = s2();
+                currentLexeme = lexeme + Character.toString(currentChar);
+                token = s2(currentLexeme);
             }
             else{
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
                 // por ende no tiramos error ni aumentamos el currentPos
+                // y dejamos el lexema como estaba sin agregar caracteres
+                currentLexeme = lexeme;
             }
         }
 
@@ -262,6 +269,7 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
         }
 
         return token;
@@ -285,6 +293,7 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
         }
 
         return token;
@@ -308,6 +317,7 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
         }
 
         return token;
@@ -331,6 +341,7 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
         }
 
         return token;
@@ -354,6 +365,7 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
         }
 
         return token;
@@ -377,6 +389,7 @@ public class LexicalAnalyzer {
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
         }
 
         return token;
@@ -406,6 +419,7 @@ public class LexicalAnalyzer {
             else {
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
                 // por ende no tiramos error ni aumentamos el currentPos
+                // y dejamos el lexema como estaba sin agregar caracteres
             }
         }
 
@@ -439,19 +453,21 @@ public class LexicalAnalyzer {
      * Estado donde un structID tiene numeros o guión bajo,
      * como no puede terminar en estos no es aceptador
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s2(){
+    private String s2(String lexeme){
         String token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
-            token = structID();
+            token = structID(currentLexeme);
         }
         else {
             if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') { // bucle
                 currentPos += 1;
-                token = s2();
+                token = s2(currentLexeme);
             }
             else {
                 // TODO: tirar error
