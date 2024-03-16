@@ -72,19 +72,19 @@ public class LexicalAnalyzer {
         // para evitar que tire error al no matchear en el switch
         if (currentChar >= 'A' && currentChar <= 'Z'){
             currentPos += 1;
-            token = structID(file);
+            token = structID();
             return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
         }
         else {
             if(currentChar >= 'a' && currentChar <= 'z'){
                 currentPos += 1;
-                token = objID(file);
+                token = objID();
                 return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
             }
             else {
                 if(currentChar >= '0' && currentChar <= '9'){
                     currentPos += 1;
-                    token = intLiteral(file);
+                    token = intLiteral();
                     return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                 }
                 else {
@@ -120,47 +120,47 @@ public class LexicalAnalyzer {
                 break;*/
             case '\\':
                 currentPos += 1;
-                token = s1(file);
+                token = s1();
                 break;
             case '\"':
                 currentPos += 1;
-                token = s3(file);
+                token = s3();
                 break;
             case '\'':
                 currentPos += 1;
-                token = s5(file);
+                token = s5();
                 break;
             case '=':
                 currentPos += 1;
-                token = assignment(file);
+                token = assignment();
                 break;
             case '!':
                 currentPos += 1;
-                token = logical(file);
+                token = logical();
                 break;
             case '&':
                 currentPos += 1;
-                token = s34(file);
+                token = s34();
                 break;
             case '|':
                 currentPos += 1;
-                token = s35(file);
+                token = s35();
                 break;
             case '<':
                 currentPos += 1;
-                token = comparison(file);
+                token = comparison();
                 break;
             case '>':
                 currentPos += 1;
-                token = comparison(file);
+                token = comparison();
                 break;
             case '+':
                 currentPos += 1;
-                token = opAd(file);
+                token = opAd();
                 break;
             case '-':
                 currentPos += 1;
-                token = opAd2(file);
+                token = opAd2();
                 break;
             case ']':
                 token = CLOSE_BRACKET;
@@ -204,7 +204,7 @@ public class LexicalAnalyzer {
                 break;
             case '$':
                 currentPos += 1;
-                token = s50(file);
+                token = s50();
                 break;
             default:
                 //TODO: Acá tendria que largar error porque no se encontró un caracter valido
@@ -227,12 +227,12 @@ public class LexicalAnalyzer {
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
-            token = structID(file);
+            token = structID();
         }
         else {
             if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') {
                 currentPos += 1;
-                token = s2(file);
+                token = s2();
             }
             else{
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -257,7 +257,7 @@ public class LexicalAnalyzer {
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')
                 || (currentChar >= '0' && currentChar <= '9') || currentChar == '_'){
             currentPos += 1;
-            token = objID(file);
+            token = objID();
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -280,7 +280,7 @@ public class LexicalAnalyzer {
 
         if (currentChar >= '0' && currentChar <= '9'){
             currentPos += 1;
-            token = intLiteral(file);
+            token = intLiteral();
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -426,7 +426,7 @@ public class LexicalAnalyzer {
         switch (currentChar) {
             case '?':
                 currentPos += 1;
-                token = s54(file);
+                token = s54();
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -446,12 +446,12 @@ public class LexicalAnalyzer {
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
-            token = structID(file);
+            token = structID();
         }
         else {
             if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') { // bucle
                 currentPos += 1;
-                token = s2(file);
+                token = s2();
             }
             else {
                 // TODO: tirar error
@@ -477,7 +477,7 @@ public class LexicalAnalyzer {
         else {
             if (belongsToTheAlphabet(currentChar, '"')) { // bucle
                 currentPos += 1;
-                token = s3(file);
+                token = s3();
             }
             else {
                 // TODO: tirar error
@@ -497,12 +497,12 @@ public class LexicalAnalyzer {
 
         if (currentChar == '\\'){
             currentPos += 1;
-            token = s7(file);
+            token = s7();
         }
         else {
             if (belongsToTheAlphabet(currentChar, '\'')) {
                 currentPos += 1;
-                token = s6(file);
+                token = s6();
             }
             else {
                 // TODO: tirar error
@@ -541,7 +541,7 @@ public class LexicalAnalyzer {
 
         if (belongsToTheAlphabet(currentChar, '0')){
             currentPos += 1;
-            token = s6(file);
+            token = s6();
         }
         else {
             // TODO: tirar error
@@ -600,7 +600,7 @@ public class LexicalAnalyzer {
         switch (currentChar) {
             case 'E':
                 currentPos += 1;
-                token = s51(file);
+                token = s51();
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -613,14 +613,14 @@ public class LexicalAnalyzer {
      * Camino hacia $EOF$
      * @author Lucas Moyano
      * */
-    private String s51(String file) {
+    private String s51() {
         String token = null;
         char currentChar = file.charAt(currentPos);
 
         switch (currentChar) {
             case 'O':
                 currentPos += 1;
-                token = s52(file);
+                token = s52();
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -633,14 +633,14 @@ public class LexicalAnalyzer {
      * Camino hacia $EOF$
      * @author Lucas Moyano
      * */
-    private String s52(String file) {
+    private String s52() {
         String token = null;
         char currentChar = file.charAt(currentPos);
 
         switch (currentChar) {
             case 'F':
                 currentPos += 1;
-                token = s53(file);
+                token = s53();
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -653,7 +653,7 @@ public class LexicalAnalyzer {
      * Camino hacia $EOF$
      * @author Lucas Moyano
      * */
-    private String s53(String file) {
+    private String s53() {
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -673,18 +673,18 @@ public class LexicalAnalyzer {
      * Estado donde empieza un comentario
      * @author Lucas Moyano
      * */
-    private String s54(String file){
+    private String s54(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
         if (currentChar == '\\'){
             currentPos += 1;
-            token = s55(file);
+            token = s55();
         }
         else {
             if (belongsToTheAlphabet(currentChar)) { // bucle
                 currentPos += 1;
-                token = s54(file);
+                token = s54();
             }
             else {
                 // TODO: tirar error
@@ -698,13 +698,13 @@ public class LexicalAnalyzer {
      * Estado intermedio y donde termina un comentario
      * @author Lucas Moyano
      * */
-    private String s55(String file){
+    private String s55(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
         if (currentChar == '\\'){
             currentPos += 1;
-            token = s55(file);
+            token = s55();
         }
         else {
             if (currentChar == 'n'){
@@ -714,7 +714,7 @@ public class LexicalAnalyzer {
             else {
                 if (belongsToTheAlphabet(currentChar)) { // bucle
                     currentPos += 1;
-                    token = s54(file);
+                    token = s54();
                 }
                 else {
                     // TODO: tirar error

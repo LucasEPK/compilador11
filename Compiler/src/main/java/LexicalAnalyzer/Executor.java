@@ -23,12 +23,12 @@ public class Executor {
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
         // Crea una lista de tokens utilizando el LexicalAnalyzer
-        String token = lexicalAnalyzer.getToken(file);
+        String token = lexicalAnalyzer.getToken();
         while (! token.equals(lexicalAnalyzer.getEOF())){
             // no se si hay que contemplar si termina sin $EOF$, dudo
             tokens.add(token);
 
-            token = lexicalAnalyzer.getToken(file);
+            token = lexicalAnalyzer.getToken();
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens

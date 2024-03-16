@@ -34,7 +34,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.xd.executor": "Run",
     "JUnit.MiClaseTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
