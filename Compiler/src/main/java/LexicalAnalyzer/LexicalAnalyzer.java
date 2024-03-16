@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
+    private final String BLANK_SPACE = "BlankSpace";
     private final String NEW_LINE = "NewLine";
     private final String CARRIAGE_RETURN = "CarriageReturn";
     private final String TAB = "Tab";
@@ -94,6 +95,26 @@ public class LexicalAnalyzer {
         }
 
         switch (currentChar) {
+            case ' ':
+                token = BLANK_SPACE;
+                currentPos += 1;
+                break;
+            case '\n':
+                token = NEW_LINE;
+                currentPos += 1;
+                break;
+            case '\r':
+                token = CARRIAGE_RETURN;
+                currentPos += 1;
+                break;
+            case '\t':
+                token = TAB;
+                currentPos += 1;
+                break;
+/*            case '\v':
+                token = VERTICAL_TAB;
+                currentPos += 1;
+                break;*/
             case '\\':
                 currentPos += 1;
                 token = s1(file);
@@ -398,23 +419,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
 
+        //TODO: hace algo con este switch xd
         switch (currentChar) {
-            case 'n':
-                token = NEW_LINE;
-                currentPos += 1;
-                break;
-            case 'r':
-                token = CARRIAGE_RETURN;
-                currentPos += 1;
-                break;
-            case 't':
-                token = TAB;
-                currentPos += 1;
-                break;
-            case 'v':
-                token = VERTICAL_TAB;
-                currentPos += 1;
-                break;
             case '?':
                 currentPos += 1;
                 token = s54(file);
