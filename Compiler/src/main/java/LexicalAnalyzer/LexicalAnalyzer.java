@@ -41,19 +41,29 @@ public class LexicalAnalyzer {
 
     private int currentPos = 0;
 
+    private String file;
+
+    /**
+     * Constructor que define el archivo que vamos a leer
+     * @author Lucas Moyano
+     * @param file este es el archivo que queremos leer pasado a String
+     * */
+    public LexicalAnalyzer(String file){
+        this.file = file;
+    }
+
     /**
      * Empieza el automata
      * */
-    public String getToken(String file){
-        return s0(file);
+    public String getToken(){
+        return s0();
     }
 
     /**
      * Este es el comienzo del automata
      * @author Lucas Moyano
-     * @param file es un string que tiene todo el contenido del archivo que se se está leyendo
      * */
-    private String s0(String file){
+    private String s0(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -211,7 +221,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String structID(String file){
+    private String structID(){
         String token = STRUCT_ID; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -240,7 +250,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String objID(String file){
+    private String objID(){
         String token = OBJ_ID; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -264,7 +274,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String intLiteral(String file){
+    private String intLiteral(){
         String token = INT_LITERAL; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -287,7 +297,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String assignment(String file){
+    private String assignment(){
         String token = ASSIGNMENT; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -310,7 +320,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String logical(String file){
+    private String logical(){
         String token = LOGICAL; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -333,7 +343,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String comparison(String file){
+    private String comparison(){
         String token = COMPARISON; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -356,7 +366,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String opAd(String file){
+    private String opAd(){
         String token = OP_AD; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -380,7 +390,7 @@ public class LexicalAnalyzer {
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * */
-    private String opAd2(String file){
+    private String opAd2(){
         String token = OP_AD; // Esto es porque es un estado aceptador
         char currentChar = file.charAt(currentPos);
 
@@ -408,7 +418,7 @@ public class LexicalAnalyzer {
      * a lexemas que empiezan con \
      * @author Lucas Moyano
      * */
-    private String s1(String file){
+    private String s1(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -430,7 +440,7 @@ public class LexicalAnalyzer {
      * como no puede terminar en estos no es aceptador
      * @author Lucas Moyano
      * */
-    private String s2(String file){
+    private String s2(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -455,7 +465,7 @@ public class LexicalAnalyzer {
      * Estado donde empieza, hace bucle y termina un string literal
      * @author Lucas Moyano
      * */
-    private String s3(String file){
+    private String s3(){
         //TODO: tiene que tener un limite de 1024 caracteres
         String token = null;
         char currentChar = file.charAt(currentPos);
@@ -481,7 +491,7 @@ public class LexicalAnalyzer {
      * Estado donde empieza un character literal
      * @author Lucas Moyano
      * */
-    private String s5(String file){
+    private String s5(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -506,7 +516,7 @@ public class LexicalAnalyzer {
      * Estado donde termina un character literal
      * @author Lucas Moyano
      * */
-    private String s6(String file){
+    private String s6(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -525,7 +535,7 @@ public class LexicalAnalyzer {
      * Estado intermedio de un character literal
      * @author Lucas Moyano
      * */
-    private String s7(String file){
+    private String s7(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -544,7 +554,7 @@ public class LexicalAnalyzer {
      * Estado de entrada de un Logical2
      * @author Lucas Moyano
      * */
-    private String s34(String file){
+    private String s34(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -563,7 +573,7 @@ public class LexicalAnalyzer {
      * Estado de entrada de un Logical2
      * @author Lucas Moyano
      * */
-    private String s35(String file){
+    private String s35(){
         String token = null;
         char currentChar = file.charAt(currentPos);
 
@@ -583,7 +593,7 @@ public class LexicalAnalyzer {
      * que van a terminar en $EOF$
      * @author Lucas Moyano
      * */
-    private String s50(String file) {
+    private String s50() {
         String token = null;
         char currentChar = file.charAt(currentPos);
 

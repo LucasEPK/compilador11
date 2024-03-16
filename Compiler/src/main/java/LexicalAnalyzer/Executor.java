@@ -20,7 +20,7 @@ public class Executor {
 
         FileManager fileManager = new FileManager(inputPath);
         String file = fileManager.getInputFile();
-        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
         // Crea una lista de tokens utilizando el LexicalAnalyzer
         String token = lexicalAnalyzer.getToken(file);
