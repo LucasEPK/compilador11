@@ -2,6 +2,4 @@ hola
 
 chau
 
-fn -> ñ{}
-
-@
+fn -> n{}

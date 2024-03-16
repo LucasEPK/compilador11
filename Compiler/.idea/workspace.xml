@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/xd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +37,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "Application.xd.executor": "Run",
     "JUnit.MiClaseTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "automata",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "project.structure.last.edited": "Modules",
@@ -48,7 +51,15 @@
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.xd">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Compiler" />
+      <option name="PROGRAM_PARAMETERS" value="src/main/java/FileManager/hola.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="xd" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="xd" />
       <module name="Compiler" />
@@ -71,6 +82,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.xd" />
+      <item itemvalue="JUnit.MiClaseTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.xd" />
@@ -99,10 +115,14 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.io.FileNotFoundException" package="java.io" />
+          <option name="timeStamp" value="9" />
+        </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="7" />
+          <line>44</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

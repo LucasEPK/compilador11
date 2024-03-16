@@ -13,7 +13,7 @@ public class Executor {
     public static void startExecution(String inputPath){
 
         FileManager fileManager = new FileManager(inputPath);
-
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(fileManager.getInputFile());
     }
 
     /**
