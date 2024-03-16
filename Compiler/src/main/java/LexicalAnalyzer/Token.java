@@ -6,6 +6,11 @@ public class Token {
 
     private String token, lexeme;
 
-
+    public Token(String token, String lexeme, int row, int column){
+        this.token = token;
+        this.lexeme = lexeme;
+        this.row = row;
+        this.column = column;
+    }
 
 }
