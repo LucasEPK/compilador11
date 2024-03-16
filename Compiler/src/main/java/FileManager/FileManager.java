@@ -1,9 +1,17 @@
 package FileManager;
 
+import LexicalAnalyzer.Token;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 
 /**
  * La clase FileManager realizara todo lo que tenga que ver con lectura
@@ -70,6 +78,109 @@ public class FileManager {
 
     public String getInputFile() {
         return inputFile;
+    }
+
+    /**
+     * Método que dado una lista de tokens finales, sera el encargado
+     * de escribirlos en consola o de escribirlos en un archivo en el caso
+     * de que este se haya dado como parametro de entrada
+     * @param tokenList lista con tokens de todo el archivo de entrada
+     * @throws IOException si no puedo escribir el archivo
+     * @author Yeumen Silva
+     */
+
+    public void saveResults(List<Token> tokenList){
+
+        /*
+        Llamo a función que convierte las instancias de clase token
+        a string con el formato pedido
+         */
+
+        List<String> validTokens = validTokenFormat(tokenList);
+
+        //Si no pasaron argumento de path de salida, etonces:
+
+        if(this.byConsole){
+
+            printByConsole(validTokens);
+
+        }
+        else {
+
+            //De otro modo, debo crear archivo de salida
+
+            /*
+            creo objeto path a partir de cadena de texto que
+            representa la ruta del archivo
+             */
+            Path path = Path.of(this.outputFile);
+
+            try {
+
+                // Verificamos si el archivo existe
+                if (!Files.exists(path)) {
+                    // Si no existe, lo creo
+                    Files.createFile(path);
+                }
+
+                // Escribir los strings en el archivo
+                Files.write(path, validTokens, StandardCharsets.UTF_8);
+                System.out.println("Se han escrito los strings en el archivo exitosamente.");
+            } catch (IOException e) {
+                System.err.println("Error al escribir en el archivo: " + e.getMessage());
+            }
+
+
+
+        }
+
+    }
+
+    /**
+     * Método que dado una lista de tokens finales, los convierte a string
+     * en el formato indicado por el documento de entrega
+     * @param tokenList lista con tokens de todo el archivo de entrada
+     * @author Yeumen Silva
+     */
+
+    private List<String> validTokenFormat(List<Token> tokenList){
+
+        //Declaro lista de strings
+
+        List<String> validStrings = new ArrayList<>();
+
+        /*
+        Recorro lista de tokens y los guardo en una lista con el
+        formato pedido
+         */
+
+        for (Token token : tokenList) {
+
+            validStrings.add(" | " + token.getToken() + " | " + token.getLexeme() +
+                    " | LINEA " + token.getRow() + " (COLUMNA " + token.getColumn() + ") |");
+
+        }
+
+        return validStrings;
+
+    }
+
+
+    /**
+     * Método que dado una lista de strings con formato solicitado,
+     * escribe por consola los resultados
+     * @param stringTokens lista con strings
+     *en formato pedido(token,lexeme,row,column)
+     * @author Yeumen Silva
+     */
+    private void printByConsole(List<String> stringTokens){
+
+        //Imprimo reocrriendo la lista
+
+        for(String tokenString : stringTokens){
+            System.out.println(tokenString);
+        }
+
     }
 }
 

@@ -3,6 +3,7 @@ package LexicalAnalyzer;
 import FileManager.FileManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -31,6 +32,33 @@ public class Executor {
 
         tokens.add(token); // agrega token EOF a la lista de tokens
         System.out.println(tokens);
+
+        /*
+
+        Por si queres probar que se imprime la salida por consola
+
+        Token token1 = new Token();
+        Token token2 = new Token();
+
+        token1.setToken("ObjectId");
+        token1.setLexeme("hola");
+        token1.setRow(1);
+        token1.setColumn(2);
+
+        token2.setToken("struct");
+        token2.setLexeme("struct");
+        token2.setRow(3);
+        token2.setColumn(4);
+
+        List<Token> tokenList = new ArrayList<>();
+
+        tokenList.add(token1);
+        tokenList.add(token2);
+
+        fileManager.saveResults(tokenList);
+
+         */
+
     }
 
     /**
@@ -42,6 +70,34 @@ public class Executor {
     public static void startExecution(String inputPath, String outputPath){
 
         FileManager fileManager = new FileManager(inputPath, outputPath);
+
+        /*
+
+        Para probar que se escribe el archivo}
+
+        Token token1 = new Token();
+        Token token2 = new Token();
+
+        token1.setToken("ObjectId");
+        token1.setLexeme("hola");
+        token1.setRow(1);
+        token1.setColumn(2);
+
+        token2.setToken("struct");
+        token2.setLexeme("struct");
+        token2.setRow(3);
+        token2.setColumn(4);
+
+        List<Token> tokenList = new ArrayList<>();
+
+        tokenList.add(token1);
+        tokenList.add(token2);
+
+        fileManager.saveResults(tokenList);
+
+         */
+
+
 
 
     }
