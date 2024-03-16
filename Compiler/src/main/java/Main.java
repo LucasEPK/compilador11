@@ -1,43 +1,45 @@
-import FileManager.FileManager;
+import Exceptions.NoArgsException;
+import LexicalAnalyzer.Executor;
 
-import java.io.*;
+/**
+ * Clase que recibe los argumentos de archivo de entrada y salida
+ * @throws NoArgsException si no se recibe ningun argumento de entrada
+ * @author Yeumen Silva
+ */
 
 public class Main {
 
     public static void main(String[] args) {
 
-        String inputPath;
-        String outputPath;
-        FileManager fileManager;
+        String inputPath,outputPath;
+
+        /* Verifica si hay algun argumento de entrada, de otro moddo
+        lanza un error
+         */
 
         try {
+            if (args.length == 0) {
+                throw new NoArgsException();
+            }
             inputPath = args[0];
-        }
-        catch (Exception e){
-            //System.err.println("Sin argumentos de entrada");
-            //e.printStackTrace();
-            //System.exit(-1);
-            //return;
-            throw new RuntimeException("No tenes argumentos", e);
+        } catch (NoArgsException e) {
+            System.err.println(e.getExceptionType());
+            return;
         }
 
-
+        /* Dependiendo si la salida es por consola o no, llama a una función
+        u otra de la clase Executor
+         */
 
         if (args.length < 2){
 
-            fileManager = new FileManager(inputPath);
+            Executor.startExecution(inputPath);
+
         }
         else    {
 
             outputPath = args[1];
-            fileManager = new FileManager(inputPath, outputPath);
-            File file = new File(inputPath);
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
+            Executor.startExecution(inputPath,outputPath);
 
         };
 
