@@ -13,6 +13,6 @@ public class xd {
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;=,==\\n$EOF$"); // Assignment y Equal test, debería reconocerlos
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;!!=&&||\\n$EOF$"); // Logical y Equal test, debería reconocerlos
         //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;><,>=\\n$EOF$"); // Comparison test, debería reconocerlo
-        LexicalAnalyzer xd = new LexicalAnalyzer("\\n;+++--->-\\n$EOF$"); // OpUnary, OpAd y Arrow test, debería reconocerlos
+        //LexicalAnalyzer xd = new LexicalAnalyzer("\\n;+++--->-\\n$EOF$"); // OpUnary, OpAd y Arrow test, debería reconocerlos
     }
 }

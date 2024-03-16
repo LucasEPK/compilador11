@@ -40,19 +40,12 @@ public class LexicalAnalyzer {
     private final String EOF = "$EOF$";
 
     private int currentPos = 0;
-    public LexicalAnalyzer (String file){
-        List<String> tokens = new ArrayList<String>();
 
-        String token = s0(file);
-        while (! token.equals(EOF)){
-            // no se si hay que contemplar si termina sin $EOF$, dudo
-            tokens.add(token);
-
-            token = s0(file);
-        }
-
-        tokens.add(token); // agrega token EOF a la lista de tokens
-        System.out.println(tokens);
+    /**
+     * Empieza el automata
+     * */
+    public String getToken(String file){
+        return s0(file);
     }
 
     /**
@@ -801,5 +794,9 @@ public class LexicalAnalyzer {
         }
 
         return belongs;
+    }
+
+    public String getEOF() {
+        return EOF;
     }
 }

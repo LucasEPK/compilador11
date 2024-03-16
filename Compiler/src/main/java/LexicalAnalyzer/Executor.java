@@ -2,6 +2,9 @@ package LexicalAnalyzer;
 
 import FileManager.FileManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Executor {
 
@@ -11,9 +14,23 @@ public class Executor {
      * @param inputPath String con ruta del archivo de entrada
      */
     public static void startExecution(String inputPath){
+        List<String> tokens = new ArrayList<String>();
 
         FileManager fileManager = new FileManager(inputPath);
-        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(fileManager.getInputFile());
+        String file = fileManager.getInputFile();
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+
+
+        String token = lexicalAnalyzer.getToken(file);
+        while (! token.equals(lexicalAnalyzer.getEOF())){
+            // no se si hay que contemplar si termina sin $EOF$, dudo
+            tokens.add(token);
+
+            token = lexicalAnalyzer.getToken(file);
+        }
+
+        tokens.add(token); // agrega token EOF a la lista de tokens
+        System.out.println(tokens);
     }
 
     /**
