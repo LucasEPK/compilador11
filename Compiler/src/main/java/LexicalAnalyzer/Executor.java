@@ -16,19 +16,19 @@ public class Executor {
      * @author Yeumen Silva
      */
     public static void startExecution(String inputPath){
-        List<String> tokens = new ArrayList<String>();
+        List<Token> tokens = new ArrayList<Token>();
 
         FileManager fileManager = new FileManager(inputPath);
         String file = fileManager.getInputFile();
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
         // Crea una lista de tokens utilizando el LexicalAnalyzer
-        String token = lexicalAnalyzer.getToken();
-        while (! token.equals(lexicalAnalyzer.getEOF())){
+        Token token = lexicalAnalyzer.getNextToken();
+        while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
             // no se si hay que contemplar si termina sin $EOF$, dudo
             tokens.add(token);
 
-            token = lexicalAnalyzer.getToken();
+            token = lexicalAnalyzer.getNextToken();
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens

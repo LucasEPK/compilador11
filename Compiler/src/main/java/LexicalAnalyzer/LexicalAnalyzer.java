@@ -1,7 +1,5 @@
 package LexicalAnalyzer;
 
-import java.util.ArrayList;
-import java.util.List;
 // Estos 2 import sirven para crear el alfabeto como conjunto
 import java.util.HashSet;
 import java.util.Set;
@@ -57,7 +55,7 @@ public class LexicalAnalyzer {
     /**
      * Empieza el automata
      * */
-    public String getToken(){
+    public Token getNextToken(){
         return s0();
     }
 
@@ -65,8 +63,8 @@ public class LexicalAnalyzer {
      * Este es el comienzo del automata
      * @author Lucas Moyano
      * */
-    private String s0(){
-        String token = null;
+    private Token s0(){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = Character.toString(currentChar);
 
@@ -94,7 +92,7 @@ public class LexicalAnalyzer {
                 }
                 else {
                     if(currentChar == '*' || currentChar == '/' || currentChar == '%'){
-                        token = OP_MUL;
+                        token = new Token(OP_MUL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                         currentPos += 1;
                         return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                     }
@@ -104,26 +102,26 @@ public class LexicalAnalyzer {
 
         switch (currentChar) {
             case ' ':
-                token = BLANK_SPACE;
+                token = new Token(BLANK_SPACE, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\n':
-                token = NEW_LINE;
+                token = new Token(NEW_LINE, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
 
                 currentColumn = 0;
                 currentRow += 1;
                 break;
             case '\r':
-                token = CARRIAGE_RETURN;
+                token = new Token(CARRIAGE_RETURN, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\t':
-                token = TAB;
+                token = new Token(TAB, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
 /*            case '\v':
-                token = VERTICAL_TAB;
+                token = new Token(VERTICAL_TAB, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;*/
             case '\\':
@@ -171,43 +169,43 @@ public class LexicalAnalyzer {
                 token = opAd2(currentLexeme);
                 break;
             case ']':
-                token = CLOSE_BRACKET;
+                token = new Token(CLOSE_BRACKET, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '[':
-                token = OPEN_BRACKET;
+                token = new Token(OPEN_BRACKET, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ')':
-                token = CLOSE_PARENTHESIS;
+                token = new Token(CLOSE_PARENTHESIS, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '(':
-                token = OPEN_PARENTHESIS;
+                token = new Token(OPEN_PARENTHESIS, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '}':
-                token = CLOSE_BRACES;
+                token = new Token(CLOSE_BRACES, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '{':
-                token = OPEN_BRACES;
+                token = new Token(OPEN_BRACES, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ';':
-                token = SEMI_COLON;
+                token = new Token(SEMI_COLON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ',':
-                token = COMMA;
+                token = new Token(COMMA, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '.':
-                token = PERIOD;
+                token = new Token(PERIOD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ':':
-                token = COLON;
+                token = new Token(COLON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '$':
@@ -230,8 +228,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String structID(String lexeme){
-        String token = STRUCT_ID; // Esto es porque es un estado aceptador
+    private Token structID(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -254,6 +252,7 @@ public class LexicalAnalyzer {
                 // y dejamos el lexema como estaba sin agregar caracteres
                 currentLexeme = lexeme;
                 currentColumn -= 1;
+                token = new Token(STRUCT_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
         }
         return token;
@@ -267,8 +266,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String objID(String lexeme){
-        String token = OBJ_ID; // Esto es porque es un estado aceptador
+    private Token objID(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -286,6 +285,7 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
+            token = new Token(OBJ_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -299,8 +299,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String intLiteral(String lexeme){
-        String token = INT_LITERAL; // Esto es porque es un estado aceptador
+    private Token intLiteral(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -317,6 +317,7 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
+            token = new Token(INT_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -330,8 +331,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String assignment(String lexeme){
-        String token = ASSIGNMENT; // Esto es porque es un estado aceptador
+    private Token assignment(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -340,7 +341,7 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = EQUAL;
+            token = new Token(EQUAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -348,6 +349,7 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
+            token = new Token(ASSIGNMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -361,8 +363,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String logical(String lexeme){
-        String token = LOGICAL; // Esto es porque es un estado aceptador
+    private Token logical(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -371,7 +373,7 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = EQUAL;
+            token = new Token(EQUAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -379,6 +381,7 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
+            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -392,8 +395,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String comparison(String lexeme){
-        String token = COMPARISON; // Esto es porque es un estado aceptador
+    private Token comparison(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -402,7 +405,7 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = COMPARISON;
+            token = new Token(COMPARISON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -410,6 +413,7 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
+            token = new Token(COMPARISON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -423,8 +427,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String opAd(String lexeme){
-        String token = OP_AD; // Esto es porque es un estado aceptador
+    private Token opAd(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -433,7 +437,7 @@ public class LexicalAnalyzer {
         if (currentChar == '+'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = OP_UNARY;
+            token = new Token(OP_UNARY, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -441,6 +445,7 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
+            token = new Token(OP_AD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -455,8 +460,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String opAd2(String lexeme){
-        String token = OP_AD; // Esto es porque es un estado aceptador
+    private Token opAd2(String lexeme){
+        Token token;
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
@@ -465,13 +470,13 @@ public class LexicalAnalyzer {
         if (currentChar == '-'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = OP_UNARY;
+            token = new Token(OP_UNARY, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             if (currentChar == '>'){
                 currentPos += 1;
                 currentLexeme = lexeme + Character.toString(currentChar);
-                token = ARROW;
+                token = new Token(ARROW, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
             else {
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -479,6 +484,7 @@ public class LexicalAnalyzer {
                 // y dejamos el lexema como estaba sin agregar caracteres
                 currentLexeme = lexeme;
                 currentColumn -= 1;
+                token = new Token(OP_AD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
         }
 
@@ -492,8 +498,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s1(String lexeme){
-        String token = null;
+    private Token s1(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -518,8 +524,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s2(String lexeme){
-        String token = null;
+    private Token s2(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -547,9 +553,9 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s3(String lexeme){
+    private Token s3(String lexeme){
         //TODO: tiene que tener un limite de 1024 caracteres
-        String token = null;
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -557,7 +563,7 @@ public class LexicalAnalyzer {
 
         if (currentChar == '"'){
             currentPos += 1;
-            token = STR_LITERAL;
+            token = new Token(STR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             if (belongsToTheAlphabet(currentChar, '"')) { // bucle
@@ -577,8 +583,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s5(String lexeme){
-        String token = null;
+    private Token s5(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -606,8 +612,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s6(String lexeme){
-        String token = null;
+    private Token s6(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -615,7 +621,7 @@ public class LexicalAnalyzer {
 
         if (currentChar == '\''){
             currentPos += 1;
-            token = CHAR_LITERAL;
+            token = new Token(CHAR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -629,8 +635,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s7(String lexeme){
-        String token = null;
+    private Token s7(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -652,8 +658,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s34(String lexeme){
-        String token = null;
+    private Token s34(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -661,7 +667,7 @@ public class LexicalAnalyzer {
 
         if (currentChar == '&'){
             currentPos += 1;
-            token = LOGICAL;
+            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -675,8 +681,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s35(String lexeme){
-        String token = null;
+    private Token s35(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -684,7 +690,7 @@ public class LexicalAnalyzer {
 
         if (currentChar == '|'){
             currentPos += 1;
-            token = LOGICAL;
+            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -699,8 +705,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s50(String lexeme) {
-        String token = null;
+    private Token s50(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -723,8 +729,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s51(String lexeme) {
-        String token = null;
+    private Token s51(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -747,8 +753,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s52(String lexeme) {
-        String token = null;
+    private Token s52(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -771,8 +777,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s53(String lexeme) {
-        String token = null;
+    private Token s53(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -780,7 +786,7 @@ public class LexicalAnalyzer {
 
         switch (currentChar) {
             case '$':
-                token = EOF;
+                token = new Token(EOF, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             default:
@@ -795,8 +801,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s54(String lexeme){
-        String token = null;
+    private Token s54(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -824,8 +830,8 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s55(String lexeme){
-        String token = null;
+    private Token s55(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
@@ -838,7 +844,7 @@ public class LexicalAnalyzer {
         else {
             if (currentChar == 'n'){
                 currentPos += 1;
-                token = SIMPLE_COMMENT;
+                token = new Token(SIMPLE_COMMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
             else {
                 if (belongsToTheAlphabet(currentChar)) { // bucle
@@ -933,6 +939,16 @@ public class LexicalAnalyzer {
         }
 
         return belongs;
+    }
+
+    /**
+     * Este metodo calcula en que columna empieza el token y la devuelve
+     * @author Lucas Moyano
+     * @param lastColumn la ultima columna del token
+     * @param lexemeLength el numero de caracteres que tiene el lexema
+     * */
+    private int startColumn(int lastColumn, int lexemeLength){
+        return lastColumn - (lexemeLength-1);
     }
 
     public String getEOF() {
