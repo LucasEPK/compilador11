@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Executor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/xd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Token.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,13 +36,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.xd.executor": "Run",
     "JUnit.MiClaseTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "tokens",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "project.structure.last.edited": "Modules",
@@ -121,7 +120,12 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>47</line>
+          <line>231</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
+          <line>66</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

@@ -1,7 +1,5 @@
 package LexicalAnalyzer;
 
-import java.util.ArrayList;
-import java.util.List;
 // Estos 2 import sirven para crear el alfabeto como conjunto
 import java.util.HashSet;
 import java.util.Set;
@@ -40,46 +38,61 @@ public class LexicalAnalyzer {
     private final String EOF = "$EOF$";
 
     private int currentPos = 0;
+    private int currentRow = 1;
+    private int currentColumn = 0;
+
+    private String file;
+
+    /**
+     * Constructor que define el archivo que vamos a leer
+     * @author Lucas Moyano
+     * @param file este es el archivo que queremos leer pasado a String
+     * */
+    public LexicalAnalyzer(String file){
+        this.file = file;
+    }
 
     /**
      * Empieza el automata
      * */
-    public String getToken(String file){
-        return s0(file);
+    public Token getNextToken(){
+        return s0();
     }
 
     /**
      * Este es el comienzo del automata
      * @author Lucas Moyano
-     * @param file es un string que tiene todo el contenido del archivo que se se está leyendo
      * */
-    private String s0(String file){
-        String token = null;
+    private Token s0(){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = Character.toString(currentChar);
+
+        currentColumn += 1;
 
 
         // Acá se hace return en vez de darle valor al token y esperar el ultimo return
         // para evitar que tire error al no matchear en el switch
         if (currentChar >= 'A' && currentChar <= 'Z'){
             currentPos += 1;
-            token = structID(file);
+            token = structID(currentLexeme);
             return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
         }
         else {
             if(currentChar >= 'a' && currentChar <= 'z'){
                 currentPos += 1;
-                token = objID(file);
+                token = objID(currentLexeme);
                 return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
             }
             else {
                 if(currentChar >= '0' && currentChar <= '9'){
                     currentPos += 1;
-                    token = intLiteral(file);
+                    token = intLiteral(currentLexeme);
                     return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                 }
                 else {
                     if(currentChar == '*' || currentChar == '/' || currentChar == '%'){
-                        token = OP_MUL;
+                        token = new Token(OP_MUL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                         currentPos += 1;
                         return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                     }
@@ -89,112 +102,115 @@ public class LexicalAnalyzer {
 
         switch (currentChar) {
             case ' ':
-                token = BLANK_SPACE;
+                token = new Token(BLANK_SPACE, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\n':
-                token = NEW_LINE;
+                token = new Token(NEW_LINE, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
+
+                currentColumn = 0;
+                currentRow += 1;
                 break;
             case '\r':
-                token = CARRIAGE_RETURN;
+                token = new Token(CARRIAGE_RETURN, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\t':
-                token = TAB;
+                token = new Token(TAB, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
 /*            case '\v':
-                token = VERTICAL_TAB;
+                token = new Token(VERTICAL_TAB, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;*/
             case '\\':
                 currentPos += 1;
-                token = s1(file);
+                token = s1(currentLexeme);
                 break;
             case '\"':
                 currentPos += 1;
-                token = s3(file);
+                token = s3(currentLexeme);
                 break;
             case '\'':
                 currentPos += 1;
-                token = s5(file);
+                token = s5(currentLexeme);
                 break;
             case '=':
                 currentPos += 1;
-                token = assignment(file);
+                token = assignment(currentLexeme);
                 break;
             case '!':
                 currentPos += 1;
-                token = logical(file);
+                token = logical(currentLexeme);
                 break;
             case '&':
                 currentPos += 1;
-                token = s34(file);
+                token = s34(currentLexeme);
                 break;
             case '|':
                 currentPos += 1;
-                token = s35(file);
+                token = s35(currentLexeme);
                 break;
             case '<':
                 currentPos += 1;
-                token = comparison(file);
+                token = comparison(currentLexeme);
                 break;
             case '>':
                 currentPos += 1;
-                token = comparison(file);
+                token = comparison(currentLexeme);
                 break;
             case '+':
                 currentPos += 1;
-                token = opAd(file);
+                token = opAd(currentLexeme);
                 break;
             case '-':
                 currentPos += 1;
-                token = opAd2(file);
+                token = opAd2(currentLexeme);
                 break;
             case ']':
-                token = CLOSE_BRACKET;
+                token = new Token(CLOSE_BRACKET, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '[':
-                token = OPEN_BRACKET;
+                token = new Token(OPEN_BRACKET, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ')':
-                token = CLOSE_PARENTHESIS;
+                token = new Token(CLOSE_PARENTHESIS, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '(':
-                token = OPEN_PARENTHESIS;
+                token = new Token(OPEN_PARENTHESIS, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '}':
-                token = CLOSE_BRACES;
+                token = new Token(CLOSE_BRACES, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '{':
-                token = OPEN_BRACES;
+                token = new Token(OPEN_BRACES, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ';':
-                token = SEMI_COLON;
+                token = new Token(SEMI_COLON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ',':
-                token = COMMA;
+                token = new Token(COMMA, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '.':
-                token = PERIOD;
+                token = new Token(PERIOD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ':':
-                token = COLON;
+                token = new Token(COLON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '$':
                 currentPos += 1;
-                token = s50(file);
+                token = s50(currentLexeme);
                 break;
             default:
                 //TODO: Acá tendria que largar error porque no se encontró un caracter valido
@@ -210,26 +226,35 @@ public class LexicalAnalyzer {
      * 3. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String structID(String file){
-        String token = STRUCT_ID; // Esto es porque es un estado aceptador
+    private Token structID(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
-            token = structID(file);
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = structID(currentLexeme);
         }
         else {
             if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') {
                 currentPos += 1;
-                token = s2(file);
+                currentLexeme = lexeme + Character.toString(currentChar);
+                token = s2(currentLexeme);
             }
             else{
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
                 // por ende no tiramos error ni aumentamos el currentPos
+                // y dejamos el lexema como estaba sin agregar caracteres
+                currentLexeme = lexeme;
+                currentColumn -= 1;
+                token = new Token(STRUCT_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
         }
-
         return token;
     }
 
@@ -239,19 +264,28 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String objID(String file){
-        String token = OBJ_ID; // Esto es porque es un estado aceptador
+    private Token objID(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')
                 || (currentChar >= '0' && currentChar <= '9') || currentChar == '_'){
             currentPos += 1;
-            token = objID(file);
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = objID(currentLexeme);
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(OBJ_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -263,18 +297,27 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String intLiteral(String file){
-        String token = INT_LITERAL; // Esto es porque es un estado aceptador
+    private Token intLiteral(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if (currentChar >= '0' && currentChar <= '9'){
             currentPos += 1;
-            token = intLiteral(file);
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = intLiteral(currentLexeme);
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(INT_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -286,18 +329,27 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String assignment(String file){
-        String token = ASSIGNMENT; // Esto es porque es un estado aceptador
+    private Token assignment(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if (currentChar == '='){
             currentPos += 1;
-            token = EQUAL;
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = new Token(EQUAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(ASSIGNMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -309,18 +361,27 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String logical(String file){
-        String token = LOGICAL; // Esto es porque es un estado aceptador
+    private Token logical(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if (currentChar == '='){
             currentPos += 1;
-            token = EQUAL;
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = new Token(EQUAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -332,18 +393,27 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String comparison(String file){
-        String token = COMPARISON; // Esto es porque es un estado aceptador
+    private Token comparison(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if (currentChar == '='){
             currentPos += 1;
-            token = COMPARISON;
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = new Token(COMPARISON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(COMPARISON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -355,18 +425,27 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String opAd(String file){
-        String token = OP_AD; // Esto es porque es un estado aceptador
+    private Token opAd(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if (currentChar == '+'){
             currentPos += 1;
-            token = OP_UNARY;
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = new Token(OP_UNARY, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
             // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(OP_AD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -379,23 +458,33 @@ public class LexicalAnalyzer {
      * 3. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String opAd2(String file){
-        String token = OP_AD; // Esto es porque es un estado aceptador
+    private Token opAd2(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
+
+        currentColumn += 1;
 
         if (currentChar == '-'){
             currentPos += 1;
-            token = OP_UNARY;
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = new Token(OP_UNARY, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             if (currentChar == '>'){
                 currentPos += 1;
-                token = ARROW;
+                currentLexeme = lexeme + Character.toString(currentChar);
+                token = new Token(ARROW, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
             else {
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
                 // por ende no tiramos error ni aumentamos el currentPos
+                // y dejamos el lexema como estaba sin agregar caracteres
+                currentLexeme = lexeme;
+                currentColumn -= 1;
+                token = new Token(OP_AD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
         }
 
@@ -407,16 +496,20 @@ public class LexicalAnalyzer {
      * Con este metodo se entra en los nodos del automata que corresponden
      * a lexemas que empiezan con \
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s1(String file){
-        String token = null;
+    private Token s1(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         //TODO: hace algo con este switch xd
         switch (currentChar) {
             case '?':
                 currentPos += 1;
-                token = s54(file);
+                token = s54(currentLexeme);
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -429,19 +522,23 @@ public class LexicalAnalyzer {
      * Estado donde un structID tiene numeros o guión bajo,
      * como no puede terminar en estos no es aceptador
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s2(String file){
-        String token = null;
+    private Token s2(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
-            token = structID(file);
+            token = structID(currentLexeme);
         }
         else {
             if ((currentChar >= '0' && currentChar <= '9') || currentChar == '_') { // bucle
                 currentPos += 1;
-                token = s2(file);
+                token = s2(currentLexeme);
             }
             else {
                 // TODO: tirar error
@@ -454,20 +551,24 @@ public class LexicalAnalyzer {
     /**
      * Estado donde empieza, hace bucle y termina un string literal
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s3(String file){
+    private Token s3(String lexeme){
         //TODO: tiene que tener un limite de 1024 caracteres
-        String token = null;
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '"'){
             currentPos += 1;
-            token = STR_LITERAL;
+            token = new Token(STR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             if (belongsToTheAlphabet(currentChar, '"')) { // bucle
                 currentPos += 1;
-                token = s3(file);
+                token = s3(currentLexeme);
             }
             else {
                 // TODO: tirar error
@@ -480,19 +581,23 @@ public class LexicalAnalyzer {
     /**
      * Estado donde empieza un character literal
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s5(String file){
-        String token = null;
+    private Token s5(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\\'){
             currentPos += 1;
-            token = s7(file);
+            token = s7(currentLexeme);
         }
         else {
             if (belongsToTheAlphabet(currentChar, '\'')) {
                 currentPos += 1;
-                token = s6(file);
+                token = s6(currentLexeme);
             }
             else {
                 // TODO: tirar error
@@ -505,14 +610,18 @@ public class LexicalAnalyzer {
     /**
      * Estado donde termina un character literal
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s6(String file){
-        String token = null;
+    private Token s6(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\''){
             currentPos += 1;
-            token = CHAR_LITERAL;
+            token = new Token(CHAR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -524,14 +633,18 @@ public class LexicalAnalyzer {
     /**
      * Estado intermedio de un character literal
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s7(String file){
-        String token = null;
+    private Token s7(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (belongsToTheAlphabet(currentChar, '0')){
             currentPos += 1;
-            token = s6(file);
+            token = s6(currentLexeme);
         }
         else {
             // TODO: tirar error
@@ -543,14 +656,18 @@ public class LexicalAnalyzer {
     /**
      * Estado de entrada de un Logical2
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s34(String file){
-        String token = null;
+    private Token s34(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '&'){
             currentPos += 1;
-            token = LOGICAL;
+            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -562,14 +679,18 @@ public class LexicalAnalyzer {
     /**
      * Estado de entrada de un Logical2
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s35(String file){
-        String token = null;
+    private Token s35(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '|'){
             currentPos += 1;
-            token = LOGICAL;
+            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -582,15 +703,19 @@ public class LexicalAnalyzer {
      * Con este metodo se entra en los nodos del automata
      * que van a terminar en $EOF$
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s50(String file) {
-        String token = null;
+    private Token s50(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         switch (currentChar) {
             case 'E':
                 currentPos += 1;
-                token = s51(file);
+                token = s51(currentLexeme);
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -602,15 +727,19 @@ public class LexicalAnalyzer {
     /**
      * Camino hacia $EOF$
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s51(String file) {
-        String token = null;
+    private Token s51(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         switch (currentChar) {
             case 'O':
                 currentPos += 1;
-                token = s52(file);
+                token = s52(currentLexeme);
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -622,15 +751,19 @@ public class LexicalAnalyzer {
     /**
      * Camino hacia $EOF$
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s52(String file) {
-        String token = null;
+    private Token s52(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         switch (currentChar) {
             case 'F':
                 currentPos += 1;
-                token = s53(file);
+                token = s53(currentLexeme);
                 break;
             default:
                 // TODO: acá debería arrojar error
@@ -642,14 +775,18 @@ public class LexicalAnalyzer {
     /**
      * Camino hacia $EOF$
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s53(String file) {
-        String token = null;
+    private Token s53(String lexeme) {
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         switch (currentChar) {
             case '$':
-                token = EOF;
+                token = new Token(EOF, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             default:
@@ -662,19 +799,23 @@ public class LexicalAnalyzer {
     /**
      * Estado donde empieza un comentario
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s54(String file){
-        String token = null;
+    private Token s54(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\\'){
             currentPos += 1;
-            token = s55(file);
+            token = s55(currentLexeme);
         }
         else {
             if (belongsToTheAlphabet(currentChar)) { // bucle
                 currentPos += 1;
-                token = s54(file);
+                token = s54(currentLexeme);
             }
             else {
                 // TODO: tirar error
@@ -687,24 +828,28 @@ public class LexicalAnalyzer {
     /**
      * Estado intermedio y donde termina un comentario
      * @author Lucas Moyano
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private String s55(String file){
-        String token = null;
+    private Token s55(String lexeme){
+        Token token = null;
         char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\\'){
             currentPos += 1;
-            token = s55(file);
+            token = s55(currentLexeme);
         }
         else {
             if (currentChar == 'n'){
                 currentPos += 1;
-                token = SIMPLE_COMMENT;
+                token = new Token(SIMPLE_COMMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
             }
             else {
                 if (belongsToTheAlphabet(currentChar)) { // bucle
                     currentPos += 1;
-                    token = s54(file);
+                    token = s54(currentLexeme);
                 }
                 else {
                     // TODO: tirar error
@@ -794,6 +939,16 @@ public class LexicalAnalyzer {
         }
 
         return belongs;
+    }
+
+    /**
+     * Este metodo calcula en que columna empieza el token y la devuelve
+     * @author Lucas Moyano
+     * @param lastColumn la ultima columna del token
+     * @param lexemeLength el numero de caracteres que tiene el lexema
+     * */
+    private int startColumn(int lastColumn, int lexemeLength){
+        return lastColumn - (lexemeLength-1);
     }
 
     public String getEOF() {
