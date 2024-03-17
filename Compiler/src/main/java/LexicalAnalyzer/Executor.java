@@ -33,7 +33,7 @@ public class Executor {
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens
-        System.out.println(tokens);
+        fileManager.saveResults(tokens);
 
         /*
 
@@ -70,8 +70,23 @@ public class Executor {
      * @param outputPath String con ruta del archivo de salida
      */
     public static void startExecution(String inputPath, String outputPath){
-
         FileManager fileManager = new FileManager(inputPath, outputPath);
+
+        List<Token> tokens = new ArrayList<Token>();
+        String file = fileManager.getInputFile();
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
+
+        // Crea una lista de tokens utilizando el LexicalAnalyzer
+        Token token = lexicalAnalyzer.getNextToken();
+        while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
+            // no se si hay que contemplar si termina sin $EOF$, dudo
+            tokens.add(token);
+
+            token = lexicalAnalyzer.getNextToken();
+        }
+
+        tokens.add(token); // agrega token EOF a la lista de tokens
+        fileManager.saveResults(tokens);
 
         /*
 
