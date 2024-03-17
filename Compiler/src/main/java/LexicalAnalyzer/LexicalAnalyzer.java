@@ -272,6 +272,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')
                 || (currentChar >= '0' && currentChar <= '9') || currentChar == '_'){
             currentPos += 1;
@@ -283,6 +285,7 @@ public class LexicalAnalyzer {
             // por ende no tiramos error ni aumentamos el currentPos
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
+            currentColumn -= 1;
         }
 
         return token;
@@ -301,6 +304,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if (currentChar >= '0' && currentChar <= '9'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -311,6 +316,7 @@ public class LexicalAnalyzer {
             // por ende no tiramos error ni aumentamos el currentPos
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
+            currentColumn -= 1;
         }
 
         return token;
@@ -329,6 +335,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -339,6 +347,7 @@ public class LexicalAnalyzer {
             // por ende no tiramos error ni aumentamos el currentPos
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
+            currentColumn -= 1;
         }
 
         return token;
@@ -357,6 +366,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -367,6 +378,7 @@ public class LexicalAnalyzer {
             // por ende no tiramos error ni aumentamos el currentPos
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
+            currentColumn -= 1;
         }
 
         return token;
@@ -385,6 +397,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -395,6 +409,7 @@ public class LexicalAnalyzer {
             // por ende no tiramos error ni aumentamos el currentPos
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
+            currentColumn -= 1;
         }
 
         return token;
@@ -413,6 +428,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if (currentChar == '+'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -423,6 +440,7 @@ public class LexicalAnalyzer {
             // por ende no tiramos error ni aumentamos el currentPos
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
+            currentColumn -= 1;
         }
 
         return token;
@@ -442,6 +460,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if (currentChar == '-'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -458,6 +478,7 @@ public class LexicalAnalyzer {
                 // por ende no tiramos error ni aumentamos el currentPos
                 // y dejamos el lexema como estaba sin agregar caracteres
                 currentLexeme = lexeme;
+                currentColumn -= 1;
             }
         }
 
@@ -475,6 +496,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         //TODO: hace algo con este switch xd
         switch (currentChar) {
@@ -530,6 +553,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        currentColumn += 1;
+
         if (currentChar == '"'){
             currentPos += 1;
             token = STR_LITERAL;
@@ -556,6 +581,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\\'){
             currentPos += 1;
@@ -584,6 +611,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        currentColumn += 1;
+
         if (currentChar == '\''){
             currentPos += 1;
             token = CHAR_LITERAL;
@@ -604,6 +633,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (belongsToTheAlphabet(currentChar, '0')){
             currentPos += 1;
@@ -626,6 +657,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        currentColumn += 1;
+
         if (currentChar == '&'){
             currentPos += 1;
             token = LOGICAL;
@@ -646,6 +679,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '|'){
             currentPos += 1;
@@ -669,6 +704,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        currentColumn += 1;
+
         switch (currentChar) {
             case 'E':
                 currentPos += 1;
@@ -690,6 +727,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         switch (currentChar) {
             case 'O':
@@ -713,6 +752,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        currentColumn += 1;
+
         switch (currentChar) {
             case 'F':
                 currentPos += 1;
@@ -735,6 +776,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        currentColumn += 1;
+
         switch (currentChar) {
             case '$':
                 token = EOF;
@@ -756,6 +799,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\\'){
             currentPos += 1;
@@ -783,6 +828,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if (currentChar == '\\'){
             currentPos += 1;
