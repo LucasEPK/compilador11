@@ -161,7 +161,7 @@ public class FileManager {
 
         for (Token token : tokenList) {
 
-            validStrings.add(" | " + token.getToken() + " | " + token.getLexeme() +
+            validStrings.add("| " + token.getToken() + " | " + token.getLexeme() +
                     " | LINEA " + token.getRow() + " (COLUMNA " + token.getColumn() + ") |");
 
         }
