@@ -2,6 +2,7 @@ package LexicalAnalyzer;
 
 import FileManager.FileManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Executor {
      * @author Lucas Moyano
      * @author Yeumen Silva
      */
-    public static void startExecution(String inputPath){
+    public void startExecution(String inputPath){
         List<Token> tokens = new ArrayList<Token>();
 
         FileManager fileManager = new FileManager(inputPath);
@@ -33,33 +34,11 @@ public class Executor {
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens
-        fileManager.saveResults(tokens);
 
-        /*
 
-        Por si queres probar que se imprime la salida por consola
+        printResults(tokens); // Imprimo reusltados por consola
 
-        Token token1 = new Token();
-        Token token2 = new Token();
 
-        token1.setToken("ObjectId");
-        token1.setLexeme("hola");
-        token1.setRow(1);
-        token1.setColumn(2);
-
-        token2.setToken("struct");
-        token2.setLexeme("struct");
-        token2.setRow(3);
-        token2.setColumn(4);
-
-        List<Token> tokenList = new ArrayList<>();
-
-        tokenList.add(token1);
-        tokenList.add(token2);
-
-        fileManager.saveResults(tokenList);
-
-         */
 
     }
 
@@ -69,7 +48,7 @@ public class Executor {
      * @param inputPath String con ruta del archivo de entrada
      * @param outputPath String con ruta del archivo de salida
      */
-    public static void startExecution(String inputPath, String outputPath){
+    public void startExecution(String inputPath, String outputPath){
         FileManager fileManager = new FileManager(inputPath, outputPath);
 
         List<Token> tokens = new ArrayList<Token>();
@@ -86,36 +65,86 @@ public class Executor {
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens
-        fileManager.saveResults(tokens);
+
+
+        //Guardo resultados en archivo de salida
+        fileManager.saveResults(validTokenFormat(tokens));
+
+    }
+
+    /**
+     * Método que dado una lista de tokens finales, sera el encargado
+     * de escribirlos en consola o de escribirlos en un archivo en el caso
+     * de que este se haya dado como parametro de entrada
+     * @param tokenList lista con tokens de todo el archivo de entrada
+     * @throws IOException si no puedo escribir el archivo
+     * @author Yeumen Silva
+     */
+
+    private void printResults(List<Token> tokenList) {
 
         /*
-
-        Para probar que se escribe el archivo}
-
-        Token token1 = new Token();
-        Token token2 = new Token();
-
-        token1.setToken("ObjectId");
-        token1.setLexeme("hola");
-        token1.setRow(1);
-        token1.setColumn(2);
-
-        token2.setToken("struct");
-        token2.setLexeme("struct");
-        token2.setRow(3);
-        token2.setColumn(4);
-
-        List<Token> tokenList = new ArrayList<>();
-
-        tokenList.add(token1);
-        tokenList.add(token2);
-
-        fileManager.saveResults(tokenList);
-
+        Llamo a función que convierte las instancias de clase token
+        a string con el formato pedido
          */
 
+        List<String> validTokens = validTokenFormat(tokenList);
+
+        //Si no pasaron argumento de path de salida, etonces:
+
+        printByConsole(validTokens);
 
 
+    }
+
+    /**
+     * Método que dado una lista de tokens finales, los convierte a string
+     * en el formato indicado por el documento de entrega
+     * @param tokenList lista con tokens de todo el archivo de entrada
+     * @author Yeumen Silva
+     * @author Lucas Moyano
+     */
+
+    private List<String> validTokenFormat(List<Token> tokenList){
+
+        //Declaro lista de strings
+
+        List<String> validStrings = new ArrayList<>();
+
+        // Agrego encabezado
+        validStrings.add("CORRECTO: ANALISIS LEXICO");
+        validStrings.add("| TOKEN | LEXEMA | NUMERO DE LINEA (NUMERO DE COLUMNA) |");
+
+        /*
+        Recorro lista de tokens y los guardo en una lista con el
+        formato pedido
+         */
+
+        for (Token token : tokenList) {
+
+            validStrings.add("| " + token.getToken() + " | " + token.getLexeme() +
+                    " | LINEA " + token.getRow() + " (COLUMNA " + token.getColumn() + ") |");
+
+        }
+
+        return validStrings;
+
+    }
+
+    /**
+     * Método que dado una lista de strings con formato solicitado,
+     * escribe por consola los resultados
+     * @param stringTokens lista con strings
+     *en formato pedido(token,lexeme,row,column)
+     * @author Yeumen Silva
+     */
+    private void printByConsole(List<String> stringTokens){
+
+        //Imprimo reocrriendo la lista
+
+        for(String tokenString : stringTokens){
+            System.out.println(tokenString);
+        }
 
     }
 }
