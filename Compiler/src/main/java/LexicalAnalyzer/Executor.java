@@ -1,19 +1,65 @@
 package LexicalAnalyzer;
 
+import Exceptions.LexicalException;
 import FileManager.FileManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class Executor {
 
+    HashMap<String,String> hashMap = new HashMap<>();
+
+    /**
+     * Constructor que inicia nuestra tablas hash de palabras reservadas
+     * @author Yeumen Silva
+     */
+
+    public  Executor(){
+        startHashTable();
+    }
+
+    /**
+     * Método que inicia nuestra hashMap agregando todas las
+     * palabras reservadas de nuestro lenguaje
+     * @author Yeumen Silva
+     */
+
+    private void startHashTable(){
+
+        this.hashMap.put("start", "start");
+        this.hashMap.put("struct", "struct");
+        this.hashMap.put("self", "self");
+        this.hashMap.put("st", "st");
+        this.hashMap.put("pri", "pri");
+        this.hashMap.put("nil", "nil");
+        this.hashMap.put("new", "new");
+        this.hashMap.put("impl", "impl");
+        this.hashMap.put("ret", "ret");
+        this.hashMap.put("if", "if");
+        this.hashMap.put("else", "else");
+        this.hashMap.put("while", "while");;
+        this.hashMap.put("true", "true");
+        this.hashMap.put("false", "false");
+        this.hashMap.put("fn", "fn");
+        this.hashMap.put("void", "void");
+        this.hashMap.put("Array", "Array");
+        this.hashMap.put("Str", "Str");
+        this.hashMap.put("Bool", "Bool");
+        this.hashMap.put("Int", "Int");
+        this.hashMap.put("Char", "Char");
+
+    }
+
     /**
      * Método que dado un String de entrada crea una instancia de la clase
      * FileMannager
      * @param inputPath String con ruta del archivo de entrada
+     * @throws LexicalException cualquier error de tipo lexico
      * @author Lucas Moyano
      * @author Yeumen Silva
      */
@@ -24,21 +70,41 @@ public class Executor {
         String file = fileManager.getInputFile();
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
-        // Crea una lista de tokens utilizando el LexicalAnalyzer
-        Token token = lexicalAnalyzer.getNextToken();
-        while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
-            // no se si hay que contemplar si termina sin $EOF$, dudo
-            tokens.add(token);
+       /*
+       Este bloque try/catch es el encargado de ejecutarse siempre
+       y cuando no encontremos un error lexico en la ejecución
+        */
+        try {
+            // Crea una lista de tokens utilizando el LexicalAnalyzer
+            Token token = lexicalAnalyzer.getNextToken();
+            while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
 
-            token = lexicalAnalyzer.getNextToken();
+
+                //Verifico si el lexema esta en la tabla Hash
+                if(this.hashMap.containsKey(token.getLexeme())){
+                    //Si esta, entonces es una palabra reservada y cambio su token
+                    token.setToken(token.getLexeme());
+                }
+                tokens.add(token);
+                token = lexicalAnalyzer.getNextToken();
+
+            }
+
+            tokens.add(token); // agrega token EOF a la lista de tokens
+
+
+            printResults(tokens); // Imprimo reusltados por consola
+
+        }catch (LexicalException exception){
+
+            /*
+            Si encuentra un error lexico, llama a metodo
+            que sera el encrgado de imprimir el error
+             */
+
+            printException(exception);
+
         }
-
-        tokens.add(token); // agrega token EOF a la lista de tokens
-
-
-        printResults(tokens); // Imprimo reusltados por consola
-
-
 
     }
 
@@ -55,20 +121,48 @@ public class Executor {
         String file = fileManager.getInputFile();
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
-        // Crea una lista de tokens utilizando el LexicalAnalyzer
-        Token token = lexicalAnalyzer.getNextToken();
-        while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
-            // no se si hay que contemplar si termina sin $EOF$, dudo
-            tokens.add(token);
+         /*
+       Este bloque try/catch es el encargado de ejecutarse siempre
+       y cuando no encontremos un error lexico en la ejecución
+        */
 
-            token = lexicalAnalyzer.getNextToken();
+        try {
+            // Crea una lista de tokens utilizando el LexicalAnalyzer
+            Token token = lexicalAnalyzer.getNextToken();
+            while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
+
+                //Verifico si el lexema esta en la tabla Hash
+                if(this.hashMap.containsKey(token.getLexeme())){
+
+                    //Si esta, entonces es una palabra reservada y cambio su token
+
+                    token.setToken(token.getLexeme());
+                    System.out.println(token.getToken());
+                }
+
+                tokens.add(token);
+
+                token = lexicalAnalyzer.getNextToken();
+            }
+
+            tokens.add(token); // agrega token EOF a la lista de tokens
+
+
+            //Guardo resultados en archivo de salida
+            fileManager.saveResults(validTokenFormat(tokens));
+        }
+        catch (LexicalException exception){
+
+            /*
+            Si encuentra un error lexico, llama a metodo
+            que sera el encrgado de imprimir el error
+             */
+
+            printException(exception);
+
         }
 
-        tokens.add(token); // agrega token EOF a la lista de tokens
 
-
-        //Guardo resultados en archivo de salida
-        fileManager.saveResults(validTokenFormat(tokens));
 
     }
 
@@ -145,6 +239,22 @@ public class Executor {
         for(String tokenString : stringTokens){
             System.out.println(tokenString);
         }
+
+    }
+
+
+    /**
+     * Método que dado un error, lo imprime con el formato pedido
+     * @param exception error de tipo léxico
+     * @author Yeumen Silva
+     */
+    private void printException(LexicalException exception){
+
+        Token tokenException = exception.getToken();
+
+        System.out.println("| Linea " + tokenException.getRow() +
+                " | COLUMNA " + tokenException.getColumn() +
+                " | " + exception.getExceptionType() + " " + tokenException.getLexeme()  );
 
     }
 }
