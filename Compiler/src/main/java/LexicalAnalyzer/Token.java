@@ -29,6 +29,22 @@ public class Token {
         return lexeme;
     }
 
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setLexeme(String lexeme) {
+        this.lexeme = lexeme;
+    }
+
     public int getColumn() {
         return column;
     }
