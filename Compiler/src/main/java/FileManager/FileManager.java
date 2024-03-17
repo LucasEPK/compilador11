@@ -141,6 +141,7 @@ public class FileManager {
      * en el formato indicado por el documento de entrega
      * @param tokenList lista con tokens de todo el archivo de entrada
      * @author Yeumen Silva
+     * @author Lucas Moyano
      */
 
     private List<String> validTokenFormat(List<Token> tokenList){
@@ -148,6 +149,10 @@ public class FileManager {
         //Declaro lista de strings
 
         List<String> validStrings = new ArrayList<>();
+
+        // Agrego encabezado
+        validStrings.add("CORRECTO: ANALISIS LEXICO");
+        validStrings.add("| TOKEN | LEXEMA | NUMERO DE LINEA (NUMERO DE COLUMNA) |");
 
         /*
         Recorro lista de tokens y los guardo en una lista con el
