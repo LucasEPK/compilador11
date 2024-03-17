@@ -106,22 +106,22 @@ public class LexicalAnalyzer {
                 currentPos += 1;
                 break;
             case '\n':
-                token = new Token(NEW_LINE, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(NEW_LINE, "\\n", currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
 
                 currentColumn = 0;
                 currentRow += 1;
                 break;
             case '\r':
-                token = new Token(CARRIAGE_RETURN, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(CARRIAGE_RETURN, "\\r", currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\t':
-                token = new Token(TAB, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(TAB, "\\t", currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
 /*            case '\v':
-                token = new Token(VERTICAL_TAB, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(VERTICAL_TAB, "\\v", currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;*/
             case '\\':

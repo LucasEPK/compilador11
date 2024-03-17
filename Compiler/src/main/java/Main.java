@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         String inputPath,outputPath;
 
-        /* Verifica si hay algun argumento de entrada, de otro moddo
+        /* Verifica si hay algun argumento de entrada, de otro modo
         lanza un error
          */
 
