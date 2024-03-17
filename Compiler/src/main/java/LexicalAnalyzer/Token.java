@@ -6,12 +6,19 @@ public class Token {
 
     private String token, lexeme;
 
-    public int getColumn() {
-        return column;
+    public Token(String token, String lexeme, int row, int column){
+        this.token = token;
+        this.lexeme = lexeme;
+        this.row = row;
+        this.column = column;
     }
 
-    public int getRow() {
-        return row;
+    /**
+     * Este metodo sirve para cuando se muestra por pantalla un Token
+     * @author Lucas Moyano
+     * */
+    public String toString() {
+        return "Token: " + getToken() + ", Lexema: " + getLexeme() + ", Fila: " + getRow() + ", Columna: " + getColumn() + "\n";
     }
 
     public String getToken() {
@@ -36,5 +43,13 @@ public class Token {
 
     public void setLexeme(String lexeme) {
         this.lexeme = lexeme;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
     }
 }

@@ -13,21 +13,23 @@ public class Executor {
      * Método que dado un String de entrada crea una instancia de la clase
      * FileMannager
      * @param inputPath String con ruta del archivo de entrada
+     * @author Lucas Moyano
+     * @author Yeumen Silva
      */
     public static void startExecution(String inputPath){
-        List<String> tokens = new ArrayList<String>();
+        List<Token> tokens = new ArrayList<Token>();
 
         FileManager fileManager = new FileManager(inputPath);
         String file = fileManager.getInputFile();
-        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
 
-
-        String token = lexicalAnalyzer.getToken(file);
-        while (! token.equals(lexicalAnalyzer.getEOF())){
+        // Crea una lista de tokens utilizando el LexicalAnalyzer
+        Token token = lexicalAnalyzer.getNextToken();
+        while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
             // no se si hay que contemplar si termina sin $EOF$, dudo
             tokens.add(token);
 
-            token = lexicalAnalyzer.getToken(file);
+            token = lexicalAnalyzer.getNextToken();
         }
 
         tokens.add(token); // agrega token EOF a la lista de tokens
