@@ -40,6 +40,8 @@ public class LexicalAnalyzer {
     private final String EOF = "$EOF$";
 
     private int currentPos = 0;
+    private int currentRow = 1;
+    private int currentColumn = 0;
 
     private String file;
 
@@ -67,6 +69,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = Character.toString(currentChar);
+
+        currentColumn += 1;
 
 
         // Acá se hace return en vez de darle valor al token y esperar el ultimo return
@@ -106,6 +110,9 @@ public class LexicalAnalyzer {
             case '\n':
                 token = NEW_LINE;
                 currentPos += 1;
+
+                currentColumn = 0;
+                currentRow += 1;
                 break;
             case '\r':
                 token = CARRIAGE_RETURN;
@@ -228,6 +235,8 @@ public class LexicalAnalyzer {
         String currentLexeme;
         char currentChar = file.charAt(currentPos);
 
+        currentColumn += 1;
+
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
@@ -244,9 +253,9 @@ public class LexicalAnalyzer {
                 // por ende no tiramos error ni aumentamos el currentPos
                 // y dejamos el lexema como estaba sin agregar caracteres
                 currentLexeme = lexeme;
+                currentColumn -= 1;
             }
         }
-
         return token;
     }
 
@@ -459,6 +468,8 @@ public class LexicalAnalyzer {
         String token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
 
         if ((currentChar >= 'A' && currentChar <= 'Z') || (currentChar >= 'a' && currentChar <= 'z')){
             currentPos += 1;
