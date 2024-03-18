@@ -92,7 +92,8 @@ public class LexicalAnalyzer {
                 }
                 else {
                     if(currentChar == '*' || currentChar == '%'){
-                        token = new Token(OP_MUL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                        token = new Token(OP_MUL, currentLexeme, currentRow,
+                                startColumn(currentColumn, currentLexeme.length()));
                         currentPos += 1;
                         return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                     }
@@ -102,26 +103,31 @@ public class LexicalAnalyzer {
 
         switch (currentChar) {
             case ' ':
-                token = new Token(BLANK_SPACE, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(BLANK_SPACE, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\n':
-                token = new Token(NEW_LINE, "\\n", currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(NEW_LINE, "\\n", currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
 
                 currentColumn = 0;
                 currentRow += 1;
                 break;
             case '\r':
-                token = new Token(CARRIAGE_RETURN, "\\r", currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(CARRIAGE_RETURN, "\\r", currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '\t':
-                token = new Token(TAB, "\\t", currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(TAB, "\\t", currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
 /*            case '\v':
-                token = new Token(VERTICAL_TAB, "\\v", currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(VERTICAL_TAB, "\\v", currentRow,
+                startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;*/
             case '/':
@@ -169,43 +175,53 @@ public class LexicalAnalyzer {
                 token = opAd2(currentLexeme);
                 break;
             case ']':
-                token = new Token(CLOSE_BRACKET, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(CLOSE_BRACKET, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '[':
-                token = new Token(OPEN_BRACKET, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(OPEN_BRACKET, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ')':
-                token = new Token(CLOSE_PARENTHESIS, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(CLOSE_PARENTHESIS, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '(':
-                token = new Token(OPEN_PARENTHESIS, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(OPEN_PARENTHESIS, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '}':
-                token = new Token(CLOSE_BRACES, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(CLOSE_BRACES, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '{':
-                token = new Token(OPEN_BRACES, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(OPEN_BRACES, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ';':
-                token = new Token(SEMI_COLON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(SEMI_COLON, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ',':
-                token = new Token(COMMA, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(COMMA, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '.':
-                token = new Token(PERIOD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(PERIOD, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case ':':
-                token = new Token(COLON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(COLON, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             case '$':
@@ -252,7 +268,8 @@ public class LexicalAnalyzer {
                 // y dejamos el lexema como estaba sin agregar caracteres
                 currentLexeme = lexeme;
                 currentColumn -= 1;
-                token = new Token(STRUCT_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(STRUCT_ID, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
             }
         }
         return token;
@@ -285,7 +302,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(OBJ_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(OBJ_ID, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -317,7 +335,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(INT_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(INT_LITERAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -341,7 +360,8 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = new Token(EQUAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(EQUAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -349,7 +369,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(ASSIGNMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(ASSIGNMENT, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -373,7 +394,8 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = new Token(EQUAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(EQUAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -381,7 +403,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(LOGICAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -405,7 +428,8 @@ public class LexicalAnalyzer {
         if (currentChar == '='){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = new Token(COMPARISON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(COMPARISON, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -413,7 +437,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(COMPARISON, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(COMPARISON, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -437,7 +462,8 @@ public class LexicalAnalyzer {
         if (currentChar == '+'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = new Token(OP_UNARY, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(OP_UNARY, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -445,7 +471,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(OP_AD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(OP_AD, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
 
         return token;
@@ -470,13 +497,15 @@ public class LexicalAnalyzer {
         if (currentChar == '-'){
             currentPos += 1;
             currentLexeme = lexeme + Character.toString(currentChar);
-            token = new Token(OP_UNARY, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(OP_UNARY, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             if (currentChar == '>'){
                 currentPos += 1;
                 currentLexeme = lexeme + Character.toString(currentChar);
-                token = new Token(ARROW, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(ARROW, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
             }
             else {
                 // Este es el caso donde miramos más caracteres de lo que deberiamos,
@@ -484,7 +513,8 @@ public class LexicalAnalyzer {
                 // y dejamos el lexema como estaba sin agregar caracteres
                 currentLexeme = lexeme;
                 currentColumn -= 1;
-                token = new Token(OP_AD, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(OP_AD, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
             }
         }
 
@@ -517,7 +547,8 @@ public class LexicalAnalyzer {
             // y dejamos el lexema como estaba sin agregar caracteres
             currentLexeme = lexeme;
             currentColumn -= 1;
-            token = new Token(OP_MUL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(OP_MUL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         return token;
     }
@@ -567,7 +598,8 @@ public class LexicalAnalyzer {
 
         if (currentChar == '"'){
             currentPos += 1;
-            token = new Token(STR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(STR_LITERAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             if (belongsToTheAlphabet(currentChar, '"')) { // bucle
@@ -625,7 +657,8 @@ public class LexicalAnalyzer {
 
         if (currentChar == '\''){
             currentPos += 1;
-            token = new Token(CHAR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(CHAR_LITERAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -671,7 +704,8 @@ public class LexicalAnalyzer {
 
         if (currentChar == '&'){
             currentPos += 1;
-            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(LOGICAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -694,7 +728,8 @@ public class LexicalAnalyzer {
 
         if (currentChar == '|'){
             currentPos += 1;
-            token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            token = new Token(LOGICAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
         }
         else {
             // TODO: tirar error
@@ -790,7 +825,8 @@ public class LexicalAnalyzer {
 
         switch (currentChar) {
             case '$':
-                token = new Token(EOF, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+                token = new Token(EOF, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
             default:
