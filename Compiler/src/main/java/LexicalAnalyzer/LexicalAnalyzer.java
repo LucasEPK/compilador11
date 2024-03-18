@@ -589,10 +589,15 @@ public class LexicalAnalyzer {
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s3(String lexeme){
-        //TODO: tiene que tener un limite de 1024 caracteres
         Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        int charCount = currentLexeme.length() - 2; // Se hace -2 por las comillas
+        if (charCount > 1024){ // Nos fijamos que no hayan más de 1024 caracteres entre las comillas
+            //TODO: tirar error
+        }
+
 
         currentColumn += 1;
 
