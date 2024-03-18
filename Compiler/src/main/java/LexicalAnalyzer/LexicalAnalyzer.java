@@ -815,7 +815,9 @@ public class LexicalAnalyzer {
         if (currentChar == '\n'){
             currentLexeme = lexeme; // No leemos el \n para que no se rompa el formato
             currentPos += 1;
-            token = new Token(SIMPLE_COMMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            // se hace currentLexeme.lenght() + 1 para tener en cuenta el \n
+            token = new Token(SIMPLE_COMMENT, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()+1));
             currentColumn = 0;
             currentRow += 1; // Se come al \n pero igual no son tan importante esos tokens
         }
