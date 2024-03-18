@@ -15,7 +15,7 @@ public class invalidCommentException extends LexicalException {
 
     @Override
     public String getExceptionType() {
-        return "ERROR EN LA DEFINICION DEL Comentario";
+        return "ERROR EN LA DEFINICION DEL COMENTARIO";
     }
 
 

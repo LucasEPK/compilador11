@@ -153,6 +153,7 @@ public class Executor {
         }
         catch (LexicalException exception){
 
+
             /*
             Si encuentra un error lexico, llama a metodo
             que sera el encrgado de imprimir el error

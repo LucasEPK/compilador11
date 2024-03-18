@@ -665,6 +665,7 @@ public class LexicalAnalyzer {
         }
         else {
             token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
+            System.out.println("HOLAAA");
             throw getException("Char",token);
         }
 
@@ -843,7 +844,7 @@ public class LexicalAnalyzer {
             }
             else {
                 token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("Comment", token);
+                throw getException("EOF", token);
             }
         }
 
@@ -878,7 +879,7 @@ public class LexicalAnalyzer {
                 }
                 else {
                     token = new Token(null,currentLexeme,currentRow,currentColumn);
-                    throw getException("Comment", token);
+                    throw getException("EOF", token);
                 }
             }
         }
@@ -999,22 +1000,33 @@ public class LexicalAnalyzer {
             }
         };
 
+
         switch (exceptionType){
             case "Invalid":
                 exception = new SymbolException(token);
                 break;
             case "InvalidId":
                 exception = new InvalidId(token);
+                break;
             case "String":
                 exception = new StringException(token);
+                break;
             case "Char":
                 exception = new CharException(token);
+                break;
             case "Comparation":
                 exception = new InvalidComparation(token);
+                break;
             case "EOF":
                 exception = new endOfFileException(token);
-            case "Comment":
-                exception = new invalidCommentException(token);
+                break;
+            case "NoClosedString":
+                exception = new NoClosedString(token);
+                break;
+            case "NoClosesChar":
+                exception = new NoClosedChar(token);
+                break;
+
 
         }
 
