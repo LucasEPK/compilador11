@@ -84,109 +84,37 @@ public class FileManager {
      * Método que dado una lista de tokens finales, sera el encargado
      * de escribirlos en consola o de escribirlos en un archivo en el caso
      * de que este se haya dado como parametro de entrada
-     * @param tokenList lista con tokens de todo el archivo de entrada
+     * @param validTokens lista con tokens convertidos a String
      * @throws IOException si no puedo escribir el archivo
      * @author Yeumen Silva
      */
 
-    public void saveResults(List<Token> tokenList){
+    public void saveResults(List<String> validTokens){
 
         /*
-        Llamo a función que convierte las instancias de clase token
-        a string con el formato pedido
-         */
+        creo objeto path a partir de cadena de texto que
+        representa la ruta del archivo
+        */
+        Path path = Path.of(this.outputFile);
 
-        List<String> validTokens = validTokenFormat(tokenList);
-
-        //Si no pasaron argumento de path de salida, etonces:
-
-        if(this.byConsole){
-
-            printByConsole(validTokens);
-
-        }
-        else {
-
-            //De otro modo, debo crear archivo de salida
-
-            /*
-            creo objeto path a partir de cadena de texto que
-            representa la ruta del archivo
-             */
-            Path path = Path.of(this.outputFile);
-
-            try {
-
-                // Verificamos si el archivo existe
-                if (!Files.exists(path)) {
-                    // Si no existe, lo creo
-                    Files.createFile(path);
-                }
-
-                // Escribir los strings en el archivo
-                Files.write(path, validTokens, StandardCharsets.UTF_8);
-                System.out.println("Se han escrito los strings en el archivo exitosamente.");
-            } catch (IOException e) {
-                System.err.println("Error al escribir en el archivo: " + e.getMessage());
+        try {
+            // Verificamos si el archivo existe
+            if (!Files.exists(path)) {
+                // Si no existe, lo creo
+                Files.createFile(path);
             }
 
-
-
+            // Escribir los strings en el archivo
+            Files.write(path, validTokens, StandardCharsets.UTF_8);
+            System.out.println("Se han escrito los strings en el archivo exitosamente.");
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
         }
+
+
 
     }
 
-    /**
-     * Método que dado una lista de tokens finales, los convierte a string
-     * en el formato indicado por el documento de entrega
-     * @param tokenList lista con tokens de todo el archivo de entrada
-     * @author Yeumen Silva
-     * @author Lucas Moyano
-     */
-
-    private List<String> validTokenFormat(List<Token> tokenList){
-
-        //Declaro lista de strings
-
-        List<String> validStrings = new ArrayList<>();
-
-        // Agrego encabezado
-        validStrings.add("CORRECTO: ANALISIS LEXICO");
-        validStrings.add("| TOKEN | LEXEMA | NUMERO DE LINEA (NUMERO DE COLUMNA) |");
-
-        /*
-        Recorro lista de tokens y los guardo en una lista con el
-        formato pedido
-         */
-
-        for (Token token : tokenList) {
-
-            validStrings.add("| " + token.getToken() + " | " + token.getLexeme() +
-                    " | LINEA " + token.getRow() + " (COLUMNA " + token.getColumn() + ") |");
-
-        }
-
-        return validStrings;
-
-    }
-
-
-    /**
-     * Método que dado una lista de strings con formato solicitado,
-     * escribe por consola los resultados
-     * @param stringTokens lista con strings
-     *en formato pedido(token,lexeme,row,column)
-     * @author Yeumen Silva
-     */
-    private void printByConsole(List<String> stringTokens){
-
-        //Imprimo reocrriendo la lista
-
-        for(String tokenString : stringTokens){
-            System.out.println(tokenString);
-        }
-
-    }
 }
 
 

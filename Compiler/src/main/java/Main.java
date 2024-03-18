@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         String inputPath,outputPath;
+        Executor executor = new Executor();
 
         /* Verifica si hay algun argumento de entrada, de otro modo
         lanza un error
@@ -32,13 +33,13 @@ public class Main {
 
         if (args.length < 2){
 
-            Executor.startExecution(inputPath);
+            executor.startExecution(inputPath);
 
         }
         else    {
 
             outputPath = args[1];
-            Executor.startExecution(inputPath,outputPath);
+            executor.startExecution(inputPath,outputPath);
 
         };
 
