@@ -18,7 +18,7 @@ public class Token {
      * @author Lucas Moyano
      * */
     public String toString() {
-        return "Token: " + getToken() + ", Lexema: " + getLexeme() + ", Fila: " + getRow() + ", Columna: " + getColumn() + "\n";
+        return "Token: " + this.token + ", Lexema: " + this.lexeme + ", Fila: " + this.row + ", Columna: " + this.column + "\n";
     }
 
     public String getToken() {

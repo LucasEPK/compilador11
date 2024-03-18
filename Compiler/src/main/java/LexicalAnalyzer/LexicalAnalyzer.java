@@ -1,6 +1,9 @@
 package LexicalAnalyzer;
 
 // Estos 2 import sirven para crear el alfabeto como conjunto
+import Exceptions.*;
+
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,6 +57,7 @@ public class LexicalAnalyzer {
 
     /**
      * Empieza el automata
+     * @Lucas Moyano
      * */
     public Token getNextToken(){
         return s0();
@@ -213,11 +217,16 @@ public class LexicalAnalyzer {
                 token = s50(currentLexeme);
                 break;
             default:
-                //TODO: Acá tendria que largar error porque no se encontró un caracter valido
+
+                //Guardo datos del token
+                token = new Token(null, currentLexeme, currentRow, currentColumn);
+                //Llamo a función que lanza error
+                throw getException("Invalid", token);
         }
 
         return token;
     }
+
 
     /**
      * Estado aceptador del automata tiene 3 casos
@@ -253,6 +262,7 @@ public class LexicalAnalyzer {
                 currentLexeme = lexeme;
                 currentColumn -= 1;
                 token = new Token(STRUCT_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+
             }
         }
         return token;
@@ -512,7 +522,9 @@ public class LexicalAnalyzer {
                 token = s54(currentLexeme);
                 break;
             default:
-                // TODO: acá debería arrojar error
+
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("Invalid", token);
         }
 
         return token;
@@ -541,7 +553,8 @@ public class LexicalAnalyzer {
                 token = s2(currentLexeme);
             }
             else {
-                // TODO: tirar error
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("InvalidId", token);
             }
         }
 
@@ -552,12 +565,18 @@ public class LexicalAnalyzer {
      * Estado donde empieza, hace bucle y termina un string literal
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * @throws LexicalException
      * */
     private Token s3(String lexeme){
         //TODO: tiene que tener un limite de 1024 caracteres
         Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
+
+        if(currentLexeme.length() > 1024){
+            token = new Token(null,currentLexeme,currentRow,currentColumn - currentLexeme.length()+1);
+            throw getException("LimitString",token);
+        }
 
         currentColumn += 1;
 
@@ -571,7 +590,8 @@ public class LexicalAnalyzer {
                 token = s3(currentLexeme);
             }
             else {
-                // TODO: tirar error
+                token = new Token(null, currentLexeme, currentRow, currentColumn);
+                throw getException("String", token);
             }
         }
 
@@ -582,6 +602,7 @@ public class LexicalAnalyzer {
      * Estado donde empieza un character literal
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * @throws LexicalException
      * */
     private Token s5(String lexeme){
         Token token = null;
@@ -600,7 +621,8 @@ public class LexicalAnalyzer {
                 token = s6(currentLexeme);
             }
             else {
-                // TODO: tirar error
+                token = new Token(null, currentLexeme, currentRow, currentColumn);
+                throw getException("Char",token);
             }
         }
 
@@ -624,7 +646,8 @@ public class LexicalAnalyzer {
             token = new Token(CHAR_LITERAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
-            // TODO: tirar error
+            token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
+            throw getException("Char",token);
         }
 
         return token;
@@ -647,7 +670,9 @@ public class LexicalAnalyzer {
             token = s6(currentLexeme);
         }
         else {
-            // TODO: tirar error
+            token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
+            System.out.println("HOLAAA");
+            throw getException("Char",token);
         }
 
         return token;
@@ -670,7 +695,8 @@ public class LexicalAnalyzer {
             token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
-            // TODO: tirar error
+            token = new Token(null, currentLexeme, currentRow, currentColumn);
+            throw getException("Comparation", token);
         }
 
         return token;
@@ -693,7 +719,8 @@ public class LexicalAnalyzer {
             token = new Token(LOGICAL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
         }
         else {
-            // TODO: tirar error
+            token = new Token(null, currentLexeme, currentRow, currentColumn);
+            throw getException("Comparation", token);
         }
 
         return token;
@@ -718,7 +745,8 @@ public class LexicalAnalyzer {
                 token = s51(currentLexeme);
                 break;
             default:
-                // TODO: acá debería arrojar error
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("EOF",token);
         }
 
         return token;
@@ -742,7 +770,8 @@ public class LexicalAnalyzer {
                 token = s52(currentLexeme);
                 break;
             default:
-                // TODO: acá debería arrojar error
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("EOF",token);
         }
 
         return token;
@@ -766,7 +795,8 @@ public class LexicalAnalyzer {
                 token = s53(currentLexeme);
                 break;
             default:
-                // TODO: acá debería arrojar error
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("EOF",token);
         }
 
         return token;
@@ -790,7 +820,8 @@ public class LexicalAnalyzer {
                 currentPos += 1;
                 break;
             default:
-                // TODO: acá debería arrojar error
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("EOF",token);
         }
 
         return token;
@@ -818,7 +849,8 @@ public class LexicalAnalyzer {
                 token = s54(currentLexeme);
             }
             else {
-                // TODO: tirar error
+                token = new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("EOF", token);
             }
         }
 
@@ -852,7 +884,8 @@ public class LexicalAnalyzer {
                     token = s54(currentLexeme);
                 }
                 else {
-                    // TODO: tirar error
+                    token = new Token(null,currentLexeme,currentRow,currentColumn);
+                    throw getException("EOF", token);
                 }
             }
         }
@@ -954,4 +987,58 @@ public class LexicalAnalyzer {
     public String getEOF() {
         return EOF;
     }
+
+
+    /**
+     * Método que dado un tipo de error y un token con datos de
+     * fila, columna y lexema, devuelve el tipo de error
+     * lexico correspondiente
+     * @param exceptionType String con el tipo de error
+     * @param  token token con infromación del error
+     * @author Yeumen Silva
+     */
+    private LexicalException getException(String exceptionType, Token token){
+
+        LexicalException exception = new LexicalException(token) {
+            @Override
+            public String getExceptionType() {
+                return "ERROR LEXICO NO TENIDO EN CUENTA";
+            }
+        };
+
+
+        switch (exceptionType){
+            case "Invalid":
+                exception = new SymbolException(token);
+                break;
+            case "InvalidId":
+                exception = new InvalidId(token);
+                break;
+            case "String":
+                exception = new StringException(token);
+                break;
+            case "Char":
+                exception = new CharException(token);
+                break;
+            case "Comparation":
+                exception = new InvalidComparation(token);
+                break;
+            case "EOF":
+                exception = new endOfFileException(token);
+                break;
+            case "NoClosedString":
+                exception = new NoClosedString(token);
+                break;
+            case "NoClosesChar":
+                exception = new NoClosedChar(token);
+                break;
+            case "LimitString":
+                exception = new LimitString(token);
+
+        }
+
+        return exception;
+    }
 }
+
+
