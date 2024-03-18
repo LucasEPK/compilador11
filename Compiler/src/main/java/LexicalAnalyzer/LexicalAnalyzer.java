@@ -573,6 +573,11 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
+        if(currentLexeme.length() > 1024){
+            token = new Token(null,currentLexeme,currentRow,currentColumn - currentLexeme.length()+1);
+            throw getException("LimitString",token);
+        }
+
         currentColumn += 1;
 
         if (currentChar == '"'){
@@ -1027,7 +1032,8 @@ public class LexicalAnalyzer {
             case "NoClosesChar":
                 exception = new NoClosedChar(token);
                 break;
-
+            case "LimitString":
+                exception = new LimitString(token);
 
         }
 
