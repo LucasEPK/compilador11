@@ -262,6 +262,7 @@ public class LexicalAnalyzer {
                 currentLexeme = lexeme;
                 currentColumn -= 1;
                 token = new Token(STRUCT_ID, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+
             }
         }
         return token;
@@ -553,7 +554,7 @@ public class LexicalAnalyzer {
             }
             else {
                 token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("InvlidId", token);
+                throw getException("InvalidId", token);
             }
         }
 
