@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Executor {
 
-    HashMap<String,String> hashMap = new HashMap<>();
+    private  final HashMap<String,String> hashMap = new HashMap<>();
 
     /**
      * Constructor que inicia nuestra tablas hash de palabras reservadas
