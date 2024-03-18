@@ -91,7 +91,7 @@ public class LexicalAnalyzer {
                     return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                 }
                 else {
-                    if(currentChar == '*' || currentChar == '/' || currentChar == '%'){
+                    if(currentChar == '*' || currentChar == '%'){
                         token = new Token(OP_MUL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
                         currentPos += 1;
                         return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
@@ -124,9 +124,9 @@ public class LexicalAnalyzer {
                 token = new Token(VERTICAL_TAB, "\\v", currentRow, startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;*/
-            case '\\':
+            case '/':
                 currentPos += 1;
-                token = s1(currentLexeme);
+                token = opMul2(currentLexeme);
                 break;
             case '\"':
                 currentPos += 1;
@@ -491,30 +491,34 @@ public class LexicalAnalyzer {
         return token;
     }
 
-
     /**
-     * Con este metodo se entra en los nodos del automata que corresponden
-     * a lexemas que empiezan con \
+     * Estado aceptador del automata tiene 2 casos
+     * 1. Le sigue una signo de pregunta
+     * 2. Leemos un caracter de más (en este caso no arroja error sino que
+     * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
-    private Token s1(String lexeme){
-        Token token = null;
+    private Token opMul2(String lexeme){
+        Token token;
+        String currentLexeme;
         char currentChar = file.charAt(currentPos);
-        String currentLexeme = lexeme + Character.toString(currentChar);
 
         currentColumn += 1;
 
-        //TODO: hace algo con este switch xd
-        switch (currentChar) {
-            case '?':
-                currentPos += 1;
-                token = s54(currentLexeme);
-                break;
-            default:
-                // TODO: acá debería arrojar error
+        if (currentChar == '?'){
+            currentPos += 1;
+            currentLexeme = lexeme + Character.toString(currentChar);
+            token = s54(currentLexeme);
         }
-
+        else {
+            // Este es el caso donde miramos más caracteres de lo que deberiamos,
+            // por ende no tiramos error ni aumentamos el currentPos
+            // y dejamos el lexema como estaba sin agregar caracteres
+            currentLexeme = lexeme;
+            currentColumn -= 1;
+            token = new Token(OP_MUL, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+        }
         return token;
     }
 
@@ -797,63 +801,32 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Estado donde empieza un comentario
+     * Estado donde empieza y termina un comentario
      * @author Lucas Moyano
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s54(String lexeme){
         Token token = null;
         char currentChar = file.charAt(currentPos);
-        String currentLexeme = lexeme + Character.toString(currentChar);
+        String currentLexeme;
 
         currentColumn += 1;
 
-        if (currentChar == '\\'){
+        if (currentChar == '\n'){
+            currentLexeme = lexeme; // No leemos el \n para que no se rompa el formato
             currentPos += 1;
-            token = s55(currentLexeme);
+            token = new Token(SIMPLE_COMMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
+            currentColumn = 0;
+            currentRow += 1; // Se come al \n pero igual no son tan importante esos tokens
         }
         else {
             if (belongsToTheAlphabet(currentChar)) { // bucle
+                currentLexeme = lexeme + Character.toString(currentChar);
                 currentPos += 1;
                 token = s54(currentLexeme);
             }
             else {
                 // TODO: tirar error
-            }
-        }
-
-        return token;
-    }
-
-    /**
-     * Estado intermedio y donde termina un comentario
-     * @author Lucas Moyano
-     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
-     * */
-    private Token s55(String lexeme){
-        Token token = null;
-        char currentChar = file.charAt(currentPos);
-        String currentLexeme = lexeme + Character.toString(currentChar);
-
-        currentColumn += 1;
-
-        if (currentChar == '\\'){
-            currentPos += 1;
-            token = s55(currentLexeme);
-        }
-        else {
-            if (currentChar == 'n'){
-                currentPos += 1;
-                token = new Token(SIMPLE_COMMENT, currentLexeme, currentRow, startColumn(currentColumn, currentLexeme.length()));
-            }
-            else {
-                if (belongsToTheAlphabet(currentChar)) { // bucle
-                    currentPos += 1;
-                    token = s54(currentLexeme);
-                }
-                else {
-                    // TODO: tirar error
-                }
             }
         }
 
