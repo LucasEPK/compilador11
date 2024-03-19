@@ -129,11 +129,11 @@ public class LexicalAnalyzer {
                         startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
-/*            case '\v':
+            case 11:
                 token = new Token(VERTICAL_TAB, "\\v", currentRow,
                 startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
-                break;*/
+                break;
             case '/':
                 currentPos += 1;
                 token = opMul2(currentLexeme);
@@ -708,11 +708,13 @@ public class LexicalAnalyzer {
 
         if (belongsToTheAlphabet(currentChar, '0')){
             currentPos += 1;
+
+            //Si es alguno de los caracteres especiales, los dejo como '\caracter'
             if(currentChar == 't' || currentChar == 'n' || currentChar == 'r' || currentChar == 'v'){
                 token = s6(currentLexeme);
             }
             else {
-                System.out.println();
+                //De otro modo, solo devuelvo el caracter sin barra invertida 'caracter'
                 token = s6(currentLexeme.substring(0,1).toString() + currentLexeme.substring(2));
             }
 
