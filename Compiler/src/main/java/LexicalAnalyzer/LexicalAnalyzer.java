@@ -604,7 +604,8 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
-        if(currentLexeme.length() > 1024){ // Controla que los strings no tengan más de 1024 caracteres
+        int charCount = currentLexeme.length()-2; // Se hace -2 para no contar las comillas
+        if(charCount > 1024){ // Controla que los strings no tengan más de 1024 caracteres
             token = new Token(null,currentLexeme,currentRow,currentColumn - currentLexeme.length()+1);
             throw getException("LimitString",token);
         }
