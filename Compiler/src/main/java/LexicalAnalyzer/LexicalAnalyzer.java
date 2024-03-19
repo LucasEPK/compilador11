@@ -619,6 +619,7 @@ public class LexicalAnalyzer {
         }
         else {
             if (belongsToTheAlphabet(currentChar, '"')) { // bucle
+                //Verifico que no haya un "\0"
                 if(currentChar == '0' && file.charAt(currentPos-1) == '\\'){
                     token= new Token(null,currentLexeme,currentRow,currentColumn);
                     throw getException("String", token);
@@ -652,6 +653,7 @@ public class LexicalAnalyzer {
         if (currentChar == '\\'){
             currentPos += 1;
             token = s7(currentLexeme);
+
         }
         else {
             if (belongsToTheAlphabet(currentChar, '\'')) {
@@ -706,11 +708,17 @@ public class LexicalAnalyzer {
 
         if (belongsToTheAlphabet(currentChar, '0')){
             currentPos += 1;
-            token = s6(currentLexeme);
+            if(currentChar == 't' || currentChar == 'n' || currentChar == 'r' || currentChar == 'v'){
+                token = s6(currentLexeme);
+            }
+            else {
+                System.out.println();
+                token = s6(currentLexeme.substring(0,1).toString() + currentLexeme.substring(2));
+            }
+
         }
         else {
             token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
-            System.out.println("HOLAAA");
             throw getException("Char",token);
         }
 
