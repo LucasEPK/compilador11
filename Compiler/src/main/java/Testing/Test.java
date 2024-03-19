@@ -21,7 +21,7 @@ public class Test {
         Executor executor = new Executor();
 
         //guardo todos los archivos de la carpeta
-        File[] files = readFolder("Compiler/src/main/java/Testing/Tests/LexicalTests");
+        File[] files = readFolder("src/main/java/Testing/Tests/LexicalTests/Fail");
 
         for (File file : files) {
 
