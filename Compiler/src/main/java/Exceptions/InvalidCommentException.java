@@ -7,9 +7,9 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class invalidCommentException extends LexicalException {
+public class InvalidCommentException extends LexicalException {
 
-    public invalidCommentException(Token token){
+    public InvalidCommentException(Token token){
         super(token);
     }
 

@@ -1,3 +1,3 @@
 
-/? Error Léxico, char con más de un carácter, salida: carácter invalido
+/? Error Léxico, char con más de un caracter, salida: carácter invalido
 'aa'

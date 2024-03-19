@@ -809,8 +809,8 @@ public class LexicalAnalyzer {
                 token = s51(currentLexeme);
                 break;
             default:
-                token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("EOF",token);
+                token = new Token(null,"$",currentRow,currentColumn - currentLexeme.length()+1);
+                throw getException("InvalidId",token);
         }
 
         return token;
@@ -834,8 +834,8 @@ public class LexicalAnalyzer {
                 token = s52(currentLexeme);
                 break;
             default:
-                token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("EOF",token);
+                token = new Token(null,"$",currentRow,currentColumn - currentLexeme.length()+1);
+                throw getException("InvalidId",token);
         }
 
         return token;
@@ -859,8 +859,8 @@ public class LexicalAnalyzer {
                 token = s53(currentLexeme);
                 break;
             default:
-                token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("EOF",token);
+                token = new Token(null,"$",currentRow,currentColumn - currentLexeme.length()+1);
+                throw getException("InvalidId",token);
         }
 
         return token;
@@ -885,8 +885,8 @@ public class LexicalAnalyzer {
                 currentPos += 1;
                 break;
             default:
-                token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("EOF",token);
+                token = new Token(null,"$",currentRow,currentColumn - currentLexeme.length()+1);
+                throw getException("InvalidId",token);
         }
 
         return token;
@@ -920,9 +920,9 @@ public class LexicalAnalyzer {
                 token = s54(currentLexeme);
             }
             else {
-                currentLexeme = null;
+                currentLexeme = lexeme + Character.toString(currentChar);
                 token = new Token(null,currentLexeme,currentRow,currentColumn);
-                throw getException("EOF", token);
+                throw getException("InvalidComment", token);
             }
         }
 
@@ -1089,6 +1089,8 @@ public class LexicalAnalyzer {
                 break;
             case "LimitString":
                 exception = new LimitString(token);
+            case "InvalidComment":
+                exception = new InvalidCommentException(token);
 
         }
 
