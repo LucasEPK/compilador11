@@ -89,166 +89,162 @@ public class LexicalAnalyzer {
         if (currentChar >= 'A' && currentChar <= 'Z'){
             currentPos += 1;
             token = structID(currentLexeme);
-            return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
         }
         else {
             if(currentChar >= 'a' && currentChar <= 'z'){
                 currentPos += 1;
                 token = objID(currentLexeme);
-                return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
             }
             else {
                 if(currentChar >= '0' && currentChar <= '9'){
                     currentPos += 1;
                     token = intLiteral(currentLexeme);
-                    return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
                 }
                 else {
                     if(currentChar == '*' || currentChar == '%'){
                         token = new Token(OP_MUL, currentLexeme, currentRow,
                                 startColumn(currentColumn, currentLexeme.length()));
                         currentPos += 1;
-                        return token; // TODO: ESTOS RETURN NO CUMPLEN CON LAS REGLAS DE CODIFICACION
+                    }
+                    else{
+                        switch (currentChar) {
+                            case ' ':
+                                token = new Token(BLANK_SPACE, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '\n':
+                                token = new Token(NEW_LINE, "\\n", currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+
+                                currentColumn = 0;
+                                currentRow += 1;
+                                break;
+                            case '\r':
+                                token = new Token(CARRIAGE_RETURN, "\\r", currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '\t':
+                                token = new Token(TAB, "\\t", currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case 11: // Codigo ASCII de '\v'
+                                token = new Token(VERTICAL_TAB, "\\v", currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '/':
+                                currentPos += 1;
+                                token = opMul2(currentLexeme);
+                                break;
+                            case '\"':
+                                currentPos += 1;
+                                token = s3(currentLexeme);
+                                break;
+                            case '\'':
+                                currentPos += 1;
+                                token = s5(currentLexeme);
+                                break;
+                            case '=':
+                                currentPos += 1;
+                                token = assignment(currentLexeme);
+                                break;
+                            case '!':
+                                currentPos += 1;
+                                token = logical(currentLexeme);
+                                break;
+                            case '&':
+                                currentPos += 1;
+                                token = s34(currentLexeme);
+                                break;
+                            case '|':
+                                currentPos += 1;
+                                token = s35(currentLexeme);
+                                break;
+                            case '<':
+                                currentPos += 1;
+                                token = comparison(currentLexeme);
+                                break;
+                            case '>':
+                                currentPos += 1;
+                                token = comparison(currentLexeme);
+                                break;
+                            case '+':
+                                currentPos += 1;
+                                token = opAd(currentLexeme);
+                                break;
+                            case '-':
+                                currentPos += 1;
+                                token = opAd2(currentLexeme);
+                                break;
+                            case ']':
+                                token = new Token(CLOSE_BRACKET, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '[':
+                                token = new Token(OPEN_BRACKET, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case ')':
+                                token = new Token(CLOSE_PARENTHESIS, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '(':
+                                token = new Token(OPEN_PARENTHESIS, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '}':
+                                token = new Token(CLOSE_BRACES, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '{':
+                                token = new Token(OPEN_BRACES, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case ';':
+                                token = new Token(SEMI_COLON, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case ',':
+                                token = new Token(COMMA, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '.':
+                                token = new Token(PERIOD, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case ':':
+                                token = new Token(COLON, currentLexeme, currentRow,
+                                        startColumn(currentColumn, currentLexeme.length()));
+                                currentPos += 1;
+                                break;
+                            case '$':
+                                currentPos += 1;
+                                token = s50(currentLexeme);
+                                break;
+                            default:
+
+                                //Guardo datos del token
+                                token = new Token(null, currentLexeme, currentRow, currentColumn);
+                                //Llamo a función que lanza error
+                                throw getException("Invalid", token);
+                        }
                     }
                 }
             }
         }
-
-        switch (currentChar) {
-            case ' ':
-                token = new Token(BLANK_SPACE, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '\n':
-                token = new Token(NEW_LINE, "\\n", currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-
-                currentColumn = 0;
-                currentRow += 1;
-                break;
-            case '\r':
-                token = new Token(CARRIAGE_RETURN, "\\r", currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '\t':
-                token = new Token(TAB, "\\t", currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case 11: // Codigo ASCII de '\v'
-                token = new Token(VERTICAL_TAB, "\\v", currentRow,
-                startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '/':
-                currentPos += 1;
-                token = opMul2(currentLexeme);
-                break;
-            case '\"':
-                currentPos += 1;
-                token = s3(currentLexeme);
-                break;
-            case '\'':
-                currentPos += 1;
-                token = s5(currentLexeme);
-                break;
-            case '=':
-                currentPos += 1;
-                token = assignment(currentLexeme);
-                break;
-            case '!':
-                currentPos += 1;
-                token = logical(currentLexeme);
-                break;
-            case '&':
-                currentPos += 1;
-                token = s34(currentLexeme);
-                break;
-            case '|':
-                currentPos += 1;
-                token = s35(currentLexeme);
-                break;
-            case '<':
-                currentPos += 1;
-                token = comparison(currentLexeme);
-                break;
-            case '>':
-                currentPos += 1;
-                token = comparison(currentLexeme);
-                break;
-            case '+':
-                currentPos += 1;
-                token = opAd(currentLexeme);
-                break;
-            case '-':
-                currentPos += 1;
-                token = opAd2(currentLexeme);
-                break;
-            case ']':
-                token = new Token(CLOSE_BRACKET, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '[':
-                token = new Token(OPEN_BRACKET, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case ')':
-                token = new Token(CLOSE_PARENTHESIS, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '(':
-                token = new Token(OPEN_PARENTHESIS, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '}':
-                token = new Token(CLOSE_BRACES, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '{':
-                token = new Token(OPEN_BRACES, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case ';':
-                token = new Token(SEMI_COLON, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case ',':
-                token = new Token(COMMA, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '.':
-                token = new Token(PERIOD, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case ':':
-                token = new Token(COLON, currentLexeme, currentRow,
-                        startColumn(currentColumn, currentLexeme.length()));
-                currentPos += 1;
-                break;
-            case '$':
-                currentPos += 1;
-                token = s50(currentLexeme);
-                break;
-            default:
-
-                //Guardo datos del token
-                token = new Token(null, currentLexeme, currentRow, currentColumn);
-                //Llamo a función que lanza error
-                throw getException("Invalid", token);
-        }
-
         return token;
     }
 
@@ -756,7 +752,7 @@ public class LexicalAnalyzer {
             }
             else {
                 //De otro modo, solo devuelvo el caracter sin barra invertida 'caracter'
-                token = s6(currentLexeme.substring(0,1).toString() + currentLexeme.substring(2));
+                token = s6("'" + Character.toString(currentChar));
             }
 
         }
