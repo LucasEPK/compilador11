@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Compiler:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" afterDir="false" />
-    </list>
+    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,23 +34,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.xd.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MiClaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;comentarioFix&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.Test.executor": "Run",
+    "Application.xd.executor": "Run",
+    "JUnit.MiClaseTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "marzo19",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
-  <component name="RunManager" selected="Application.Main">
+}]]></component>
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler" />
@@ -109,6 +112,9 @@
     </task>
     <servers />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.ru" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -116,16 +122,6 @@
           <properties class="java.io.FileNotFoundException" package="java.io" />
           <option name="timeStamp" value="9" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>247</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

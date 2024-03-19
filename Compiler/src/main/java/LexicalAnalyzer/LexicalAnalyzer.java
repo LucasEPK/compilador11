@@ -600,12 +600,12 @@ public class LexicalAnalyzer {
      * @throws LexicalException
      * */
     private Token s3(String lexeme){
-        //TODO: tiene que tener un limite de 1024 caracteres
         Token token = null;
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
-        if(currentLexeme.length() > 1024){
+        int charCount = currentLexeme.length()-2; // Se hace -2 para no contar las comillas
+        if(charCount > 1024){ // Controla que los strings no tengan más de 1024 caracteres
             token = new Token(null,currentLexeme,currentRow,currentColumn - currentLexeme.length()+1);
             throw getException("LimitString",token);
         }
@@ -1024,6 +1024,25 @@ public class LexicalAnalyzer {
         return EOF;
     }
 
+    public String getBLANK_SPACE() {
+        return BLANK_SPACE;
+    }
+
+    public String getNEW_LINE() {
+        return NEW_LINE;
+    }
+
+    public String getCARRIAGE_RETURN() {
+        return CARRIAGE_RETURN;
+    }
+
+    public String getTAB() {
+        return TAB;
+    }
+
+    public String getVERTICAL_TAB() {
+        return VERTICAL_TAB;
+    }
 
     /**
      * Método que dado un tipo de error y un token con datos de
