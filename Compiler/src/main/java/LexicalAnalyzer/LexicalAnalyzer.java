@@ -629,7 +629,13 @@ public class LexicalAnalyzer {
 
             }
             else {
-                token = new Token(null, currentLexeme, currentRow, currentColumn);
+                if(currentChar== '\n'){
+                    token = new Token(null, currentLexeme, currentRow, currentColumn);
+                }
+                else {
+                    token = new Token(null, currentLexeme + '"', currentRow, currentColumn);
+                }
+
                 throw getException("String", token);
             }
         }
@@ -687,8 +693,15 @@ public class LexicalAnalyzer {
                     startColumn(currentColumn, currentLexeme.length()));
         }
         else {
-            token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
+            if(!belongsToTheAlphabet(currentChar)){
+                token = new Token(null, currentLexeme, currentRow, currentColumn);
+            }
+            else {
+                token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
+            }
             throw getException("Char",token);
+
+
         }
 
         return token;
