@@ -129,7 +129,7 @@ public class LexicalAnalyzer {
                         startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
                 break;
-            case 11:
+            case 11: // Codigo ASCII de '\v'
                 token = new Token(VERTICAL_TAB, "\\v", currentRow,
                 startColumn(currentColumn, currentLexeme.length()));
                 currentPos += 1;
@@ -942,7 +942,7 @@ public class LexicalAnalyzer {
         }
 
         // Agregar los caracteres especiales al conjunto
-        char[] caracteresEspeciales = {'\\', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        char[] caracteresEspeciales = {'\\', '=', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
         for (char c : caracteresEspeciales) {
             sigma.add(c);
         }
@@ -981,7 +981,7 @@ public class LexicalAnalyzer {
         }
 
         // Agregar los caracteres especiales al conjunto
-        char[] caracteresEspeciales = {'\\', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        char[] caracteresEspeciales = {'\\', '=', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
         for (char c : caracteresEspeciales) {
             sigma.add(c);
         }
