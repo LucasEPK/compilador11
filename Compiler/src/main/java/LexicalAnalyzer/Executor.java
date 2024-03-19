@@ -85,7 +85,16 @@ public class Executor {
                     //Si esta, entonces es una palabra reservada y cambio su token
                     token.setToken(token.getLexeme());
                 }
-                tokens.add(token);
+
+                // Verificamos si no es algunos de los tokens skipeables, si no lo es entonces lo agregamos a la lista de tokens
+                if (! token.getToken().equals(lexicalAnalyzer.getBLANK_SPACE()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getTAB()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getCARRIAGE_RETURN()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getNEW_LINE()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getVERTICAL_TAB())){
+
+                    tokens.add(token);
+                }
                 token = lexicalAnalyzer.getNextToken();
 
             }
