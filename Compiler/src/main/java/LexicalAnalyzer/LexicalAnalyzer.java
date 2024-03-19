@@ -619,8 +619,13 @@ public class LexicalAnalyzer {
         }
         else {
             if (belongsToTheAlphabet(currentChar, '"')) { // bucle
+                if(currentChar == '0' && file.charAt(currentPos-1) == '\\'){
+                    token= new Token(null,currentLexeme,currentRow,currentColumn);
+                    throw getException("String", token);
+                }
                 currentPos += 1;
                 token = s3(currentLexeme);
+
             }
             else {
                 token = new Token(null, currentLexeme, currentRow, currentColumn);
@@ -892,6 +897,7 @@ public class LexicalAnalyzer {
                 token = s54(currentLexeme);
             }
             else {
+                currentLexeme = null;
                 token = new Token(null,currentLexeme,currentRow,currentColumn);
                 throw getException("EOF", token);
             }
