@@ -56,6 +56,7 @@ public class FileManager {
      * archivo, lo lee linea por linea, lo devuelve como un solo string y
      * le agrega un EOF
      * @param path es el String con el path al archivo
+     * @return String que contiene todo el archivo
      * @author Yeumen Silva
      */
     private String convertFiletoString(String path){

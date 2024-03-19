@@ -1,5 +1,7 @@
 package Testing;
 import java.io.File;
+import java.util.Objects;
+
 import Exceptions.NoArgsException;
 import LexicalAnalyzer.Executor;
 
@@ -18,10 +20,21 @@ public class Test {
      * @author Yeumen Silva
      */
     public void lexicalTest(){
+        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Pass", "Pass");
+        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Fail", "Fail");
+    }
+    private void folderExecutor(String path, String type){
+
         Executor executor = new Executor();
 
         //guardo todos los archivos de la carpeta
-        File[] files = readFolder("src/main/java/Testing/Tests/LexicalTests/Fail");
+        File[] files = readFolder(path);
+
+        if (type.equals("Pass")) {
+            System.out.println("ARCHIVOS QUE PASAN EL LEXICO\n");
+        }else {
+            System.out.println("ARCHIVOS QUE NO PASAN EL LEXICO\n");
+        }
 
         for (File file : files) {
 
@@ -32,11 +45,12 @@ public class Test {
             executor.startExecution(file.getAbsolutePath());
             System.out.println("\n");
         }
+
     }
 
     /**
      * Método que dado un path de una carpeta, lee todos los
-     * archivos y los alamcena en una lista
+     * archivos, los alamcena en una lista y luego ejecuta los tests
      * @author Yeumen Silva
      */
 
@@ -46,6 +60,8 @@ public class Test {
 
         return  folder.listFiles();
     }
+
+
 
     // Main que invoca al tester léxico
     public static void main(String[] args) {

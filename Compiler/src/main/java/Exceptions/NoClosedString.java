@@ -11,6 +11,11 @@ public class NoClosedString extends LexicalException{
         super(token);
     }
 
+    /**
+     * Método que devuelve un mensaje con el error
+     * @return String que contiene el mesnaje de error
+     * @author Yeumen Silva
+     */
     @Override
     public String getExceptionType() {
         return "ERROR EN LA DEFINICION DE LA CADENA: NO SE CERRO";

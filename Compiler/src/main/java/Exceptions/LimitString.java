@@ -13,6 +13,11 @@ public class LimitString  extends LexicalException{
         super(token);
     }
 
+    /**
+     * Método que devuelve un mensaje con el error
+     * @return String que contiene el mesnaje de error
+     * @author Yeumen Silva
+     */
     @Override
     public String getExceptionType() {
         return "LIMITE DE 1024 CARACTERES ALCANZADO";

@@ -9,7 +9,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="" />
+    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/CharException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/CharException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/IntException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/IntException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidCommentException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidCommentException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidComparation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidComparation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/InvalidOperator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/LimitString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/LimitString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/NoClosedChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/NoClosedChar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/NoClosedString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/NoClosedString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/StringException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/StringException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/SymbolException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/SymbolException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/endOfFileException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/endOfFileException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HashTable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Automaton.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexicalAnalyzer/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/LexicalTests/InvalidChar.ru" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/FileManager/FileManagerTest.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,12 +67,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "marzo19",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
-    "project.structure.last.edited": "Artifacts",
+    "last_opened_file_path": "/home/yeu/Documentos/compilador11/Compiler",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RunManager">
@@ -97,7 +123,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-78a6f59c" />
       </set>
     </attachedChunks>
   </component>
@@ -110,10 +136,23 @@
       <option name="presentableId" value="Default" />
       <updated>1710026028758</updated>
     </task>
+    <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
+      <option name="closed" value="true" />
+      <created>1710869046125</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710869046125</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.ru" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="solucioné vista de error de comentarios" />
+    <option name="LAST_COMMIT_MESSAGE" value="solucioné vista de error de comentarios" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

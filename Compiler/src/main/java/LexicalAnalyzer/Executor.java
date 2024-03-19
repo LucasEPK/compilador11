@@ -1,6 +1,7 @@
 package LexicalAnalyzer;
 
 import Exceptions.LexicalException;
+import Exceptions.NoArgsException;
 import FileManager.FileManager;
 
 import java.io.IOException;
@@ -9,7 +10,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Clase que será la encargada de llamar al analizador lèxico
+ * e imprimir los resultados por consola o llamar a la clase
+ * FileManager en caso de que haya que escribir los resultados
+ * en un archivo de salida
+ * @throws LexicalException
+ * @author Yeumen Silva
+ */
 public class Executor {
 
     private  final HashMap<String,String> hashMap = new HashMap<>();
@@ -57,7 +65,8 @@ public class Executor {
 
     /**
      * Método que dado un String de entrada crea una instancia de la clase
-     * FileMannager
+     * FileMannager, recibe los tokens del analizador léxico y luego llama
+     * a función encargada de imprimir los resultados
      * @param inputPath String con ruta del archivo de entrada
      * @throws LexicalException cualquier error de tipo lexico
      * @author Lucas Moyano
@@ -91,7 +100,8 @@ public class Executor {
                         ! token.getToken().equals(lexicalAnalyzer.getTAB()) &&
                         ! token.getToken().equals(lexicalAnalyzer.getCARRIAGE_RETURN()) &&
                         ! token.getToken().equals(lexicalAnalyzer.getNEW_LINE()) &&
-                        ! token.getToken().equals(lexicalAnalyzer.getVERTICAL_TAB())){
+                        ! token.getToken().equals(lexicalAnalyzer.getVERTICAL_TAB()) &&
+                        !token.getToken().equals(lexicalAnalyzer.getSIMPLE_COMMENT())){
 
                     tokens.add(token);
                 }
@@ -119,7 +129,8 @@ public class Executor {
 
     /**
      * Método que dado un String de entrada crea una instancia de la clase
-     * FileMannager
+     * FileMannager, recibe los tokens del analizador léxico y llama
+     * a función que guarda los resultados en un archivo de salida
      * @param inputPath String con ruta del archivo de entrada
      * @param outputPath String con ruta del archivo de salida
      */
@@ -146,10 +157,18 @@ public class Executor {
                     //Si esta, entonces es una palabra reservada y cambio su token
 
                     token.setToken(token.getLexeme());
-                    System.out.println(token.getToken());
                 }
 
-                tokens.add(token);
+                // Verificamos si no es algunos de los tokens skipeables, si no lo es entonces lo agregamos a la lista de tokens
+                if (! token.getToken().equals(lexicalAnalyzer.getBLANK_SPACE()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getTAB()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getCARRIAGE_RETURN()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getNEW_LINE()) &&
+                        ! token.getToken().equals(lexicalAnalyzer.getVERTICAL_TAB()) &&
+                        !token.getToken().equals(lexicalAnalyzer.getSIMPLE_COMMENT())){
+
+                    tokens.add(token);
+                }
 
                 token = lexicalAnalyzer.getNextToken();
             }
@@ -205,6 +224,7 @@ public class Executor {
      * Método que dado una lista de tokens finales, los convierte a string
      * en el formato indicado por el documento de entrega
      * @param tokenList lista con tokens de todo el archivo de entrada
+     * @return Lista con los tokens convertidos en string para imprimir
      * @author Yeumen Silva
      * @author Lucas Moyano
      */
@@ -261,6 +281,9 @@ public class Executor {
     private void printException(LexicalException exception){
 
         Token tokenException = exception.getToken();
+
+        System.out.println("ERROR: LEXICO");
+        System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
 
         System.out.println("| Linea " + tokenException.getRow() +
                 " | COLUMNA " + tokenException.getColumn() +

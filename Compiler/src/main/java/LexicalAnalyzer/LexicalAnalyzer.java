@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Clase que será la encargada de representar nuestro automata
+ * teniendo en cuenta estados aceptadores, errores y estados
+ * intermedios
+ * @throws LexicalException
+ * @author Lucas Moyano
+ */
 public class LexicalAnalyzer {
     //Acá se definen todos los tokens como constantes para simplificar el cambio de nombres
     private final String BLANK_SPACE = "BlankSpace";
@@ -57,15 +64,17 @@ public class LexicalAnalyzer {
 
     /**
      * Empieza el automata
-     * @Lucas Moyano
+     * @author Lucas Moyano
      * */
     public Token getNextToken(){
         return s0();
     }
 
     /**
-     * Este es el comienzo del automata
+     * Este es el comienzo del automata , en este nodo tenemos
+     * el switch case encargado de ir al estado indicado
      * @author Lucas Moyano
+     * @throws LexicalException
      * */
     private Token s0(){
         Token token = null;
@@ -251,6 +260,7 @@ public class LexicalAnalyzer {
      * 3. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token structID(String lexeme){
@@ -290,6 +300,7 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token objID(String lexeme){
@@ -324,6 +335,7 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token intLiteral(String lexeme){
@@ -357,6 +369,7 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token assignment(String lexeme){
@@ -391,6 +404,7 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token logical(String lexeme){
@@ -425,6 +439,7 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token comparison(String lexeme){
@@ -459,6 +474,7 @@ public class LexicalAnalyzer {
      * 2. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token opAd(String lexeme){
@@ -494,6 +510,7 @@ public class LexicalAnalyzer {
      * 3. Ninguno de los anteriores (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token opAd2(String lexeme){
@@ -536,6 +553,7 @@ public class LexicalAnalyzer {
      * 2. Leemos un caracter de más (en este caso no arroja error sino que
      * deslee el char para que sea analizado de vuelta desde el principio)
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token opMul2(String lexeme){
@@ -566,6 +584,8 @@ public class LexicalAnalyzer {
      * Estado donde un structID tiene numeros o guión bajo,
      * como no puede terminar en estos no es aceptador
      * @author Lucas Moyano
+     * @return Token
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s2(String lexeme){
@@ -596,6 +616,7 @@ public class LexicalAnalyzer {
     /**
      * Estado donde empieza, hace bucle y termina un string literal
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * @throws LexicalException
      * */
@@ -631,9 +652,10 @@ public class LexicalAnalyzer {
             else {
                 if(currentChar== '\n'){
                     token = new Token(null, currentLexeme, currentRow, currentColumn);
+                    throw getException("NoClosedString",token);
                 }
                 else {
-                    token = new Token(null, currentLexeme + '"', currentRow, currentColumn);
+                    token = new Token(null, currentLexeme, currentRow, currentColumn);
                 }
 
                 throw getException("String", token);
@@ -646,6 +668,7 @@ public class LexicalAnalyzer {
     /**
      * Estado donde empieza un character literal
      * @author Lucas Moyano
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * @throws LexicalException
      * */
@@ -678,6 +701,8 @@ public class LexicalAnalyzer {
     /**
      * Estado donde termina un character literal
      * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s6(String lexeme){
@@ -695,9 +720,10 @@ public class LexicalAnalyzer {
         else {
             if(!belongsToTheAlphabet(currentChar)){
                 token = new Token(null, currentLexeme, currentRow, currentColumn);
+                throw getException("NoClosedChar",token);
             }
             else {
-                token = new Token(null, currentLexeme + "'", currentRow, currentColumn);
+                token = new Token(null, currentLexeme, currentRow, currentColumn);
             }
             throw getException("Char",token);
 
@@ -710,6 +736,8 @@ public class LexicalAnalyzer {
     /**
      * Estado intermedio de un character literal
      * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s7(String lexeme){
@@ -743,6 +771,8 @@ public class LexicalAnalyzer {
     /**
      * Estado de entrada de un Logical2
      * @author Lucas Moyano
+     * @return Token
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s34(String lexeme){
@@ -768,6 +798,8 @@ public class LexicalAnalyzer {
     /**
      * Estado de entrada de un Logical2
      * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s35(String lexeme){
@@ -794,6 +826,8 @@ public class LexicalAnalyzer {
      * Con este metodo se entra en los nodos del automata
      * que van a terminar en $EOF$
      * @author Lucas Moyano
+     * @return token
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s50(String lexeme) {
@@ -819,6 +853,8 @@ public class LexicalAnalyzer {
     /**
      * Camino hacia $EOF$
      * @author Lucas Moyano
+     * @return
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s51(String lexeme) {
@@ -844,6 +880,8 @@ public class LexicalAnalyzer {
     /**
      * Camino hacia $EOF$
      * @author Lucas Moyano
+     * @return Token
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s52(String lexeme) {
@@ -869,6 +907,8 @@ public class LexicalAnalyzer {
     /**
      * Camino hacia $EOF$
      * @author Lucas Moyano
+     * @return Token
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s53(String lexeme) {
@@ -877,6 +917,10 @@ public class LexicalAnalyzer {
         String currentLexeme = lexeme + Character.toString(currentChar);
 
         currentColumn += 1;
+        if(currentPos != file.length()-1){
+            token = new Token(null,"$",currentRow,currentColumn - currentLexeme.length()+1);
+            throw getException("InvalidId",token);
+        }
 
         switch (currentChar) {
             case '$':
@@ -895,6 +939,8 @@ public class LexicalAnalyzer {
     /**
      * Estado donde empieza y termina un comentario
      * @author Lucas Moyano
+     * @return Token
+     * @throws LexicalException
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
      * */
     private Token s54(String lexeme){
@@ -934,6 +980,7 @@ public class LexicalAnalyzer {
     /**
      * Este metodo nos dice si un caracter pertenece o no a nuestro alfabeto
      * @param element este es el caracter del cual queremos saber si pertenece o no al alfabeto
+     * @return boolean si el caracter pertenece al alfabeto o no
      * @author Lucas Moyano
      * */
     private boolean belongsToTheAlphabet(char element) {
@@ -973,6 +1020,7 @@ public class LexicalAnalyzer {
      * con un caracter de excepción
      * @param element este es el caracter del cual queremos saber si pertenece o no al alfabeto
      * @param exception este es el caracter que queremos excluir del alfabeto
+     * @return boolean si el carctaer pertenece al alfabeto o no
      * @author Lucas Moyano
      * */
     private boolean belongsToTheAlphabet(char element, char exception) {
@@ -1015,33 +1063,66 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * @param lastColumn la ultima columna del token
      * @param lexemeLength el numero de caracteres que tiene el lexema
+     * @return posición donde comineza el token
      * */
     private int startColumn(int lastColumn, int lexemeLength){
         return lastColumn - (lexemeLength-1);
     }
 
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
     public String getEOF() {
         return EOF;
     }
 
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
     public String getBLANK_SPACE() {
         return BLANK_SPACE;
     }
 
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
     public String getNEW_LINE() {
         return NEW_LINE;
     }
 
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
     public String getCARRIAGE_RETURN() {
         return CARRIAGE_RETURN;
     }
 
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
     public String getTAB() {
         return TAB;
     }
 
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
     public String getVERTICAL_TAB() {
         return VERTICAL_TAB;
+    }
+
+    /**
+     *  Método que retorna constante referida a un token
+     * @return String
+     */
+    public String getSIMPLE_COMMENT() {
+        return SIMPLE_COMMENT;
     }
 
     /**
@@ -1050,6 +1131,7 @@ public class LexicalAnalyzer {
      * lexico correspondiente
      * @param exceptionType String con el tipo de error
      * @param  token token con infromación del error
+     * @return Retorna excepción de tipo léxico
      * @author Yeumen Silva
      */
     private LexicalException getException(String exceptionType, Token token){
@@ -1084,13 +1166,15 @@ public class LexicalAnalyzer {
             case "NoClosedString":
                 exception = new NoClosedString(token);
                 break;
-            case "NoClosesChar":
+            case "NoClosedChar":
                 exception = new NoClosedChar(token);
                 break;
             case "LimitString":
                 exception = new LimitString(token);
+                break;
             case "InvalidComment":
                 exception = new InvalidCommentException(token);
+                break;
 
         }
 
