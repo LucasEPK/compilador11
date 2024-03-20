@@ -1,5 +1,4 @@
 /? Algunas palabra reservadas, analisis léxico correcto
-
 while
 true
 false

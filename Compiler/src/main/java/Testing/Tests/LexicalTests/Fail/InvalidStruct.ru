@@ -1,2 +1,4 @@
 /? id de struct invalido, salida: id invalido
+/? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
+/? | Linea 4 | COLUMNA 11 | ERROR EN LA DEFINICION DEL IDENTIFICADOR: IDENTIFICADOR NO VALIDO FailClass2
 FailClass2

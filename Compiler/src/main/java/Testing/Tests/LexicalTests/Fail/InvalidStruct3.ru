@@ -1,0 +1,5 @@
+/? id de struct invalido, contiene ñ
+/? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
+/?| Linea 5 | COLUMNA 5 | ERROR SIMBOLO NO VALIDO: EL SIMBOLO DEFINIDO NO ES PARTE DEL ALFABETO ñ
+
+Bebeñ

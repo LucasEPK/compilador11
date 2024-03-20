@@ -1,2 +1,4 @@
 /? Error Léxico, salida: operador inváldio
+/? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
+/? | Linea 4 | COLUMNA 2 | ERROR EN LA COMPARACIÓN: OPERADOR DE COMPARACIÓN NO VALIDO &
 &

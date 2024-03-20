@@ -1,6 +1,5 @@
 /? Distintos tipos de string que deberian pasar
 /? analisis léxico correcto
-
 "hola, soy el léxico \a"
 
 "\@"
