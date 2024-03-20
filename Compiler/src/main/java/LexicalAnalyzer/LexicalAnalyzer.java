@@ -690,13 +690,18 @@ public class LexicalAnalyzer {
                 throw getException("String", token);
             }
             else {
+                if (belongsToTheAlphabet(currentChar)){ // Esto contempla casos \a y similares
+                    int lexemeLength = currentLexeme.length();
+                    String substringbefore = currentLexeme.substring(0,lexemeLength-2);
+                    String substringAfter = currentLexeme.substring(lexemeLength-1);
+                    currentPos+=1;
+                    currentColumn-=1;
 
-                String substringbefore = currentLexeme.substring(0,currentColumn-2);
-                String substringAfter = currentLexeme.substring(currentColumn-1);
-                currentPos+=1;
-                currentColumn-=1;
-
-                token =s3(substringbefore + substringAfter);
+                    token =s3(substringbefore + substringAfter);
+                }
+                else {
+                    //TODO: tirar error invalid
+                }
             }
 
         }
