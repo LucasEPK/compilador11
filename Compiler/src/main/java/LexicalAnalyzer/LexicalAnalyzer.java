@@ -695,7 +695,10 @@ public class LexicalAnalyzer {
                     String substringbefore = currentLexeme.substring(0,lexemeLength-2);
                     String substringAfter = currentLexeme.substring(lexemeLength-1);
                     currentPos+=1;
-                    currentColumn-=1;
+                    currentColumn-=1; //Esto se hace porque el lexema termina teniendo 1 caracter menos y al calcularlo
+                    //con el metodo startColumn da una columna de más por la longitud del lexema
+                    //no es la mejor manera pero funciona, podria romperse cuando se usa currentColumn sin startColumn
+                    //para crear tokens
 
                     token =s3(substringbefore + substringAfter);
                 }
