@@ -681,9 +681,9 @@ public class LexicalAnalyzer {
         char currentChar = file.charAt(currentPos);
         String currentLexeme = lexeme + Character.toString(currentChar);
 
-        currentColumn += 1;
+        currentColumn+=1;
 
-        if (currentChar == '\\' || currentChar == '"' || currentChar == '\'' ||
+        if (currentChar == '\\' || currentChar == '\"' || currentChar == '\'' ||
                 currentChar == 't' || currentChar == 'b' || currentChar == 'n' ||
                 currentChar == 'r' || currentChar == 'f' || currentChar == 'v'){
             currentPos += 1;
@@ -691,8 +691,28 @@ public class LexicalAnalyzer {
 
         }
         else {
+            if(currentChar == '0'){
                 token= new Token(null,currentLexeme,currentRow,currentColumn);
                 throw getException("String", token);
+            }
+            else {
+                if (belongsToTheAlphabet(currentChar)){ // Esto contempla casos \a y similares
+                    int lexemeLength = currentLexeme.length();
+                    String substringbefore = currentLexeme.substring(0,lexemeLength-2);
+                    String substringAfter = currentLexeme.substring(lexemeLength-1);
+                    currentPos+=1;
+                    currentColumn-=1; //Esto se hace porque el lexema termina teniendo 1 caracter menos y al calcularlo
+                    //con el metodo startColumn da una columna de más por la longitud del lexema
+                    //no es la mejor manera pero funciona, podria romperse cuando se usa currentColumn sin startColumn
+                    //para crear tokens
+
+                    token =s3(substringbefore + substringAfter);
+                }
+                else {
+                    //TODO: tirar error invalid
+                }
+            }
+
         }
 
 
@@ -785,11 +805,15 @@ public class LexicalAnalyzer {
             currentPos += 1;
 
             //Si es alguno de los caracteres especiales, los dejo como '\caracter'
-            if(currentChar == 't' || currentChar == 'n' || currentChar == 'r' || currentChar == 'v'){
+            if(currentChar == 't' || currentChar == 'n'
+                    || currentChar == 'r' || currentChar == 'v' || currentChar == '\''
+                    || currentChar == '\"' || currentChar == '\\'){
                 token = s6(currentLexeme);
+
             }
             else {
                 //De otro modo, solo devuelvo el caracter sin barra invertida 'caracter'
+                currentColumn-=1;
                 token = s6("'" + Character.toString(currentChar));
             }
 
@@ -1254,7 +1278,7 @@ public class LexicalAnalyzer {
         }
 
         // Agregar los caracteres especiales al conjunto
-        char[] caracteresEspeciales = {'\\', '=', '?', '|' , '\'', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        char[] caracteresEspeciales = {'\\', '=', '?', '|' , '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
         for (char c : caracteresEspeciales) {
             sigma.add(c);
         }
@@ -1432,6 +1456,8 @@ public class LexicalAnalyzer {
 
         return exception;
     }
+
+
 }
 
 
