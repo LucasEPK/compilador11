@@ -642,12 +642,6 @@ public class LexicalAnalyzer {
             else {
 
                 if (belongsToTheAlphabet(currentChar)) { // bucle
-                    //Verifico que no haya un "\0"
-                    //TODO: creo que esto hay que cambiarlo de lugar
-                    if(currentChar == '0' && file.charAt(currentPos-1) == '\\'){
-                        token= new Token(null,currentLexeme,currentRow,currentColumn);
-                        throw getException("String", token);
-                    }
                     currentPos += 1;
                     token = s3(currentLexeme);
 
@@ -685,14 +679,16 @@ public class LexicalAnalyzer {
 
         if (currentChar == '\\' || currentChar == '"' || currentChar == '\'' ||
                 currentChar == 't' || currentChar == 'b' || currentChar == 'n' ||
-                currentChar == 'r' || currentChar == 'f'){
+                currentChar == 'r' || currentChar == 'f' || currentChar == 'v'){
             currentPos += 1;
             token = s3(currentLexeme);
 
         }
         else {
-            //TODO: tirar error
+                token= new Token(null,currentLexeme,currentRow,currentColumn);
+                throw getException("String", token);
         }
+
 
         return token;
     }
@@ -1034,7 +1030,7 @@ public class LexicalAnalyzer {
         }
 
         // Agregar los caracteres especiales al conjunto
-        char[] caracteresEspeciales = {'\\', '=', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        char[] caracteresEspeciales = {'\\', '=', '?', '|' , '\'', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
         for (char c : caracteresEspeciales) {
             sigma.add(c);
         }
@@ -1074,7 +1070,7 @@ public class LexicalAnalyzer {
         }
 
         // Agregar los caracteres especiales al conjunto
-        char[] caracteresEspeciales = {'\\', '=', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
+        char[] caracteresEspeciales = {'\\', '=', '|', '?', '#', '$', '%', '&', '@', '¿', '¡', '!', 'ñ', '+', '-', '*', '/', '_', '>', '<', '"', '\'', '.', ';', ':', ' ', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '(', ')', '[', ']', '{', '}', ','};
         for (char c : caracteresEspeciales) {
             sigma.add(c);
         }
