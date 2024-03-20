@@ -1,1 +1,1 @@
-"hola \n mundo"
+"hola \n mundo $EOF\\"
