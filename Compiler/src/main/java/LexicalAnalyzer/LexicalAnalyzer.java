@@ -610,7 +610,7 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Estado donde empieza, hace bucle y termina un string literal
+     * Estado donde empieza un string literal
      * @author Lucas Moyano
      * @return Token
      * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
@@ -640,23 +640,29 @@ public class LexicalAnalyzer {
                 token = s4(currentLexeme);
             }
             else {
-
-                if (belongsToTheAlphabet(currentChar)) { // bucle
+                if(currentChar == '$'){ // Sospecha hay un $EOF$
                     currentPos += 1;
-                    token = s3(currentLexeme);
-
+                    token = s64(currentLexeme);
                 }
                 else {
-                    if(currentChar== '\n'){
-                        token = new Token(null, currentLexeme, currentRow, currentColumn);
-                        throw getException("NoClosedString",token);
+                    if (belongsToTheAlphabet(currentChar)) { // bucle
+                        currentPos += 1;
+                        token = s3(currentLexeme);
+
                     }
                     else {
-                        token = new Token(null, currentLexeme, currentRow, currentColumn);
-                    }
+                        if(currentChar== '\n'){
+                            token = new Token(null, currentLexeme, currentRow, currentColumn);
+                            throw getException("NoClosedString",token);
+                        }
+                        else {
+                            token = new Token(null, currentLexeme, currentRow, currentColumn);
+                        }
 
-                    throw getException("String", token);
+                        throw getException("String", token);
+                    }
                 }
+
             }
         }
 
@@ -997,6 +1003,224 @@ public class LexicalAnalyzer {
                 currentLexeme = lexeme + Character.toString(currentChar);
                 token = new Token(null,currentLexeme,currentRow,currentColumn);
                 throw getException("InvalidComment", token);
+            }
+        }
+
+        return token;
+    }
+
+    /**
+     * Camino hacia $EOF$ en un string
+     * Tiene 4 casos:
+     * 1. El currentChar es el caracter E
+     *    (Vamos a s65)
+     * 2. El currentChar es el caracter "
+     *    (Lo aceptamos como token String literal)
+     * 3. El currentChar es el caracter \
+     *    (Vamos a s4)
+     * 4. El currentChar no es ninguno de los caracteres
+     *    anteriores pero si pertenece al alfabeto
+     *    (Vamos a s3)
+     * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * */
+    private Token s64(String lexeme){
+        Token token = null;
+        char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
+
+        if (currentChar == 'E'){
+            currentPos += 1;
+            token = s65(currentLexeme);
+        }
+        else {
+            if(currentChar == '"'){ // Aceptamos el token
+                currentPos += 1;
+                token = new Token(STR_LITERAL, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
+            }
+            else {
+                if(currentChar == '\\'){
+                    currentPos += 1;
+                    token = s4(currentLexeme);
+                }
+                else {
+                    if(belongsToTheAlphabet(currentChar)){
+                        currentPos += 1;
+                        token = s3(currentLexeme);
+                    }
+                    else {
+                        //TODO: tirar error
+                    }
+                }
+            }
+
+        }
+
+        return token;
+    }
+
+    /**
+     * Camino hacia $EOF$ en un string
+     * Tiene 4 casos:
+     * 1. El currentChar es el caracter O
+     *    (Vamos a s66)
+     * 2. El currentChar es el caracter "
+     *    (Lo aceptamos como token String literal)
+     * 3. El currentChar es el caracter \
+     *    (Vamos a s4)
+     * 4. El currentChar no es ninguno de los caracteres
+     *    anteriores pero si pertenece al alfabeto
+     *    (Vamos a s3)
+     * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * */
+    private Token s65(String lexeme){
+        Token token = null;
+        char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
+
+        if (currentChar == 'O'){
+            currentPos += 1;
+            token = s66(currentLexeme);
+        }
+        else {
+            if(currentChar == '"'){ // Aceptamos el token
+                currentPos += 1;
+                token = new Token(STR_LITERAL, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
+            }
+            else {
+                if(currentChar == '\\'){
+                    currentPos += 1;
+                    token = s4(currentLexeme);
+                }
+                else {
+                    if(belongsToTheAlphabet(currentChar)){
+                        currentPos += 1;
+                        token = s3(currentLexeme);
+                    }
+                    else {
+                        //TODO: tirar error
+                    }
+                }
+            }
+
+        }
+
+        return token;
+    }
+
+    /**
+     * Camino hacia $EOF$ en un string
+     * Tiene 4 casos:
+     * 1. El currentChar es el caracter F
+     *    (Vamos a s67)
+     * 2. El currentChar es el caracter "
+     *    (Lo aceptamos como token String literal)
+     * 3. El currentChar es el caracter \
+     *    (Vamos a s4)
+     * 4. El currentChar no es ninguno de los caracteres
+     *    anteriores pero si pertenece al alfabeto
+     *    (Vamos a s3)
+     * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * */
+    private Token s66(String lexeme){
+        Token token = null;
+        char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
+
+        if (currentChar == 'F'){
+            currentPos += 1;
+            token = s67(currentLexeme);
+        }
+        else {
+            if(currentChar == '"'){ // Aceptamos el token
+                currentPos += 1;
+                token = new Token(STR_LITERAL, currentLexeme, currentRow,
+                        startColumn(currentColumn, currentLexeme.length()));
+            }
+            else {
+                if(currentChar == '\\'){
+                    currentPos += 1;
+                    token = s4(currentLexeme);
+                }
+                else {
+                    if(belongsToTheAlphabet(currentChar)){
+                        currentPos += 1;
+                        token = s3(currentLexeme);
+                    }
+                    else {
+                        //TODO: tirar error
+                    }
+                }
+            }
+
+        }
+
+        return token;
+    }
+
+    /**
+     * Final del camino hacia $EOF$ en un string
+     * Tiene 3 casos:
+     * 1. El currentChar es el caracter "
+     *    (Lo aceptamos como token String literal)
+     * 2. El currentChar es el caracter \
+     *    (Vamos a s4)
+     * 3. El currentChar no es ninguno de los caracteres
+     *    anteriores y tampoco es $ pero si pertenece al alfabeto
+     *    (Vamos a s3)
+     * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * */
+    private Token s67(String lexeme){
+        Token token = null;
+        char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
+
+        if(currentChar == '"'){ // Aceptamos el token
+            currentPos += 1;
+            token = new Token(STR_LITERAL, currentLexeme, currentRow,
+                    startColumn(currentColumn, currentLexeme.length()));
+        }
+        else {
+            if(currentChar == '\\'){
+                currentPos += 1;
+                token = s4(currentLexeme);
+            }
+            else {
+                if(belongsToTheAlphabet(currentChar, '$')){
+                    currentPos += 1;
+                    token = s3(currentLexeme);
+                }
+                else {
+                    //TODO: tirar error
+                    if (currentChar == '$'){
+                        //TODO: tirar error $EOF$ en String
+                        System.out.println("$EOF$ en string");
+                    }
+                    else {
+                        //TODO: tirar error caracter invalido
+                    }
+                }
             }
         }
 
