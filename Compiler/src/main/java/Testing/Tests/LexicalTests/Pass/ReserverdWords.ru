@@ -1,4 +1,5 @@
 /? Algunas palabra reservadas, analisis léxico correcto
+/? CORRECTO: ANALISIS LEXICO
 while
 true
 false

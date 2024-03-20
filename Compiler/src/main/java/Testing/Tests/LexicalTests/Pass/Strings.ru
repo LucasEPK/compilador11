@@ -1,5 +1,5 @@
 /? Distintos tipos de string que deberian pasar
-/? analisis léxico correcto
+/? CORRECTO: ANALISIS LEXICO
 "hola, soy el léxico \a"
 
 "\@"

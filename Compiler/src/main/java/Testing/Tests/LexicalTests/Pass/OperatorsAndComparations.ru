@@ -1,5 +1,5 @@
 /? operadores y comparaciones logicas
-/? analisis léxico correcto
+/? CORRECTO: ANALISIS LEXICO
   ==
   <=
   >=

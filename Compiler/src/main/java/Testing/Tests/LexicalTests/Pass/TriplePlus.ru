@@ -1,3 +1,3 @@
 /? tres operadores más seguidos (uno ++ y otro +)
-/? analisis léxico correcto
+/? CORRECTO: ANALISIS LEXICO
 i+++j
