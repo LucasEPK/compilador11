@@ -635,27 +635,63 @@ public class LexicalAnalyzer {
                     startColumn(currentColumn, currentLexeme.length()));
         }
         else {
-            if (belongsToTheAlphabet(currentChar, '"')) { // bucle
-                //Verifico que no haya un "\0"
-                if(currentChar == '0' && file.charAt(currentPos-1) == '\\'){
-                    token= new Token(null,currentLexeme,currentRow,currentColumn);
-                    throw getException("String", token);
-                }
+            if (currentChar == '\\'){
                 currentPos += 1;
-                token = s3(currentLexeme);
-
+                token = s4(currentLexeme);
             }
             else {
-                if(currentChar== '\n'){
-                    token = new Token(null, currentLexeme, currentRow, currentColumn);
-                    throw getException("NoClosedString",token);
+
+                if (belongsToTheAlphabet(currentChar)) { // bucle
+                    //Verifico que no haya un "\0"
+                    //TODO: creo que esto hay que cambiarlo de lugar
+                    if(currentChar == '0' && file.charAt(currentPos-1) == '\\'){
+                        token= new Token(null,currentLexeme,currentRow,currentColumn);
+                        throw getException("String", token);
+                    }
+                    currentPos += 1;
+                    token = s3(currentLexeme);
+
                 }
                 else {
-                    token = new Token(null, currentLexeme, currentRow, currentColumn);
-                }
+                    if(currentChar== '\n'){
+                        token = new Token(null, currentLexeme, currentRow, currentColumn);
+                        throw getException("NoClosedString",token);
+                    }
+                    else {
+                        token = new Token(null, currentLexeme, currentRow, currentColumn);
+                    }
 
-                throw getException("String", token);
+                    throw getException("String", token);
+                }
             }
+        }
+
+        return token;
+    }
+
+    /**
+     * Estado intermedio de un string literal
+     * @author Lucas Moyano
+     * @throws LexicalException
+     * @return Token
+     * @param lexeme esta es una string que contiene los caracteres recolectados por el automata hasta el momento
+     * */
+    private Token s4(String lexeme){
+        Token token = null;
+        char currentChar = file.charAt(currentPos);
+        String currentLexeme = lexeme + Character.toString(currentChar);
+
+        currentColumn += 1;
+
+        if (currentChar == '\\' || currentChar == '"' || currentChar == '\'' ||
+                currentChar == 't' || currentChar == 'b' || currentChar == 'n' ||
+                currentChar == 'r' || currentChar == 'f'){
+            currentPos += 1;
+            token = s3(currentLexeme);
+
+        }
+        else {
+            //TODO: tirar error
         }
 
         return token;
