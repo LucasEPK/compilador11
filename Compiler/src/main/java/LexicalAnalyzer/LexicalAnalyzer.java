@@ -709,7 +709,8 @@ public class LexicalAnalyzer {
                     token =s3(substringbefore + substringAfter);
                 }
                 else {
-                    //TODO: tirar error invalid
+                    token = new Token(null,currentLexeme,currentRow,currentColumn);
+                    throw getException("InvalidId", token);
                 }
             }
 
@@ -1078,7 +1079,8 @@ public class LexicalAnalyzer {
                         token = s3(currentLexeme);
                     }
                     else {
-                        //TODO: tirar error
+                        token = new Token(null,currentLexeme,currentRow,currentColumn);
+                        throw getException("Invalid",token);
                     }
                 }
             }
@@ -1133,7 +1135,8 @@ public class LexicalAnalyzer {
                         token = s3(currentLexeme);
                     }
                     else {
-                        //TODO: tirar error
+                        token = new Token(null,currentLexeme,currentRow,currentColumn);
+                        throw getException("Invalid",token);
                     }
                 }
             }
@@ -1188,7 +1191,8 @@ public class LexicalAnalyzer {
                         token = s3(currentLexeme);
                     }
                     else {
-                        //TODO: tirar error
+                        token = new Token(null,currentLexeme,currentRow,currentColumn);
+                        throw getException("Invalid",token);
                     }
                 }
             }
@@ -1236,13 +1240,13 @@ public class LexicalAnalyzer {
                     token = s3(currentLexeme);
                 }
                 else {
-                    //TODO: tirar error
                     if (currentChar == '$'){
-                        //TODO: tirar error $EOF$ en String
-                        System.out.println("$EOF$ en string");
+                        token = new Token(null,currentLexeme,currentRow,currentColumn);
+                        throw getException("EOF",token);
                     }
                     else {
-                        //TODO: tirar error caracter invalido
+                        token = new Token(null,currentLexeme,currentRow,currentColumn);
+                        throw getException("Invalid",token);
                     }
                 }
             }
@@ -1436,9 +1440,6 @@ public class LexicalAnalyzer {
             case "Comparation":
                 exception = new InvalidComparation(token);
                 break;
-            case "EOF":
-                exception = new endOfFileException(token);
-                break;
             case "NoClosedString":
                 exception = new NoClosedString(token);
                 break;
@@ -1450,6 +1451,9 @@ public class LexicalAnalyzer {
                 break;
             case "InvalidComment":
                 exception = new InvalidCommentException(token);
+                break;
+            case "EOF":
+                exception = new EndOfFileInString(token);
                 break;
 
         }

@@ -20,8 +20,8 @@ public class Test {
      * @author Yeumen Silva
      */
     public void lexicalTest(){
-        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Pass", "Pass");
-        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Fail", "Fail");
+        folderExecutor("Compiler/src/main/java/Testing/Tests/LexicalTests/Pass", "Pass");
+        folderExecutor("Compiler/src/main/java/Testing/Tests/LexicalTests/Fail", "Fail");
     }
     private void folderExecutor(String path, String type){
 

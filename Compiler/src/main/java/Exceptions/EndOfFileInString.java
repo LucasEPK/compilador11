@@ -3,14 +3,13 @@ package Exceptions;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa el error de no haber EOF
+ * Clase que representa el error de EOF dentro de String
  * @author Yeumen Silva
  */
 
-public class endOfFileException extends LexicalException {
+public class EndOfFileInString  extends  LexicalException{
 
-
-    public endOfFileException(Token token) {
+    public EndOfFileInString(Token token){
         super(token);
     }
 
@@ -21,7 +20,9 @@ public class endOfFileException extends LexicalException {
      */
     @Override
     public String getExceptionType() {
-        return "FALLO EN EOF";
+        return "ERROR EOF DENTRO DE STRING";
     }
+
+
 
 }
