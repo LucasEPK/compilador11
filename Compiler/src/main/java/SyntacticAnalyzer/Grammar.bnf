@@ -6,7 +6,8 @@ Start ::= 'start' Bloque-Método
 Lista-Definiciones ::= Struct Lista-DefinicionesF
 | Impl Lista-DefinicionesF
 
-Lista-DefinicionesF ::=  λ |  Lista-Definiciones
+Lista-DefinicionesF ::=  Lista-Definiciones
+|
 
 Struct ::= 'struct' 'idStruct' Struct-F
 
@@ -22,14 +23,14 @@ Struct-F2 ::= '}'
 Atributo-Estrella ::=  Atributo Atributo-Estrella-F
 
 Atributo-Estrella-F ::=  Atributo-Estrella
-| λ
+|
 
 Impl ::= 'impl' 'idStruct' '{' Miembro-Más '}'
 
 Miembro-Más ::= Miembro Miembro-Más-F
 
-Miembro-Más-F ::= λ
-| Miembro-Más
+Miembro-Más-F ::= Miembro-Más
+|
 
 Herencia ::= ':' Tipo
 
@@ -60,20 +61,20 @@ Bloque-Método-F1 ::= '}'
 
 Decl-Var-Locales-Estrella ::= Decl-Var-Locales Decl-Var-Locales-Estrella-F
 
-Decl-Var-Locales-Estrella-F ::= λ
-| Decl-Var-Locales-Estrella
+Decl-Var-Locales-Estrella-F ::= Decl-Var-Locales-Estrella
+|
 
 Sentencia-Estrella ::= Sentencia Sentencia-Estrella-F
 
-Sentencia-Estrella-F ::= λ
-| Sentencia-Estrella
+Sentencia-Estrella-F ::= Sentencia-Estrella
+|
 
 Decl-Var-Locales ::= Tipo Lista-Declaracion-Variables ';'
 
 Lista-Declaracion-Variables ::= 'idMetAt' Lista-Declaracion-Variables-F
 
-Lista-Declaracion-Variables-F ::= λ
-| ',' Lista-Declaracion-Variables
+Lista-Declaracion-Variables-F ::= ',' Lista-Declaracion-Variables
+|
 
 Argumentos-Formales::= '(' Argumentos-Formales-F
 
@@ -82,8 +83,8 @@ Argumentos-Formales-F::= Lista-Argumentos-Formales ')'
 
 Lista-Argumentos-Formales ::= Argumento-Formal Lista-Argumentos-Formales-F
 
-Lista-Argumentos-Formales-F ::= λ
-| ',' Lista-Argumentos-Formales
+Lista-Argumentos-Formales-F ::= ',' Lista-Argumentos-Formales
+|
 
 Argumento-Formal ::= Tipo 'idMetAt'
 
@@ -112,8 +113,8 @@ Sentencia ::= ';'
 | 'ret' Sentencia-F1
 
 
-Sentencia-F ::=  λ
-| 'else' Sentencia
+Sentencia-F ::=  'else' Sentencia
+|
 
 Sentencia-F1 ::=  ';'
 |  Expresión ';'
@@ -128,21 +129,21 @@ Asignación ::= AccesoVar-Simple '=' Expresión
 
 AccesoVar-Simple ::= 'id' AccesoVar-Simple-F
 
-AccesoVar-Simple-F ::= λ
+AccesoVar-Simple-F ::= Encadenado-Simple-Estrella
 | '[' Expresión ']'
-| Encadenado-Simple-Estrella
+|
 
 Encadenado-Simple-Estrella ::= Encadenado-Simple Encadenado-Simple-Estrella-F
 
-Encadenado-Simple-Estrella-F ::= λ
-| Encadenado-Simple-Estrella
+Encadenado-Simple-Estrella-F ::= Encadenado-Simple-Estrella
+|
 
 AccesoSelf-Simple ::= 'self' AccesoSelf-Simple-F
 
-AccesoSelf-Simple-F ::= λ
-| Encadenado-Simple-Estrella
+AccesoSelf-Simple-F ::= Encadenado-Simple-Estrella
+|
 
-Encadenado-Simple ::= '.λid'
+Encadenado-Simple ::= '.id'
 
 Sentencia-Simple ::= '(' Expresión ')'
 
@@ -150,58 +151,58 @@ Expresión ::= ExpOr
 
 ExpOr ::=  ExpAnd ExpOr-F
 
-ExpOr-F ::= λ
-| ExpOrR
+ExpOr-F ::= ExpOrR
+|
 
 ExpOrR ::= '||' ExpAnd ExpOrR-F
 
-ExpOrR-F ::=  λ
-| ExpOrR
+ExpOrR-F ::=  ExpOrR
+|
 
 ExpAnd ::= ExpIgual ExpAnd-F
 
-ExpAnd-F ::= λ
-| ExpAndR
+ExpAnd-F ::= ExpAndR
+|
 
 ExpAndR ::= '&&' ExpIgual ExpAndR-F
 
-ExpAndR-F ::= λ
-| ExpAndR
+ExpAndR-F ::= ExpAndR
+|
 
 ExpIgual ::=  ExpCompuesta ExpIgual-F
 
-ExpIgual-F ::= λ
-| ExpIgualR
+ExpIgual-F ::= ExpIgualR
+|
 
 ExpIgualR ::=  OpIgual ExpCompuesta ExpIgualR-F
 
-ExpIgualR-F ::=  λ
-|  ExpIgualR
+ExpIgualR-F ::=  ExpIgualR
+|
 
 ExpCompuesta ::= ExpAd ExpCompuesta-F
 
-ExpCompuesta-F ::=  λ
-| OpCompuesto ExpAd
+ExpCompuesta-F ::=  OpCompuesto ExpAd
+|
 
 ExpAd ::=  ExpMul ExpAd-F
 
-ExpAd-F ::= λ
-| ExpAdR
+ExpAd-F ::= ExpAdR
+|
 
 ExpAdR ::= OpAd ExpMul ExpAdR-F
 
-ExpAdR-F ::= λ
-| ExpAdR
+ExpAdR-F ::= ExpAdR
+|
 
 ExpMul ::=  ExpUn ExpMul-F
 
-ExpMul-F ::= λ
-| ExpMulR
+ExpMul-F ::= ExpMulR
+|
 
 ExpMulR ::= OpMul ExpUn ExpMulR-F
 
-ExpMulR-F ::= λ
-| ExpMulR
+ExpMulR-F ::= ExpMulR
+|
 
 ExpUn ::= OpUnario ExpUn
 | Operando
@@ -230,8 +231,8 @@ OpMul ::= '*'
 Operando ::= Literal
 | Primario Operando-F
 
-Operando-F ::=  λ
-| Encadenado
+Operando-F ::=  Encadenado
+|
 
 Literal ::= 'nil'
 | 'true'
@@ -250,40 +251,40 @@ Primario ::= ExpresionParentizada
 
 ExpresionParentizada ::= '(' Expresión ')' ExpresionParentizada-F
 
-ExpresionParentizada-F ::= λ
-| Encadenado
+ExpresionParentizada-F ::= Encadenado
+|
 
 AccesoSelf  ::= 'self' AccesoSelf-F
 
-AccesoSelf-F ::= λ
-| Encadenado
+AccesoSelf-F ::= Encadenado
+|
 
 AccesoVar ::= 'id' AccesoVar-F
 
-AccesoVar-F ::= λ
+AccesoVar-F ::= '[' Expresión ']'  AccesoVar-F1
 | Encadenado
-| '[' Expresión ']'  AccesoVar-F1
+|
 
-AccesoVar-F1 ::= λ
-| Encadenado
+AccesoVar-F1 ::= Encadenado
+|
 
 Llamada-Método ::= 'id' Argumentos-Actuales Llamada-Método-F
 
-Llamada-Método-F ::= λ
-| Encadenado
+Llamada-Método-F ::= Encadenado
+|
 
-Llamada-Método-Estático ::= 'idStructλ.' Llamada-Método Llamada-Método-Estático-F
+Llamada-Método-Estático ::= 'idStruct.' Llamada-Método Llamada-Método-Estático-F
 
-Llamada-Método-Estático-F ::= λ
-| Encadenado
+Llamada-Método-Estático-F ::= Encadenado
+|
 
 Llamada-Constructor  ::= 'new' Llamada-Constructor-F
 
 Llamada-Constructor-F ::= 'idStruct' Argumentos-Actuales Llamada-Constructor-F1
 | Tipo-Primitivo '[' Expresión ']'
 
-Llamada-Constructor-F1 ::= λ
-| Encadenado
+Llamada-Constructor-F1 ::= Encadenado
+|
 
 Argumentos-Actuales ::= '(' Argumentos-Actuales-F
 
@@ -292,8 +293,8 @@ Argumentos-Actuales-F ::= ')'
 
 Lista-Expresiones ::= Expresión Lista-Expresiones-F
 
-Lista-Expresiones-F ::= λ
-| ',' Lista-Expresiones
+Lista-Expresiones-F ::= ',' Lista-Expresiones
+|
 
 Encadenado ::= '.' Encadenado-F
 
@@ -302,15 +303,15 @@ Encadenado-F ::=  Llamada-Método-Encadenado
 
 Llamada-Método-Encadenado::= 'id' Argumentos-Actuales Llamada-Método-Encadenado-F
 
-Llamada-Método-Encadenado-F ::= λ
-| Encadenado
+Llamada-Método-Encadenado-F ::= Encadenado
+|
 
 Acceso-Variable-Encadenado ::= 'id' Acceso-Variable-Encadenado-F
 
 
-Acceso-Variable-Encadenado-F ::= λ
+Acceso-Variable-Encadenado-F ::= '[' Expresión ']' Acceso-Variable-Encadenado-F1
 | Encadenado
-| '[' Expresión ']' Acceso-Variable-Encadenado-F1
+|
 
-Acceso-Variable-Encadenado-F1 ::= λ
-| Encadenado
+Acceso-Variable-Encadenado-F1 ::= Encadenado
+|
