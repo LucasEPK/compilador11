@@ -1,0 +1,316 @@
+Program ::=  Start
+| Lista-Definiciones Start
+
+Start ::= 'start' Bloque-Método
+
+Lista-Definiciones ::= Struct Lista-DefinicionesF
+| Impl Lista-DefinicionesF
+
+Lista-DefinicionesF ::=  λ |  Lista-Definiciones
+
+Struct ::= 'struct' 'idStruct' Struct-F
+
+Struct-F ::= '{'  Struct-F1
+| Herencia '{'  Struct-F2
+
+Struct-F1 ::= '}'
+| Atributo-Estrella '}'
+
+Struct-F2 ::= '}'
+|  Atributo-Estrella '}'
+
+Atributo-Estrella ::=  Atributo Atributo-Estrella-F
+
+Atributo-Estrella-F ::=  Atributo-Estrella
+| λ
+
+Impl ::= 'impl' 'idStruct' '{' Miembro-Más '}'
+
+Miembro-Más ::= Miembro Miembro-Más-F
+
+Miembro-Más-F ::= λ
+| Miembro-Más
+
+Herencia ::= ':' Tipo
+
+Miembro ::= Método
+| Constructor
+
+Constructor  ::= '.' Argumentos-Formales Bloque-Método
+
+Atributo ::= Visibilidad Tipo Lista-Declaracion-Variables ';'
+| Tipo Lista-Declaracion-Variables ';'
+
+Método ::= Forma-Método 'fn' 'idMetAt' Argumentos-Formales '->' Tipo-Método Bloque-Método
+| 'fn' 'idMetAt' Argumentos-Formales '->' Tipo-Método Bloque-Método
+
+Visibilidad ::= 'pri'
+
+Forma-Método ::= 'st'
+
+Bloque-Método ::= '{' Bloque-Método-F
+
+
+Bloque-Método-F ::= Decl-Var-Locales-Estrella Bloque-Método-F1
+| Sentencia-Estrella '}'
+| '}'
+
+Bloque-Método-F1 ::= '}'
+| Sentencia-Estrella '}'
+
+Decl-Var-Locales-Estrella ::= Decl-Var-Locales Decl-Var-Locales-Estrella-F
+
+Decl-Var-Locales-Estrella-F ::= λ
+| Decl-Var-Locales-Estrella
+
+Sentencia-Estrella ::= Sentencia Sentencia-Estrella-F
+
+Sentencia-Estrella-F ::= λ
+| Sentencia-Estrella
+
+Decl-Var-Locales ::= Tipo Lista-Declaracion-Variables ';'
+
+Lista-Declaracion-Variables ::= 'idMetAt' Lista-Declaracion-Variables-F
+
+Lista-Declaracion-Variables-F ::= λ
+| ',' Lista-Declaracion-Variables
+
+Argumentos-Formales::= '(' Argumentos-Formales-F
+
+Argumentos-Formales-F::= Lista-Argumentos-Formales ')'
+| ')'
+
+Lista-Argumentos-Formales ::= Argumento-Formal Lista-Argumentos-Formales-F
+
+Lista-Argumentos-Formales-F ::= λ
+| ',' Lista-Argumentos-Formales
+
+Argumento-Formal ::= Tipo 'idMetAt'
+
+Tipo-Método ::= Tipo
+| 'void'
+
+Tipo ::= Tipo-Primitivo
+| Tipo-Referencia
+| Tipo-Arreglo
+
+Tipo-Primitivo ::= 'Str'
+| 'Bool'
+| 'Int'
+| 'Char'
+
+Tipo-Referencia ::= 'idStruct'
+
+Tipo-Arreglo ::= 'Array' Tipo-Primitivo
+
+Sentencia ::= ';'
+| Asignación ';'
+| Sentencia-Simple ';'
+| 'if' '(' Expresión ')' Sentencia Sentencia-F
+| 'while' '(' Expresión ')' Sentencia
+| Bloque
+| 'ret' Sentencia-F1
+
+
+Sentencia-F ::=  λ
+| 'else' Sentencia
+
+Sentencia-F1 ::=  ';'
+|  Expresión ';'
+
+Bloque ::= '{' Bloque-F
+
+Bloque-F ::= '}'
+| Sentencia-Estrella  '}'
+
+Asignación ::= AccesoVar-Simple '=' Expresión
+| AccesoSelf-Simple '=' Expresión
+
+AccesoVar-Simple ::= 'id' AccesoVar-Simple-F
+
+AccesoVar-Simple-F ::= λ
+| '[' Expresión ']'
+| Encadenado-Simple-Estrella
+
+Encadenado-Simple-Estrella ::= Encadenado-Simple Encadenado-Simple-Estrella-F
+
+Encadenado-Simple-Estrella-F ::= λ
+| Encadenado-Simple-Estrella
+
+AccesoSelf-Simple ::= 'self' AccesoSelf-Simple-F
+
+AccesoSelf-Simple-F ::= λ
+| Encadenado-Simple-Estrella
+
+Encadenado-Simple ::= '.λid'
+
+Sentencia-Simple ::= '(' Expresión ')'
+
+Expresión ::= ExpOr
+
+ExpOr ::=  ExpAnd ExpOr-F
+
+ExpOr-F ::= λ
+| ExpOrR
+
+ExpOrR ::= '||' ExpAnd ExpOrR-F
+
+ExpOrR-F ::=  λ
+| ExpOrR
+
+ExpAnd ::= ExpIgual ExpAnd-F
+
+ExpAnd-F ::= λ
+| ExpAndR
+
+ExpAndR ::= '&&' ExpIgual ExpAndR-F
+
+ExpAndR-F ::= λ
+| ExpAndR
+
+ExpIgual ::=  ExpCompuesta ExpIgual-F
+
+ExpIgual-F ::= λ
+| ExpIgualR
+
+ExpIgualR ::=  OpIgual ExpCompuesta ExpIgualR-F
+
+ExpIgualR-F ::=  λ
+|  ExpIgualR
+
+ExpCompuesta ::= ExpAd ExpCompuesta-F
+
+ExpCompuesta-F ::=  λ
+| OpCompuesto ExpAd
+
+ExpAd ::=  ExpMul ExpAd-F
+
+ExpAd-F ::= λ
+| ExpAdR
+
+ExpAdR ::= OpAd ExpMul ExpAdR-F
+
+ExpAdR-F ::= λ
+| ExpAdR
+
+ExpMul ::=  ExpUn ExpMul-F
+
+ExpMul-F ::= λ
+| ExpMulR
+
+ExpMulR ::= OpMul ExpUn ExpMulR-F
+
+ExpMulR-F ::= λ
+| ExpMulR
+
+ExpUn ::= OpUnario ExpUn
+| Operando
+
+OpIgual ::= '=='
+| '!='
+
+OpCompuesto ::= '<'
+| '>'
+| '<='
+| '>='
+
+OpAd ::= '+'
+| '-'
+
+OpUnario ::= '+'
+| '-'
+| '!'
+| '++'
+| '--'
+
+OpMul ::= '*'
+| '/'
+| '%'
+
+Operando ::= Literal
+| Primario Operando-F
+
+Operando-F ::=  λ
+| Encadenado
+
+Literal ::= 'nil'
+| 'true'
+| 'false'
+| 'intLiteral'
+| 'StrLiteral'
+| 'charLiteral'
+
+Primario ::= ExpresionParentizada
+| AccesoSelf
+| AccesoVar
+| Llamada-Método
+| Llamada-Método-Estático
+| Llamada-Constructor
+
+
+ExpresionParentizada ::= '(' Expresión ')' ExpresionParentizada-F
+
+ExpresionParentizada-F ::= λ
+| Encadenado
+
+AccesoSelf  ::= 'self' AccesoSelf-F
+
+AccesoSelf-F ::= λ
+| Encadenado
+
+AccesoVar ::= 'id' AccesoVar-F
+
+AccesoVar-F ::= λ
+| Encadenado
+| '[' Expresión ']'  AccesoVar-F1
+
+AccesoVar-F1 ::= λ
+| Encadenado
+
+Llamada-Método ::= 'id' Argumentos-Actuales Llamada-Método-F
+
+Llamada-Método-F ::= λ
+| Encadenado
+
+Llamada-Método-Estático ::= 'idStructλ.' Llamada-Método Llamada-Método-Estático-F
+
+Llamada-Método-Estático-F ::= λ
+| Encadenado
+
+Llamada-Constructor  ::= 'new' Llamada-Constructor-F
+
+Llamada-Constructor-F ::= 'idStruct' Argumentos-Actuales Llamada-Constructor-F1
+| Tipo-Primitivo '[' Expresión ']'
+
+Llamada-Constructor-F1 ::= λ
+| Encadenado
+
+Argumentos-Actuales ::= '(' Argumentos-Actuales-F
+
+Argumentos-Actuales-F ::= ')'
+| Lista-Expresiones ')'
+
+Lista-Expresiones ::= Expresión Lista-Expresiones-F
+
+Lista-Expresiones-F ::= λ
+| ',' Lista-Expresiones
+
+Encadenado ::= '.' Encadenado-F
+
+Encadenado-F ::=  Llamada-Método-Encadenado
+| Acceso-Variable-Encadenado
+
+Llamada-Método-Encadenado::= 'id' Argumentos-Actuales Llamada-Método-Encadenado-F
+
+Llamada-Método-Encadenado-F ::= λ
+| Encadenado
+
+Acceso-Variable-Encadenado ::= 'id' Acceso-Variable-Encadenado-F
+
+
+Acceso-Variable-Encadenado-F ::= λ
+| Encadenado
+| '[' Expresión ']' Acceso-Variable-Encadenado-F1
+
+Acceso-Variable-Encadenado-F1 ::= λ
+| Encadenado
