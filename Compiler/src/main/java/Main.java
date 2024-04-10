@@ -33,7 +33,7 @@ public class Main {
 
         if (args.length < 2){
 
-            executor.startExecution(inputPath);
+            executor.startExecution(inputPath,null);
 
         }
         else    {

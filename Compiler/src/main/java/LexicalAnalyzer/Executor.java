@@ -63,74 +63,12 @@ public class Executor {
 
     }
 
-    /**
-     * Método que dado un String de entrada crea una instancia de la clase
-     * FileMannager, recibe los tokens del analizador léxico y luego llama
-     * a función encargada de imprimir los resultados
-     * @param inputPath String con ruta del archivo de entrada
-     * @throws LexicalException cualquier error de tipo lexico
-     * @author Lucas Moyano
-     * @author Yeumen Silva
-     */
-    public void startExecution(String inputPath){
-        List<Token> tokens = new ArrayList<Token>();
-
-        FileManager fileManager = new FileManager(inputPath);
-        String file = fileManager.getInputFile();
-        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(file);
-
-       /*
-       Este bloque try/catch es el encargado de ejecutarse siempre
-       y cuando no encontremos un error lexico en la ejecución
-        */
-        try {
-            // Crea una lista de tokens utilizando el LexicalAnalyzer
-            Token token = lexicalAnalyzer.getNextToken();
-            while (! token.getToken().equals(lexicalAnalyzer.getEOF())){
-
-
-                //Verifico si el lexema esta en la tabla Hash
-                if(this.hashMap.containsKey(token.getLexeme())){
-                    //Si esta, entonces es una palabra reservada y cambio su token
-                    token.setToken(token.getLexeme());
-                }
-
-                // Verificamos si no es algunos de los tokens skipeables, si no lo es entonces lo agregamos a la lista de tokens
-                if (! token.getToken().equals(lexicalAnalyzer.getBLANK_SPACE()) &&
-                        ! token.getToken().equals(lexicalAnalyzer.getTAB()) &&
-                        ! token.getToken().equals(lexicalAnalyzer.getCARRIAGE_RETURN()) &&
-                        ! token.getToken().equals(lexicalAnalyzer.getNEW_LINE()) &&
-                        ! token.getToken().equals(lexicalAnalyzer.getVERTICAL_TAB()) &&
-                        !token.getToken().equals(lexicalAnalyzer.getSIMPLE_COMMENT())){
-
-                    tokens.add(token);
-                }
-                token = lexicalAnalyzer.getNextToken();
-
-            }
-
-            tokens.add(token); // agrega token EOF a la lista de tokens
-
-
-            printResults(tokens); // Imprimo reusltados por consola
-
-        }catch (LexicalException exception){
-
-            /*
-            Si encuentra un error lexico, llama a metodo
-            que sera el encrgado de imprimir el error
-             */
-
-            printException(exception);
-
-        }
-
-    }
 
     /**
      * Método que dado un String de entrada crea una instancia de la clase
      * FileMannager, recibe los tokens del analizador léxico y llama
      * a función que guarda los resultados en un archivo de salida
+     * o los imprime por consola
      * @param inputPath String con ruta del archivo de entrada
      * @param outputPath String con ruta del archivo de salida
      */
@@ -175,9 +113,16 @@ public class Executor {
 
             tokens.add(token); // agrega token EOF a la lista de tokens
 
+            if(outputPath == null){
 
-            //Guardo resultados en archivo de salida
-            fileManager.saveResults(validTokenFormat(tokens));
+                printResults(tokens); // Imprimo reusltados por consola
+
+            }
+            else {
+                //Guardo resultados en archivo de salida
+                fileManager.saveResults(validTokenFormat(tokens));
+            }
+
         }
         catch (LexicalException exception){
 
