@@ -1,0 +1,234 @@
+Formato para la siguiente página para comparar ambos primeros y siguientes:
+
+http://hackingoff.com/compilers/predict-first-follow-set
+
+Program ->  Start | Lista-Definiciones Start
+
+Start -> 'start' Bloque-Método
+
+Lista-Definiciones -> Struct Lista-DefinicionesF | Impl Lista-DefinicionesF
+
+Lista-DefinicionesF ->  Lista-Definiciones | EPSILON
+
+Struct -> 'struct' 'idStruct' Struct-F
+
+Struct-F -> '{'  Struct-F1 | Herencia '{'  Struct-F2
+
+Struct-F1 -> '}' | Atributo-Estrella '}'
+
+Struct-F2 -> '}' | Atributo-Estrella '}'
+
+Atributo-Estrella ->  Atributo Atributo-Estrella-F
+
+Atributo-Estrella-F ->  Atributo-Estrella | EPSILON
+
+Impl -> 'impl' 'idStruct' '{' Miembro-Más '}'
+
+Miembro-Más -> Miembro Miembro-Más-F
+
+Miembro-Más-F -> Miembro-Más | EPSILON
+
+Herencia -> ':' Tipo
+
+Miembro -> Método | Constructor
+
+Constructor  -> '.' Argumentos-Formales Bloque-Método
+
+Atributo -> Visibilidad Tipo Lista-Declaracion-Variables ';' | Tipo Lista-Declaracion-Variables ';'
+
+Método -> Forma-Método 'fn' 'idMetAt' Argumentos-Formales '->' Tipo-Método Bloque-Método | 'fn' 'idMetAt' Argumentos-Formales '->' Tipo-Método Bloque-Método
+
+Visibilidad -> 'pri'
+
+Forma-Método -> 'st'
+
+Bloque-Método -> '{' Bloque-Método-F
+
+
+Bloque-Método-F -> Decl-Var-Locales-Estrella Bloque-Método-F1 | Sentencia-Estrella '}' | '}'
+
+Bloque-Método-F1 -> '}' | Sentencia-Estrella '}'
+
+Decl-Var-Locales-Estrella -> Decl-Var-Locales Decl-Var-Locales-Estrella-F
+
+Decl-Var-Locales-Estrella-F -> Decl-Var-Locales-Estrella | EPSILON
+
+Sentencia-Estrella -> Sentencia Sentencia-Estrella-F
+
+Sentencia-Estrella-F -> Sentencia-Estrella | EPSILON
+
+Decl-Var-Locales -> Tipo Lista-Declaracion-Variables ';'
+
+Lista-Declaracion-Variables -> 'idMetAt' Lista-Declaracion-Variables-F
+
+Lista-Declaracion-Variables-F -> ',' Lista-Declaracion-Variables | EPSILON
+
+Argumentos-Formales-> '(' Argumentos-Formales-F
+
+Argumentos-Formales-F-> Lista-Argumentos-Formales ')' | ')'
+
+Lista-Argumentos-Formales -> Argumento-Formal Lista-Argumentos-Formales-F
+
+Lista-Argumentos-Formales-F -> ',' Lista-Argumentos-Formales | EPSILON
+
+Argumento-Formal -> Tipo 'idMetAt'
+
+Tipo-Método -> Tipo | 'void'
+
+Tipo -> Tipo-Primitivo | Tipo-Referencia | Tipo-Arreglo
+
+Tipo-Primitivo -> 'Str' | 'Bool' | 'Int' | 'Char'
+
+Tipo-Referencia -> 'idStruct'
+
+Tipo-Arreglo -> 'Array' Tipo-Primitivo
+
+Sentencia -> ';' | Asignación ';' | Sentencia-Simple ';' | 'if' '(' Expresión ')' Sentencia Sentencia-F | 'while' '(' Expresión ')' Sentencia | Bloque | 'ret' Sentencia-F1
+
+
+Sentencia-F ->  'else' Sentencia | EPSILON
+
+Sentencia-F1 ->  ';' |  Expresión ';'
+
+Bloque -> '{' Bloque-F
+
+Bloque-F -> '}' | Sentencia-Estrella  '}'
+
+Asignación -> AccesoVar-Simple '=' Expresión | AccesoSelf-Simple '=' Expresión
+
+AccesoVar-Simple -> 'id' AccesoVar-Simple-F
+
+AccesoVar-Simple-F -> Encadenado-Simple-Estrella | '[' Expresión ']' | EPSILON
+
+Encadenado-Simple-Estrella -> Encadenado-Simple Encadenado-Simple-Estrella-F
+
+Encadenado-Simple-Estrella-F -> Encadenado-Simple-Estrella | EPSILON
+
+AccesoSelf-Simple -> 'self' AccesoSelf-Simple-F
+
+AccesoSelf-Simple-F -> Encadenado-Simple-Estrella | EPSILON
+
+Encadenado-Simple -> '.id'
+
+Sentencia-Simple -> '(' Expresión ')'
+
+Expresión -> ExpOr
+
+ExpOr ->  ExpAnd ExpOr-F
+
+ExpOr-F -> ExpOrR | EPSILON
+
+ExpOrR -> '||' ExpAnd ExpOrR-F
+
+ExpOrR-F ->  ExpOrR | EPSILON
+
+ExpAnd -> ExpIgual ExpAnd-F
+
+ExpAnd-F -> ExpAndR | EPSILON
+
+ExpAndR -> '&&' ExpIgual ExpAndR-F
+
+ExpAndR-F -> ExpAndR | EPSILON
+
+ExpIgual ->  ExpCompuesta ExpIgual-F
+
+ExpIgual-F -> ExpIgualR | EPSILON
+
+ExpIgualR ->  OpIgual ExpCompuesta ExpIgualR-F
+
+ExpIgualR-F ->  ExpIgualR | EPSILON
+
+ExpCompuesta -> ExpAd ExpCompuesta-F
+
+ExpCompuesta-F ->  OpCompuesto ExpAd | EPSILON
+
+ExpAd ->  ExpMul ExpAd-F
+
+ExpAd-F -> ExpAdR | EPSILON
+
+ExpAdR -> OpAd ExpMul ExpAdR-F
+
+ExpAdR-F -> ExpAdR | EPSILON
+
+ExpMul ->  ExpUn ExpMul-F
+
+ExpMul-F -> ExpMulR | EPSILON
+
+ExpMulR -> OpMul ExpUn ExpMulR-F
+
+ExpMulR-F -> ExpMulR | EPSILON
+
+ExpUn -> OpUnario ExpUn | Operando
+
+OpIgual -> '==' | '!='
+
+OpCompuesto -> '<' | '>' | '<=' | '>='
+
+OpAd -> '+' | '-'
+
+OpUnario -> '+' | '-' | '!' | '++' | '--'
+
+OpMul -> '*' | '/' | '%'
+
+Operando -> Literal | Primario Operando-F
+
+Operando-F ->  Encadenado | EPSILON
+
+Literal -> 'nil' | 'true' | 'false' | 'intLiteral' | 'StrLiteral' | 'charLiteral'
+
+Primario -> ExpresionParentizada | AccesoSelf | AccesoVar | Llamada-Método | Llamada-Método-Estático | Llamada-Constructor
+
+
+ExpresionParentizada -> '(' Expresión ')' ExpresionParentizada-F
+
+ExpresionParentizada-F -> Encadenado | EPSILON
+
+AccesoSelf  -> 'self' AccesoSelf-F
+
+AccesoSelf-F -> Encadenado | EPSILON
+
+AccesoVar -> 'id' AccesoVar-F
+
+AccesoVar-F -> '[' Expresión ']'  AccesoVar-F1 | Encadenado | EPSILON
+
+AccesoVar-F1 -> Encadenado | EPSILON
+
+Llamada-Método -> 'id' Argumentos-Actuales Llamada-Método-F
+
+Llamada-Método-F -> Encadenado | EPSILON
+
+Llamada-Método-Estático -> 'idStruct.' Llamada-Método Llamada-Método-Estático-F
+
+Llamada-Método-Estático-F -> Encadenado | EPSILON
+
+Llamada-Constructor  -> 'new' Llamada-Constructor-F
+
+Llamada-Constructor-F -> 'idStruct' Argumentos-Actuales Llamada-Constructor-F1 | Tipo-Primitivo '[' Expresión ']'
+
+Llamada-Constructor-F1 -> Encadenado | EPSILON
+
+Argumentos-Actuales -> '(' Argumentos-Actuales-F
+
+Argumentos-Actuales-F -> ')' | Lista-Expresiones ')'
+
+Lista-Expresiones -> Expresión Lista-Expresiones-F
+
+Lista-Expresiones-F -> ',' Lista-Expresiones | EPSILON
+
+Encadenado -> '.' Encadenado-F
+
+Encadenado-F ->  Llamada-Método-Encadenado | Acceso-Variable-Encadenado
+
+Llamada-Método-Encadenado-> 'id' Argumentos-Actuales Llamada-Método-Encadenado-F
+
+Llamada-Método-Encadenado-F -> Encadenado | EPSILON
+
+Acceso-Variable-Encadenado -> 'id' Acceso-Variable-Encadenado-F
+
+
+Acceso-Variable-Encadenado-F -> '[' Expresión ']' Acceso-Variable-Encadenado-F1 | Encadenado | EPSILON
+
+Acceso-Variable-Encadenado-F1 -> Encadenado | EPSILON
+
+
+
