@@ -42,7 +42,7 @@ public class Test {
             System.out.println("Resultado de prueba: " + file.getName());
 
             //Ejecuto con executor como se haria desde el main
-            executor.startExecution(file.getAbsolutePath());
+            executor.startExecution(file.getAbsolutePath(),null);
             System.out.println("\n");
         }
 

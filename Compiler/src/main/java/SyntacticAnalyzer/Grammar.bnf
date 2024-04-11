@@ -143,7 +143,7 @@ AccesoSelf-Simple ::= 'self' AccesoSelf-Simple-F
 AccesoSelf-Simple-F ::= Encadenado-Simple-Estrella
 |
 
-Encadenado-Simple ::= '.id'
+Encadenado-Simple ::= '.' 'id'
 
 Sentencia-Simple ::= '(' Expresión ')'
 
@@ -273,7 +273,7 @@ Llamada-Método ::= 'id' Argumentos-Actuales Llamada-Método-F
 Llamada-Método-F ::= Encadenado
 |
 
-Llamada-Método-Estático ::= 'idStruct.' Llamada-Método Llamada-Método-Estático-F
+Llamada-Método-Estático ::= 'idStruct' '.' Llamada-Método Llamada-Método-Estático-F
 
 Llamada-Método-Estático-F ::= Encadenado
 |
