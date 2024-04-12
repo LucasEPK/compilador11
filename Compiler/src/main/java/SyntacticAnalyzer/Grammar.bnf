@@ -12,13 +12,11 @@ Lista-DefinicionesF ::=  Lista-Definiciones
 Struct ::= 'struct' 'idStruct' Struct-F
 
 Struct-F ::= '{'  Struct-F1
-| Herencia '{'  Struct-F2
+| Herencia '{'  Struct-F1
 
 Struct-F1 ::= '}'
 | Atributo-Estrella '}'
 
-Struct-F2 ::= '}'
-|  Atributo-Estrella '}'
 
 Atributo-Estrella ::=  Atributo Atributo-Estrella-F
 
