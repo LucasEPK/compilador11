@@ -12,9 +12,7 @@ import java.util.List;
 
 /**
  * Clase que será la encargada de llamar al analizador lèxico
- * e imprimir los resultados por consola o llamar a la clase
- * FileManager en caso de que haya que escribir los resultados
- * en un archivo de salida
+ * cuando sea necesario un nuevo Token
  * @throws LexicalException
  * @author Yeumen Silva
  */
@@ -75,6 +73,7 @@ public class SyntacticExecutor {
 
     /**
      * Método que devuelve el next token al analizador sintáctico
+     * @return Nuevo Token
      * @author Yeumen Silva
      */
 
