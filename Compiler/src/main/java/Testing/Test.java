@@ -20,8 +20,8 @@ public class Test {
      * @author Yeumen Silva
      */
     public void lexicalTest(){
-        folderExecutor("Compiler/src/main/java/Testing/Tests/LexicalTests/Pass", "Pass");
-        folderExecutor("Compiler/src/main/java/Testing/Tests/LexicalTests/Fail", "Fail");
+        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Pass", "Pass");
+        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Fail", "Fail");
     }
     private void folderExecutor(String path, String type){
 
@@ -42,7 +42,7 @@ public class Test {
             System.out.println("Resultado de prueba: " + file.getName());
 
             //Ejecuto con executor como se haria desde el main
-            executor.startExecution(file.getAbsolutePath());
+            executor.startExecution(file.getAbsolutePath(),null);
             System.out.println("\n");
         }
 
