@@ -34,11 +34,11 @@ public class SyntacticAnalyzer {
         this.syntacticExecutor = new SyntacticExecutor(inputPath,outputPath);
 
         // llamada a regla inicial de nuestra gramática
-        program();
+        //program();
 
 
     }
-
+    
     /**
      * Método el cual trata de hacer match y actualizar el token actual
      * y el siguiente
@@ -49,6 +49,24 @@ public class SyntacticAnalyzer {
     private boolean match(String actualname){
 
         boolean matched = false;
+        
+        //Verifico si matchea el Token actual con token esperado
+        if(Objects.equals(this.actualToken.getToken(),"StructID") ||
+                Objects.equals(this.actualToken.getToken(),"ObjID") ||
+                Objects.equals(this.actualToken.getToken(),"IntLiteral") ||
+                Objects.equals(this.actualToken.getToken(),"StrLiteral") ||
+                Objects.equals(this.actualToken.getToken(),"CharLiteral")){
+            if(Objects.equals(this.actualToken.getToken(), actualname)){
+
+                this.actualToken = syntacticExecutor.getNextToken();
+                matched = true;
+
+            }
+            else {
+
+                // ToDo error
+            }
+        }
 
         //Verifico si matchea el lexema del token actual con el lexema esperado
         if(Objects.equals(this.actualToken.getLexeme(), actualname)){
@@ -97,6 +115,7 @@ public class SyntacticAnalyzer {
         return false;
     }
 
+    /*
 
     /**
      * Regla inicial de nuestra gramática
@@ -180,15 +199,15 @@ public class SyntacticAnalyzer {
     private void structF(){
 
         //Primeros de {
-        if(verifyEquals("OpenBraces")){
-            match("OpenBraces");
+        if(verifyEquals("{")){
+            match("{");
             structF1();
         }
         else {
             //Primeros de Herencia
-            if(verifyEquals("Colon")){
+            if(verifyEquals(":")){
                 herencia();
-                match("OpenBraces");
+                match("{");
                 structF1();
             }
 
@@ -198,15 +217,15 @@ public class SyntacticAnalyzer {
     private void structF1(){
 
         //Primeros }
-        if(verifyEquals("CloseBraces")){
-            match("CloseBraces");
+        if(verifyEquals("}")){
+            match("}");
         }
         else {
             //Primeros Atributo-Estrella
             if(verifyEquals("Array", "Bool", "Char","Int","Str","StructID"
                     ,"pri")){
                 atributoEstrella();
-                match("CloseBraces");
+                match("}");
             }
         }
     }
@@ -225,7 +244,7 @@ public class SyntacticAnalyzer {
         }
         else {
             //Siguientes de Atributo-Estrella-F
-            if(verifyEquals("ClosesBraces","$EOF$")){
+            if(verifyEquals("}","$EOF$")){
                 //lambda
             }
             else {
@@ -238,9 +257,9 @@ public class SyntacticAnalyzer {
     private void impl(){
         match("impl");
         match("StructID");
-        match("OpenBraces");
+        match("{");
         miembroMas();
-        match("CloseBraces");
+        match("}");
     }
 
     private void miembroMas(){
@@ -251,12 +270,12 @@ public class SyntacticAnalyzer {
     private void miembroMasF(){
 
         //Primeros Miembro-Mas
-        if(verifyEquals("Period","fn","st")){
+        if(verifyEquals(".","fn","st")){
             miembroMas();
         }
         else {
             //Siguientes Miembro-Mas-F
-            if (verifyEquals("CloseBraces","$EOF$")){
+            if (verifyEquals("}","$EOF$")){
                 //Lambda
             }
             else {
@@ -266,7 +285,7 @@ public class SyntacticAnalyzer {
     }
 
     private void herencia(){
-        match("Colon");
+        match(":");
         tipo();
     }
 
@@ -278,14 +297,14 @@ public class SyntacticAnalyzer {
         }
         //Primeros Constructor
         else {
-            if(verifyEquals("Period")){
+            if(verifyEquals(".")){
                 constructor();
             }
         }
     }
 
     private void constructor(){
-        match("Period");
+        match(".");
         argumentosFormales();
         bloqueMetodo();
     }
@@ -297,7 +316,7 @@ public class SyntacticAnalyzer {
             visibilidad();
             tipo();
             listaDeclaracionVariables();
-            match("SemiColon");
+            match(";");
         }
         else {
             //Primeros Tipo
@@ -305,7 +324,7 @@ public class SyntacticAnalyzer {
             , "idStruct")){
                 tipo();
                 listaDeclaracionVariables();
-                match("SemiColon");
+                match(";");
             }
         }
     }
@@ -317,7 +336,7 @@ public class SyntacticAnalyzer {
             match("fn");
             match("ObjID");
             argumentosFormales();
-            match("Arrow");
+            match("->");
             tipoMetodo();
             bloqueMetodo();
         }
@@ -327,7 +346,7 @@ public class SyntacticAnalyzer {
                 match("fn");
                 match("ObjID");
                 argumentosFormales();
-                match("Arrow");
+                match("->");
                 tipoMetodo();
                 bloqueMetodo();
 
@@ -347,7 +366,7 @@ public class SyntacticAnalyzer {
     }
 
     private void bloqueMetodo(){
-        match("OpenBraces");
+        match("{");
         bloqueMetodoF();
     }
 
@@ -360,27 +379,27 @@ public class SyntacticAnalyzer {
             bloqueMetodoF1();
         }else {
             //Primeros Sentencia-Estrella
-            if (verifyEquals("OpenParenthesis" , "SemiColon" , "ObjID" , "if"
-                    , "ret" , "self" , "while", "OpenBraces")){
+            if (verifyEquals("(" , ";" , "ObjID" , "if"
+                    , "ret" , "self" , "while", "{")){
                 sentenciaEstrella();
-                match("CloseBraces");
+                match("}");
             }else {
-                match("CloseBraces");
+                match("}");
             }
         }
     }
 
     private void bloqueMetodoF1(){
         //Primeros }
-        if(verifyEquals("CloseBraces")){
-            match("CloseBraces");
+        if(verifyEquals("}")){
+            match("}");
         }
         else {
             //Primeros Sentencia-Estrella
-            if(verifyEquals("OpenParenthesis" , "SemiColon" , "ObjID" , "if"
-                    , "ret" , "self" , "while", "OpenBraces")){
+            if(verifyEquals("(" , ";" , "ObjID" , "if"
+                    , "ret" , "self" , "while", "{")){
                 sentenciaEstrella();
-                match("CloseBraces");
+                match("}");
             }
             else {
                 //ToDo error
@@ -402,8 +421,8 @@ public class SyntacticAnalyzer {
         }
         else {
             //Siguientes de Decl-Var-Locales-Estrella-F
-            if(verifyEquals("OpenParenthesis" , "SemiColon" , "ObjID" , "if" ,
-                    "ret" , "self" , "while" , "OpenBraces" , "CloseBraces" , "$EOF$")){
+            if(verifyEquals("(" , ";" , "ObjID" , "if" ,
+                    "ret" , "self" , "while" , "{" , "}" , "$EOF$")){
                 //Lambda
             }
             else {
@@ -419,13 +438,13 @@ public class SyntacticAnalyzer {
 
     private void sentenciaEstrellaF(){
         //Primeros Sentencia-Estrella
-        if(verifyEquals("OpenParenthesis" , "SemiColon" , "ObjID" , "if"
-                , "ret" , "self" , "while", "OpenBraces")){
+        if(verifyEquals("(" , ";" , "ObjID" , "if"
+                , "ret" , "self" , "while", "{")){
             sentenciaEstrella();
         }
         else {
             //Siguientes Sentencia-Estrella-F
-            if (verifyEquals("CloseBraces","$EOF$")){
+            if (verifyEquals("}","$EOF$")){
                 //Lambda
             }
             else {
@@ -437,7 +456,7 @@ public class SyntacticAnalyzer {
     private void declVarLocales(){
         tipo();
         listaDeclaracionVariables();
-        match("SemiColon");
+        match(";");
     }
 
     private void listaDeclaracionVariables(){
@@ -447,13 +466,13 @@ public class SyntacticAnalyzer {
 
     private void listaDeclaracionVariablesF(){
         //Primeros ,
-        if(verifyEquals("Comma")){
-            match("Comma");
+        if(verifyEquals(",")){
+            match(",");
             listaDeclaracionVariables();
         }
         else {
             //Siguientes Lista-Declaracion-Variables-F
-            if(verifyEquals("SemiColon","$EOF$")){
+            if(verifyEquals(";","$EOF$")){
                 //Lambda
             }
             else {
@@ -463,7 +482,7 @@ public class SyntacticAnalyzer {
     }
 
     private void argumentosFormales(){
-        match("OpenParenthesis");
+        match("(");
         argumentosFormalesF();
     }
 
@@ -473,11 +492,11 @@ public class SyntacticAnalyzer {
         if (verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" ,
                 "StructID")){
             listaArgumentosFormales();
-            match("CloseParenthesis");
+            match(")");
         }else {
             //Primeros )
-            if(verifyEquals("CloseParenthesis")){
-                match("CloseParenthesis");
+            if(verifyEquals(")")){
+                match(")");
             }
             else {
                 //ToDo error
@@ -493,13 +512,13 @@ public class SyntacticAnalyzer {
     private void listaArgumentosFormalesF(){
 
         //Primeros ,
-        if(verifyEquals("Comma")){
-            match("Comma");
+        if(verifyEquals(",")){
+            match(",");
             listaArgumentosFormales();
         }
         else{
             //Siguientes Lista-Argumentos-Formales-F
-            if(verifyEquals("CloseParenthesis","$EOF$")){
+            if(verifyEquals(")","$EOF$")){
                 //Lambda
             }
             else {
@@ -576,22 +595,22 @@ public class SyntacticAnalyzer {
 
     private void sentencia(){
         //Primeros ;
-        if (verifyEquals("SemiColon")){
-            match("SemiColon");
+        if (verifyEquals(";")){
+            match(";");
         }
         else {
             //Primeros Asignacion
             if(verifyEquals("ObjID","self")){
                 asignacion();
-                match("SemiColon");
+                match(";");
             }
             else {
                 //Primeros if
                 if (verifyEquals("if")){
                     match("if");
-                    match("OpenParenthesis");
+                    match("(");
                     expresion();
-                    match("CloseParenthesis");
+                    match(")");
                     sentencia();
                     sentenciaF();
                 }
@@ -599,14 +618,14 @@ public class SyntacticAnalyzer {
                     //Primeros while
                     if (verifyEquals("while")){
                         match("while");
-                        match("OpenParenthesis");
+                        match("(");
                         expresion();
-                        match("CloseParenthesis");
+                        match(")");
                         sentencia();
                     }
                     else {
                         //Primeros Bloque
-                        if (verifyEquals("CloseBraces")){
+                        if (verifyEquals("}")){
                             bloque();
                         }
                         else {
@@ -639,8 +658,8 @@ public class SyntacticAnalyzer {
 
     private void sentenciaF1(){
         //Primeros ;
-        if (verifyEquals("SemiColon")){
-            match("SemiColon");
+        if (verifyEquals(";")){
+            match(";");
         }
         else {
             //Primeros Expresion
@@ -648,5 +667,5 @@ public class SyntacticAnalyzer {
         }
     }
 
-
+    
 }
