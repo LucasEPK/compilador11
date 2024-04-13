@@ -120,4 +120,57 @@ public class SyntacticAnalyzer {
         }
 
     }
+
+    /**
+     * Función para la regla 55 <ExpOr> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expOr() {
+        String[] firstExpAnd = {"!", "(", "+" , "++" , "-" , "--" ,
+                "StrLiteral" , "charLiteral" , "false" , "id" , "idStruct" ,
+                "intLiteral" , "new" , "nil" , "self" , "true"};
+
+        if(verifyEquals(firstExpAnd)){
+            expAnd();
+            expOrF();
+        } else {
+            // TODO: tirar error
+        }
+
+    }
+
+    /**
+     * Función para la regla 56 <ExpOr-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expOrF() {
+        String[] followExpOrF = {")" , "," , ";" , "]" , "$EOF$"};
+        String[] firstExpOrR = {"||"};
+
+        if(verifyEquals(followExpOrF)){ // Esto es por Lambda
+            //Lambda
+        } else {
+            if (verifyEquals(firstExpOrR)){
+                expOrR();
+            } else {
+                // TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 57 <ExpOrR> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expOrR(){
+        String[] firstExpOrR = {"||"};
+
+        if (verifyEquals(firstExpOrR)) {
+            match("||");
+            expAnd();
+            expOrRF();
+        } else {
+            // TODO: tirar error
+        }
+    }
 }
