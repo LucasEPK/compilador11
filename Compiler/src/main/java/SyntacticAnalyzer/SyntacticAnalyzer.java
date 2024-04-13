@@ -187,4 +187,107 @@ public class SyntacticAnalyzer {
             }
         }
     }
+
+    /**
+     * Función para la regla 59 <ExpAnd> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expAnd() {
+        String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "charLiteral" , "false" , "id" , "idStruct" , "intLiteral" , "new" , "nil" , "self" , "true"};
+
+        if (verifyEquals(firstExpIgual)) {
+            expIgual();
+            expAndF();
+        }
+    }
+
+    /**
+     * Función para la regla 60 <ExpAnd-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expAndF() {
+        String[] followExpAndF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
+        String[] firstExpAndR = {"&&"};
+
+        if(verifyEquals(followExpAndF)) {
+            //Lambda
+        } else {
+            if (verifyEquals(firstExpAndR)) {
+                expAndR();
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 61 <ExpAndR> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expAndR() {
+        match("&&");
+        expIgual();
+        expAndRF();
+    }
+
+    /**
+     * Función para la regla 62 <ExpAndR-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expAndRF() {
+        String[] followExpAndRF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
+        String[] firstExpAndR = {"&&"};
+
+        if(verifyEquals(followExpAndRF)) {
+            //Lambda
+        } else {
+            if (verifyEquals(firstExpAndR)) {
+                expAndR();
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 63 <ExpIgual> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expIgual() {
+        String[] firstExpCompuesta = {"!" , "(" , "+" , "++" , "-"
+                , "--" , "StrLiteral" , "charLiteral" , "false"
+                , "id" , "idStruct" , "intLiteral" , "new" , "nil"
+                , "self" , "true"};
+
+        if (verifyEquals(firstExpCompuesta)) {
+            expCompuesta();
+            expIgualF();
+        }
+    }
+
+    /**
+     * Función para la regla 64 <ExpIgual-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expIgualF() {
+        String[] followExpIgualF = {"&&" , ")" , "," , ";" , "]" , "||" , "$EOF$"};
+        String[] firstExpIgualR = {"!=" , "=="};
+
+        if(verifyEquals(followExpIgualF)) {
+            //Lambda
+        } else {
+            if (verifyEquals(firstExpIgualR)) {
+                expIgualR();
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 65 <ExpIgualR> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expIgualR() {
+        String[] firstOpIgual = {"!=" , "=="};
+        if (verifyEquals(firstOpIgual)){
+            opIgual();
+            expCompuesta();
+            expIgualRF();
+        }
+    }
 }
