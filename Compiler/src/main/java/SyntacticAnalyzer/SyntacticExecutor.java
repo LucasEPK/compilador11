@@ -1,6 +1,7 @@
 package SyntacticAnalyzer;
 
 import Exceptions.LexicalException;
+import Exceptions.SyntacticException;
 import FileManager.FileManager;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
@@ -31,7 +32,7 @@ public class SyntacticExecutor {
      * @author Yeumen Silva
      */
 
-    SyntacticExecutor(String inputPath, String outputPath) {
+    public SyntacticExecutor(String inputPath, String outputPath) {
         startHashTable();
         this.fileManager = new FileManager(inputPath, outputPath);
         String file = this.fileManager.getInputFile();
@@ -85,14 +86,14 @@ public class SyntacticExecutor {
 
             // Si no es uno de los tokens válidos, sigo buscando uno
 
-            while (token.getToken().equals(this.lexicalAnalyzer.getBLANK_SPACE()) &&
-                    token.getToken().equals(this.lexicalAnalyzer.getTAB()) &&
-                    token.getToken().equals(this.lexicalAnalyzer.getCARRIAGE_RETURN()) &&
-                    token.getToken().equals(this.lexicalAnalyzer.getNEW_LINE()) &&
-                    token.getToken().equals(this.lexicalAnalyzer.getVERTICAL_TAB()) &&
-                    token.getToken().equals(this.lexicalAnalyzer.getSIMPLE_COMMENT())){
+            while ( token.getToken().equals(this.lexicalAnalyzer.getBLANK_SPACE()) ||
+                     token.getToken().equals(this.lexicalAnalyzer.getTAB()) ||
+                     token.getToken().equals(this.lexicalAnalyzer.getCARRIAGE_RETURN()) ||
+                     token.getToken().equals(this.lexicalAnalyzer.getNEW_LINE()) ||
+                     token.getToken().equals(this.lexicalAnalyzer.getVERTICAL_TAB()) ||
+                     token.getToken().equals(this.lexicalAnalyzer.getSIMPLE_COMMENT())){;
 
-                token = this.lexicalAnalyzer.getNextToken();
+                token = this.lexicalAnalyzer.getNextToken();;
 
 
             }
@@ -137,6 +138,19 @@ public class SyntacticExecutor {
         System.out.println("| Linea " + tokenException.getRow() +
                 " | COLUMNA " + tokenException.getColumn() +
                 " | " + exception.getExceptionType() + " " + tokenException.getLexeme());
+
+    }
+
+    public void printException(SyntacticException exception){
+
+        Token tokenException = exception.getToken();
+
+        System.out.println("ERROR: SINTÁCTICO");
+        System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
+
+        System.out.println("| Linea " + tokenException.getRow() +
+                " | COLUMNA " + tokenException.getColumn() +
+                " | " + exception.getExceptionType()   );
 
     }
 

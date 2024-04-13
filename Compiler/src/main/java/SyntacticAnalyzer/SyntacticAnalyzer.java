@@ -1,7 +1,12 @@
 package SyntacticAnalyzer;
 
+import Exceptions.LexicalException;
+import Exceptions.SyntacticException;
 import LexicalAnalyzer.Token;
 
+import java.security.spec.RSAOtherPrimeInfo;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,7 +19,6 @@ public class SyntacticAnalyzer {
     private Token actualToken;
     private SyntacticExecutor syntacticExecutor;
 
-    private Token nextToken;
 
     /**
      * Constructor del Analizador Sintáctico que inicializa el Executor
@@ -32,9 +36,16 @@ public class SyntacticAnalyzer {
          verifica que no haya errores léxicos
         */
         this.syntacticExecutor = new SyntacticExecutor(inputPath,outputPath);
+        this.actualToken = this.syntacticExecutor.getNextToken();
 
-        // llamada a regla inicial de nuestra gramática
-        //program();
+        try {
+            // llamada a regla inicial de nuestra gramática
+            program();
+        }
+        catch (SyntacticException exception){
+            this.syntacticExecutor.printException(exception);
+        }
+
 
 
     }
@@ -48,7 +59,6 @@ public class SyntacticAnalyzer {
 
     private boolean match(String actualname){
 
-        boolean matched = false;
         
         //Verifico si matchea el Token actual con token esperado
         if(Objects.equals(this.actualToken.getToken(),"StructID") ||
@@ -59,12 +69,11 @@ public class SyntacticAnalyzer {
             if(Objects.equals(this.actualToken.getToken(), actualname)){
 
                 this.actualToken = syntacticExecutor.getNextToken();
-                matched = true;
+                return true;
 
             }
             else {
-
-                // ToDo error
+                throw createException(this.actualToken, List.of(actualname), this.actualToken.getToken());
             }
         }
 
@@ -72,24 +81,18 @@ public class SyntacticAnalyzer {
         if(Objects.equals(this.actualToken.getLexeme(), actualname)){
 
             this.actualToken = syntacticExecutor.getNextToken();
-            matched = true;
+            return true;
 
         }
         else {
-
-            // ToDo error
-        }
-        if(Objects.equals(this.actualToken.getLexeme(), "$EOF$")){
-
-            /* Si el lexema del token actual es $EOF$ significa que no tengo
-            nextToken por lo tanto no lo actualizo
-             */
-        }
-        else {
-            this.nextToken = syntacticExecutor.getNextToken();
+            throw createException(this.actualToken, List.of(actualname),this.actualToken.getLexeme());
         }
 
-        return matched;
+    }
+
+    private SyntacticException createException(Token token, List<String> waiting, String actual){
+
+        return new SyntacticException(token,waiting,actual);
     }
 
     /**
@@ -134,7 +137,7 @@ public class SyntacticAnalyzer {
                 start();
             }
             else {
-                // Todo error
+                throw createException(this.actualToken, List.of("start","impl","struct"),this.actualToken.getLexeme());
             }
         }
 
@@ -168,7 +171,7 @@ public class SyntacticAnalyzer {
                 listaDefinicionesF();
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("impl","struct"),this.actualToken.getLexeme());
             }
         }
     }
@@ -185,7 +188,7 @@ public class SyntacticAnalyzer {
                 // Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("start","impl","struct"),this.actualToken.getLexeme());
             }
         }
     }
@@ -198,35 +201,29 @@ public class SyntacticAnalyzer {
 
     private void structF(){
 
-        //Primeros de {
-        if(verifyEquals("{")){
+        //Primeros de :
+        if(verifyEquals(":")){
+            herencia();
             match("{");
             structF1();
+
         }
         else {
-            //Primeros de Herencia
-            if(verifyEquals(":")){
-                herencia();
-                match("{");
-                structF1();
-            }
-
+            match("{");
+            structF1();
         }
     }
 
     private void structF1(){
-
-        //Primeros }
-        if(verifyEquals("}")){
+        //Primeros Atributo-Estrella
+        if(verifyEquals("Array", "Bool", "Char","Int","Str","StructID"
+                ,"pri")){
+            atributoEstrella();
             match("}");
+
         }
         else {
-            //Primeros Atributo-Estrella
-            if(verifyEquals("Array", "Bool", "Char","Int","Str","StructID"
-                    ,"pri")){
-                atributoEstrella();
-                match("}");
-            }
+            match("}");
         }
     }
 
@@ -238,7 +235,7 @@ public class SyntacticAnalyzer {
     private void atributoEstrellaF(){
 
         //Primeros de Atributo-Estrella
-        if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" , "idStruct"
+        if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" , "StructID"
                 , "pri")){
             atributoEstrella();
         }
@@ -248,7 +245,8 @@ public class SyntacticAnalyzer {
                 //lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" , "StructID"
+                        , "pri","}"),this.actualToken.getLexeme());
             }
         }
 
@@ -279,7 +277,7 @@ public class SyntacticAnalyzer {
                 //Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("." , "fn" , "st" , "}"),this.actualToken.getLexeme());
             }
         }
     }
@@ -299,6 +297,9 @@ public class SyntacticAnalyzer {
         else {
             if(verifyEquals(".")){
                 constructor();
+            }
+            else {
+                throw createException(this.actualToken, List.of("fn" , "st" , "." ),this.actualToken.getLexeme());
             }
         }
     }
@@ -321,10 +322,14 @@ public class SyntacticAnalyzer {
         else {
             //Primeros Tipo
             if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
-            , "idStruct")){
+            , "StructID")){
                 tipo();
                 listaDeclaracionVariables();
                 match(";");
+            }
+            else {
+                throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" , "StructID"
+                        , "pri"),this.actualToken.getLexeme());
             }
         }
     }
@@ -352,7 +357,7 @@ public class SyntacticAnalyzer {
 
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("st" , "fn" ),this.actualToken.getLexeme());
             }
         }
     }
@@ -368,6 +373,7 @@ public class SyntacticAnalyzer {
     private void bloqueMetodo(){
         match("{");
         bloqueMetodoF();
+
     }
 
     private void bloqueMetodoF(){
@@ -384,7 +390,14 @@ public class SyntacticAnalyzer {
                 sentenciaEstrella();
                 match("}");
             }else {
-                match("}");
+                if(verifyEquals("}")) {
+                    match("}");
+                }
+                else {
+                    throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" , "StructID"
+                            , "(" , ";" , "ObjID" , "if", "ret"
+                            , "self" , "while", "{","}"),this.actualToken.getLexeme());
+                }
             }
         }
     }
@@ -402,7 +415,8 @@ public class SyntacticAnalyzer {
                 match("}");
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("}" , "(" , ";" , "ObjID" , "if"
+                        , "ret" , "self" , "while", "{"),this.actualToken.getLexeme());
             }
         }
     }
@@ -426,7 +440,9 @@ public class SyntacticAnalyzer {
                 //Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str"
+                        , "StructID","(" , ";" , "ObjID" , "if" ,
+                        "ret" , "self" , "while" , "{" , "}" ),this.actualToken.getLexeme());
             }
         }
     }
@@ -448,7 +464,8 @@ public class SyntacticAnalyzer {
                 //Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("(" , ";" , "ObjID" , "if"
+                        , "ret" , "self" , "while", "{","}"),this.actualToken.getLexeme());
             }
         }
     }
@@ -476,7 +493,7 @@ public class SyntacticAnalyzer {
                 //Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of(",",";"),this.actualToken.getLexeme());
             }
         }
     }
@@ -499,7 +516,8 @@ public class SyntacticAnalyzer {
                 match(")");
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" ,
+                        "StructID",")"),this.actualToken.getLexeme());
             }
         }
     }
@@ -522,7 +540,7 @@ public class SyntacticAnalyzer {
                 //Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("," ,")"),this.actualToken.getLexeme());
             }
         }
     }
@@ -545,7 +563,8 @@ public class SyntacticAnalyzer {
                 match("void");
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" ,
+                        "StructID","void"),this.actualToken.getLexeme());
             }
         }
     }
@@ -557,6 +576,7 @@ public class SyntacticAnalyzer {
         }
         else {
             //Primeros Tipo-Referencia
+            System.out.println(verifyEquals("StructID"));
             if(verifyEquals("StructID")){
                 tipoReferencia();
             }
@@ -566,7 +586,8 @@ public class SyntacticAnalyzer {
                     tipoArreglo();
                 }
                 else {
-                    //ToDo error
+                    throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" ,
+                            "StructID"),this.actualToken.getLexeme());
                 }
             }
         }
@@ -579,7 +600,7 @@ public class SyntacticAnalyzer {
             //Correcto
         }
         else {
-            //ToDo error
+            throw createException(this.actualToken, List.of( "Bool" , "Char" , "Int" , "Str"),this.actualToken.getLexeme());
         }
 
     }
@@ -641,7 +662,8 @@ public class SyntacticAnalyzer {
                                     sentenciaF1();
                                 }
                                 else {
-                                    //ToDo error
+                                    throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
+                                            "while","}","ret"),this.actualToken.getLexeme());
                                 }
                             }
                         }
@@ -679,7 +701,9 @@ public class SyntacticAnalyzer {
                 match(";");
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of(";" , "!" , "(" , "+" , "++" , "-" , "--"
+                        , "StrLiteral", "charLiteral" , "false" , "ObjID"
+                        , "StructID" , "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
             }
         }
     }
@@ -703,7 +727,8 @@ public class SyntacticAnalyzer {
                 match("}");
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("}" ,"(" , ";" , "ObjID" , "if" , "ret" ,
+                        "self" , "while" , "{"),this.actualToken.getLexeme());
             }
         }
     }
@@ -723,7 +748,7 @@ public class SyntacticAnalyzer {
                 expresion();
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("ObjID" , "self"),this.actualToken.getLexeme());
             }
         }
     }
@@ -751,7 +776,7 @@ public class SyntacticAnalyzer {
                     //Lambda
                 }
                 else {
-                    //Todo Error
+                    throw createException(this.actualToken, List.of("[" , "="),this.actualToken.getLexeme());
                 }
             }
         }
@@ -773,7 +798,7 @@ public class SyntacticAnalyzer {
                 //Lambda
             }
             else {
-                //ToDo error
+                throw createException(this.actualToken, List.of("." , "="),this.actualToken.getLexeme());
             }
         }
     }
@@ -790,7 +815,10 @@ public class SyntacticAnalyzer {
         }else {
             //Siguientes AccesoSelf-Simple-F
             if(verifyEquals("=","$EOF$")){
-
+                //Lambda
+            }
+            else {
+                throw createException(this.actualToken, List.of("." , "="),this.actualToken.getLexeme());
             }
         }
     }
