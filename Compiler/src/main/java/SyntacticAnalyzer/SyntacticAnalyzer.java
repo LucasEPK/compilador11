@@ -163,14 +163,28 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void expOrR(){
+
+        match("||");
+        expAnd();
+        expOrRF();
+    }
+
+    /**
+     * Función para la regla 58 <ExpOrR-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void expOrRF() {
+        String[] followExpOrRF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
 
-        if (verifyEquals(firstExpOrR)) {
-            match("||");
-            expAnd();
-            expOrRF();
+        if (verifyEquals(followExpOrRF)) {
+            // Lambda
         } else {
-            // TODO: tirar error
+            if (verifyEquals(firstExpOrR)) {
+                expOrR();
+            } else {
+                //TODO: tirar error
+            }
         }
     }
 }
