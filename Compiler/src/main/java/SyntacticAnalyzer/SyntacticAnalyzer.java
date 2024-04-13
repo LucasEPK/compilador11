@@ -605,42 +605,51 @@ public class SyntacticAnalyzer {
                 match(";");
             }
             else {
-                //Primeros if
-                if (verifyEquals("if")){
-                    match("if");
-                    match("(");
-                    expresion();
-                    match(")");
-                    sentencia();
-                    sentenciaF();
+                //Primeros Sentencia-Simple
+                if(verifyEquals("(")){
+                    sentenciaSimple();
+                    match(";");
                 }
                 else {
-                    //Primeros while
-                    if (verifyEquals("while")){
-                        match("while");
+                    //Primeros if
+                    if (verifyEquals("if")){
+                        match("if");
                         match("(");
                         expresion();
                         match(")");
                         sentencia();
+                        sentenciaF();
                     }
                     else {
-                        //Primeros Bloque
-                        if (verifyEquals("}")){
-                            bloque();
+                        //Primeros while
+                        if (verifyEquals("while")){
+                            match("while");
+                            match("(");
+                            expresion();
+                            match(")");
+                            sentencia();
                         }
                         else {
-                            //Primeros ret
-                            if (verifyEquals("ret")){
-                                match("ret");
-                                sentenciaF1();
+                            //Primeros Bloque
+                            if (verifyEquals("}")){
+                                bloque();
                             }
                             else {
-                                //ToDo error
+                                //Primeros ret
+                                if (verifyEquals("ret")){
+                                    match("ret");
+                                    sentenciaF1();
+                                }
+                                else {
+                                    //ToDo error
+                                }
                             }
                         }
                     }
                 }
+
             }
+
         }
     }
 
@@ -663,9 +672,146 @@ public class SyntacticAnalyzer {
         }
         else {
             //Primeros Expresion
-            if (verifyEquals('!' | '(' | '+' | '++' | '-' | '--' | 'StrLiteral' | 'charLiteral' | 'false' | 'id' | 'idStruct' | 'intLiteral' | 'new' | 'nil' | 'self' | 'true'))
+            if (verifyEquals("!" , "(" , "+" , "++" , "-" , "--"
+                    , "StrLiteral", "charLiteral" , "false" , "ObjID"
+                    , "StructID" , "intLiteral" , "new" , "nil" , "self" , "true")){
+                expresion();
+                match(";");
+            }
+            else {
+                //ToDo error
+            }
         }
     }
 
-    
+    private void bloque(){
+        match(";");
+        bloqueF();
+
+    }
+
+    private void bloqueF(){
+        //Primeros }
+        if(verifyEquals("}")){
+            match("}");
+        }
+        else {
+            //Primeros Setntencia-Estrella
+            if(verifyEquals("(" , ";" , "ObjID" , "if" , "ret" ,
+                    "self" , "while" , "{")){
+                sentenciaEstrella();
+                match("}");
+            }
+            else {
+                //ToDo error
+            }
+        }
+    }
+
+    private void asignacion(){
+        //Primeros AccesoVar-Simple
+        if (verifyEquals("ObjID")){
+            accesoVarSimple();
+            match("=");
+            expresion();
+        }
+        else {
+            //`Primeros AccesoSelf-Simple
+            if(verifyEquals("self")){
+                accesoSelfSimple();
+                match("=");
+                expresion();
+            }
+            else {
+                //ToDo error
+            }
+        }
+    }
+
+    private void accesoVarSimple(){
+        match("id");
+        accesoVarSimpleF();
+    }
+
+    private void accesoVarSimpleF(){
+        //Primeros Encadenado-Simple-Estrella
+        if(verifyEquals(".")){
+            encadenadoSimpleEstrella();
+        }
+        else {
+            //Primeros [
+            if(verifyEquals("[")){
+                match("[");
+                expresion();
+                match("]");
+            }
+            else {
+                //Siguientes AccesoVar-Simple-F
+                if(verifyEquals("=","$EOF$")){
+                    //Lambda
+                }
+                else {
+                    //Todo Error
+                }
+            }
+        }
+    }
+
+    private void encadenadoSimpleEstrella(){
+        encadenadoSimple();
+        encadenadoSimpleEstrellaF();
+    }
+
+    private void encadenadoSimpleEstrellaF(){
+        //Primeros Encadenado-Simple-Estrella
+        if (verifyEquals(".")){
+            encadenadoSimpleEstrella();
+        }
+        else {
+            //Siguientes Encadenado-Simple-Estrella-F
+            if(verifyEquals("=","$EOF$")){
+                //Lambda
+            }
+            else {
+                //ToDo error
+            }
+        }
+    }
+
+    private void accesoSelfSimple(){
+        match("self");
+        accesoSelfSimpleF();
+    }
+
+    private void accesoSelfSimpleF(){
+        //Primeros Encadenado-Simple-Estrella
+        if (verifyEquals(".")){
+            encadenadoSimpleEstrella();
+        }else {
+            //Siguientes AccesoSelf-Simple-F
+            if(verifyEquals("=","$EOF$")){
+
+            }
+        }
+    }
+
+    private void encadenadoSimple(){
+        match(".");
+        match("Objid");
+    }
+
+    private void sentenciaSimple(){
+        match("(");
+        expresion();
+        match(")");
+    }
+
+    private void expresion(){
+        expOr();
+    }
+
+    private void expOr(){
+        expAnd();
+        expOrF();
+    }
 }
