@@ -778,4 +778,353 @@ public class SyntacticAnalyzer {
             }
         }
     }
+
+    /**
+     * Función para la regla 91 <AccesoVar> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void accesoVar() {
+        match("id");
+        accesoVarF();
+    }
+
+    /**
+     * Función para la regla 92 <AccesoVarF> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void accesoVarF() {
+        String[] followAccesoVarF = {"!=" , "%" , "&&" , ")" ,
+                "*" , "+" , "," , "-" , "." , "/" , ";" , "<" ,
+                "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+        String[] firstBracket = {"["};
+
+        if (verifyEquals(followAccesoVarF)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                if (verifyEquals(firstBracket)){
+                    match("[");
+                    expresion();
+                    match("]");
+                    accesoVarF1();
+                } else {
+                    // TODO: tirar error
+                }
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 93 <AccesoVarF1> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void accesoVarF1() {
+        String[] followAccesoVarF1 = {"!=" , "%" , "&&" ,
+                ")" , "*" , "+" , "," , "-" , "." , "/" ,
+                ";" , "<" , "<=" , "==" , ">" , ">=" , "]" ,
+                "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followAccesoVarF1)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                //TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 94 <Llamada-Método> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaMetodo() {
+        match("id");
+        argumentosActuales();
+        llamadaMetodoF();
+    }
+
+    /**
+     * Función para la regla 95 <Llamada-Método-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaMetodoF() {
+        String[] followLlamadaMetodoF = {"!=" , "%" , "&&" , ")" , "*" ,
+                        "+" , "," , "-" , "." , "/" , ";" ,
+                "<" , "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followLlamadaMetodoF)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                //TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 96 <Llamada-Método-Estático> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaMetodoEstatico() {
+        match("idStruct");
+        llamadaMetodo();
+        llamadaMetodoEstaticoF();
+    }
+
+    /**
+     * Función para la regla 97 <Llamada-Método-Estático-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaMetodoEstaticoF() {
+        String[] followLlamadaMetodoEstaticoF = {"!=" , "%" ,
+                "&&" , ")" , "*" , "+" , "," , "-" , "." ,
+                "/" , ";" , "<" , "<=" , "==" , ">" , ">=" ,
+                "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followLlamadaMetodoEstaticoF)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                //TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 98 <Llamada-Constructor> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaConstructor() {
+        match("new");
+        llamadaConstructorF();
+    }
+
+    /**
+     * Función para la regla 99 <Llamada-Constructor-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaConstructorF() {
+        String[] firstTipoPrimitivo = {"Bool" , "Char" , "Int" , "Str"};
+
+        if (verifyEquals(firstTipoPrimitivo)){
+            tipoPrimitivo();
+            match("[");
+            expresion();
+            match("]");
+        } else {
+            match("idStruct");
+            argumentosActuales();
+            llamadaConstructorF1();
+        }
+    }
+
+    /**
+     * Función para la regla 100 <Llamada-Constructor-F1> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaConstructorF1() {
+        String[] followLlamadaConstructorF1 = {"!=" ,
+                "%" , "&&" , ")" , "*" , "+" , "," ,
+                "-" , "." , "/" , ";" , "<" , "<=" ,
+                "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followLlamadaConstructorF1)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                //TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 101 <Argumentos-Actuales> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void argumentosActuales() {
+        match("(");
+        argumentosActualesF();
+    }
+
+    /**
+     * Función para la regla 102 <Argumentos-Actuales-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void argumentosActualesF() {
+        String[] firstListaExpresiones = {"!" , "(" ,
+                "+" , "++" , "-" , "--" , "StrLiteral" ,
+                "charLiteral" , "false" , "id" , "idStruct" ,
+                "intLiteral" , "new" , "nil" , "self" , "true"};
+
+        if (verifyEquals(firstListaExpresiones)){
+            listaExpresiones();
+            match(")");
+        } else {
+            match(")");
+        }
+    }
+
+    /**
+     * Función para la regla 103 <Lista-Expresiones> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void listaExpresiones() {
+        String[] firstExpresion = {"!" , "(" , "+" ,
+                "++" , "-" , "--" , "StrLiteral" ,
+                "charLiteral" , "false" , "id" , "idStruct" ,
+                "intLiteral" , "new" , "nil" , "self" , "true"};
+
+        if (verifyEquals(firstExpresion)){
+            expresion();
+            listaExpresionesF();
+        } else {
+            // TODO: tirar error
+        }
+    }
+
+    /**
+     * Función para la regla 104 <Lista-Expresiones-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void listaExpresionesF() {
+        String[] followListaExpresionesF = {")" , "$EOF$"};
+
+        if (verifyEquals(followListaExpresionesF)){
+            //Lambda
+        } else {
+            match(",");
+            listaExpresiones();
+        }
+    }
+
+    /**
+     * Función para la regla 105 <Encadenado> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void encadenado(){
+        match(".");
+        encadenadoF();
+    }
+
+    /**
+     * Función para la regla 106 <Encadenado-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void encadenadoF(){
+        String[] firstLlamadaMetodoEncadenado = {"id"}; // TODO: puede que haga error porque los dos son id?
+        String[] firstAccesoVariableEncadenado = {"id"};
+
+        if (verifyEquals(firstLlamadaMetodoEncadenado)){
+            llamadaMetodoEncadenado();
+        } else {
+            if (verifyEquals(firstAccesoVariableEncadenado)){
+                accesoVariableEncadenado();
+            } else {
+                // TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 107 <Llamada-Método-Encadenado> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaMetodoEncadenado() {
+        match("id");
+        argumentosActuales();
+        llamadaMetodoEncadenadoF();
+    }
+
+    /**
+     * Función para la regla 108 <Llamada-Método-Encadenado-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void llamadaMetodoEncadenadoF() {
+        String[] followLlamadaMetodoEncadenadoF = {"!=" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
+                "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                ">=" , "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followLlamadaMetodoEncadenadoF)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                //TODO: tirar error
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 109 <Acceso-Variable-Encadenado> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void accesoVariableEncadenado() {
+        match("id");
+        accesoVariableEncadenadoF();
+    }
+
+    /**
+     * Función para la regla 110 <Acceso-Variable-Encadenado-F> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void accesoVariableEncadenadoF() {
+        String[] followAccesoVariableEncadenadoF = {"!=" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
+                "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                ">=" , "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followAccesoVariableEncadenadoF)) {
+            // Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)) {
+                encadenado();
+            } else {
+                match("[");
+                expresion();
+                match("]");
+                accesoVariableEncadenadoF1();
+            }
+        }
+    }
+
+    /**
+     * Función para la regla 111 <Acceso-Variable-Encadenado-F1> de la Gramatica
+     * @author Lucas Moyano
+     * */
+    private void accesoVariableEncadenadoF1() {
+        String[] followAccesoVariableEncadenadoF1 = {"!=" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
+                "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                ">=" , "]" , "||" , "$EOF$"};
+        String[] firstEncadenado = {"."};
+
+        if (verifyEquals(followAccesoVariableEncadenadoF1)){
+            //Lambda
+        } else {
+            if (verifyEquals(firstEncadenado)){
+                encadenado();
+            } else {
+                //TODO: tirar error
+            }
+        }
+    }
 }
