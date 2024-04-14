@@ -851,7 +851,9 @@ public class SyntacticAnalyzer {
             expAnd();
             expOrF();
         } else {
-            // TODO: tirar error
+            throw createException(this.actualToken, List.of("!", "(", "+" , "++" , "-" , "--" ,
+                    "StrLiteral" , "charLiteral" , "false" , "id" , "idStruct" ,
+                    "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
 
     }
@@ -870,7 +872,8 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstExpOrR)){
                 expOrR();
             } else {
-                // TODO: tirar error
+                throw createException(this.actualToken, List.of("||", ")" , "," ,
+                        ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -900,7 +903,8 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstExpOrR)) {
                 expOrR();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("||" ,")" , "," ,
+                        ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -910,11 +914,15 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void expAnd() {
-        String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "charLiteral" , "false" , "id" , "idStruct" , "intLiteral" , "new" , "nil" , "self" , "true"};
+        String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "charLiteral" ,
+                "false" , "id" , "idStruct" , "intLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpIgual)) {
             expIgual();
             expAndF();
+        } else {
+            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "charLiteral" ,
+                    "false" , "id" , "idStruct" , "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -931,6 +939,9 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpAndR)) {
                 expAndR();
+            } else {
+                throw createException(this.actualToken, List.of("&&", ")" , "," , ";" ,
+                        "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -958,6 +969,9 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpAndR)) {
                 expAndR();
+            } else {
+                throw createException(this.actualToken, List.of("&&" , ")" , "," , ";" ,
+                        "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -975,6 +989,11 @@ public class SyntacticAnalyzer {
         if (verifyEquals(firstExpCompuesta)) {
             expCompuesta();
             expIgualF();
+        } else {
+            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-"
+                    , "--" , "StrLiteral" , "charLiteral" , "false"
+                    , "id" , "idStruct" , "intLiteral" , "new" , "nil"
+                    , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -991,6 +1010,9 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpIgualR)) {
                 expIgualR();
+            } else {
+                throw createException(this.actualToken, List.of("!=" , "==" ,"&&" ,
+                        ")" , "," , ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1005,6 +1027,8 @@ public class SyntacticAnalyzer {
             opIgual();
             expCompuesta();
             expIgualRF();
+        } else {
+            throw createException(this.actualToken, List.of("!=" , "=="),this.actualToken.getLexeme());
         }
     }
 
@@ -1022,6 +1046,9 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpIgualR)) {
                 expIgualR();
+            } else {
+                throw createException(this.actualToken, List.of("!=" , "==", "&&" , ")" , "," ,
+                        ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1039,6 +1066,11 @@ public class SyntacticAnalyzer {
         if (verifyEquals(firstExpAd)) {
             expAd();
             expCompuestaF();
+        } else {
+            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++"
+                    , "-" , "--" , "StrLiteral" , "charLiteral"
+                    , "false" , "id" , "idStruct" , "intLiteral"
+                    , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -1058,6 +1090,11 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstOpCompuesto)) {
                 opCompuesto();
                 expAd();
+            } else {
+                throw createException(this.actualToken, List.of("<" , "<=" , ">" , ">=",
+                        "!=" , "&&" , ")" ,
+                        "," , ";" , "==" ,
+                        "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1075,6 +1112,11 @@ public class SyntacticAnalyzer {
         if (verifyEquals(firstExpMul)) {
             expMul();
             expAdF();
+        } else {
+            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" ,
+                    "-" , "--" , "StrLiteral" , "charLiteral" ,
+                    "false" , "id" , "idStruct" , "intLiteral" ,
+                    "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -1093,6 +1135,10 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpAdR)) {
                 expAdR();
+            } else {
+                throw createException(this.actualToken, List.of("+" , "-", "!=" , "&&" , ")" ,
+                        "," , ";" , "<" , "<=" , "==" ,
+                        ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1108,6 +1154,8 @@ public class SyntacticAnalyzer {
             opAd();
             expMul();
             expAdRF();
+        } else {
+            throw createException(this.actualToken, List.of("+" , "-"),this.actualToken.getLexeme());
         }
     }
 
@@ -1126,6 +1174,10 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpAdR)) {
                 expAdR();
+            } else {
+                throw createException(this.actualToken, List.of("+" , "-", "!=" , "&&" , ")" , "," ,
+                        ";" , "<" , "<=" , "==" , ">" , ">=" ,
+                        "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1143,6 +1195,11 @@ public class SyntacticAnalyzer {
         if (verifyEquals(firstExpUn)) {
             expUn();
             expMulF();
+        } else {
+            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" ,
+                    "--" , "StrLiteral" , "charLiteral" , "false" ,
+                    "id" , "idStruct" , "intLiteral" , "new" ,
+                    "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -1162,6 +1219,11 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstMulR)) {
                 expMulR();
+            } else {
+                throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" ,
+                        "+" , "," , "-" , ";" , "<" ,
+                        "<=" , "==" , ">" , ">=" , "]" ,
+                        "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1177,6 +1239,8 @@ public class SyntacticAnalyzer {
             opMul();
             expUn();
             expMulRF();
+        } else {
+            throw createException(this.actualToken, List.of("%" , "*" , "/"),this.actualToken.getLexeme());
         }
     }
 
@@ -1195,6 +1259,10 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstExpMulR)) {
                 expMulR();
+            } else {
+                throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" , "+" ,
+                        "," , "-" , ";" , "<" , "<=" , "==" ,
+                        ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1215,6 +1283,10 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstOperando)) {
                 operando();
+            } else {
+                throw createException(this.actualToken, List.of("!" , "+" , "++" , "-" , "--", "(" , "StrLiteral" ,
+                        "charLiteral" , "false" , "id" , "idStruct" ,
+                        "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1336,7 +1408,10 @@ public class SyntacticAnalyzer {
                 primario();
                 operandoF();
             } else {
-                // TODO: tirar error
+                throw createException(this.actualToken, List.of("StrLiteral" ,
+                        "charLiteral" , "false" , "intLiteral" ,
+                        "nil" , "true", "(" , "id" , "idStruct" ,
+                        "new" , "self"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1358,7 +1433,10 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                // TODO: tirar error
+                throw createException(this.actualToken, List.of(".", "!=" , "%" , "&&" ,
+                        ")" , "*" , "+" , "," , "-" , "/" , ";" ,
+                        "<" , "<=" , "==" , ">" , ">=" , "]" , "||" ,
+                        "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1427,7 +1505,7 @@ public class SyntacticAnalyzer {
                             if (verifyEquals(firstLlamadaConstructor)){
                                 llamadaConstructor();
                             } else {
-                                //TODO: TIRAR ERROR
+                                throw createException(this.actualToken, List.of("(", "self", "id", "idStruct", "new"),this.actualToken.getLexeme());
                             }
                         }
                     }
@@ -1463,6 +1541,11 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
+            } else {
+                throw createException(this.actualToken, List.of(".", "!=" , "%"
+                        , "&&" , ")" , "*" , "+" , "," , "-"
+                        , "." , "/" , ";" , "<" , "<=" , "=="
+                        , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1492,6 +1575,11 @@ public class SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
+            } else {
+                throw createException(this.actualToken, List.of(".", "!=" , "%" ,
+                        "&&" , ")" , "*" , "+" , "," ,
+                        "-" , "." , "/" , ";" , "<" , "<=" ,
+                        "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1513,7 +1601,7 @@ public class SyntacticAnalyzer {
         String[] followAccesoVarF = {"!=" , "%" , "&&" , ")" ,
                 "*" , "+" , "," , "-" , "." , "/" , ";" , "<" ,
                 "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; // TODO: first y follow tienen ".", no se si puede causar errores
         String[] firstBracket = {"["};
 
         if (verifyEquals(followAccesoVarF)){
@@ -1528,7 +1616,9 @@ public class SyntacticAnalyzer {
                     match("]");
                     accesoVarF1();
                 } else {
-                    // TODO: tirar error
+                    throw createException(this.actualToken, List.of("[", "!=" , "%" , "&&" , ")" ,
+                            "*" , "+" , "," , "-" , "." , "/" , ";" , "<" ,
+                            "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
                 }
             }
         }
@@ -1543,7 +1633,7 @@ public class SyntacticAnalyzer {
                 ")" , "*" , "+" , "," , "-" , "." , "/" ,
                 ";" , "<" , "<=" , "==" , ">" , ">=" , "]" ,
                 "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; // TODO: estos tambien tienen "." los dos
 
         if (verifyEquals(followAccesoVarF1)){
             //Lambda
@@ -1551,7 +1641,10 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("!=" , "%" , "&&" ,
+                        ")" , "*" , "+" , "," , "-" , "." , "/" ,
+                        ";" , "<" , "<=" , "==" , ">" , ">=" , "]" ,
+                        "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1574,7 +1667,7 @@ public class SyntacticAnalyzer {
         String[] followLlamadaMetodoF = {"!=" , "%" , "&&" , ")" , "*" ,
                         "+" , "," , "-" , "." , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; // TODO: los dos tienen "."
 
         if (verifyEquals(followLlamadaMetodoF)){
             //Lambda
@@ -1582,7 +1675,9 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("!=" , "%" , "&&" , ")" , "*" ,
+                        "+" , "," , "-" , "." , "/" , ";" ,
+                        "<" , "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1606,7 +1701,7 @@ public class SyntacticAnalyzer {
                 "&&" , ")" , "*" , "+" , "," , "-" , "." ,
                 "/" , ";" , "<" , "<=" , "==" , ">" , ">=" ,
                 "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; // TODO: los dos tienen "."
 
         if (verifyEquals(followLlamadaMetodoEstaticoF)){
             //Lambda
@@ -1614,7 +1709,10 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("!=" , "%" ,
+                        "&&" , ")" , "*" , "+" , "," , "-" , "." ,
+                        "/" , ";" , "<" , "<=" , "==" , ">" , ">=" ,
+                        "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1656,7 +1754,7 @@ public class SyntacticAnalyzer {
                 "%" , "&&" , ")" , "*" , "+" , "," ,
                 "-" , "." , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; // todo: los dos tienen "."
 
         if (verifyEquals(followLlamadaConstructorF1)){
             //Lambda
@@ -1664,7 +1762,10 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("!=" ,
+                        "%" , "&&" , ")" , "*" , "+" , "," ,
+                        "-" , "." , "/" , ";" , "<" , "<=" ,
+                        "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1710,7 +1811,10 @@ public class SyntacticAnalyzer {
             expresion();
             listaExpresionesF();
         } else {
-            // TODO: tirar error
+            throw createException(this.actualToken, List.of("!" , "(" , "+" ,
+                    "++" , "-" , "--" , "StrLiteral" ,
+                    "charLiteral" , "false" , "id" , "idStruct" ,
+                    "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -1752,7 +1856,7 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstAccesoVariableEncadenado)){
                 accesoVariableEncadenado();
             } else {
-                // TODO: tirar error
+                throw createException(this.actualToken, List.of("id"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1776,7 +1880,7 @@ public class SyntacticAnalyzer {
                 "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
                 "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; // TODO: los dos tienen "."
 
         if (verifyEquals(followLlamadaMetodoEncadenadoF)){
             //Lambda
@@ -1784,7 +1888,10 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("!=" ,
+                        "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
+                        "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                        ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1807,7 +1914,7 @@ public class SyntacticAnalyzer {
                 "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
                 "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; //TODO : los dos tienen "."
 
         if (verifyEquals(followAccesoVariableEncadenadoF)) {
             // Lambda
@@ -1832,7 +1939,7 @@ public class SyntacticAnalyzer {
                 "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
                 "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."};
+        String[] firstEncadenado = {"."}; //TODO : los dos tienen "."
 
         if (verifyEquals(followAccesoVariableEncadenadoF1)){
             //Lambda
@@ -1840,7 +1947,10 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstEncadenado)){
                 encadenado();
             } else {
-                //TODO: tirar error
+                throw createException(this.actualToken, List.of("!=" ,
+                        "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
+                        "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                        ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
     }
