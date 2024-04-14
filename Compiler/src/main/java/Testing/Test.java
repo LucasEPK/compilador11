@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import Exceptions.NoArgsException;
 import LexicalAnalyzer.Executor;
+import SyntacticAnalyzer.SyntacticAnalyzer;
+import SyntacticAnalyzer.SyntacticExecutor;
 
 
 /**
@@ -20,10 +22,23 @@ public class Test {
      * @author Yeumen Silva
      */
     public void lexicalTest(){
-        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Pass", "Pass");
-        folderExecutor("src/main/java/Testing/Tests/LexicalTests/Fail", "Fail");
+        folderExecutorLexical("src/main/java/Testing/Tests/LexicalTests/passing", "Pass");
+        folderExecutorLexical("src/main/java/Testing/Tests/LexicalTests/failing", "Fail");
     }
-    private void folderExecutor(String path, String type){
+
+    /**
+     * Método que es ejecuta los tests del analizador sintáctico
+     * @throws Exceptions.LexicalException
+     * @author Yeumen Silva
+     */
+
+    public void SyntacticTest(){
+        folderExecutorSyntactic("src/main/java/Testing/Tests/LexicalTests/passing", "Pass");
+        folderExecutorSyntactic("src/main/java/Testing/Tests/LexicalTests/failing", "Fail");
+    }
+
+
+    private void folderExecutorLexical(String path, String type){
 
         Executor executor = new Executor();
 
@@ -43,6 +58,30 @@ public class Test {
 
             //Ejecuto con executor como se haria desde el main
             executor.startExecution(file.getAbsolutePath(),null);
+            System.out.println("\n");
+        }
+
+    }
+
+    private void folderExecutorSyntactic(String path, String type){
+
+        SyntacticExecutor syntacticExecutor;
+        //guardo todos los archivos de la carpeta
+        File[] files = readFolder(path);
+
+        if (type.equals("Pass")) {
+            System.out.println("ARCHIVOS QUE PASAN EL SINTÁCTICO\n");
+        }else {
+            System.out.println("ARCHIVOS QUE NO PASAN EL SINTÁCTICO\n");
+        }
+
+        for (File file : files) {
+
+            //Imprimo el nombre del archivo para identificarlo
+            System.out.println("Resultado de prueba: " + file.getName());
+
+            //Ejecuto con executor como se haria desde el Sintáctico
+            syntacticExecutor = new SyntacticExecutor(path,null);
             System.out.println("\n");
         }
 
@@ -68,7 +107,9 @@ public class Test {
 
         Test tester = new Test();
 
-        tester.lexicalTest();
+        tester.SyntacticTest();
+
+        //tester.lexicalTest();
 
     }
 
