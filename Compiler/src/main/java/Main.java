@@ -1,3 +1,4 @@
+import Exceptions.LexicalException;
 import Exceptions.NoArgsException;
 import LexicalAnalyzer.Executor;
 import SyntacticAnalyzer.SyntacticAnalyzer;
@@ -11,8 +12,7 @@ import SyntacticAnalyzer.SyntacticAnalyzer;
 public class Main {
 
     public static void main(String[] args) {
-        String inputPath,outputPath;
-        SyntacticAnalyzer syntacticAnalyzer;
+        String inputPath;
 
         /* Verifica si hay algun argumento de entrada, de otro modo
         lanza un error
@@ -28,10 +28,46 @@ public class Main {
             return;
         }
 
+
+        newExecutor(args,inputPath);
+
+
+
+
+
+    }
+
+    /**
+     * Método que llama al antiguo Executor
+     * @author Yeumen Silva
+     * */
+    private static void oldExecutor(String[] args, String inputPath){
+
         /* Dependiendo si la salida es por consola o no, llama a una función
         u otra de la clase Executor
          */
 
+        Executor executor = new Executor();
+        if (args.length < 2){
+
+            executor.startExecution(inputPath,null);
+
+        }
+        else    {
+
+            executor.startExecution(inputPath,args[1]);
+
+        };
+
+    }
+
+    /**
+     * Método que llama al nuevo Executor
+     * @author Yeumen Silva
+     * */
+
+    private static void newExecutor(String[] args, String inputPath ){
+        SyntacticAnalyzer syntacticAnalyzer;
         if (args.length < 2){
 
             syntacticAnalyzer = new SyntacticAnalyzer(inputPath,null);
@@ -39,14 +75,9 @@ public class Main {
         }
         else    {
 
-            outputPath = args[1];
-            syntacticAnalyzer = new SyntacticAnalyzer(inputPath,outputPath);
+            syntacticAnalyzer = new SyntacticAnalyzer(inputPath,args[1]);
 
         };
 
-
-
-
     }
-
 }
