@@ -141,20 +141,30 @@ public class SyntacticAnalyzer {
 
     private void program() {
 
+        boolean isFInal = true;
         //Primeros Start
         if (verifyEquals("start")) {
             start();
+            if(!Objects.equals(this.actualToken.getLexeme(), "$EOF$")){
+                isFInal = false;
+            }
         } else {
             //Primeros Lista-Definiciones
             if (verifyEquals("impl","struct")) {
                 listaDefiniciones();
                 start();
+                if(!Objects.equals(this.actualToken.getLexeme(), "$EOF$")){
+                    isFInal = false;
+                }
             }
             else {
                 throw createException(this.actualToken, List.of("start","impl","struct"),this.actualToken.getLexeme());
             }
         }
 
+        if(!isFInal){
+            throw createException(this.actualToken,List.of("$EOF$"),this.actualToken.getLexeme());
+        }
     }
 
     /**
