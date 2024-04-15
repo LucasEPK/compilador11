@@ -59,7 +59,9 @@ public class SyntacticAnalyzer {
 
     private boolean match(String actualname){
 
-        
+        System.out.println("El que tengo " + this.actualToken.getLexeme());
+        System.out.println("El que espero " + actualname);
+
         //Verifico si matchea el Token actual con token esperado
         if(Objects.equals(this.actualToken.getToken(),"StructID") ||
                 Objects.equals(this.actualToken.getToken(),"ObjID") ||
@@ -90,6 +92,17 @@ public class SyntacticAnalyzer {
 
     }
 
+    /**
+     * Método el cual trata de hacer match cuando tenemos
+     * más de un match posible
+     * @param actualname Nombre del lexema actual
+     * @author Yeumen Silva
+     * */
+
+    private boolean moreOneMatch(String actualname){
+        return Objects.equals(this.actualToken.getLexeme(),actualname);
+    }
+
     private SyntacticException createException(Token token, List<String> waiting, String actual){
 
         return new SyntacticException(token,waiting,actual);
@@ -108,10 +121,11 @@ public class SyntacticAnalyzer {
     private boolean verifyEquals(String... name){
 
         String actualLexeme = this.actualToken.getLexeme();
+        String actualToken = this.actualToken.getToken();
 
         for (String lexeme : name){
 
-            if(Objects.equals(actualLexeme,lexeme)){
+            if(Objects.equals(actualLexeme,lexeme) || Objects.equals(actualToken,lexeme)){
                 return true;
             }
         }
@@ -576,7 +590,6 @@ public class SyntacticAnalyzer {
         }
         else {
             //Primeros Tipo-Referencia
-            System.out.println(verifyEquals("StructID"));
             if(verifyEquals("StructID")){
                 tipoReferencia();
             }
@@ -595,9 +608,9 @@ public class SyntacticAnalyzer {
 
     private void tipoPrimitivo(){
 
-        if(match("Str") || match("Bool")
-                || match("Int") || match("Char")){
-            //Correcto
+        if(moreOneMatch("Str") || moreOneMatch("Bool")
+                || moreOneMatch("Int") || moreOneMatch("Char")){
+            this.actualToken = this.syntacticExecutor.getNextToken();
         }
         else {
             throw createException(this.actualToken, List.of( "Bool" , "Char" , "Int" , "Str"),this.actualToken.getLexeme());
@@ -652,7 +665,7 @@ public class SyntacticAnalyzer {
                         }
                         else {
                             //Primeros Bloque
-                            if (verifyEquals("}")){
+                            if (verifyEquals("{")){
                                 bloque();
                             }
                             else {
@@ -663,7 +676,7 @@ public class SyntacticAnalyzer {
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
-                                            "while","}","ret"),this.actualToken.getLexeme());
+                                            "while","{","ret"),this.actualToken.getLexeme());
                                 }
                             }
                         }
@@ -695,21 +708,21 @@ public class SyntacticAnalyzer {
         else {
             //Primeros Expresion
             if (verifyEquals("!" , "(" , "+" , "++" , "-" , "--"
-                    , "StrLiteral", "charLiteral" , "false" , "ObjID"
-                    , "StructID" , "intLiteral" , "new" , "nil" , "self" , "true")){
+                    , "StrLiteral", "CharLiteral" , "false" , "ObjID"
+                    , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true")){
                 expresion();
                 match(";");
             }
             else {
                 throw createException(this.actualToken, List.of(";" , "!" , "(" , "+" , "++" , "-" , "--"
-                        , "StrLiteral", "charLiteral" , "false" , "ObjID"
-                        , "StructID" , "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
+                        , "StrLiteral", "CharLiteral" , "false" , "ObjID"
+                        , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
             }
         }
     }
 
     private void bloque(){
-        match(";");
+        match("{");
         bloqueF();
 
     }
@@ -754,7 +767,7 @@ public class SyntacticAnalyzer {
     }
 
     private void accesoVarSimple(){
-        match("id");
+        match("ObjID");
         accesoVarSimpleF();
     }
 
@@ -825,7 +838,7 @@ public class SyntacticAnalyzer {
 
     private void encadenadoSimple(){
         match(".");
-        match("Objid");
+        match("ObjID");
     }
 
     private void sentenciaSimple(){
@@ -844,16 +857,16 @@ public class SyntacticAnalyzer {
      * */
     private void expOr() {
         String[] firstExpAnd = {"!", "(", "+" , "++" , "-" , "--" ,
-                "StrLiteral" , "charLiteral" , "false" , "id" , "idStruct" ,
-                "intLiteral" , "new" , "nil" , "self" , "true"};
+                "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if(verifyEquals(firstExpAnd)){
             expAnd();
             expOrF();
         } else {
             throw createException(this.actualToken, List.of("!", "(", "+" , "++" , "-" , "--" ,
-                    "StrLiteral" , "charLiteral" , "false" , "id" , "idStruct" ,
-                    "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
+                    "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                    "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
 
     }
@@ -914,15 +927,15 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void expAnd() {
-        String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "charLiteral" ,
-                "false" , "id" , "idStruct" , "intLiteral" , "new" , "nil" , "self" , "true"};
+        String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
+                "false" , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpIgual)) {
             expIgual();
             expAndF();
         } else {
-            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "charLiteral" ,
-                    "false" , "id" , "idStruct" , "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
+            throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
+                    "false" , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -982,8 +995,8 @@ public class SyntacticAnalyzer {
      * */
     private void expIgual() {
         String[] firstExpCompuesta = {"!" , "(" , "+" , "++" , "-"
-                , "--" , "StrLiteral" , "charLiteral" , "false"
-                , "id" , "idStruct" , "intLiteral" , "new" , "nil"
+                , "--" , "StrLiteral" , "CharLiteral" , "false"
+                , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil"
                 , "self" , "true"};
 
         if (verifyEquals(firstExpCompuesta)) {
@@ -991,8 +1004,8 @@ public class SyntacticAnalyzer {
             expIgualF();
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-"
-                    , "--" , "StrLiteral" , "charLiteral" , "false"
-                    , "id" , "idStruct" , "intLiteral" , "new" , "nil"
+                    , "--" , "StrLiteral" , "CharLiteral" , "false"
+                    , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil"
                     , "self" , "true"),this.actualToken.getLexeme());
         }
     }
@@ -1059,8 +1072,8 @@ public class SyntacticAnalyzer {
      * */
     private void expCompuesta() {
         String[] firstExpAd = {"!" , "(" , "+" , "++"
-                , "-" , "--" , "StrLiteral" , "charLiteral"
-                , "false" , "id" , "idStruct" , "intLiteral"
+                , "-" , "--" , "StrLiteral" , "CharLiteral"
+                , "false" , "ObjID" , "StructID" , "IntLiteral"
                 , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpAd)) {
@@ -1068,8 +1081,8 @@ public class SyntacticAnalyzer {
             expCompuestaF();
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++"
-                    , "-" , "--" , "StrLiteral" , "charLiteral"
-                    , "false" , "id" , "idStruct" , "intLiteral"
+                    , "-" , "--" , "StrLiteral" , "CharLiteral"
+                    , "false" , "ObjID" , "StructID" , "IntLiteral"
                     , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
@@ -1105,8 +1118,8 @@ public class SyntacticAnalyzer {
      * */
     private void expAd() {
         String[] firstExpMul = {"!" , "(" , "+" , "++" ,
-                "-" , "--" , "StrLiteral" , "charLiteral" ,
-                "false" , "id" , "idStruct" , "intLiteral" ,
+                "-" , "--" , "StrLiteral" , "CharLiteral" ,
+                "false" , "ObjID" , "StructID" , "IntLiteral" ,
                 "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpMul)) {
@@ -1114,8 +1127,8 @@ public class SyntacticAnalyzer {
             expAdF();
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" ,
-                    "-" , "--" , "StrLiteral" , "charLiteral" ,
-                    "false" , "id" , "idStruct" , "intLiteral" ,
+                    "-" , "--" , "StrLiteral" , "CharLiteral" ,
+                    "false" , "ObjID" , "StructID" , "IntLiteral" ,
                     "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
@@ -1188,8 +1201,8 @@ public class SyntacticAnalyzer {
      * */
     private void expMul() {
         String[] firstExpUn = {"!" , "(" , "+" , "++" , "-" ,
-                "--" , "StrLiteral" , "charLiteral" , "false" ,
-                "id" , "idStruct" , "intLiteral" , "new" ,
+                "--" , "StrLiteral" , "CharLiteral" , "false" ,
+                "ObjID" , "StructID" , "IntLiteral" , "new" ,
                 "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpUn)) {
@@ -1197,8 +1210,8 @@ public class SyntacticAnalyzer {
             expMulF();
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" ,
-                    "--" , "StrLiteral" , "charLiteral" , "false" ,
-                    "id" , "idStruct" , "intLiteral" , "new" ,
+                    "--" , "StrLiteral" , "CharLiteral" , "false" ,
+                    "ObjID" , "StructID" , "IntLiteral" , "new" ,
                     "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
@@ -1274,8 +1287,8 @@ public class SyntacticAnalyzer {
     private void expUn() {
         String[] firstOpUnario = {"!" , "+" , "++" , "-" , "--"};
         String[] firstOperando = {"(" , "StrLiteral" ,
-                "charLiteral" , "false" , "id" , "idStruct" ,
-                "intLiteral" , "new" , "nil" , "self" , "true"};
+                "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstOpUnario)) {
             opUnario();
@@ -1285,8 +1298,8 @@ public class SyntacticAnalyzer {
                 operando();
             } else {
                 throw createException(this.actualToken, List.of("!" , "+" , "++" , "-" , "--", "(" , "StrLiteral" ,
-                        "charLiteral" , "false" , "id" , "idStruct" ,
-                        "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
+                        "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                        "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1396,9 +1409,9 @@ public class SyntacticAnalyzer {
      * */
     private void operando() {
         String[] firstLiteral = {"StrLiteral" ,
-                "charLiteral" , "false" , "intLiteral" ,
+                "CharLiteral" , "false" , "IntLiteral" ,
                 "nil" , "true"};
-        String[] firstPrimario = {"(" , "id" , "idStruct" ,
+        String[] firstPrimario = {"(" , "ObjID" , "StructID" ,
                 "new" , "self"};
 
         if (verifyEquals(firstLiteral)){
@@ -1409,8 +1422,8 @@ public class SyntacticAnalyzer {
                 operandoF();
             } else {
                 throw createException(this.actualToken, List.of("StrLiteral" ,
-                        "charLiteral" , "false" , "intLiteral" ,
-                        "nil" , "true", "(" , "id" , "idStruct" ,
+                        "CharLiteral" , "false" , "IntLiteral" ,
+                        "nil" , "true", "(" , "ObjID" , "StructID" ,
                         "new" , "self"),this.actualToken.getLexeme());
             }
         }
@@ -1449,7 +1462,7 @@ public class SyntacticAnalyzer {
         String[] firstNil = {"nil"};
         String[] firstTrue = {"true"};
         String[] firstFalse = {"false"};
-        String[] firstIntLiteral = {"intLiteral"};
+        String[] firstIntLiteral = {"IntLiteral"};
         String[] firstStrLiteral = {"StrLiteral"};
 
         if (verifyEquals(firstNil)){
@@ -1462,12 +1475,12 @@ public class SyntacticAnalyzer {
                     match("false");
                 } else {
                     if (verifyEquals(firstIntLiteral)){
-                        match("intLiteral");
+                        match("IntLiteral");
                     } else {
                         if (verifyEquals(firstStrLiteral)){
                             match("StrLiteral");
                         } else {
-                            match("charLiteral");
+                            match("CharLiteral");
                         }
                     }
                 }
@@ -1482,9 +1495,9 @@ public class SyntacticAnalyzer {
     private void primario() {
         String[] firstExpresionParentizada = {"("};
         String[] firstAccesoSelf = {"self"};
-        String[] firstAccesoVar = {"id"}; //TODO: puede que haya error por doble id?
-        String[] firstLlamadaMetodo = {"id"};
-        String[] firstLlamadaMetodoEstatico = {"idStruct"};
+        String[] firstAccesoVar = {"ObjID"}; //TODO: puede que haya error por doble id?
+        String[] firstLlamadaMetodo = {"ObjID"};
+        String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
 
         if (verifyEquals(firstExpresionParentizada)) {
@@ -1505,7 +1518,7 @@ public class SyntacticAnalyzer {
                             if (verifyEquals(firstLlamadaConstructor)){
                                 llamadaConstructor();
                             } else {
-                                throw createException(this.actualToken, List.of("(", "self", "id", "idStruct", "new"),this.actualToken.getLexeme());
+                                throw createException(this.actualToken, List.of("(", "self", "ObjID", "StructID", "new"),this.actualToken.getLexeme());
                             }
                         }
                     }
@@ -1589,7 +1602,7 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void accesoVar() {
-        match("id");
+        match("ObjID");
         accesoVarF();
     }
 
@@ -1654,7 +1667,7 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void llamadaMetodo() {
-        match("id");
+        match("ObjID");
         argumentosActuales();
         llamadaMetodoF();
     }
@@ -1687,7 +1700,7 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void llamadaMetodoEstatico() {
-        match("idStruct");
+        match("StructID");
         llamadaMetodo();
         llamadaMetodoEstaticoF();
     }
@@ -1739,7 +1752,7 @@ public class SyntacticAnalyzer {
             expresion();
             match("]");
         } else {
-            match("idStruct");
+            match("StructID");
             argumentosActuales();
             llamadaConstructorF1();
         }
@@ -1786,8 +1799,8 @@ public class SyntacticAnalyzer {
     private void argumentosActualesF() {
         String[] firstListaExpresiones = {"!" , "(" ,
                 "+" , "++" , "-" , "--" , "StrLiteral" ,
-                "charLiteral" , "false" , "id" , "idStruct" ,
-                "intLiteral" , "new" , "nil" , "self" , "true"};
+                "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstListaExpresiones)){
             listaExpresiones();
@@ -1804,8 +1817,8 @@ public class SyntacticAnalyzer {
     private void listaExpresiones() {
         String[] firstExpresion = {"!" , "(" , "+" ,
                 "++" , "-" , "--" , "StrLiteral" ,
-                "charLiteral" , "false" , "id" , "idStruct" ,
-                "intLiteral" , "new" , "nil" , "self" , "true"};
+                "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpresion)){
             expresion();
@@ -1813,8 +1826,8 @@ public class SyntacticAnalyzer {
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" ,
                     "++" , "-" , "--" , "StrLiteral" ,
-                    "charLiteral" , "false" , "id" , "idStruct" ,
-                    "intLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
+                    "CharLiteral" , "false" , "ObjID" , "StructID" ,
+                    "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
     }
 
@@ -1847,8 +1860,8 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void encadenadoF(){
-        String[] firstLlamadaMetodoEncadenado = {"id"}; // TODO: puede que haga error porque los dos son id?
-        String[] firstAccesoVariableEncadenado = {"id"};
+        String[] firstLlamadaMetodoEncadenado = {"ObjID"}; // TODO: puede que haga error porque los dos son id?
+        String[] firstAccesoVariableEncadenado = {"ObjID"};
 
         if (verifyEquals(firstLlamadaMetodoEncadenado)){
             llamadaMetodoEncadenado();
@@ -1856,7 +1869,7 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstAccesoVariableEncadenado)){
                 accesoVariableEncadenado();
             } else {
-                throw createException(this.actualToken, List.of("id"),this.actualToken.getLexeme());
+                throw createException(this.actualToken, List.of("ObjID"),this.actualToken.getLexeme());
             }
         }
     }
@@ -1866,7 +1879,7 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void llamadaMetodoEncadenado() {
-        match("id");
+        match("ObjID");
         argumentosActuales();
         llamadaMetodoEncadenadoF();
     }
@@ -1901,7 +1914,7 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void accesoVariableEncadenado() {
-        match("id");
+        match("ObjID");
         accesoVariableEncadenadoF();
     }
 
