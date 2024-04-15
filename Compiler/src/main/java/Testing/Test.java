@@ -65,7 +65,7 @@ public class Test {
 
     private void folderExecutorSyntactic(String path, String type){
 
-        SyntacticExecutor syntacticExecutor;
+        SyntacticAnalyzer syntacticAnalyzer;
         //guardo todos los archivos de la carpeta
         File[] files = readFolder(path);
 
@@ -81,7 +81,7 @@ public class Test {
             System.out.println("Resultado de prueba: " + file.getName());
 
             //Ejecuto con executor como se haria desde el Sintáctico
-            syntacticExecutor = new SyntacticExecutor(file.getAbsolutePath(),null);
+            syntacticAnalyzer = new SyntacticAnalyzer(file.getAbsolutePath(),null);
             System.out.println("\n");
         }
 
