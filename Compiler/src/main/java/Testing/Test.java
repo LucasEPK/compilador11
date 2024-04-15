@@ -33,8 +33,8 @@ public class Test {
      */
 
     public void SyntacticTest(){
-        folderExecutorSyntactic("src/main/java/Testing/Tests/LexicalTests/passing", "Pass");
-        folderExecutorSyntactic("src/main/java/Testing/Tests/LexicalTests/failing", "Fail");
+        folderExecutorSyntactic("src/main/java/Testing/Tests/SyntacticTests/passing", "Pass");
+        folderExecutorSyntactic("src/main/java/Testing/Tests/SyntacticTests/failing", "Fail");
     }
 
 
@@ -46,9 +46,9 @@ public class Test {
         File[] files = readFolder(path);
 
         if (type.equals("Pass")) {
-            System.out.println("ARCHIVOS QUE PASAN EL LEXICO\n");
+            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL LEXICO\n");
         }else {
-            System.out.println("ARCHIVOS QUE NO PASAN EL LEXICO\n");
+            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL LEXICO\n");
         }
 
         for (File file : files) {
@@ -70,9 +70,9 @@ public class Test {
         File[] files = readFolder(path);
 
         if (type.equals("Pass")) {
-            System.out.println("ARCHIVOS QUE PASAN EL SINTÁCTICO\n");
+            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL SINTÁCTICO\n");
         }else {
-            System.out.println("ARCHIVOS QUE NO PASAN EL SINTÁCTICO\n");
+            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL SINTÁCTICO\n");
         }
 
         for (File file : files) {
@@ -81,7 +81,7 @@ public class Test {
             System.out.println("Resultado de prueba: " + file.getName());
 
             //Ejecuto con executor como se haria desde el Sintáctico
-            syntacticExecutor = new SyntacticExecutor(path,null);
+            syntacticExecutor = new SyntacticExecutor(file.getAbsolutePath(),null);
             System.out.println("\n");
         }
 
