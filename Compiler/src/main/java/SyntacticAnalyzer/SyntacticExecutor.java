@@ -116,6 +116,7 @@ public class SyntacticExecutor {
              */
 
             printException(exception);
+            System.exit(0);
 
         }
 
