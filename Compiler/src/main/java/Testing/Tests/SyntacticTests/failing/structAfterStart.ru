@@ -3,6 +3,6 @@
 /? Salida esperada:
 /? ERROR: SINTÁCTICO
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 5 | COLUMNA 1 | Se esperaba: $EOF$ y llegó: struct
+/? | Linea 8 | COLUMNA 1 | Se esperaba: $EOF$ y llegó: struct
 start {}
 struct Xd {}

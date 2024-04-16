@@ -3,6 +3,6 @@
 /? Salida esperada:
 /? ERROR: SINTÁCTICO
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 5 | COLUMNA 1 | Se esperaba: $EOF$ y llegó: impl
+/? | Linea 8 | COLUMNA 1 | Se esperaba: $EOF$ y llegó: impl
 start {}
 impl Bruh {.(){}}

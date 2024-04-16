@@ -2,4 +2,4 @@
 /? Salida esperada:
 /? ERROR: SINTÁCTICO
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 3 | COLUMNA 1 | Se esperaba: start o impl o struct y llegó: $EOF$
+/? | Linea 6 | COLUMNA 1 | Se esperaba: start o impl o struct y llegó: $EOF$

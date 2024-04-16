@@ -12,9 +12,14 @@
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyFile.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyFile.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyImpl.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyImpl.ru" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/implAfterStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/implAfterStart.ru" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/structAfterStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/structAfterStart.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/startX.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/startVar.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/ImplStructStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/ImplStructStart.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdPrimario.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId2.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdPrimario2.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId3.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdEncadenado.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId4.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdEncadenado2.ru" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

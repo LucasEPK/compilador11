@@ -2,7 +2,7 @@
 /? Salida esperada:
 /? ERROR: SINTÁCTICO
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 4 | COLUMNA 26 | Se esperaba: fn o st o . y llegó: }
+/? | Linea 6 | COLUMNA 26 | Se esperaba: fn o st o . y llegó: }
 impl HolaQuienSeaQueSos {}
 struct EstasLeyendoEsto {}
 start {}
