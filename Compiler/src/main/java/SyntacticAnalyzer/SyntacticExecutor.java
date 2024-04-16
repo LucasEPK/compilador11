@@ -141,6 +141,12 @@ public class SyntacticExecutor {
 
     }
 
+    /**
+     * Método que dado un error, lo imprime con el formato pedido
+     * @param exception error de tipo Sintáctico
+     * @author Yeumen Silva
+     */
+
     public void printException(SyntacticException exception){
 
         Token tokenException = exception.getToken();
@@ -152,6 +158,16 @@ public class SyntacticExecutor {
                 " | COLUMNA " + tokenException.getColumn() +
                 " | " + exception.getExceptionType()   );
 
+    }
+
+    /**
+     * Método que si el análisis sintáctico es correcto,
+     * muestra el mensaje por pantalla
+     * @author Yeumen Silva
+     */
+
+    public void printCorrect(){
+        System.out.println("CORRECTO: ANALISIS SINTACTICO");
     }
 
 }
