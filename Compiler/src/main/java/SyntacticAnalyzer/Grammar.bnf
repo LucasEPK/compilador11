@@ -296,8 +296,10 @@ Lista-Expresiones-F ::= ',' Lista-Expresiones
 
 Encadenado ::= '.' Encadenado-F
 
-Encadenado-F ::=  Llamada-Método-Encadenado
-| Acceso-Variable-Encadenado
+Encadenado-F ::=  'id' Encadenado-F1
+
+Encadenado-F1 ::= Argumentos-Actuales Llamada-Método-Encadenado-F
+| Acceso-Variable-Encadenado-F
 
 Llamada-Método-Encadenado::= 'id' Argumentos-Actuales Llamada-Método-Encadenado-F
 
@@ -305,7 +307,6 @@ Llamada-Método-Encadenado-F ::= Encadenado
 |
 
 Acceso-Variable-Encadenado ::= 'id' Acceso-Variable-Encadenado-F
-
 
 Acceso-Variable-Encadenado-F ::= '[' Expresión ']' Acceso-Variable-Encadenado-F1
 | Encadenado
