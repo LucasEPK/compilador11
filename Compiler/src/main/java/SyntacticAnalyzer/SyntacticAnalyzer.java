@@ -1823,7 +1823,7 @@ public class SyntacticAnalyzer {
     private void expresionParentizadaF() {
         String[] followExpresionParentizadaF = {"!=" , "%"
                 , "&&" , ")" , "*" , "+" , "," , "-"
-                , "." , "/" , ";" , "<" , "<=" , "=="
+                , "/" , ";" , "<" , "<=" , "=="
                 , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
@@ -1835,7 +1835,7 @@ public class SyntacticAnalyzer {
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%"
                         , "&&" , ")" , "*" , "+" , "," , "-"
-                        , "." , "/" , ";" , "<" , "<=" , "=="
+                        , "/" , ";" , "<" , "<=" , "=="
                         , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
@@ -1857,7 +1857,7 @@ public class SyntacticAnalyzer {
     private void accesoSelfF() {
         String[] followAccesoSelfF = {"!=" , "%" ,
                 "&&" , ")" , "*" , "+" , "," ,
-                "-" , "." , "/" , ";" , "<" , "<=" ,
+                "-" , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
@@ -1869,7 +1869,7 @@ public class SyntacticAnalyzer {
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%" ,
                         "&&" , ")" , "*" , "+" , "," ,
-                        "-" , "." , "/" , ";" , "<" , "<=" ,
+                        "-" , "/" , ";" , "<" , "<=" ,
                         "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
@@ -1890,9 +1890,9 @@ public class SyntacticAnalyzer {
      * */
     private void accesoVarF() {
         String[] followAccesoVarF = {"!=" , "%" , "&&" , ")" ,
-                "*" , "+" , "," , "-" , "." , "/" , ";" , "<" ,
+                "*" , "+" , "," , "-" , "/" , ";" , "<" ,
                 "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; // TODO: first y follow tienen ".", no se si puede causar errores
+        String[] firstEncadenado = {"."};
         String[] firstBracket = {"["};
 
         if (verifyEquals(followAccesoVarF)){
@@ -1921,10 +1921,10 @@ public class SyntacticAnalyzer {
      * */
     private void accesoVarF1() {
         String[] followAccesoVarF1 = {"!=" , "%" , "&&" ,
-                ")" , "*" , "+" , "," , "-" , "." , "/" ,
+                ")" , "*" , "+" , "," , "-" , "/" ,
                 ";" , "<" , "<=" , "==" , ">" , ">=" , "]" ,
                 "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; // TODO: estos tambien tienen "." los dos
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followAccesoVarF1)){
             //Lambda
@@ -1956,9 +1956,9 @@ public class SyntacticAnalyzer {
      * */
     private void llamadaMetodoF() {
         String[] followLlamadaMetodoF = {"!=" , "%" , "&&" , ")" , "*" ,
-                        "+" , "," , "-" , "." , "/" , ";" ,
+                        "+" , "," , "-" , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; // TODO: los dos tienen "."
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followLlamadaMetodoF)){
             //Lambda
@@ -1990,10 +1990,10 @@ public class SyntacticAnalyzer {
      * */
     private void llamadaMetodoEstaticoF() {
         String[] followLlamadaMetodoEstaticoF = {"!=" , "%" ,
-                "&&" , ")" , "*" , "+" , "," , "-" , "." ,
+                "&&" , ")" , "*" , "+" , "," , "-" ,
                 "/" , ";" , "<" , "<=" , "==" , ">" , ">=" ,
                 "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; // TODO: los dos tienen "."
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followLlamadaMetodoEstaticoF)){
             //Lambda
@@ -2044,9 +2044,9 @@ public class SyntacticAnalyzer {
     private void llamadaConstructorF1() {
         String[] followLlamadaConstructorF1 = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," ,
-                "-" , "." , "/" , ";" , "<" , "<=" ,
+                "-" , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; // todo: los dos tienen "."
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followLlamadaConstructorF1)){
             //Lambda
@@ -2169,10 +2169,10 @@ public class SyntacticAnalyzer {
      * */
     private void llamadaMetodoEncadenadoF() {
         String[] followLlamadaMetodoEncadenadoF = {"!=" ,
-                "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
-                "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-"
+                , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; // TODO: los dos tienen "."
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followLlamadaMetodoEncadenadoF)){
             //Lambda
@@ -2203,10 +2203,10 @@ public class SyntacticAnalyzer {
      * */
     private void accesoVariableEncadenadoF() {
         String[] followAccesoVariableEncadenadoF = {"!=" ,
-                "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
-                "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-"
+                , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; //TODO : los dos tienen "."
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followAccesoVariableEncadenadoF)) {
             // Lambda
@@ -2228,10 +2228,10 @@ public class SyntacticAnalyzer {
      * */
     private void accesoVariableEncadenadoF1() {
         String[] followAccesoVariableEncadenadoF1 = {"!=" ,
-                "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
-                "." , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-"
+                , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
-        String[] firstEncadenado = {"."}; //TODO : los dos tienen "."
+        String[] firstEncadenado = {"."};
 
         if (verifyEquals(followAccesoVariableEncadenadoF1)){
             //Lambda
