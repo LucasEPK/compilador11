@@ -11,8 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyFile.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyFile.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/implAfterStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/implAfterStart.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/structAfterStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/structAfterStart.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/startX.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/startVar.ru" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "syntacticTests",
+    "git-widget-placeholder": "testsAndFixes",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "last_opened_file_path": "/home/yeu/Documentos/compilador11/Compiler",
@@ -189,11 +191,6 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>81</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
           <line>620</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
@@ -201,6 +198,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
           <line>674</line>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Testing/Test.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
