@@ -241,11 +241,11 @@ Literal ::= 'nil'
 
 Primario ::= ExpresionParentizada
 | AccesoSelf
-| AccesoVar
-| Llamada-Método
+| "id" Primario-F
 | Llamada-Método-Estático
 | Llamada-Constructor
 
+Primario-F ::= AccesoVar-F | Argumentos-Actuales Llamada-Método-F
 
 ExpresionParentizada ::= '(' Expresión ')' ExpresionParentizada-F
 

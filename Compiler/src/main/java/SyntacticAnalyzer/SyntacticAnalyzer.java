@@ -59,9 +59,6 @@ public class SyntacticAnalyzer {
 
     private boolean match(String actualname){
 
-        System.out.println("El que tengo " + this.actualToken.getLexeme());
-        System.out.println("El que espero " + actualname);
-
         //Verifico si matchea el Token actual con token esperado
         if(Objects.equals(this.actualToken.getToken(),"StructID") ||
                 Objects.equals(this.actualToken.getToken(),"ObjID") ||
@@ -132,8 +129,6 @@ public class SyntacticAnalyzer {
         return false;
     }
 
-    /*
-
     /**
      * Regla inicial de nuestra gramática
      * @author Yeumen Silva
@@ -141,20 +136,32 @@ public class SyntacticAnalyzer {
 
     private void program() {
 
+        boolean isFInal = true;
         //Primeros Start
         if (verifyEquals("start")) {
             start();
+            if(!Objects.equals(this.actualToken.getLexeme(), "$EOF$")){
+                isFInal = false;
+            }
         } else {
             //Primeros Lista-Definiciones
             if (verifyEquals("impl","struct")) {
                 listaDefiniciones();
                 start();
+                if(!Objects.equals(this.actualToken.getLexeme(), "$EOF$")){
+                    isFInal = false;
+                }
             }
             else {
                 throw createException(this.actualToken, List.of("start","impl","struct"),this.actualToken.getLexeme());
             }
         }
 
+        if(!isFInal){
+            throw createException(this.actualToken,List.of("$EOF$"),this.actualToken.getLexeme());
+        }
+
+        this.syntacticExecutor.printCorrect();
     }
 
     /**
@@ -190,6 +197,11 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Lista-Definiciones-F
+     * @author Yeumen Silva
+     * */
+
     private void listaDefinicionesF(){
 
         //Primeros Lista-Definiciones
@@ -207,11 +219,21 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Struct
+     * @author Yeumen Silva
+     * */
+
     private void struct(){
         match("struct");
         match("StructID");
         structF();
     }
+
+    /**
+     * Regla Struct-F
+     * @author Yeumen Silva
+     * */
 
     private void structF(){
 
@@ -228,6 +250,11 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Struct-F1
+     * @author Yeumen Silva
+     * */
+
     private void structF1(){
         //Primeros Atributo-Estrella
         if(verifyEquals("Array", "Bool", "Char","Int","Str","StructID"
@@ -241,10 +268,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Atributo-Estrella
+     * @author Yeumen Silva
+     * */
+
     private void atributoEstrella(){
         atributo();
         atributoEstrellaF();
     }
+
+    /**
+     * Regla Atributo-Estrella-F
+     * @author Yeumen Silva
+     * */
 
     private void atributoEstrellaF(){
 
@@ -266,6 +303,11 @@ public class SyntacticAnalyzer {
 
     }
 
+    /**
+     * Regla Impl
+     * @author Yeumen Silva
+     * */
+
     private void impl(){
         match("impl");
         match("StructID");
@@ -274,10 +316,20 @@ public class SyntacticAnalyzer {
         match("}");
     }
 
+    /**
+     * Regla Miembro-Mas
+     * @author Yeumen Silva
+     * */
+
     private void miembroMas(){
         miembro();
         miembroMasF();
     }
+
+    /**
+     * Regla Miembro-Mas-F
+     * @author Yeumen Silva
+     * */
 
     private void miembroMasF(){
 
@@ -296,10 +348,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Herencia
+     * @author Yeumen Silva
+     * */
+
     private void herencia(){
         match(":");
         tipo();
     }
+
+    /**
+     * Regla Miembro
+     * @author Yeumen Silva
+     * */
 
     private void miembro(){
 
@@ -318,11 +380,21 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Constructor
+     * @author Yeumen Silva
+     * */
+
     private void constructor(){
         match(".");
         argumentosFormales();
         bloqueMetodo();
     }
+
+    /**
+     * Regla atributo
+     * @author Yeumen Silva
+     * */
 
     private void atributo(){
 
@@ -347,6 +419,11 @@ public class SyntacticAnalyzer {
             }
         }
     }
+
+    /**
+     * Regla método
+     * @author Yeumen Silva
+     * */
 
     private void metodo(){
         //Primeros Forma-Método
@@ -376,19 +453,39 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla visibilidad
+     * @author Yeumen Silva
+     * */
+
     private void visibilidad(){
         match("pri");
     }
 
+    /**
+     * Regla Forma-Metodo
+     * @author Yeumen Silva
+     * */
+
     private void formaMetodo(){
         match("st");
     }
+
+    /**
+     * Regla Bloque-Metodo
+     * @author Yeumen Silva
+     * */
 
     private void bloqueMetodo(){
         match("{");
         bloqueMetodoF();
 
     }
+
+    /**
+     * Regla Bloque-Metodo-F
+     * @author Yeumen Silva
+     * */
 
     private void bloqueMetodoF(){
 
@@ -416,6 +513,11 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Bloque-Metodo-F1
+     * @author Yeumen Silva
+     * */
+
     private void bloqueMetodoF1(){
         //Primeros }
         if(verifyEquals("}")){
@@ -435,10 +537,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla DeclVar-Locales-Estrella
+     * @author Yeumen Silva
+     * */
+
     private void declVarLocalesEstrella(){
         declVarLocales();
         declVarLocalesEstrellaF();
     }
+
+    /**
+     * Regla DeclVar-Locales-Estrella-F
+     * @author Yeumen Silva
+     * */
 
     private void declVarLocalesEstrellaF(){
 
@@ -461,10 +573,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Sentencia-Estrella
+     * @author Yeumen Silva
+     * */
+
     private void sentenciaEstrella(){
         sentencia();
         sentenciaEstrellaF();
     }
+
+    /**
+     * Regla Sentencia-Estrella-F
+     * @author Yeumen Silva
+     * */
 
     private void sentenciaEstrellaF(){
         //Primeros Sentencia-Estrella
@@ -484,16 +606,31 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla DeclVar-Locales
+     * @author Yeumen Silva
+     * */
+
     private void declVarLocales(){
         tipo();
         listaDeclaracionVariables();
         match(";");
     }
 
+    /**
+     * Regla Lista-Declaracion-Variables
+     * @author Yeumen Silva
+     * */
+
     private void listaDeclaracionVariables(){
         match("ObjID");
         listaDeclaracionVariablesF();
     }
+
+    /**
+     * Regla Lista-Declaracion-Variables-F
+     * @author Yeumen Silva
+     * */
 
     private void listaDeclaracionVariablesF(){
         //Primeros ,
@@ -512,10 +649,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Argumentos-Formales
+     * @author Yeumen Silva
+     * */
+
     private void argumentosFormales(){
         match("(");
         argumentosFormalesF();
     }
+
+    /**
+     * Regla Argumentos-Formales-F
+     * @author Yeumen Silva
+     * */
 
     private void argumentosFormalesF(){
 
@@ -536,10 +683,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Lista-Argumentos-Formales
+     * @author Yeumen Silva
+     * */
+
     private void listaArgumentosFormales(){
         argumentoFormal();
         listaArgumentosFormalesF();
     }
+
+    /**
+     * Regla Lista-Argumentos-Formales-F
+     * @author Yeumen Silva
+     * */
 
     private void listaArgumentosFormalesF(){
 
@@ -559,10 +716,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Argumento-Formal
+     * @author Yeumen Silva
+     * */
+
     private void argumentoFormal(){
         tipo();
         match("ObjID");
     }
+
+    /**
+     * Regla Tipo-Metodo
+     * @author Yeumen Silva
+     * */
 
     private void tipoMetodo(){
 
@@ -582,6 +749,11 @@ public class SyntacticAnalyzer {
             }
         }
     }
+
+    /**
+     * Regla Tipo
+     * @author Yeumen Silva
+     * */
 
     private void tipo(){
         //Primeros Tipo-Primitivo
@@ -606,6 +778,11 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Tipo-Primitivo
+     * @author Yeumen Silva
+     * */
+
     private void tipoPrimitivo(){
 
         if(moreOneMatch("Str") || moreOneMatch("Bool")
@@ -618,14 +795,29 @@ public class SyntacticAnalyzer {
 
     }
 
+    /**
+     * Regla Tipo-Referencia
+     * @author Yeumen Silva
+     * */
+
     private void tipoReferencia(){
         match("StructID");
     }
 
+
+    /**
+     * Regla Tipo-Arreglo
+     * @author Yeumen Silva
+     * */
     private void tipoArreglo(){
         match("Array");
         tipoPrimitivo();
     }
+
+    /**
+     * Regla Sentencia
+     * @author Yeumen Silva
+     * */
 
     private void sentencia(){
         //Primeros ;
@@ -688,6 +880,11 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Sentencia-F
+     * @author Yeumen Silva
+     * */
+
     private void sentenciaF(){
         //Primeros else
         if (verifyEquals("else")){
@@ -699,6 +896,11 @@ public class SyntacticAnalyzer {
         para daspues, ya que con los siguientes solo hacemos lambda
          */
     }
+
+    /**
+     * Regla Sentencia-F1
+     * @author Yeumen Silva
+     * */
 
     private void sentenciaF1(){
         //Primeros ;
@@ -721,11 +923,21 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Bloque
+     * @author Yeumen Silva
+     * */
+
     private void bloque(){
         match("{");
         bloqueF();
 
     }
+
+    /**
+     * Regla Bloque-F
+     * @author Yeumen Silva
+     * */
 
     private void bloqueF(){
         //Primeros }
@@ -745,6 +957,11 @@ public class SyntacticAnalyzer {
             }
         }
     }
+
+    /**
+     * Regla Asignación
+     * @author Yeumen Silva
+     * */
 
     private void asignacion(){
         //Primeros AccesoVar-Simple
@@ -766,10 +983,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla AccesoVar-Simple
+     * @author Yeumen Silva
+     * */
+
     private void accesoVarSimple(){
         match("ObjID");
         accesoVarSimpleF();
     }
+
+    /**
+     * Regla AccesoVar-Simple-F
+     * @author Yeumen Silva
+     * */
 
     private void accesoVarSimpleF(){
         //Primeros Encadenado-Simple-Estrella
@@ -795,10 +1022,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Encadenado-Simple-Estrella
+     * @author Yeumen Silva
+     * */
+
     private void encadenadoSimpleEstrella(){
         encadenadoSimple();
         encadenadoSimpleEstrellaF();
     }
+
+    /**
+     * Regla Encadenado-Simple-Estrella
+     * @author Yeumen Silva
+     * */
 
     private void encadenadoSimpleEstrellaF(){
         //Primeros Encadenado-Simple-Estrella
@@ -816,10 +1053,20 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla AccesoSelf-Simple
+     * @author Yeumen Silva
+     * */
+
     private void accesoSelfSimple(){
         match("self");
         accesoSelfSimpleF();
     }
+
+    /**
+     * Regla AccesoSelf-Simple
+     * @author Yeumen Silva
+     * */
 
     private void accesoSelfSimpleF(){
         //Primeros Encadenado-Simple-Estrella
@@ -836,16 +1083,31 @@ public class SyntacticAnalyzer {
         }
     }
 
+    /**
+     * Regla Encadenado-Simple
+     * @author Yeumen Silva
+     * */
+
     private void encadenadoSimple(){
         match(".");
         match("ObjID");
     }
+
+    /**
+     * Regla Sentencia-Simple
+     * @author Yeumen Silva
+     * */
 
     private void sentenciaSimple(){
         match("(");
         expresion();
         match(")");
     }
+
+    /**
+     * Regla Expresion
+     * @author Yeumen Silva
+     * */
 
     private void expresion(){
         expOr();
@@ -1495,8 +1757,7 @@ public class SyntacticAnalyzer {
     private void primario() {
         String[] firstExpresionParentizada = {"("};
         String[] firstAccesoSelf = {"self"};
-        String[] firstAccesoVar = {"ObjID"}; //TODO: puede que haya error por doble id?
-        String[] firstLlamadaMetodo = {"ObjID"};
+        String[] firstAccesoVarAndMethod = {"ObjID"};
         String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
 
@@ -1506,26 +1767,43 @@ public class SyntacticAnalyzer {
             if (verifyEquals(firstAccesoSelf)){
                 accesoSelf();
             } else {
-                if (verifyEquals(firstAccesoVar)){
-                    accesoVar();
-                } else {
-                    if (verifyEquals(firstLlamadaMetodo)){
-                        llamadaMetodo();
-                    } else {
-                        if (verifyEquals(firstLlamadaMetodoEstatico)){
-                            llamadaMetodoEstatico();
-                        } else {
-                            if (verifyEquals(firstLlamadaConstructor)){
-                                llamadaConstructor();
-                            } else {
-                                throw createException(this.actualToken, List.of("(", "self", "ObjID", "StructID", "new"),this.actualToken.getLexeme());
-                            }
+                if (verifyEquals(firstAccesoVarAndMethod)){
+                    match("ObjID");
+                    primarioF();
+                }
+                else {
+                    if (verifyEquals(firstLlamadaMetodoEstatico)){
+                        llamadaMetodoEstatico();
+                    }
+                    else {
+                        if (verifyEquals(firstLlamadaConstructor)){
+                            llamadaConstructor();
+                        }
+                        else {
+                            throw createException(this.actualToken, List.of("(", "self", "ObjID", "StructID", "new"),this.actualToken.getLexeme());
                         }
                     }
                 }
             }
         }
     }
+
+    private void primarioF(){
+        String[] firstAccesoVarF = {".","["};
+        String[] firstArgumentosActuales = {"("};
+
+        if(verifyEquals(firstAccesoVarF)){
+            accesoVarF();
+        }
+        else{
+           if(verifyEquals(firstArgumentosActuales)){
+             argumentosActuales();
+             llamadaMetodoF();
+           }
+        }
+
+    }
+
 
     /**
      * Función para la regla 87 <ExpresionParentizada> de la Gramatica
@@ -1701,6 +1979,7 @@ public class SyntacticAnalyzer {
      * */
     private void llamadaMetodoEstatico() {
         match("StructID");
+        match(".");
         llamadaMetodo();
         llamadaMetodoEstaticoF();
     }
