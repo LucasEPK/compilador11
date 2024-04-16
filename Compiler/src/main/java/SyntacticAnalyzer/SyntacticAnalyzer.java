@@ -1791,6 +1791,10 @@ public class SyntacticAnalyzer {
     private void primarioF(){
         String[] firstAccesoVarF = {".","["};
         String[] firstArgumentosActuales = {"("};
+        String[] followPrimarioF = {"!=" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-"
+                , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                ">=" , "]" , "||" , "$EOF$"};
 
         if(verifyEquals(firstAccesoVarF)){
             accesoVarF();
@@ -1799,6 +1803,17 @@ public class SyntacticAnalyzer {
            if(verifyEquals(firstArgumentosActuales)){
              argumentosActuales();
              llamadaMetodoF();
+           }
+           else {
+               if(verifyEquals(followPrimarioF)){
+                   //Lambda
+               }
+               else {
+                   throw createException(this.actualToken,List.of("!=" ,
+                           "%" ,".", "(", "[",  "&&" , ")" , "*" , "+" , "," , "-"
+                           , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                           ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
+               }
            }
         }
 
@@ -2139,16 +2154,39 @@ public class SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void encadenadoF(){
-        String[] firstLlamadaMetodoEncadenado = {"ObjID"}; // TODO: puede que haga error porque los dos son id?
-        String[] firstAccesoVariableEncadenado = {"ObjID"};
+        match("ObjID");
+        encadenadoF1();
+    }
 
-        if (verifyEquals(firstLlamadaMetodoEncadenado)){
-            llamadaMetodoEncadenado();
-        } else {
-            if (verifyEquals(firstAccesoVariableEncadenado)){
-                accesoVariableEncadenado();
-            } else {
-                throw createException(this.actualToken, List.of("ObjID"),this.actualToken.getLexeme());
+    /**
+     * Función para la regla 107 <Encadenado-F1> de la Gramatica
+     * @author Lucas Moyano
+     * */
+
+    private void encadenadoF1(){
+        String[] firstArgActuales = {"("};
+        String[] firstAccesVarEncadF = {".", "[" };
+        String[] followEncadenadoF1 = {"!=" ,
+                "%" , "&&" , ")" , "*" , "+" , "," , "-"
+                , "/" , ";" , "<" , "<=" , "==" , ">" ,
+                ">=" , "]" , "||" , "$EOF$"};
+
+        if(verifyEquals(firstArgActuales)){
+            argumentosActuales();
+            llamadaMetodoEncadenadoF();
+        }
+        else {
+            if(verifyEquals(firstAccesVarEncadF)){
+                accesoVariableEncadenadoF();
+            }
+            else {
+                if(verifyEquals(followEncadenadoF1)){
+                    //Lambda
+                }
+                else {
+                    throw createException(this.actualToken, List.of("(",".","["),this.actualToken.getLexeme());
+                }
+
             }
         }
     }
