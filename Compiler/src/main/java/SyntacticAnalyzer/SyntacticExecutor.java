@@ -80,10 +80,11 @@ public class SyntacticExecutor {
 
     public Token getNextToken() {
 
-        Token token = this.lexicalAnalyzer.getNextToken();
+        Token token = null;
 
         try {
 
+            token = this.lexicalAnalyzer.getNextToken();
             // Si no es uno de los tokens válidos, sigo buscando uno
 
             while ( token.getToken().equals(this.lexicalAnalyzer.getBLANK_SPACE()) ||
