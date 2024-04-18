@@ -6,7 +6,7 @@ public class Atributes {
     private String name;
 
     //Tipo del atributo
-    private String type; //ToDo que pasaria con arrays? quizas modelar type Class
+    private Type type;
 
     //Si es o no público
     private boolean isPublic;

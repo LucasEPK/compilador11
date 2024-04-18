@@ -1,12 +1,14 @@
 package SemanticAnalyzer;
 
+import java.util.Set;
+
 public class Params {
 
     //Id del parámetro
     private String name;
 
-    //Tipo asociado al parámetro
-    private String type;
+    //Argumentos que recibe el parámetro
+    private Set<Atributes> atributes;
 
     //Posicion del parámetro
     private int pos;
