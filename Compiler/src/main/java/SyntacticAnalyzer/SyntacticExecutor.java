@@ -1,7 +1,7 @@
 package SyntacticAnalyzer;
 
 import Exceptions.LexicalExceptions.LexicalException;
-import Exceptions.SyntacticException;
+import Exceptions.SyntacticExceptions.SyntacticException;
 import FileManager.FileManager;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;

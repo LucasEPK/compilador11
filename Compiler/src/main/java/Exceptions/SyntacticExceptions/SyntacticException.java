@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.SyntacticExceptions;
 
 import LexicalAnalyzer.Token;
 
