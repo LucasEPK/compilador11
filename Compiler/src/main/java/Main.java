@@ -1,7 +1,7 @@
 import Exceptions.LexicalException;
 import Exceptions.NoArgsException;
 import LexicalAnalyzer.Executor;
-import SyntacticAnalyzer.SyntacticAnalyzer;
+import SyntacticAnalyzer.SyntacticExecutor;
 
 /**
  * Clase que recibe los argumentos de archivo de entrada y salida
@@ -67,15 +67,15 @@ public class Main {
      * */
 
     private static void newExecutor(String[] args, String inputPath ){
-        SyntacticAnalyzer syntacticAnalyzer;
+        SyntacticExecutor syntacticExecutor;
         if (args.length < 2){
 
-            syntacticAnalyzer = new SyntacticAnalyzer(inputPath,null);
+            syntacticExecutor = new SyntacticExecutor(inputPath,null);
 
         }
         else    {
 
-            syntacticAnalyzer = new SyntacticAnalyzer(inputPath,args[1]);
+            syntacticExecutor = new SyntacticExecutor(inputPath,args[1]);
 
         };
 
