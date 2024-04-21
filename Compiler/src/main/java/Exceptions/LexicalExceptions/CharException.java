@@ -1,14 +1,15 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa el error de que no se cerró el caracter (falta ')
+ * Clase que representa los errores de caracteres mal formados
  * @author Yeumen Silva
  */
-public class NoClosedChar extends  LexicalException{
+public class CharException extends LexicalException{
 
-    public NoClosedChar(Token token){
+
+    public CharException(Token token){
         super(token);
     }
 
@@ -19,6 +20,6 @@ public class NoClosedChar extends  LexicalException{
      */
     @Override
     public String getExceptionType() {
-        return "ERROR EN LA DEFINICION DEL CARACTER: NO SE CERRO";
+        return "ERROR EN LA DEFINICION DEL CARACTER: CARACTER NO VALIDO";
     }
 }

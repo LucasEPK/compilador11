@@ -1,12 +1,9 @@
 package SyntacticAnalyzer;
 
-import Exceptions.LexicalException;
 import Exceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
 
-import java.security.spec.RSAOtherPrimeInfo;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

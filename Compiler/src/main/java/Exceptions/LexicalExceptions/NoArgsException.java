@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 /**
  * Error no se proporciono ningun argumento de entrada

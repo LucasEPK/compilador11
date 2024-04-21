@@ -1,15 +1,15 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa el error de comentario invalido
+ * Clase que representa el error de EOF dentro de String
  * @author Yeumen Silva
  */
 
-public class InvalidCommentException extends LexicalException {
+public class EndOfFileInString  extends  LexicalException{
 
-    public InvalidCommentException(Token token){
+    public EndOfFileInString(Token token){
         super(token);
     }
 
@@ -20,8 +20,9 @@ public class InvalidCommentException extends LexicalException {
      */
     @Override
     public String getExceptionType() {
-        return "ERROR EN LA DEFINICION DEL COMENTARIO";
+        return "ERROR EOF DENTRO DE STRING";
     }
+
 
 
 }

@@ -1,5 +1,4 @@
-import Exceptions.LexicalException;
-import Exceptions.NoArgsException;
+import Exceptions.LexicalExceptions.NoArgsException;
 import LexicalAnalyzer.Executor;
 import SyntacticAnalyzer.SyntacticExecutor;
 

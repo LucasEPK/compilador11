@@ -1,7 +1,6 @@
 package SemanticAnalyzer;
 
 import java.util.HashMap;
-import java.util.Set;
 
 public class Struct extends Json {
 
@@ -12,7 +11,7 @@ public class Struct extends Json {
     private Class inerithFrom;
 
     //Lista de atributos
-    private HashMap<String,Atributes> atributes;
+    private HashMap<String, Attributes> atributes;
 
     //Lista de métodos
     private HashMap<String,Methods> methods;

@@ -1,6 +1,6 @@
 package SemanticAnalyzer;
 
-public class Atributes extends Variable {
+public class Attributes extends Variable {
 
 
     //Si es o no pública
@@ -14,7 +14,7 @@ public class Atributes extends Variable {
      * @param type tipo de la variable
      * @param pos  posición de la variable
      */
-    public Atributes(String name, Struct type, int pos) {
+    public Attributes(String name, Struct type, int pos) {
         super(name, type, pos);
     }
 }

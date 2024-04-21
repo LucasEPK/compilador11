@@ -1,8 +1,6 @@
 package SemanticAnalyzer;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 public class Methods extends Json {
 
@@ -19,7 +17,7 @@ public class Methods extends Json {
     private HashMap<String,Variable> paramsOfMethod;
 
     //Lista de atributos declarados en el método
-    private HashMap<String,Atributes> atributesOfMethod;
+    private HashMap<String, Attributes> atributesOfMethod;
 
     //Pos del método
     private int pos;

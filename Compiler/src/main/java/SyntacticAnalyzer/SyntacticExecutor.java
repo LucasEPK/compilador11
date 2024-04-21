@@ -1,14 +1,11 @@
 package SyntacticAnalyzer;
 
-import Exceptions.LexicalException;
+import Exceptions.LexicalExceptions.LexicalException;
 import Exceptions.SyntacticException;
 import FileManager.FileManager;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

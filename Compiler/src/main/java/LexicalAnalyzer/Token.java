@@ -1,6 +1,6 @@
 package LexicalAnalyzer;
 
-import Exceptions.LexicalException;
+import Exceptions.LexicalExceptions.LexicalException;
 
 /**
  * Clase que será la encargada de almacenar los datos referidos

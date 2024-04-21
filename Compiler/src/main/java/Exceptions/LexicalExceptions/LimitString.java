@@ -1,15 +1,15 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa el error de EOF dentro de String
+ * Clase que representa los errores de string con màs de 1024 caracteres
+ * no es valido
  * @author Yeumen Silva
  */
+public class LimitString  extends LexicalException{
 
-public class EndOfFileInString  extends  LexicalException{
-
-    public EndOfFileInString(Token token){
+    public LimitString(Token token){
         super(token);
     }
 
@@ -20,9 +20,8 @@ public class EndOfFileInString  extends  LexicalException{
      */
     @Override
     public String getExceptionType() {
-        return "ERROR EOF DENTRO DE STRING";
+        return "LIMITE DE 1024 CARACTERES ALCANZADO";
     }
-
 
 
 }
