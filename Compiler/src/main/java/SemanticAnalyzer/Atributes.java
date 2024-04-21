@@ -1,17 +1,20 @@
 package SemanticAnalyzer;
 
-public class Atributes extends Json {
+public class Atributes extends Variable {
 
-    //Id que identifica el atributo
-    private String name;
 
-    //Tipo del atributo
-    private Type type;
-
-    //Si es o no público
+    //Si es o no pública
     private boolean isPublic;
 
-    //Posición del atributp
-    private int pos;
 
+    /**
+     * Constructor de clase
+     *
+     * @param name id de la variable
+     * @param type tipo de la variable
+     * @param pos  posición de la variable
+     */
+    public Atributes(String name, Struct type, int pos) {
+        super(name, type, pos);
+    }
 }
