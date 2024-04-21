@@ -4,6 +4,7 @@ package LexicalAnalyzer;
 import Exceptions.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,6 +54,8 @@ public class LexicalAnalyzer {
 
     private String file;
 
+    private  final HashMap<String,String> hashMap = new HashMap<>();
+
     /**
      * Constructor que define el archivo que vamos a leer
      * @author Lucas Moyano
@@ -67,7 +70,58 @@ public class LexicalAnalyzer {
      * @author Lucas Moyano
      * */
     public Token getNextToken(){
-        return s0();
+        startHashTable();
+        Token token = null;
+        token = s0();
+        // Si no es uno de los tokens válidos, sigo buscando uno
+        while (token.getToken().equals(this.BLANK_SPACE) ||
+                token.getToken().equals(this.TAB) ||
+                token.getToken().equals(this.CARRIAGE_RETURN) ||
+                token.getToken().equals(this.NEW_LINE) ||
+                token.getToken().equals(this.VERTICAL_TAB) ||
+                token.getToken().equals(this.SIMPLE_COMMENT)){
+            token = s0();
+        }
+        // Verifico si el lexema es una palabra reservada
+        if (this.hashMap.containsKey(token.getLexeme())) {
+
+            //Si esta, entonces es una palabra reservada y cambio su token
+
+            token.setToken(token.getLexeme());
+        }
+        return token;
+    }
+
+    /**
+     * Método que inicia nuestra hashMap agregando todas las
+     * palabras reservadas de nuestro lenguaje
+     * @author Yeumen Silva
+     */
+
+    private void startHashTable(){
+
+        this.hashMap.put("start", "start");
+        this.hashMap.put("struct", "struct");
+        this.hashMap.put("self", "self");
+        this.hashMap.put("st", "st");
+        this.hashMap.put("pri", "pri");
+        this.hashMap.put("nil", "nil");
+        this.hashMap.put("new", "new");
+        this.hashMap.put("impl", "impl");
+        this.hashMap.put("ret", "ret");
+        this.hashMap.put("if", "if");
+        this.hashMap.put("else", "else");
+        this.hashMap.put("while", "while");;
+        this.hashMap.put("true", "true");
+        this.hashMap.put("false", "false");
+        this.hashMap.put("fn", "fn");
+        this.hashMap.put("void", "void");
+        this.hashMap.put("Array", "Array");
+        this.hashMap.put("Str", "Str");
+        this.hashMap.put("Bool", "Bool");
+        this.hashMap.put("Int", "Int");
+        this.hashMap.put("Char", "Char");
+
     }
 
     /**

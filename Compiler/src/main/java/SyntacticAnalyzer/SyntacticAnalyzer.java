@@ -2,6 +2,7 @@ package SyntacticAnalyzer;
 
 import Exceptions.LexicalException;
 import Exceptions.SyntacticException;
+import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
 
 import java.security.spec.RSAOtherPrimeInfo;
@@ -17,7 +18,8 @@ import java.util.Objects;
 public class SyntacticAnalyzer {
 
     private Token actualToken;
-    private SyntacticExecutor syntacticExecutor;
+
+    private LexicalAnalyzer lexicalAnalyzer;
 
 
     /**
@@ -25,28 +27,13 @@ public class SyntacticAnalyzer {
      * el cual es el encargado de pasar los tokens y evaluar los errores
      * Léxicos y a su vez se encarga de llamar a la primera regla
      * de nuestra gramática
-     * @param inputPath Path con archivo de entrada
-     * @param outputPath Path con archivo de salida
      * @author Yeumen Silva
      * */
 
-    public SyntacticAnalyzer(String inputPath, String outputPath){
-
-        /* Inicio Executor el cual pasa tokens y
-         verifica que no haya errores léxicos
-        */
-        this.syntacticExecutor = new SyntacticExecutor(inputPath,outputPath);
-        this.actualToken = this.syntacticExecutor.getNextToken();
-
-        try {
-            // llamada a regla inicial de nuestra gramática
-            program();
-        }
-        catch (SyntacticException exception){
-            this.syntacticExecutor.printException(exception);
-        }
-
-
+    public SyntacticAnalyzer(LexicalAnalyzer lexicalAnalyzer){
+        this.lexicalAnalyzer = lexicalAnalyzer;
+        this.actualToken = lexicalAnalyzer.getNextToken();
+        program();
 
     }
     
@@ -67,7 +54,7 @@ public class SyntacticAnalyzer {
                 Objects.equals(this.actualToken.getToken(),"CharLiteral")){
             if(Objects.equals(this.actualToken.getToken(), actualname)){
 
-                this.actualToken = syntacticExecutor.getNextToken();
+                this.actualToken = lexicalAnalyzer.getNextToken();
                 return true;
 
             }
@@ -79,7 +66,7 @@ public class SyntacticAnalyzer {
         //Verifico si matchea el lexema del token actual con el lexema esperado
         if(Objects.equals(this.actualToken.getLexeme(), actualname)){
 
-            this.actualToken = syntacticExecutor.getNextToken();
+            this.actualToken = lexicalAnalyzer.getNextToken();
             return true;
 
         }
@@ -116,7 +103,6 @@ public class SyntacticAnalyzer {
      * */
 
     private boolean verifyEquals(String... name){
-
         String actualLexeme = this.actualToken.getLexeme();
         String actualToken = this.actualToken.getToken();
 
@@ -161,7 +147,6 @@ public class SyntacticAnalyzer {
             throw createException(this.actualToken,List.of("$EOF$"),this.actualToken.getLexeme());
         }
 
-        this.syntacticExecutor.printCorrect();
     }
 
     /**
@@ -787,7 +772,7 @@ public class SyntacticAnalyzer {
 
         if(moreOneMatch("Str") || moreOneMatch("Bool")
                 || moreOneMatch("Int") || moreOneMatch("Char")){
-            this.actualToken = this.syntacticExecutor.getNextToken();
+            this.actualToken = this.lexicalAnalyzer.getNextToken();
         }
         else {
             throw createException(this.actualToken, List.of( "Bool" , "Char" , "Int" , "Str"),this.actualToken.getLexeme());
