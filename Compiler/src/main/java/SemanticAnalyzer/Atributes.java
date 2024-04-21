@@ -1,6 +1,6 @@
 package SemanticAnalyzer;
 
-public class Atributes {
+public class Atributes extends Json {
 
     //Id que identifica el atributo
     private String name;

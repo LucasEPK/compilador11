@@ -2,7 +2,7 @@ package SemanticAnalyzer;
 
 import java.util.Set;
 
-public class Params {
+public class Params extends Json {
 
     //Id del parámetro
     private String name;

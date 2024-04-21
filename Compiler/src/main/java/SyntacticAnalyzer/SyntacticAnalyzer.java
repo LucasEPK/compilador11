@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author Yeumen Silva
  */
 
-public class SyntacticAnalyzer {
+public class    SyntacticAnalyzer {
 
     private Token actualToken;
 
