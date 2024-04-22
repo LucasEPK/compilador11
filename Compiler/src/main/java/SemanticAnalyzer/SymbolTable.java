@@ -26,11 +26,17 @@ public class SymbolTable extends Commons {
 
     private void addInt(){
         Struct Int = new Struct("Int");
+        //Agrego que Int hereda de Object
+        Int.setInheritFrom(this.structs.get("Object"));
+
         this.structs.put("Int",Int);
     }
 
     private void addStr(){
         Struct Str = new Struct("Str");
+
+        //Agrego que Str hereda de Object
+        Str.setInheritFrom(this.structs.get("Object"));
 
         //fn length()->Int
         Methods length = new Methods("length",false,this.structs.get("Int"), new LinkedHashMap<String,Variable>(),0);
@@ -56,17 +62,26 @@ public class SymbolTable extends Commons {
     private void addBool(){
         Struct Bool = new Struct("Bool");
 
+        //Agrego que Bool hereda de Object
+        Bool.setInheritFrom(this.structs.get("Object"));
+
         this.structs.put("Bool",Bool);
     }
 
     private void addChar(){
         Struct Char = new Struct("Char");
 
+        //Agrego que Char hereda de Object
+        Char.setInheritFrom(this.structs.get("Object"));
+
         this.structs.put("Char",Char);
     }
 
     private void addArray(){
         Struct Array = new Struct("Array");
+
+        //Agrego que Array hereda de Object
+        Array.setInheritFrom(this.structs.get("Object"));
 
         // fn length()->Int.
         Methods length = new Methods("length",false,this.structs.get("Int"),new LinkedHashMap<>(),0);
@@ -82,12 +97,18 @@ public class SymbolTable extends Commons {
 
     private void addObject(){
         Struct Object = new Struct("Object");
-
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        Object.setConstructor(constructor);
         this.structs.put("Object",Object);
     }
 
     private void addIO(){
         Struct IO = new Struct("IO");
+
+        //Agrego que IO hereda de Object
+        IO.setInheritFrom(this.structs.get("Object"));
 
         // st fn out_str(Str s)->void
         Variable s = new Variable("s",this.structs.get("Str"),0);

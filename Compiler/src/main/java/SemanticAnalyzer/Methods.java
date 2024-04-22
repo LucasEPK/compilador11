@@ -18,6 +18,9 @@ public class Methods extends Commons {
     //Lista de variables que recibe el método
     private Map<String,Variable> paramsOfMethod = new LinkedHashMap<>();
 
+    //Lista de variables declaradas dentro del método
+    private Map<String,Variable> definedVar;
+
     //Pos del método
     private int pos;
 
@@ -39,6 +42,15 @@ public class Methods extends Commons {
         this.paramsOfMethod = paramsOfMethod;
         this.pos = pos;
 
+    }
+
+    public Methods(String name, Map<String,Variable> paramsOfMethod){
+        this.name = name;
+        this.paramsOfMethod = paramsOfMethod;
+    }
+
+    public Map<String, Variable> getParamsOfMethod() {
+        return paramsOfMethod;
     }
 
     public String toJson(int tabs){

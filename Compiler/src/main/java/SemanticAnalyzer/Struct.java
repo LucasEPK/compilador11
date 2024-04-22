@@ -22,6 +22,10 @@ public class Struct extends Commons {
 
     private boolean isConsolidate = false;
 
+    //Constructor de clase
+
+    Methods constructor;
+
 
     /**
      * Constructor con solo id de clase
@@ -50,13 +54,26 @@ public class Struct extends Commons {
         this.methods = methods;
     }
 
+    public void setConstructor(Methods method){
+        this.constructor = method;
+    }
+
+    public void setInheritFrom(Struct inheritFrom) {
+        this.inheritFrom = inheritFrom;
+    }
 
     public String toJson(int tabs){
 
         //Concateno todos los datos del struct
         String jsonSting = "";
         jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"nombre\": " + "\""  + this.name + "\"" + ",";
-        jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"heredaDe\": " + "\"" + this.inheritFrom + "\"" + ",";
+        if(this.inheritFrom == null){
+            jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"heredaDe\": " + "\"" + this.inheritFrom + "\"" + ",";
+        }
+        else {
+            jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"heredaDe\": " + "\"" + this.inheritFrom.getName() + "\"" + ",";
+        }
+
         jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"atributos\": [";
         //Si no posee atributos, solo cierro los corchetes
         tabs +=1;
@@ -102,7 +119,5 @@ public class Struct extends Commons {
 
         return jsonSting;
     }
-
-
 }
 

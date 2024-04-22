@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "src/main/java/FileManager/hola.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -9,13 +9,13 @@
 	},
  	 {
 		"nombre": "Int",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": []
 	},
  	 {
 		"nombre": "Str",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
@@ -42,19 +42,19 @@
 	},
  	 {
 		"nombre": "Bool",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": []
 	},
  	 {
 		"nombre": "Char",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": []
 	},
  	 {
 		"nombre": "Array",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
@@ -68,7 +68,7 @@
 	},
  	 {
 		"nombre": "IO",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
