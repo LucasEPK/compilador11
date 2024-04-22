@@ -55,8 +55,8 @@ public class Struct extends Commons {
 
         //Concateno todos los datos del struct
         String jsonSting = "";
-        jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"nombre\": " + "\""  + this.name + "\"";
-        jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"heredaDe\": " + "\"" + this.inheritFrom + "\"";
+        jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"nombre\": " + "\""  + this.name + "\"" + ",";
+        jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"heredaDe\": " + "\"" + this.inheritFrom + "\"" + ",";
         jsonSting = jsonSting + "\n" + addtabs(tabs) + "\"atributos\": [";
         //Si no posee atributos, solo cierro los corchetes
         tabs +=1;
@@ -78,11 +78,11 @@ public class Struct extends Commons {
         }
         tabs -=1;
 
-        jsonSting += "\n" + addtabs(tabs) + "metodos: [";
+        jsonSting += "\n" + addtabs(tabs) + "\"" + "metodos"  + "\"" + ": [";
         tabs+=1;
         //Si el struct no tiene métodos
         if(this.methods.isEmpty()){
-            jsonSting += "],";
+            jsonSting += "]";
         }
         else{
             //De otro modo, voy a llamar a función toJson de methods
@@ -93,10 +93,11 @@ public class Struct extends Commons {
                 jsonSting+= methods.getValue().toJson(tabs);
             }
             jsonSting = jsonSting.substring(0,jsonSting.length()-1);
-            jsonSting += "\n" + addtabs(tabs-1) + "],";
+            jsonSting += "\n" + addtabs(tabs-1) + "]";
         }
 
         //ToDo agregar constructor
+        //ToDo ver como agregar herencia
 
 
         return jsonSting;

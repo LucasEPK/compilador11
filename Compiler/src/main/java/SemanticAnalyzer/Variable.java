@@ -35,4 +35,20 @@ public class Variable extends Commons {
     public int getPos() {
         return pos;
     }
+
+    public String toJson(int tabs){
+        String jsonString = "";
+        jsonString += "\n" + addtabs(tabs+2) + "{";
+        tabs=tabs+2;
+        jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + this.name + "\"" + ",";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "tipo" + "\"" + ": " + "\"" + this.type.getName() + "\"" + ",";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " +  this.pos  ;
+        tabs=tabs-1;
+        jsonString += "\n" + addtabs(tabs) + "}" + ",";
+
+
+        return jsonString;
+
+
+    }
 }

@@ -1,6 +1,7 @@
 package SemanticAnalyzer;
 
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Methods extends Commons {
@@ -15,10 +16,7 @@ public class Methods extends Commons {
     private Struct giveBack;
 
     //Lista de variables que recibe el método
-    private Map<String,Variable> paramsOfMethod;
-
-    //Lista de atributos declarados en el método
-    private Map<String, Attributes> atributesOfMethod;
+    private Map<String,Variable> paramsOfMethod = new LinkedHashMap<>();
 
     //Pos del método
     private int pos;
@@ -47,15 +45,30 @@ public class Methods extends Commons {
         String jsonString = "";
         jsonString += "\n" + addtabs(tabs) + "{";
         tabs=tabs+1;
-        jsonString += "\n" + addtabs(tabs) + "nombre: " + "\"" + this.name + "\"" + ",";
-        jsonString += "\n" + addtabs(tabs) + "static: " + "\"" + this.isStatic + "\"" + ",";
-        jsonString += "\n" + addtabs(tabs) + "retorno: " + "\"" + this.giveBack.getName() + "\"" + ",";
-        jsonString += "\n" + addtabs(tabs) + "posicion: " + "\"" + this.pos + "\"";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + this.name + "\"" + ",";
+        jsonString += "\n" + addtabs(tabs) +  "\"" + "static" +  "\"" + ": "  + this.isStatic + ",";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" +  ": " + "\"" + this.giveBack.getName() + "\"" + ",";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " +this.pos + ",";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "paramF" + "\"" + ": [";
+        //Debo imprimir los parametros que recibe el método
+        if(this.paramsOfMethod.isEmpty()){
+            jsonString += "]";
+        }
+        else {
+            //Llamo a toJson de Variable
+            Map<String,Variable> variableMap = this.paramsOfMethod;
+            for(Map.Entry<String,Variable> variable : variableMap.entrySet()){
+
+                jsonString +=variable.getValue().toJson(tabs+1);
+
+            }
+            jsonString = jsonString.substring(0,jsonString.length()-1);
+            jsonString += "\n" + addtabs(tabs) + "]";
+        }
         tabs=tabs-1;
         jsonString += "\n" + addtabs(tabs) + "}" + ",";
 
-        //ToDo agregar variables que recibe el método
-        //No se agrega lo declarado dentro del método
+
 
 
         return jsonString;

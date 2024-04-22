@@ -162,7 +162,7 @@ public class SymbolTable extends Commons {
     }
 
 
-    public Map<String, Struct> getStructs() {
+    public      Map<String, Struct> getStructs() {
         return structs;
     }
 }
