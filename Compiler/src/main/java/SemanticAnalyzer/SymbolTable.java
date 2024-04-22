@@ -3,13 +3,11 @@ package SemanticAnalyzer;
 import LexicalAnalyzer.Token;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class SymbolTable {
+public class SymbolTable extends Commons {
 
-    private HashMap<String,Struct> structs = new HashMap<>();
+    private Map<String,Struct> structs = new LinkedHashMap<>();;
 
     private Struct currentStruct;
 
@@ -35,18 +33,18 @@ public class SymbolTable {
         Struct Str = new Struct("Str");
 
         //fn length()->Int
-        Methods length = new Methods("length",false,this.structs.get("Int"), new HashMap<String,Variable>(),0);
+        Methods length = new Methods("length",false,this.structs.get("Int"), new LinkedHashMap<String,Variable>(),0);
 
         //fn concat(Str s)->Str
         Variable s = new Variable("s",Str,0);
-        HashMap<String, Variable> hashMapS = new HashMap<>();
+        Map<String, Variable> hashMapS = new LinkedHashMap<>();
         hashMapS.put("s", s);
 
         Methods concat = new Methods("concat",false,Str,hashMapS ,1);
 
         //Agrego métodos a struct Str
 
-        HashMap<String,Methods> methods = new HashMap<>();
+        Map<String,Methods> methods = new LinkedHashMap<>();
         methods.put("length",length);
         methods.put("concat",concat);
 
@@ -71,9 +69,9 @@ public class SymbolTable {
         Struct Array = new Struct("Array");
 
         // fn length()->Int.
-        Methods length = new Methods("length",false,this.structs.get("Int"),new HashMap<>(),0);
+        Methods length = new Methods("length",false,this.structs.get("Int"),new LinkedHashMap<>(),0);
 
-        HashMap<String,Methods> methods = new HashMap<>();
+        Map<String,Methods> methods = new LinkedHashMap<>();
 
         methods.put("length",length);
 
@@ -93,45 +91,45 @@ public class SymbolTable {
 
         // st fn out_str(Str s)->void
         Variable s = new Variable("s",this.structs.get("Str"),0);
-        HashMap<String,Variable> hashMapAtributes = new HashMap<>();
+        Map<String,Variable> hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("s",s);
-        Methods out_str = new Methods("out_str",true,null,hashMapAtributes,0 );
+        Methods out_str = new Methods("out_str",true,new Struct("void"),hashMapAtributes,0 );
 
         // st fn out_int(Int i)->void
         Variable i = new Variable("i",this.structs.get("Int"),0);
-        hashMapAtributes = new HashMap<>();
+        hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("i",i);
-        Methods out_int = new Methods("out_int",true,null,hashMapAtributes,1);
+        Methods out_int = new Methods("out_int",true,new Struct("void"),hashMapAtributes,1);
 
         // st fn out_bool(Bool b)->void
         Variable b = new Variable("b",this.structs.get("Bool"),0);
-        hashMapAtributes = new HashMap<>();
+        hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("b",b);
-        Methods out_bool = new Methods("out_bool",true,null,hashMapAtributes,2);
+        Methods out_bool = new Methods("out_bool",true,new Struct("void"),hashMapAtributes,2);
 
         // st fn out_char(Char c)->void
         Variable c = new Variable("c",this.structs.get("Char"),0);
-        hashMapAtributes = new HashMap<>();
+        hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("c",c);
-        Methods out_char = new Methods("out_char",true,null,hashMapAtributes,3);
+        Methods out_char = new Methods("out_char",true,new Struct("void"),hashMapAtributes,3);
 
         // st fn out_array_int(Array a)->void
         Variable a = new Variable("a",this.structs.get("Array"),0);
-        hashMapAtributes = new HashMap<>();
+        hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("a",a);
-        Methods out_array_int = new Methods("out_array_int",true,null,hashMapAtributes,4);
+        Methods out_array_int = new Methods("out_array_int",true,new Struct("void"),hashMapAtributes,4);
 
         // st fn out_array_str(Array a)->void
-        Methods out_array_str = new Methods("out_array_str",true,null,hashMapAtributes,5);
+        Methods out_array_str = new Methods("out_array_str",true,new Struct("void"),hashMapAtributes,5);
 
         // st fn out_array_bool(Array a)->void
-        Methods out_array_bool = new Methods("out_array_bool",true,null,hashMapAtributes,6);
+        Methods out_array_bool = new Methods("out_array_bool",true,new Struct("void"),hashMapAtributes,6);
 
         // st fn out_array_char(Array a)->void
-        Methods out_array_char = new Methods("out_array_char", true,null,hashMapAtributes,7);
+        Methods out_array_char = new Methods("out_array_char", true,new Struct("void"),hashMapAtributes,7);
 
         // st fn in_str()->Str
-        hashMapAtributes = new HashMap<>();
+        hashMapAtributes = new LinkedHashMap<>();
         Methods in_str = new Methods("in_str",true,this.structs.get("Str"),hashMapAtributes,8);
 
         // st fn in_int()->Int
@@ -143,7 +141,7 @@ public class SymbolTable {
         // st fn in_char()->Char
         Methods in_char = new Methods("in_char",true,this.structs.get("Char"),hashMapAtributes,11);
 
-        HashMap<String, Methods> methods = new HashMap<>();
+        HashMap<String, Methods> methods = new LinkedHashMap<>();
 
         methods.put("out_str",out_str);
         methods.put("out_int",out_int);
@@ -164,9 +162,7 @@ public class SymbolTable {
     }
 
 
-    public static void main(String[] args) {
-        SymbolTable symbolTable = new SymbolTable();
+    public Map<String, Struct> getStructs() {
+        return structs;
     }
-
-
 }

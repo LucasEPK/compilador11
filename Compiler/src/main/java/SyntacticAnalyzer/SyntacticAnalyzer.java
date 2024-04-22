@@ -3,6 +3,7 @@ package SyntacticAnalyzer;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,8 @@ public class    SyntacticAnalyzer {
 
     private LexicalAnalyzer lexicalAnalyzer;
 
+    private SymbolTable symbolTable = new SymbolTable();
+
 
     /**
      * Constructor del Analizador Sintáctico que inicializa el Executor
@@ -27,10 +30,11 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    public SyntacticAnalyzer(LexicalAnalyzer lexicalAnalyzer){
+    public SymbolTable startSyntactic(LexicalAnalyzer lexicalAnalyzer){
         this.lexicalAnalyzer = lexicalAnalyzer;
         this.actualToken = lexicalAnalyzer.getNextToken();
         program();
+        return this.symbolTable;
 
     }
     

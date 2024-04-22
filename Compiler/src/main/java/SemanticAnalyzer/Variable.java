@@ -1,6 +1,6 @@
 package SemanticAnalyzer;
 
-public class Variable extends Json {
+public class Variable extends Commons {
 
     //Id que identifica la variable
     private String name;
@@ -22,5 +22,17 @@ public class Variable extends Json {
         this.name = name;
         this.type = type;
         this.pos = pos;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Struct getType() {
+        return type;
+    }
+
+    public int getPos() {
+        return pos;
     }
 }
