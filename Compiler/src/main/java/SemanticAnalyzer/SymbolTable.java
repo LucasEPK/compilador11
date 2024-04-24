@@ -60,6 +60,9 @@ public class SymbolTable extends Commons {
                 //Lanzo error de que ya existe
                 throw throwException("DuplicateStruct",token);
             }
+            else {
+                this.currentStruct.setHaveStruct(true);
+            }
         }
         else {
             //Si el struct no existe, lo debo agregar
@@ -81,9 +84,13 @@ public class SymbolTable extends Commons {
         if(this.structs.containsKey(structName)){
             this.currentStruct = this.structs.get(structName);
             //Si existe, verifico que no haya otro impl con ese nombre
+            System.out.println(this.currentStruct.getName());
             if(this.currentStruct.getHaveImpl()){
                 //Lanzo error de que ya existe
                 throw throwException("DuplicateImpl",token);
+            }
+            else {
+                this.currentStruct.setHaveImpl(true);
             }
         } else {
             //Si el struct no existe, lo debo agregar
