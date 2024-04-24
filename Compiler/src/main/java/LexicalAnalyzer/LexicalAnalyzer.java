@@ -1,9 +1,8 @@
 package LexicalAnalyzer;
 
 // Estos 2 import sirven para crear el alfabeto como conjunto
-import Exceptions.*;
+import Exceptions.LexicalExceptions.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;

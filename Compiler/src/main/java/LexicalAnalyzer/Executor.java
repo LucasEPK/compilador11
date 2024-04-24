@@ -1,12 +1,10 @@
 package LexicalAnalyzer;
 
-import Exceptions.LexicalException;
-import Exceptions.NoArgsException;
+import Exceptions.LexicalExceptions.LexicalException;
 import FileManager.FileManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

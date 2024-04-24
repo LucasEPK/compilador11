@@ -1,14 +1,15 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa los errores de id mal formados
+ * Clase que representa el error de comentario invalido
  * @author Yeumen Silva
  */
-public class InvalidId  extends LexicalException{
 
-    public InvalidId(Token token){
+public class InvalidCommentException extends LexicalException {
+
+    public InvalidCommentException(Token token){
         super(token);
     }
 
@@ -19,6 +20,8 @@ public class InvalidId  extends LexicalException{
      */
     @Override
     public String getExceptionType() {
-        return "ERROR EN LA DEFINICION DEL IDENTIFICADOR: IDENTIFICADOR NO VALIDO";
+        return "ERROR EN LA DEFINICION DEL COMENTARIO";
     }
+
+
 }

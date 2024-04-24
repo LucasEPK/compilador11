@@ -1,0 +1,209 @@
+{ 
+ "nombre": "src/main/java/FileManager/hola.ru",
+"structs": [
+ 	 {
+		"nombre": "Object",
+		"heredaDe": "null",
+		"atributos": [],
+		"metodos": []
+	},
+ 	 {
+		"nombre": "Int",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": []
+	},
+ 	 {
+		"nombre": "Str",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "length",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": []
+			},
+			{
+				"nombre": "concat",
+				"static": false,
+				"retorno": "Str",
+				"posicion": 1,
+				"paramF": [
+							{
+							"nombre": "s",
+							"tipo": "Str",
+							"posicion": 0
+						}
+				]
+			}
+		]
+	},
+ 	 {
+		"nombre": "Bool",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": []
+	},
+ 	 {
+		"nombre": "Char",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": []
+	},
+ 	 {
+		"nombre": "Array",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "length",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": []
+			}
+		]
+	},
+ 	 {
+		"nombre": "IO",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "out_str",
+				"static": true,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [
+							{
+							"nombre": "s",
+							"tipo": "Str",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_int",
+				"static": true,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [
+							{
+							"nombre": "i",
+							"tipo": "Int",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_bool",
+				"static": true,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [
+							{
+							"nombre": "b",
+							"tipo": "Bool",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_char",
+				"static": true,
+				"retorno": "void",
+				"posicion": 3,
+				"paramF": [
+							{
+							"nombre": "c",
+							"tipo": "Char",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_array_int",
+				"static": true,
+				"retorno": "void",
+				"posicion": 4,
+				"paramF": [
+							{
+							"nombre": "a",
+							"tipo": "Array",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_array_bool",
+				"static": true,
+				"retorno": "void",
+				"posicion": 6,
+				"paramF": [
+							{
+							"nombre": "a",
+							"tipo": "Array",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_array_str",
+				"static": true,
+				"retorno": "void",
+				"posicion": 5,
+				"paramF": [
+							{
+							"nombre": "a",
+							"tipo": "Array",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "out_array_char",
+				"static": true,
+				"retorno": "void",
+				"posicion": 7,
+				"paramF": [
+							{
+							"nombre": "a",
+							"tipo": "Array",
+							"posicion": 0
+						}
+				]
+			},
+			{
+				"nombre": "in_str",
+				"static": true,
+				"retorno": "Str",
+				"posicion": 8,
+				"paramF": []
+			},
+			{
+				"nombre": "in_int",
+				"static": true,
+				"retorno": "Int",
+				"posicion": 9,
+				"paramF": []
+			},
+			{
+				"nombre": "in_bool",
+				"static": true,
+				"retorno": "Bool",
+				"posicion": 10,
+				"paramF": []
+			},
+			{
+				"nombre": "in_char",
+				"static": true,
+				"retorno": "Char",
+				"posicion": 11,
+				"paramF": []
+			}
+		]
+	}
+]
+}

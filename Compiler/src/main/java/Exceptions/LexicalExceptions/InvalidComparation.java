@@ -1,15 +1,15 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa los errores de string con màs de 1024 caracteres
+ * Clase que representa los errores de comparación: el operador de comparación
  * no es valido
  * @author Yeumen Silva
  */
-public class LimitString  extends LexicalException{
+public class InvalidComparation extends LexicalException{
 
-    public LimitString(Token token){
+    public InvalidComparation(Token token){
         super(token);
     }
 
@@ -20,8 +20,6 @@ public class LimitString  extends LexicalException{
      */
     @Override
     public String getExceptionType() {
-        return "LIMITE DE 1024 CARACTERES ALCANZADO";
+        return "ERROR EN LA COMPARACIÓN: OPERADOR DE COMPARACIÓN NO VALIDO";
     }
-
-
 }

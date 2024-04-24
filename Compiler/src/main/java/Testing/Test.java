@@ -1,10 +1,8 @@
 package Testing;
 import java.io.File;
-import java.util.Objects;
 
-import Exceptions.NoArgsException;
+import Exceptions.LexicalExceptions.LexicalException;
 import LexicalAnalyzer.Executor;
-import SyntacticAnalyzer.SyntacticAnalyzer;
 import SyntacticAnalyzer.SyntacticExecutor;
 
 
@@ -18,7 +16,7 @@ public class Test {
 
     /**
      * Método que es ejecuta los tests del analizador lexico
-     * @throws Exceptions.LexicalException
+     * @throws LexicalException
      * @author Yeumen Silva
      */
     public void lexicalTest(){
@@ -28,7 +26,7 @@ public class Test {
 
     /**
      * Método que es ejecuta los tests del analizador sintáctico
-     * @throws Exceptions.LexicalException
+     * @throws LexicalException
      * @author Yeumen Silva
      */
 

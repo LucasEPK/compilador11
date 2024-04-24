@@ -1,14 +1,14 @@
 package SyntacticAnalyzer;
 
-import Exceptions.LexicalException;
-import Exceptions.SyntacticException;
+import Exceptions.LexicalExceptions.LexicalException;
+import Exceptions.SemanticExceptions.SemanticException;
+import Exceptions.SyntacticExceptions.SyntacticException;
 import FileManager.FileManager;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.Json;
+import SemanticAnalyzer.SymbolTable;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,7 +24,11 @@ public class SyntacticExecutor {
     private FileManager fileManager;
     private   LexicalAnalyzer lexicalAnalyzer;
 
-    private  SyntacticAnalyzer syntacticAnalyzer;
+    private  SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer();
+
+    private SymbolTable symbolTable;
+
+    private Json jsonMannager = new Json();
 
 
     /**
@@ -40,7 +44,7 @@ public class SyntacticExecutor {
         String file = this.fileManager.getInputFile();
         try {
             lexicalAnalyzer = new LexicalAnalyzer(file);
-            syntacticAnalyzer = new SyntacticAnalyzer(lexicalAnalyzer);
+            symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
         }
         catch (LexicalException exception){
             this.printExceptionLexical(exception);
@@ -48,13 +52,20 @@ public class SyntacticExecutor {
         catch (SyntacticException exception){
             this.printExceptionSyntactic(exception);
         }
+        catch (SemanticException exception){
+            this.printExceptionSemanticDecl(exception);
+        }
 
+        /*
         if(outputPath == null){
             this.printCorrect();
         }
         else {
             fileManager.saveResults(List.of("CORRECTO: ANALISIS SINTACTICO"));
         }
+         */
+
+        this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
 
     }
 
@@ -93,6 +104,19 @@ public class SyntacticExecutor {
         System.out.println("| Linea " + tokenException.getRow() +
                 " | COLUMNA " + tokenException.getColumn() +
                 " | " + exception.getExceptionType()   );
+
+    }
+
+    public void printExceptionSemanticDecl(SemanticException exception){
+
+        Token tokenException = exception.getToken();
+
+        System.out.println("ERROR: SEMÁNTICO - DECLARACIONES");
+        System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
+
+        System.out.println("| Linea " + tokenException.getRow() +
+                " | COLUMNA " + tokenException.getColumn() +
+                " | " + exception.getExceptionType() );
 
     }
 

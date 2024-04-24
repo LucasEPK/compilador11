@@ -1,15 +1,14 @@
-package Exceptions;
+package Exceptions.LexicalExceptions;
 
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa los errores de comparación: el operador de comparación
- * no es valido
+ * Clase que representa los errores de id mal formados
  * @author Yeumen Silva
  */
-public class InvalidComparation extends LexicalException{
+public class InvalidId  extends LexicalException{
 
-    public InvalidComparation(Token token){
+    public InvalidId(Token token){
         super(token);
     }
 
@@ -20,6 +19,6 @@ public class InvalidComparation extends LexicalException{
      */
     @Override
     public String getExceptionType() {
-        return "ERROR EN LA COMPARACIÓN: OPERADOR DE COMPARACIÓN NO VALIDO";
+        return "ERROR EN LA DEFINICION DEL IDENTIFICADOR: IDENTIFICADOR NO VALIDO";
     }
 }
