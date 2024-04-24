@@ -2,9 +2,9 @@ package Exceptions.SemanticExceptions;
 
 import LexicalAnalyzer.Token;
 
-public class AllredyExist extends SemanticException {
+public class AlreadyExist extends SemanticException {
 
-    public AllredyExist(Token token){
+    public AlreadyExist(Token token){
         super(token);
     }
 

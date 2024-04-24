@@ -4,9 +4,17 @@ import LexicalAnalyzer.Token;
 
 public abstract class Commons {
 
-    protected String name;
-
+    //Token que almacena, linea, fila, columna, token y lexema
     protected Token token;
+
+    /**
+     * Método que setea el token
+     * @param token
+     */
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
 
     protected String toJson(int tabs){
         return null;

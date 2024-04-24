@@ -11,6 +11,8 @@ import SemanticAnalyzer.SymbolTable;
 
 import java.util.List;
 
+import static java.lang.System.exit;
+
 /**
  * Clase que será la encargada de llamar al analizador lèxico
  * cuando sea necesario un nuevo Token
@@ -48,12 +50,15 @@ public class SyntacticExecutor {
         }
         catch (LexicalException exception){
             this.printExceptionLexical(exception);
+            exit(0);
         }
         catch (SyntacticException exception){
             this.printExceptionSyntactic(exception);
+            exit(0);
         }
         catch (SemanticException exception){
             this.printExceptionSemanticDecl(exception);
+            exit(0);
         }
 
         /*
