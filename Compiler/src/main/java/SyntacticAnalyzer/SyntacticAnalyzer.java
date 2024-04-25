@@ -423,6 +423,9 @@ public class    SyntacticAnalyzer {
         if(verifyEquals("st")){
             formaMetodo();
             match("fn");
+            // Analisis semantico ----------------------------------
+            this.symbolTable.addMethodToStruct(this.actualToken);
+            // -----------------------------------------------------
             match("ObjID");
             argumentosFormales();
             match("->");
@@ -433,6 +436,9 @@ public class    SyntacticAnalyzer {
             //Primeros de fn
             if(verifyEquals("fn")){
                 match("fn");
+                // Analisis semantico ----------------------------------
+                this.symbolTable.addMethodToStruct(this.actualToken);
+                // -----------------------------------------------------
                 match("ObjID");
                 argumentosFormales();
                 match("->");
@@ -452,6 +458,9 @@ public class    SyntacticAnalyzer {
      * */
 
     private void visibilidad(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.setVisibility(this.actualToken); // como sabemos si es de un atributo o un metodo?
+        // -----------------------------------------------------
         match("pri");
     }
 
@@ -461,6 +470,9 @@ public class    SyntacticAnalyzer {
      * */
 
     private void formaMetodo(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.setStatic(this.actualToken);
+        // -----------------------------------------------------
         match("st");
     }
 
@@ -616,6 +628,9 @@ public class    SyntacticAnalyzer {
      * */
 
     private void listaDeclaracionVariables(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.addVarToMethod(this.actualToken); //TODO: como sabemos si es una variable o un atributo?
+        // -----------------------------------------------------
         match("ObjID");
         listaDeclaracionVariablesF();
     }
@@ -716,6 +731,10 @@ public class    SyntacticAnalyzer {
 
     private void argumentoFormal(){
         tipo();
+        // Analisis semantico ----------------------------------
+        //TODO: en este caso son parametros, por ende ya están declarados por algún lado
+        //      por lo que entiendo no se debería hacer nada
+        //-----------------------------------------------------
         match("ObjID");
     }
 
@@ -734,6 +753,9 @@ public class    SyntacticAnalyzer {
         else {
             //Primeros void
             if (verifyEquals("void")){
+                // Analisis semantico ----------------------------------
+                this.symbolTable.setType(this.actualToken); // como sabemos que es metodo?
+                // -----------------------------------------------------
                 match("void");
             }
             else {
@@ -780,6 +802,9 @@ public class    SyntacticAnalyzer {
 
         if(moreOneMatch("Str") || moreOneMatch("Bool")
                 || moreOneMatch("Int") || moreOneMatch("Char")){
+            // Analisis semantico ----------------------------------
+            this.symbolTable.setype(this.actualToken); // como sabemos si es un metodo o una herencia o una variable o un parametro?
+            // -----------------------------------------------------
             this.actualToken = this.lexicalAnalyzer.getNextToken();
         }
         else {
@@ -794,6 +819,9 @@ public class    SyntacticAnalyzer {
      * */
 
     private void tipoReferencia(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.setType(this.actualToken); // como sabemos si es un metodo o una herencia o una variable o un parametro?
+        // -----------------------------------------------------
         match("StructID");
     }
 
@@ -803,6 +831,9 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
     private void tipoArreglo(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.setType(this.actualToken); // como sabemos si es un metodo o una herencia o una variable o un parametro?
+        // -----------------------------------------------------
         match("Array");
         tipoPrimitivo();
     }
@@ -982,6 +1013,9 @@ public class    SyntacticAnalyzer {
      * */
 
     private void accesoVarSimple(){
+        // Analisis semantico ----------------------------------
+        // acá ya debería existir este objeto
+        // -----------------------------------------------------
         match("ObjID");
         accesoVarSimpleF();
     }
@@ -1083,6 +1117,9 @@ public class    SyntacticAnalyzer {
 
     private void encadenadoSimple(){
         match(".");
+        // Analisis semantico ----------------------------------
+        // ya debería existir este objeto
+        // -----------------------------------------------------
         match("ObjID");
     }
 
@@ -1761,6 +1798,9 @@ public class    SyntacticAnalyzer {
                 accesoSelf();
             } else {
                 if (verifyEquals(firstAccesoVarAndMethod)){
+                    // Analisis semantico ----------------------------------
+                    // ya debería existir este objeto
+                    // -----------------------------------------------------
                     match("ObjID");
                     primarioF();
                 }
@@ -1888,6 +1928,7 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void accesoVar() {
+        // TODO: wtf porque no se llega nunca a esta regla
         match("ObjID");
         accesoVarF();
     }
@@ -1953,6 +1994,9 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void llamadaMetodo() {
+        // Analisis semantico ----------------------------------
+        // ya debería existir el metodo
+        // -----------------------------------------------------
         match("ObjID");
         argumentosActuales();
         llamadaMetodoF();
@@ -1986,6 +2030,9 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void llamadaMetodoEstatico() {
+        // Analisis semantico ----------------------------------
+        // ya debería existir ese metodo
+        // -----------------------------------------------------
         match("StructID");
         match(".");
         llamadaMetodo();
@@ -2039,6 +2086,9 @@ public class    SyntacticAnalyzer {
             expresion();
             match("]");
         } else {
+            // Analisis semantico ----------------------------------
+            this.symbolTable.addType(this.actualToken); // como sabemos si es una variable o un atributo?
+            // -----------------------------------------------------
             match("StructID");
             argumentosActuales();
             llamadaConstructorF1();
@@ -2147,6 +2197,9 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void encadenadoF(){
+        // Analisis semantico ----------------------------------
+        // ya debería existir el objeto
+        // -----------------------------------------------------
         match("ObjID");
         encadenadoF1();
     }
@@ -2189,6 +2242,9 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void llamadaMetodoEncadenado() {
+        // Analisis semantico ----------------------------------
+        // ya debería existir el metodo
+        // -----------------------------------------------------
         match("ObjID");
         argumentosActuales();
         llamadaMetodoEncadenadoF();
@@ -2224,6 +2280,9 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
     private void accesoVariableEncadenado() {
+        // Analisis semantico ----------------------------------
+        // ya debería existir la variable
+        // -----------------------------------------------------
         match("ObjID");
         accesoVariableEncadenadoF();
     }
