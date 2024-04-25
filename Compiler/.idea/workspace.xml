@@ -11,15 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyFile.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyFile.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyImpl.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/emptyImpl.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/implAfterStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/implAfterStart.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/structAfterStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/failing/structAfterStart.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/ImplStructStart.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/ImplStructStart.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdPrimario.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId2.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdPrimario2.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId3.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdEncadenado.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstId4.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SyntacticTests/passing/doubleFirstIdEncadenado2.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +61,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "testsAndFixes",
+    "git-widget-placeholder": "semanticFunctions",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "last_opened_file_path": "/home/yeu/Documentos/compilador11/Compiler",
@@ -165,6 +157,8 @@
       <workItem from="1713103018091" duration="3699000" />
       <workItem from="1713106794758" duration="145000" />
       <workItem from="1713183221954" duration="6959000" />
+      <workItem from="1713963203099" duration="547000" />
+      <workItem from="1714049948229" duration="5891000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />
@@ -196,17 +190,17 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>620</line>
+          <line>673</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/LexicalAnalyzer/LexicalAnalyzer.java</url>
-          <line>674</line>
+          <line>727</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Testing/Test.java</url>
-          <line>80</line>
+          <line>78</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
