@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-public class Json extends Commons {
+public class Json{
 
     //Concateno el principio
     private String jsonString = "{ \n \"nombre\": ";
@@ -27,9 +27,6 @@ public class Json extends Commons {
             jsonString += structs.getValue().toJson(tab);
             jsonString += "\n" + addtabs(tab-1) + "},";
         }
-        //ToDo agregar start
-        //ToDo agregar temas de herencia para que agrege metodos y atributos
-        //ToDo agregar constructores
         jsonString = jsonString.substring(0,jsonString.length()-1);
         jsonString += "\n" + "]";
         jsonString += "\n" + "}";
@@ -41,6 +38,14 @@ public class Json extends Commons {
 
         return this.jsonString;
 
+    }
+
+    private String addtabs(int tabs){
+        String tabString = "";
+        for (int i = 0; i < tabs; i++) {
+            tabString+="\t";
+        }
+        return  tabString;
     }
 
     private void saveJson(String jsonString, String inputPath){

@@ -6,6 +6,9 @@ public class Attributes extends Variable {
     //Si es o no pública
     private boolean isPublic;
 
+    //Es heredado o no
+    private boolean isInherited;
+
 
     /**
      * Constructor de clase
@@ -18,6 +21,13 @@ public class Attributes extends Variable {
         super(name, type, pos);
     }
 
+    /**
+     * Método que setea si el atributo es privado o público
+     * @param isPublic
+     */
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
     public String toJson(int tabs){
 

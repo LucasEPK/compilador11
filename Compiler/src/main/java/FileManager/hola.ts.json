@@ -204,6 +204,18 @@
 				"paramF": []
 			}
 		]
+	},
+ 	 {
+		"nombre": "Fibonacci",
+		"heredaDe": "null",
+		"atributos": [],
+		"metodos": []
+	},
+ 	 {
+		"nombre": "A",
+		"heredaDe": "null",
+		"atributos": [],
+		"metodos": []
 	}
 ]
 }

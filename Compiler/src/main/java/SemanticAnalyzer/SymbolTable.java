@@ -1,5 +1,8 @@
 package SemanticAnalyzer;
 
+import Exceptions.SemanticExceptions.DuplicateImpl;
+import Exceptions.SemanticExceptions.DuplicateStruct;
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 import java.lang.reflect.Method;
@@ -7,11 +10,23 @@ import java.util.*;
 
 public class SymbolTable extends Commons {
 
+    //Lista con todos los structs
+
     private Map<String,Struct> structs = new LinkedHashMap<>();;
+
+    //Struct actual
 
     private Struct currentStruct;
 
+    //Método actual
+
     private Methods currentMethod;
+
+    //Start
+
+    private  Methods start;
+
+
 
     public SymbolTable(){
         addObject();
@@ -23,7 +38,73 @@ public class SymbolTable extends Commons {
         addIO();
     }
 
+    public void addStart(Token token){
+        Methods start = new Methods();
+        start.setName(token.getLexeme());
+        start.setToken(token);
+        this.start = start;
+        this.currentMethod = start;
 
+    }
+
+    public void addStructbyStruct(Token token){
+
+        String structName = token.getLexeme();
+
+        //Verifico que la clase no exista ya en mi tabla
+
+        if(this.structs.containsKey(structName)){
+            this.currentStruct = this.structs.get(structName);
+            //Si existe, verifico que no haya otro struct con ese nombre
+            if(this.currentStruct.getHaveStruct()){
+                //Lanzo error de que ya existe
+                throw throwException("DuplicateStruct",token);
+            }
+            else {
+                this.currentStruct.setHaveStruct(true);
+            }
+        }
+        else {
+            //Si el struct no existe, lo debo agregar
+            Struct newStruct = new Struct(structName);
+            //Seteo que ya existe el struct
+            newStruct.setHaveStruct(true);
+
+            //Lo seteo como struct actual
+            this.currentStruct = newStruct;
+            //Lo agrego a lista de Strucrs
+            this.structs.put(structName,newStruct);
+        }
+
+    }
+
+    public void addStructByImpl(Token token){
+        String structName = token.getLexeme();
+
+        if(this.structs.containsKey(structName)){
+            this.currentStruct = this.structs.get(structName);
+            //Si existe, verifico que no haya otro impl con ese nombre
+            System.out.println(this.currentStruct.getName());
+            if(this.currentStruct.getHaveImpl()){
+                //Lanzo error de que ya existe
+                throw throwException("DuplicateImpl",token);
+            }
+            else {
+                this.currentStruct.setHaveImpl(true);
+            }
+        } else {
+            //Si el struct no existe, lo debo agregar
+            Struct newStruct = new Struct(structName);
+            //Seteo que ya existe el impl
+            newStruct.setHaveImpl(true);
+
+            //Lo seteo como struct actual
+            this.currentStruct = newStruct;
+            //Lo agrego a lista de Structs
+            this.structs.put(structName,newStruct);
+        }
+    }
+    
     private void addInt(){
         Struct Int = new Struct("Int");
         //Agrego que Int hereda de Object
@@ -186,4 +267,23 @@ public class SymbolTable extends Commons {
     public      Map<String, Struct> getStructs() {
         return structs;
     }
+
+    private SemanticException throwException(String type, Token token){
+
+        SemanticException semanticException = null;
+
+        switch (type){
+            case ("DuplicateStruct"):
+                semanticException = new DuplicateStruct(token);
+                break;
+            case ("DuplicateImpl") :
+                semanticException = new DuplicateImpl(token);
+                break;
+        }
+
+        return semanticException;
+
+    }
+
+
 }

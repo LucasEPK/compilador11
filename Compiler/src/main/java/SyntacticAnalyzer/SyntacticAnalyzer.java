@@ -156,6 +156,11 @@ public class    SyntacticAnalyzer {
      * */
 
     private void start(){
+
+        //Tabla Simbolos
+        symbolTable.addStart(this.actualToken);
+
+        //Sintáctico
         match("start");
         bloqueMetodo();
     }
@@ -212,6 +217,7 @@ public class    SyntacticAnalyzer {
 
     private void struct(){
         match("struct");
+        this.symbolTable.addStructbyStruct(this.actualToken);
         match("StructID");
         structF();
     }
@@ -296,6 +302,7 @@ public class    SyntacticAnalyzer {
 
     private void impl(){
         match("impl");
+        this.symbolTable.addStructByImpl(this.actualToken);
         match("StructID");
         match("{");
         miembroMas();

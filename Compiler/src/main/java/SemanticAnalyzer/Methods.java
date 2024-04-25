@@ -24,6 +24,9 @@ public class Methods extends Commons {
     //Pos del método
     private int pos;
 
+    //Es heredado o no
+    private boolean isInherited;
+
     /**
      * Constructor de la clase Method el cual se usa
      * para construir los métodos predefinidos
@@ -47,6 +50,68 @@ public class Methods extends Commons {
     public Methods(String name, Map<String,Variable> paramsOfMethod){
         this.name = name;
         this.paramsOfMethod = paramsOfMethod;
+    }
+
+    /**
+     * Constructor vocia
+     */
+
+    public Methods(){
+
+    }
+
+    /**
+     * Método que setea el nombre del método
+     * @param name
+     */
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Método que setea la lista de variables declaradas
+     * @param definedVar
+     */
+
+    public void setDefinedVar(Map<String, Variable> definedVar) {
+        this.definedVar = definedVar;
+    }
+
+    /**
+     * Método que setea la lista de parámetros del método
+     * @param paramsOfMethod
+     */
+
+    public void setParamsOfMethod(Map<String, Variable> paramsOfMethod) {
+        this.paramsOfMethod = paramsOfMethod;
+    }
+
+    /**
+     * Método que setea el retorno del método
+     * @param giveBack Struct
+     */
+
+    public void setGiveBack(Struct giveBack) {
+        this.giveBack = giveBack;
+    }
+
+    /**
+     * Método que setea la pos del método
+     * @param pos int
+     */
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
+    /**
+     * Método que setea si el método es estaático o mo
+     * @param aStatic boolean
+     */
+
+    public void setStatic(boolean aStatic) {
+        isStatic = aStatic;
     }
 
     public Map<String, Variable> getParamsOfMethod() {

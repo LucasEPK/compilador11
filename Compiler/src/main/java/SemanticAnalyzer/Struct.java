@@ -26,6 +26,12 @@ public class Struct extends Commons {
 
     Methods constructor;
 
+    //Indica si ya tiene un struct declarado
+    private boolean haveStruct = false;
+
+    //Indica si ya tiene un impl declarado
+    private boolean haveImpl = false;
+
 
     /**
      * Constructor con solo id de clase
@@ -45,6 +51,7 @@ public class Struct extends Commons {
         return name;
     }
 
+
     /**
      * Método que modifica el set de métodos
      * @param methods lista de métodos
@@ -54,12 +61,72 @@ public class Struct extends Commons {
         this.methods = methods;
     }
 
+    /**
+     * Método que define el constructor del Struct
+     * @param method
+     */
     public void setConstructor(Methods method){
         this.constructor = method;
     }
 
+    /**
+     * Método que define la clase de la la cual hereda
+     * @param inheritFrom
+     */
+
     public void setInheritFrom(Struct inheritFrom) {
         this.inheritFrom = inheritFrom;
+    }
+
+    /**
+     * Método que setea los atributos de la clase
+     * @param attributes
+     */
+
+
+    public void setAttributes(Map<String, Attributes> attributes) {
+        this.attributes = attributes;
+    }
+
+    /**
+     * Método que setea si se consololido la tabla
+     * @param consolidate
+     */
+
+    public void setConsolidate(boolean consolidate) {
+        isConsolidate = consolidate;
+    }
+
+    /**
+     * Método que setea el nombre de la clase
+     * @param name
+     */
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Método que setea si el struct ya tiene impl
+     * @param haveImpl booleano
+     */
+
+    public void setHaveImpl(boolean haveImpl) {
+        this.haveImpl = haveImpl;
+    }
+
+    public boolean getHaveImpl() {return this.haveImpl;}
+    /**
+     * Método que setea si el struct ya tiene struct
+     * @param haveStruct
+     */
+
+    public void setHaveStruct(boolean haveStruct) {
+        this.haveStruct = haveStruct;
+    }
+
+    public boolean getHaveStruct(){
+        return this.haveStruct;
     }
 
     public String toJson(int tabs){
@@ -113,8 +180,8 @@ public class Struct extends Commons {
             jsonSting += "\n" + addtabs(tabs-1) + "]";
         }
 
-        //ToDo agregar constructor
-        //ToDo ver como agregar herencia
+        //ToDo agregar constructores
+
 
 
         return jsonSting;
