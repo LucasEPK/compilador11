@@ -12,6 +12,9 @@ public class Struct extends Commons {
     //Clase de la cual hereda
     private Struct inheritFrom = null;
 
+    //Hereda o no
+    private boolean haveInherit;
+
     //Lista de atributos
     private Map<String, Attributes> attributes = new LinkedHashMap<>();
 
@@ -127,6 +130,23 @@ public class Struct extends Commons {
 
     public boolean getHaveStruct(){
         return this.haveStruct;
+    }
+
+    /**
+     * Método que setea si la clase hereda o no
+     * @param haveInherit
+     */
+
+    public void setHaveInherit(boolean haveInherit){
+        this.haveInherit = haveInherit;
+    }
+
+    /**
+     * Método que retorna los métodos del struct
+     * @return lista con los métodos del struct
+     */
+    public Map<String, Methods> getMethods() {
+        return methods;
     }
 
     public String toJson(int tabs){

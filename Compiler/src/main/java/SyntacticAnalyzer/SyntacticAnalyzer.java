@@ -157,8 +157,9 @@ public class    SyntacticAnalyzer {
 
     private void start(){
 
-        //Tabla Simbolos
+        //Tabla Simbolos-------------------------------------
         symbolTable.addStart(this.actualToken);
+        //-----------------------------------------------------
 
         //Sintáctico
         match("start");
@@ -217,7 +218,11 @@ public class    SyntacticAnalyzer {
 
     private void struct(){
         match("struct");
-        this.symbolTable.addStructbyStruct(this.actualToken);
+
+        //Semántico--------------------------------------------
+        this.symbolTable.addStructByStruct(this.actualToken);
+        //-----------------------------------------------------
+
         match("StructID");
         structF();
     }
@@ -302,7 +307,11 @@ public class    SyntacticAnalyzer {
 
     private void impl(){
         match("impl");
+
+        //Semántico----------------------------------------
         this.symbolTable.addStructByImpl(this.actualToken);
+        //-------------------------------------------------
+
         match("StructID");
         match("{");
         miembroMas();
@@ -348,6 +357,11 @@ public class    SyntacticAnalyzer {
 
     private void herencia(){
         match(":");
+
+        //Análisis Semantico-------------------------------
+        this.symbolTable.addHeritance(this.actualToken);
+        //--------------------------------------------------
+
         tipo();
     }
 
@@ -423,12 +437,18 @@ public class    SyntacticAnalyzer {
         if(verifyEquals("st")){
             formaMetodo();
             match("fn");
-            // Analisis semantico ----------------------------------
-            this.symbolTable.addMethodToStruct(this.actualToken);
-            // -----------------------------------------------------
+
+            // Analisis semantico ----------------------------------------
+            boolean isStatic = true;
+            this.symbolTable.addMethodToStruct(this.actualToken,isStatic);
+            // -----------------------------------------------------------
+
             match("ObjID");
             argumentosFormales();
             match("->");
+            //Análisis semántico-----------------------------------------
+            this.symbolTable.addReturnToMethod(this.actualToken);
+            //------------------------------------------------------------
             tipoMetodo();
             bloqueMetodo();
         }
@@ -436,12 +456,20 @@ public class    SyntacticAnalyzer {
             //Primeros de fn
             if(verifyEquals("fn")){
                 match("fn");
+
                 // Analisis semantico ----------------------------------
-                this.symbolTable.addMethodToStruct(this.actualToken);
+                boolean isEstatic = false;
+                this.symbolTable.addMethodToStruct(this.actualToken,isEstatic);
                 // -----------------------------------------------------
+
                 match("ObjID");
                 argumentosFormales();
                 match("->");
+
+                //Análisis semántico-----------------------------------------
+                this.symbolTable.addReturnToMethod(this.actualToken);
+                //------------------------------------------------------------
+
                 tipoMetodo();
                 bloqueMetodo();
 
@@ -470,6 +498,7 @@ public class    SyntacticAnalyzer {
      * */
 
     private void formaMetodo(){
+
         // Analisis semantico ----------------------------------
         this.symbolTable.setStatic(this.actualToken);
         // -----------------------------------------------------

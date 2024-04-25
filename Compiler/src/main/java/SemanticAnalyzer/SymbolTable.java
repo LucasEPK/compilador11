@@ -1,8 +1,6 @@
 package SemanticAnalyzer;
 
-import Exceptions.SemanticExceptions.DuplicateImpl;
-import Exceptions.SemanticExceptions.DuplicateStruct;
-import Exceptions.SemanticExceptions.SemanticException;
+import Exceptions.SemanticExceptions.*;
 import LexicalAnalyzer.Token;
 
 import java.lang.reflect.Method;
@@ -47,7 +45,7 @@ public class SymbolTable extends Commons {
 
     }
 
-    public void addStructbyStruct(Token token){
+    public void addStructByStruct(Token token){
 
         String structName = token.getLexeme();
 
@@ -61,6 +59,7 @@ public class SymbolTable extends Commons {
                 throw throwException("DuplicateStruct",token);
             }
             else {
+                //Si ya existe, seteo que ya tiene struct
                 this.currentStruct.setHaveStruct(true);
             }
         }
@@ -82,6 +81,7 @@ public class SymbolTable extends Commons {
         String structName = token.getLexeme();
 
         if(this.structs.containsKey(structName)){
+            //Seteo la clase com oactual
             this.currentStruct = this.structs.get(structName);
             //Si existe, verifico que no haya otro impl con ese nombre
             System.out.println(this.currentStruct.getName());
@@ -90,6 +90,7 @@ public class SymbolTable extends Commons {
                 throw throwException("DuplicateImpl",token);
             }
             else {
+                //Si ya existe, seteo que ya tiene impl
                 this.currentStruct.setHaveImpl(true);
             }
         } else {
@@ -104,6 +105,76 @@ public class SymbolTable extends Commons {
             this.structs.put(structName,newStruct);
         }
     }
+
+    public void addMethodToStruct(Token token, boolean isEstatic){
+
+        String methodName = token.getLexeme();
+
+        //Verifico si el método ya existe
+        if(currentStruct.getMethods().containsKey(methodName)){
+            //Si existe deberia tirar
+            throw throwException("DuplicateMethod",token);
+        }
+        //Defino el nuevo método con el nombre del ID
+        Methods newMethod = new Methods(methodName);
+
+        //Seteo su pos como el tamaño de la lista de métodos
+        newMethod.setPos(currentStruct.getMethods().size());
+        //Defino si es estático o no
+        newMethod.setStatic(isEstatic);
+        //Seteo este método como actual
+        this.currentMethod = newMethod;
+    }
+
+    public void addHeritance(Token token){
+        String heritanceName = token.getLexeme();
+
+        //Verifico que no sea Array,Bool,Char,Int,Str,IO
+        if(Objects.equals(heritanceName,"Array" ) ||
+                Objects.equals(heritanceName,"Bool" ) ||
+                Objects.equals(heritanceName,"Char" ) ||
+                Objects.equals(heritanceName,"Int" ) ||
+                Objects.equals(heritanceName,"Str" ) ||
+                Objects.equals(heritanceName,"IO")){
+            throw throwException("InvalidHeritance",token);
+        }
+
+        //Verifico que la clase de la cual hereda no este definida en la tabla
+
+        if(this.structs.containsKey(heritanceName)){
+            //Si la clase ya estaba en la tabla
+            Struct heritance = this.structs.get(heritanceName);
+            this.currentStruct.setInheritFrom(heritance);
+        }
+        //La declaro como clase
+        Struct newClass = new Struct(heritanceName);
+        this.currentStruct.setInheritFrom(newClass);
+
+        //Seteo en ambos casos que la clase actual esta heredando
+        this.currentStruct.setHaveInherit(true);
+
+    }
+
+    public void addReturnToMethod(Token token){
+
+        String returnName = token.getLexeme();
+        //Si retorna void lo agrego
+        if(Objects.equals(returnName, "void")){
+            Struct newVoid = new Struct("void");
+            this.currentMethod.setGiveBack(newVoid);
+        }
+        //Como puede ser una referencia, debo verificar si existe el struct
+        if(this.structs.containsKey(returnName)){
+            //Si contiene la clave, solo seteo el return
+            this.currentMethod.setGiveBack(this.structs.get(returnName));
+        }
+
+        //De otro modo, creo la nueva clase
+        Struct newClass = new Struct(returnName);
+        this.currentMethod.setGiveBack(newClass);
+    }
+
+
     
     private void addInt(){
         Struct Int = new Struct("Int");
@@ -276,8 +347,14 @@ public class SymbolTable extends Commons {
             case ("DuplicateStruct"):
                 semanticException = new DuplicateStruct(token);
                 break;
-            case ("DuplicateImpl") :
+            case ("DuplicateImpl"):
                 semanticException = new DuplicateImpl(token);
+                break;
+            case ("DuplicateMethod"):
+                semanticException = new DuplicateMethod(token);
+                break;
+            case ("InvalidHeritance"):
+                semanticException = new InvalidHeritance(token);
                 break;
         }
 

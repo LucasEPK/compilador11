@@ -53,11 +53,20 @@ public class Methods extends Commons {
     }
 
     /**
-     * Constructor vocia
+     * Constructor vo
      */
 
     public Methods(){
 
+    }
+
+    /**
+     * Constructor que setea el nombre del método
+     * @param name string
+     */
+
+    public Methods(String name){
+        this.name = name;
     }
 
     /**
