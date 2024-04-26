@@ -407,13 +407,16 @@ public class    SyntacticAnalyzer {
 
         //Primeros visibilidad
         if(verifyEquals("pri")){
+            // Analisis semantico ----------------------------------
+            boolean isPublic = false;
+            // -----------------------------------------------------
             visibilidad();
             // Analisis semantico ----------------------------------
             String attrType = this.actualToken.getLexeme();
             // -----------------------------------------------------
             tipo();
             // Analisis semantico ----------------------------------
-            this.symbolTable.addAttrToStruct(this.actualToken, attrType);
+            this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
             // -----------------------------------------------------
             listaDeclaracionVariables(attrType, true);
             match(";");
@@ -423,11 +426,12 @@ public class    SyntacticAnalyzer {
             if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
             , "StructID")){
                 // Analisis semantico ----------------------------------
+                boolean isPublic = true;
                 String attrType = this.actualToken.getLexeme();
                 // -----------------------------------------------------
                 tipo();
                 // Analisis semantico ----------------------------------
-                this.symbolTable.addAttrToStruct(this.actualToken, attrType);
+                this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
                 // -----------------------------------------------------
                 listaDeclaracionVariables(attrType, true);
                 match(";");
@@ -498,9 +502,6 @@ public class    SyntacticAnalyzer {
      * */
 
     private void visibilidad(){
-        // Analisis semantico ----------------------------------
-        //this.symbolTable.setVisibility(this.actualToken);
-        // -----------------------------------------------------
         match("pri");
     }
 

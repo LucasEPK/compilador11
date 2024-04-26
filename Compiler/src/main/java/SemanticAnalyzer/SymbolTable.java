@@ -176,10 +176,13 @@ public class SymbolTable extends Commons {
     }
 
     /**
-     * Agrega un atributo al currentStruct
+     * Agrega un atributo al currentStruct seteando el nombre, el tipo, la visibilidad y la posicion
+     * @param token es un token del lexico
+     * @param type un string con el tipo del atributo
+     * @param isPublic un booleano que indica si el atributo es publico o no
      * @author Lucas Moyano
      * */
-    public void addAttrToStruct(Token token, String type){
+    public void addAttrToStruct(Token token, String type, boolean isPublic){
         String attributeName = token.getLexeme();
         // Observa si ya existe un attribute con este nombre
         if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
@@ -190,7 +193,7 @@ public class SymbolTable extends Commons {
                 Struct structType = this.structs.get(type);
                 int pos = structType.getAttributes().size();
                 // si existe agregamos el nuevo atributo
-                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos); // TODO: no entendí muy bien que tengo que poner en pos
+                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos, isPublic);
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
             } else {
                 // Si no existe tiramos error
