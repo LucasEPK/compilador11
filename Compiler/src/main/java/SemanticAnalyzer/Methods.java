@@ -78,6 +78,18 @@ public class Methods extends Commons {
         this.name = name;
     }
 
+    public void setInherited(boolean inherited) {
+        isInherited = inherited;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Struct getGiveBack() {
+        return giveBack;
+    }
+
     /**
      * Método que setea la lista de variables declaradas
      * @param definedVar

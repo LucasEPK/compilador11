@@ -36,6 +36,8 @@ public class Struct extends Commons {
     private boolean haveImpl = false;
 
 
+
+
     /**
      * Constructor con solo id de clase
      * @param name id de la clase
@@ -64,12 +66,21 @@ public class Struct extends Commons {
         this.methods = methods;
     }
 
+
     /**
      * Método que define el constructor del Struct
      * @param method
      */
     public void setConstructor(Methods method){
         this.constructor = method;
+    }
+
+    public boolean getIsConsolidate(){
+        return  this.isConsolidate;
+    }
+
+    public Methods getConstructor() {
+        return constructor;
     }
 
     /**
@@ -155,6 +166,10 @@ public class Struct extends Commons {
      */
     public Map<String, Methods> getMethods() {
         return methods;
+    }
+
+    public Struct getInheritFrom() {
+        return inheritFrom;
     }
 
     public String toJson(int tabs){
