@@ -784,12 +784,16 @@ public class    SyntacticAnalyzer {
     /**
      * Regla Argumento-Formal
      * @author Yeumen Silva
+     * @author Lucas Moyano
      * */
 
     private void argumentoFormal(){
+        // Analisis semantico ----------------------------------
+        String paramType = actualToken.getLexeme();
+        //-----------------------------------------------------
         tipo();
         // Analisis semantico ----------------------------------
-        //this.symbolTable.addParameterToMethod(this.actualToken);
+        this.symbolTable.addParameterToMethod(this.actualToken, paramType);
         //-----------------------------------------------------
         match("ObjID");
     }
@@ -805,7 +809,7 @@ public class    SyntacticAnalyzer {
         if (verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" ,
                 "StructID")){
             // Analisis semantico ----------------------------------
-            //this.symbolTable.setMethodType(this.actualToken);
+            // el tipo del metodo ya se guardó en la tabla
             // -----------------------------------------------------
             tipo();
         }
@@ -813,7 +817,7 @@ public class    SyntacticAnalyzer {
             //Primeros void
             if (verifyEquals("void")){
                 // Analisis semantico ----------------------------------
-                //this.symbolTable.setMethodType(this.actualToken);
+                // el tipo del metodo ya se guardó en la tabla
                 // -----------------------------------------------------
                 match("void");
             }

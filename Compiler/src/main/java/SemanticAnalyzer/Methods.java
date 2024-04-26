@@ -106,6 +106,10 @@ public class Methods extends Commons {
         this.paramsOfMethod = paramsOfMethod;
     }
 
+    public void addParameter(String paramName, Variable param) {
+        this.getParamsOfMethod().put(paramName, param);
+    }
+
     /**
      * Método que setea el retorno del método
      * @param giveBack Struct
