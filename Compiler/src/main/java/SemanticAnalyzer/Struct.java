@@ -232,6 +232,8 @@ public class Struct extends Commons {
             jsonString = jsonString.substring(0,jsonString.length()-1);
             jsonString += "\n" + addtabs(tabs) + "]";
         }
+
+        return jsonString;
     }
 
 
