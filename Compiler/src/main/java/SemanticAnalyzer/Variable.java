@@ -36,6 +36,10 @@ public class Variable extends Commons {
         return pos;
     }
 
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
     public String toJson(int tabs){
         String jsonString = "";
         jsonString += "\n" + addtabs(tabs+2) + "{";
