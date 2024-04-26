@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +158,7 @@
       <workItem from="1713183221954" duration="6959000" />
       <workItem from="1713963203099" duration="547000" />
       <workItem from="1714049948229" duration="5891000" />
-      <workItem from="1714134873309" duration="2111000" />
+      <workItem from="1714134873309" duration="3934000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />
