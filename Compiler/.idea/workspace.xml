@@ -61,7 +61,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "semanticFunctions",
+    "git-widget-placeholder": "semanticFunctionsFix",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "last_opened_file_path": "/home/yeu/Documentos/compilador11/Compiler",
@@ -159,6 +159,7 @@
       <workItem from="1713183221954" duration="6959000" />
       <workItem from="1713963203099" duration="547000" />
       <workItem from="1714049948229" duration="5891000" />
+      <workItem from="1714134873309" duration="2111000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />

@@ -652,7 +652,7 @@ public class    SyntacticAnalyzer {
 
     private void declVarLocales(){
         // Analisis semantico ----------------------------------
-        this.symbolTable.setVarType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+        this.symbolTable.setVarType(this.actualToken);
         // -----------------------------------------------------
         tipo();
         // Analisis semantico ----------------------------------
@@ -769,8 +769,7 @@ public class    SyntacticAnalyzer {
     private void argumentoFormal(){
         tipo();
         // Analisis semantico ----------------------------------
-        // en este caso son parametros, por ende ya están declarados por algún lado
-        // por lo que entiendo no se debería hacer nada
+        this.symbolTable.addParameterToMethod(this.actualToken);
         //-----------------------------------------------------
         match("ObjID");
     }
