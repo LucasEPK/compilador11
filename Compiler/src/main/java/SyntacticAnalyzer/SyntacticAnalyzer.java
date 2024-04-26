@@ -791,7 +791,7 @@ public class    SyntacticAnalyzer {
         if (verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" ,
                 "StructID")){
             // Analisis semantico ----------------------------------
-            //this.symbolTable.setMethodType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+            //this.symbolTable.setMethodType(this.actualToken);
             // -----------------------------------------------------
             tipo();
         }

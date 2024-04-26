@@ -185,9 +185,10 @@ public class SymbolTable extends Commons {
         if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
             throw throwException("DuplicateAttribute", token);
         } else { // si no existe un attribute con ese mismo nombre entonces lo crea en el currentStruct
-            // Chequea si existe el tipo
+            // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
+                int pos = structType.getAttributes().size();
                 // si existe agregamos el nuevo atributo
                 Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos); // TODO: no entendí muy bien que tengo que poner en pos
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
