@@ -91,6 +91,14 @@ public class Struct extends Commons {
         this.attributes = attributes;
     }
 
+    public Map<String, Attributes> getAttributes() {
+        return attributes;
+    }
+
+    public void addAttribute(String attributeName, Attributes attribute) {
+        this.attributes.put(attributeName, attribute);
+    }
+
     /**
      * Método que setea si se consololido la tabla
      * @param consolidate

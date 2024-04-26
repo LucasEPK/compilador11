@@ -409,9 +409,12 @@ public class    SyntacticAnalyzer {
         if(verifyEquals("pri")){
             visibilidad();
             // Analisis semantico ----------------------------------
-            //this.symbolTable.setAttrType(this.actualToken);
+            String attrType = this.actualToken.getLexeme();
             // -----------------------------------------------------
             tipo();
+            // Analisis semantico ----------------------------------
+            this.symbolTable.addAttrToStruct(this.actualToken, attrType);
+            // -----------------------------------------------------
             listaDeclaracionVariables();
             match(";");
         }
@@ -420,11 +423,11 @@ public class    SyntacticAnalyzer {
             if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
             , "StructID")){
                 // Analisis semantico ----------------------------------
-                //this.symbolTable.setAttrType(this.actualToken);
+                String attrType = this.actualToken.getLexeme();
                 // -----------------------------------------------------
                 tipo();
                 // Analisis semantico ----------------------------------
-                //this.symbolTable.addAttrToStruct(this.actualToken);
+                this.symbolTable.addAttrToStruct(this.actualToken, attrType);
                 // -----------------------------------------------------
                 listaDeclaracionVariables();
                 match(";");
@@ -668,6 +671,9 @@ public class    SyntacticAnalyzer {
      * */
 
     private void listaDeclaracionVariables(){
+        // TODO: acá hay un problema porque al iniciar varias variables/attributos como puedo saber
+        //       si es un attributo o una variable? Lo unico que se me ocurre es pasarle un parametro
+        //       a esta funcion
         match("ObjID");
         listaDeclaracionVariablesF();
     }

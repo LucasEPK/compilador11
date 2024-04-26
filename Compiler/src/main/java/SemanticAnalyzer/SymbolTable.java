@@ -145,10 +145,11 @@ public class SymbolTable extends Commons {
             //Si la clase ya estaba en la tabla
             Struct heritance = this.structs.get(heritanceName);
             this.currentStruct.setInheritFrom(heritance);
+        } else {
+            //La declaro como clase
+            Struct newClass = new Struct(heritanceName);
+            this.currentStruct.setInheritFrom(newClass);
         }
-        //La declaro como clase
-        Struct newClass = new Struct(heritanceName);
-        this.currentStruct.setInheritFrom(newClass);
 
         //Seteo en ambos casos que la clase actual esta heredando
         this.currentStruct.setHaveInherit(true);
@@ -174,7 +175,28 @@ public class SymbolTable extends Commons {
         this.currentMethod.setGiveBack(newClass);
     }
 
-
+    /**
+     * Agrega un atributo al currentStruct
+     * @author Lucas Moyano
+     * */
+    public void addAttrToStruct(Token token, String type){
+        String attributeName = token.getLexeme();
+        // Observa si ya existe un attribute con este nombre
+        if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
+            throw throwException("DuplicateAttribute", token);
+        } else { // si no existe un attribute con ese mismo nombre entonces lo crea en el currentStruct
+            // Chequea si existe el tipo
+            if (this.structs.containsKey(type)) {
+                Struct structType = this.structs.get(type);
+                // si existe agregamos el nuevo atributo
+                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos); // TODO: no entendí muy bien que tengo que poner en pos
+                this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
+            } else {
+                // Si no existe tiramos error
+                throw throwException("InvalidType", token);
+            }
+        }
+    }
     
     private void addInt(){
         Struct Int = new Struct("Int");
@@ -355,6 +377,12 @@ public class SymbolTable extends Commons {
                 break;
             case ("InvalidHeritance"):
                 semanticException = new InvalidHeritance(token);
+                break;
+            case ("DuplicateAttribute"):
+                semanticException = new DuplicateAttribute(token);
+                break;
+            case ("InvalidType"):
+                semanticException = new InvalidType(token);
                 break;
         }
 
