@@ -201,6 +201,32 @@ public class SymbolTable extends Commons {
             }
         }
     }
+
+    /**
+     * Agrega una variable a currentMethod seteando el nombre, el tipo, y la posicion
+     * @param token es un token del lexico
+     * @param type un string con el tipo de la variable
+     * @author Lucas Moyano
+     * */
+    public void addVarToMethod(Token token, String type){
+        String attributeName = token.getLexeme();
+        // Observa si ya existe una variable con este nombre
+        if (this.currentMethod.getDefinedVar().containsKey(attributeName)) { // Si existe tira error
+            throw throwException("DuplicateVariable", token);
+        } else { // si no existe una variable con ese mismo nombre entonces la crea en el currentMethod
+            // Chequea si existe el tipo en las clases de la tabla
+            if (this.structs.containsKey(type)) {
+                Struct structType = this.structs.get(type);
+                int pos = this.currentMethod.getDefinedVar().size();
+                // si existe agregamos la nueva variable
+                Variable newVariable = new Variable(token.getLexeme(), structType, pos);
+                this.currentMethod.addVariable(newVariable.getName(), newVariable);
+            } else {
+                // Si no existe tiramos error
+                throw throwException("InvalidType", token);
+            }
+        }
+    }
     
     private void addInt(){
         Struct Int = new Struct("Int");
@@ -387,6 +413,9 @@ public class SymbolTable extends Commons {
                 break;
             case ("InvalidType"):
                 semanticException = new InvalidType(token);
+                break;
+            case("DuplicateVariable") :
+                semanticException = new DuplicateVariable(token);
                 break;
         }
 

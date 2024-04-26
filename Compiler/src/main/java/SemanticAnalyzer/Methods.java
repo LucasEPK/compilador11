@@ -87,6 +87,16 @@ public class Methods extends Commons {
         this.definedVar = definedVar;
     }
 
+
+    public Map<String, Variable> getDefinedVar() {
+        return definedVar;
+    }
+
+    public void addVariable(String varName,Variable var) {
+        // Adds variable to the hashmap of the method's variables
+        this.getDefinedVar().put(varName, var);
+    }
+
     /**
      * Método que setea la lista de parámetros del método
      * @param paramsOfMethod

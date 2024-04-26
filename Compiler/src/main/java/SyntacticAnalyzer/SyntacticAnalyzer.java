@@ -418,7 +418,7 @@ public class    SyntacticAnalyzer {
             // Analisis semantico ----------------------------------
             this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
             // -----------------------------------------------------
-            listaDeclaracionVariables(attrType, true);
+            listaDeclaracionVariables(attrType, true, isPublic);
             match(";");
         }
         else {
@@ -433,7 +433,7 @@ public class    SyntacticAnalyzer {
                 // Analisis semantico ----------------------------------
                 this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
                 // -----------------------------------------------------
-                listaDeclaracionVariables(attrType, true);
+                listaDeclaracionVariables(attrType, true, isPublic);
                 match(";");
             }
             else {
@@ -656,13 +656,13 @@ public class    SyntacticAnalyzer {
 
     private void declVarLocales(){
         // Analisis semantico ----------------------------------
-        //this.symbolTable.setVarType(this.actualToken);
+        String varType = this.actualToken.getLexeme();
         // -----------------------------------------------------
         tipo();
         // Analisis semantico ----------------------------------
-        //this.symbolTable.addVarToMethod(this.actualToken);
+        this.symbolTable.addVarToMethod(this.actualToken, varType);
         // -----------------------------------------------------
-        listaDeclaracionVariables();
+        listaDeclaracionVariables(varType, false, true);
         match(";");
     }
 
@@ -670,35 +670,38 @@ public class    SyntacticAnalyzer {
      * Regla Lista-Declaracion-Variables
      * @param type este es el tipo de variable/atributo
      * @param isAttribute indica si es un atributo, en caso contrario se asume que es una variable
+     * @param isPublic indica si el atributo es publico (no se usa en caso de ser una variable)
      * @author Yeumen Silva
      * @author Lucas Moyano
      * */
 
-    private void listaDeclaracionVariables(String type, boolean isAttribute){
+    private void listaDeclaracionVariables(String type, boolean isAttribute, boolean isPublic){
 
         // Analisis semantico ----------------------------------
+        // Esto se hace porque llegado a este punto no podemos saber si estamos declarando variables o atributos
         if (isAttribute){
-            this.symbolTable.addAttrToStruct(this.actualToken, type);
+            this.symbolTable.addAttrToStruct(this.actualToken, type, isPublic);
         } else {
-            //this.symbolTable.addVarToMethod(this.actualToken);
+            this.symbolTable.addVarToMethod(this.actualToken, type);
         }
         // -----------------------------------------------------
         match("ObjID");
-        listaDeclaracionVariablesF(type, isAttribute);
+        listaDeclaracionVariablesF(type, isAttribute, isPublic);
     }
 
     /**
      * Regla Lista-Declaracion-Variables-F
      * @param type este es el tipo de variable/atributo
      * @param isAttribute indica si es un atributo, en caso contrario se asume que es una variable
+     * @param isPublic indica si el atributo es publico (no se usa en caso de ser una variable)
      * @author Yeumen Silva
      * */
 
-    private void listaDeclaracionVariablesF(String type, boolean isAttribute){
+    private void listaDeclaracionVariablesF(String type, boolean isAttribute, boolean isPublic){
         //Primeros ,
         if(verifyEquals(",")){
             match(",");
-            listaDeclaracionVariables(type, isAttribute);
+            listaDeclaracionVariables(type, isAttribute, isPublic);
         }
         else {
             //Siguientes Lista-Declaracion-Variables-F
