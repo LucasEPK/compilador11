@@ -415,7 +415,7 @@ public class    SyntacticAnalyzer {
             // Analisis semantico ----------------------------------
             this.symbolTable.addAttrToStruct(this.actualToken, attrType);
             // -----------------------------------------------------
-            listaDeclaracionVariables();
+            listaDeclaracionVariables(attrType, true);
             match(";");
         }
         else {
@@ -429,7 +429,7 @@ public class    SyntacticAnalyzer {
                 // Analisis semantico ----------------------------------
                 this.symbolTable.addAttrToStruct(this.actualToken, attrType);
                 // -----------------------------------------------------
-                listaDeclaracionVariables();
+                listaDeclaracionVariables(attrType, true);
                 match(";");
             }
             else {
@@ -667,27 +667,37 @@ public class    SyntacticAnalyzer {
 
     /**
      * Regla Lista-Declaracion-Variables
+     * @param type este es el tipo de variable/atributo
+     * @param isAttribute indica si es un atributo, en caso contrario se asume que es una variable
      * @author Yeumen Silva
+     * @author Lucas Moyano
      * */
 
-    private void listaDeclaracionVariables(){
-        // TODO: acá hay un problema porque al iniciar varias variables/attributos como puedo saber
-        //       si es un attributo o una variable? Lo unico que se me ocurre es pasarle un parametro
-        //       a esta funcion
+    private void listaDeclaracionVariables(String type, boolean isAttribute){
+
+        // Analisis semantico ----------------------------------
+        if (isAttribute){
+            this.symbolTable.addAttrToStruct(this.actualToken, type);
+        } else {
+            //this.symbolTable.addVarToMethod(this.actualToken);
+        }
+        // -----------------------------------------------------
         match("ObjID");
-        listaDeclaracionVariablesF();
+        listaDeclaracionVariablesF(type, isAttribute);
     }
 
     /**
      * Regla Lista-Declaracion-Variables-F
+     * @param type este es el tipo de variable/atributo
+     * @param isAttribute indica si es un atributo, en caso contrario se asume que es una variable
      * @author Yeumen Silva
      * */
 
-    private void listaDeclaracionVariablesF(){
+    private void listaDeclaracionVariablesF(String type, boolean isAttribute){
         //Primeros ,
         if(verifyEquals(",")){
             match(",");
-            listaDeclaracionVariables();
+            listaDeclaracionVariables(type, isAttribute);
         }
         else {
             //Siguientes Lista-Declaracion-Variables-F
