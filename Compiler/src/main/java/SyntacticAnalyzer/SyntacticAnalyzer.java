@@ -408,6 +408,9 @@ public class    SyntacticAnalyzer {
         //Primeros visibilidad
         if(verifyEquals("pri")){
             visibilidad();
+            // Analisis semantico ----------------------------------
+            this.symbolTable.setAttrType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+            // -----------------------------------------------------
             tipo();
             listaDeclaracionVariables();
             match(";");
@@ -416,7 +419,13 @@ public class    SyntacticAnalyzer {
             //Primeros Tipo
             if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
             , "StructID")){
+                // Analisis semantico ----------------------------------
+                this.symbolTable.setAttrType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+                // -----------------------------------------------------
                 tipo();
+                // Analisis semantico ----------------------------------
+                this.symbolTable.addAttrToStruct(this.actualToken);
+                // -----------------------------------------------------
                 listaDeclaracionVariables();
                 match(";");
             }
@@ -487,7 +496,7 @@ public class    SyntacticAnalyzer {
 
     private void visibilidad(){
         // Analisis semantico ----------------------------------
-        this.symbolTable.setVisibility(this.actualToken); // como sabemos si es de un atributo o un metodo?
+        this.symbolTable.setVisibility(this.actualToken);
         // -----------------------------------------------------
         match("pri");
     }
@@ -498,10 +507,6 @@ public class    SyntacticAnalyzer {
      * */
 
     private void formaMetodo(){
-
-        // Analisis semantico ----------------------------------
-        this.symbolTable.setStatic(this.actualToken);
-        // -----------------------------------------------------
         match("st");
     }
 
@@ -646,7 +651,13 @@ public class    SyntacticAnalyzer {
      * */
 
     private void declVarLocales(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.setVarType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+        // -----------------------------------------------------
         tipo();
+        // Analisis semantico ----------------------------------
+        this.symbolTable.addVarToMethod(this.actualToken);
+        // -----------------------------------------------------
         listaDeclaracionVariables();
         match(";");
     }
@@ -657,9 +668,6 @@ public class    SyntacticAnalyzer {
      * */
 
     private void listaDeclaracionVariables(){
-        // Analisis semantico ----------------------------------
-        this.symbolTable.addVarToMethod(this.actualToken); //TODO: como sabemos si es una variable o un atributo?
-        // -----------------------------------------------------
         match("ObjID");
         listaDeclaracionVariablesF();
     }
@@ -761,8 +769,8 @@ public class    SyntacticAnalyzer {
     private void argumentoFormal(){
         tipo();
         // Analisis semantico ----------------------------------
-        //TODO: en este caso son parametros, por ende ya están declarados por algún lado
-        //      por lo que entiendo no se debería hacer nada
+        // en este caso son parametros, por ende ya están declarados por algún lado
+        // por lo que entiendo no se debería hacer nada
         //-----------------------------------------------------
         match("ObjID");
     }
@@ -777,13 +785,16 @@ public class    SyntacticAnalyzer {
         //Primeros Tipo
         if (verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" ,
                 "StructID")){
+            // Analisis semantico ----------------------------------
+            this.symbolTable.setMethodType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+            // -----------------------------------------------------
             tipo();
         }
         else {
             //Primeros void
             if (verifyEquals("void")){
                 // Analisis semantico ----------------------------------
-                this.symbolTable.setType(this.actualToken); // como sabemos que es metodo?
+                this.symbolTable.setMethodType(this.actualToken);
                 // -----------------------------------------------------
                 match("void");
             }
@@ -831,9 +842,6 @@ public class    SyntacticAnalyzer {
 
         if(moreOneMatch("Str") || moreOneMatch("Bool")
                 || moreOneMatch("Int") || moreOneMatch("Char")){
-            // Analisis semantico ----------------------------------
-            this.symbolTable.setype(this.actualToken); // como sabemos si es un metodo o una herencia o una variable o un parametro?
-            // -----------------------------------------------------
             this.actualToken = this.lexicalAnalyzer.getNextToken();
         }
         else {
@@ -848,9 +856,6 @@ public class    SyntacticAnalyzer {
      * */
 
     private void tipoReferencia(){
-        // Analisis semantico ----------------------------------
-        this.symbolTable.setType(this.actualToken); // como sabemos si es un metodo o una herencia o una variable o un parametro?
-        // -----------------------------------------------------
         match("StructID");
     }
 
@@ -860,9 +865,6 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
     private void tipoArreglo(){
-        // Analisis semantico ----------------------------------
-        this.symbolTable.setType(this.actualToken); // como sabemos si es un metodo o una herencia o una variable o un parametro?
-        // -----------------------------------------------------
         match("Array");
         tipoPrimitivo();
     }
@@ -2116,7 +2118,7 @@ public class    SyntacticAnalyzer {
             match("]");
         } else {
             // Analisis semantico ----------------------------------
-            this.symbolTable.addType(this.actualToken); // como sabemos si es una variable o un atributo?
+            // como es un constructor debería ya estar inicializada la variable/el atributo en la TS
             // -----------------------------------------------------
             match("StructID");
             argumentosActuales();
