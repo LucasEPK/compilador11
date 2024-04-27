@@ -209,7 +209,7 @@ public class Struct extends Commons {
         tabs+=1;
         //Si el struct no tiene métodos
         if(this.methods.isEmpty()){
-            jsonSting += "]";
+            jsonSting += "],";
         }
         else{
             //De otro modo, voy a llamar a función toJson de methods
@@ -220,10 +220,10 @@ public class Struct extends Commons {
                 jsonSting+= methods.getValue().toJson(tabs);
             }
             jsonSting = jsonSting.substring(0,jsonSting.length()-1);
-            jsonSting += "\n" + addtabs(tabs-1) + "]";
+            jsonSting += "\n" + addtabs(tabs-1) + "],";
         }
 
-        //jsonSting += addConstructor(tabs-1);
+        jsonSting += addConstructor(tabs-1);
 
 
 
@@ -247,6 +247,7 @@ public class Struct extends Commons {
             jsonString = jsonString.substring(0,jsonString.length()-1);
             jsonString += "\n" + addtabs(tabs) + "]";
         }
+        jsonString+=  "\n" + addtabs(tabs) + "}";
 
         return jsonString;
     }

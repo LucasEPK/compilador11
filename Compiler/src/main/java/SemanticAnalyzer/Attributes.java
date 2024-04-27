@@ -39,12 +39,10 @@ public class Attributes extends Variable {
         String jsonString = "";
 
         jsonString += "\n" + addtabs(tabs) + "{";
-        tabs=tabs+1;
         jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" +  ": " + "\"" + this.getName() + "\"" + ",";
         jsonString += "\n" + addtabs(tabs) + "\"" + "tipo" + "\"" +  ": "  + "\"" + this.getType().getName() + "\"" + ",";
         jsonString += "\n" + addtabs(tabs) + "\"" + "public" + "\"" +   ": " + this.isPublic +",";
         jsonString += "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" +  ": " + this.getPos();
-        tabs=tabs-1;
         jsonString += "\n" + addtabs(tabs) + "}" + ",";
 
         return jsonString;

@@ -28,11 +28,13 @@ public class Json{
             jsonString += "\n" + addtabs(tab-1) + "},";
         }
         jsonString = jsonString.substring(0,jsonString.length()-1);
-        jsonString += "\n" + "]";
-        jsonString += "\n" + "}";
+        jsonString += "\n" + "],";
 
         //Agrego el Start
         jsonString += addStart(tab, table);
+
+        jsonString+= "\n" + addtabs(tab-1) + "}";
+        jsonString+= "\n" + "}";
 
 
         saveJson(jsonString,inputPath);
@@ -54,7 +56,9 @@ public class Json{
     private String addStart(int tabs, SymbolTable table){
         Methods start = table.getStart();
         String jsonString = "\n";
-        jsonString+= "\"" + "start" + "\"" + ": {";
+        tabs-=1;
+        jsonString+=  addtabs(tabs) + "\""  + "start" + "\"" + ": {";
+        tabs+=tabs+1;
         jsonString+= "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + "start" + "\"" + ",";
         jsonString+= "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" + ": " + "\"" + "void" + "\"" + ",";
         jsonString+= "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " + 0 + ",";
