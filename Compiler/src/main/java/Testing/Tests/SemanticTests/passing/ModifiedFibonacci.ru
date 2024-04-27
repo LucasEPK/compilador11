@@ -1,3 +1,7 @@
+/? Descripción: caso de prueba generico
+/? Salida esperada:
+/? El json construido correctamente
+
 struct Pepe : Fibonacci {
     Array Bool a;
 }

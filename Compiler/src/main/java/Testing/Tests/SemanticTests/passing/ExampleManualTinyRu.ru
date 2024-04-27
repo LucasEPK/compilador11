@@ -1,3 +1,8 @@
+/? Descripción: caso de prueba generico
+/? Salida esperada:
+/? El json construido correctamente
+
+
 struct Mundo {
 pri Int a;
 Str b;

@@ -1,3 +1,7 @@
+/? Descripción: caso de prueba que verifica que una herencia sea valida
+/? Salida esperada:
+/? El json construido correctamente
+
 struct A{
 pri Int a;
 Array Bool b;}

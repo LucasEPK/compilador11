@@ -1,3 +1,10 @@
+/? Descripción: caso de prueba que verifica que un struct no tenga dos
+/? metodos con el mismo nombre
+/? Salida esperada:
+/? ERROR: SEMÁNTICO - DECLARACIONES
+/? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
+/? | Linea 12 | COLUMNA 4 | EL MÉTODO YA ESTA DECLARADO
+
 struct A{}
 impl A{
 .(){}
