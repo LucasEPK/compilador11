@@ -10,6 +10,6 @@ public class DuplicateAttributeHeritance  extends  SemanticException{
 
     @Override
     public String getExceptionType() {
-        return "EL ATIBUTO YA ESTA DECLARADO EN UNA SUPER CLASE";
+        return "EL ATIBUTO YA ESTA DECLARADO EN UNA SUPERCLASE";
     }
 }
