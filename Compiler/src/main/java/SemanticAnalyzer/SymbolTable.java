@@ -83,6 +83,8 @@ public class SymbolTable extends Commons {
 
     }
 
+    //ToDo agregar Constructor aparte, struct.setConstructor
+
     public void addStructByImpl(Token token){
         String structName = token.getLexeme();
 
@@ -176,6 +178,7 @@ public class SymbolTable extends Commons {
         //Si retorna void lo agrego
         if(Objects.equals(returnName, "void")){
             Struct newVoid = new Struct("void");
+            this.setToken(token);
             this.currentMethod.setGiveBack(newVoid);
         }
         //Como puede ser una referencia, debo verificar si existe el struct
@@ -211,9 +214,9 @@ public class SymbolTable extends Commons {
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
                 int pos = structType.getAttributes().size();
-                structType.setToken(token);
                 // si existe agregamos el nuevo atributo
                 Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos, isPublic);
+                newAttribute.setToken(token);
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
             } else {
                 // Si no existe tiramos error
@@ -242,6 +245,7 @@ public class SymbolTable extends Commons {
                 int pos = this.currentMethod.getDefinedVar().size();
                 // si existe agregamos la nueva variable
                 Variable newVariable = new Variable(token.getLexeme(), structType, pos);
+                newVariable.setToken(token);
                 this.currentMethod.addVariable(newVariable.getName(), newVariable);
             } else {
                 // Si no existe tiramos error
@@ -269,6 +273,7 @@ public class SymbolTable extends Commons {
                 int pos = this.currentMethod.getParamsOfMethod().size();
                 // si existe agregamos el nuevo parametro
                 Variable newParameter = new Variable(token.getLexeme(), structType, pos);
+                newParameter.setToken(token);
                 this.currentMethod.addParameter(newParameter.getName(), newParameter);
             } else {
                 // Si no existe tiramos error
@@ -517,8 +522,9 @@ public class SymbolTable extends Commons {
                         actualStruct.setInheritFrom(newActualStruct);
                     }
                 }
+                haveCycle = haveCycles(initialStruct,actualStruct.getInheritFrom());
             }
-            haveCycle = haveCycles(initialStruct,actualStruct.getInheritFrom());
+
         }
         return haveCycle;
     }

@@ -1,3 +1,7 @@
+struct Pepe : Fibonacci {
+Array Bool a;}
+impl Pepe{
+.(){}}
 struct Fibonacci{
 Int suma;
 Int i,j;

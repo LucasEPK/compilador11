@@ -242,6 +242,83 @@
 		}
 	},
  	 {
+		"nombre": "Pepe",
+		"heredaDe": "Fibonacci",
+		"atributos": [
+			{
+			"nombre": "suma",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 0
+			},
+			{
+			"nombre": "i",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 1
+			},
+			{
+			"nombre": "j",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 2
+			},
+			{
+			"nombre": "a",
+			"tipo": "Array",
+			"public": true,
+			"posicion": 3
+			}
+		],
+		"metodos": [
+			{
+				"nombre": "sucesion_fib",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": [
+						{
+						"nombre": "n",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "imprimo_numero",
+				"static": false,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [
+						{
+						"nombre": "num",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "imprimo_sucesion",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [
+						{
+						"nombre": "s",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
 		"nombre": "Fibonacci",
 		"heredaDe": "Object",
 		"atributos": [
