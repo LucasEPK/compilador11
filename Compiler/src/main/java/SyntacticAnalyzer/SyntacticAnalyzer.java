@@ -420,9 +420,6 @@ public class    SyntacticAnalyzer {
             String attrType = this.actualToken.getLexeme();
             // -----------------------------------------------------
             tipo();
-            // Analisis semantico ----------------------------------
-            this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
-            // -----------------------------------------------------
             listaDeclaracionVariables(attrType, true, isPublic);
             match(";");
         }
@@ -435,9 +432,6 @@ public class    SyntacticAnalyzer {
                 String attrType = this.actualToken.getLexeme();
                 // -----------------------------------------------------
                 tipo();
-                // Analisis semantico ----------------------------------
-                this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
-                // -----------------------------------------------------
                 listaDeclaracionVariables(attrType, true, isPublic);
                 match(";");
             }
@@ -664,9 +658,6 @@ public class    SyntacticAnalyzer {
         String varType = this.actualToken.getLexeme();
         // -----------------------------------------------------
         tipo();
-        // Analisis semantico ----------------------------------
-        this.symbolTable.addVarToMethod(this.actualToken, varType);
-        // -----------------------------------------------------
         listaDeclaracionVariables(varType, false, true);
         match(";");
     }

@@ -312,6 +312,21 @@
 						}
 				],
 				"atributos": []
+			},
+			{
+				"nombre": "hola",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 3,
+				"paramF": [
+						{
+						"nombre": "n",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"atributos": 
+				]
 			}
 		],
 		"constructor": {

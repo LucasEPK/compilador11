@@ -83,7 +83,6 @@ public class SymbolTable extends Commons {
 
     }
 
-    //ToDo agregar Constructor aparte, struct.setConstructor
 
     public void addStructByImpl(Token token){
         String structName = token.getLexeme();
@@ -232,7 +231,7 @@ public class SymbolTable extends Commons {
         String attributeName = token.getLexeme();
         // Observa si ya existe un attribute con este nombre
         if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
-             // throw throwException("DuplicateAttribute", token); //Todo aca tira error cuando no deberia
+            throw throwException("DuplicateAttribute", token);
         } else { // si no existe un attribute con ese mismo nombre entonces lo crea en el currentStruct
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
@@ -256,11 +255,10 @@ public class SymbolTable extends Commons {
      * @author Lucas Moyano
      * */
     public void addVarToMethod(Token token, String type){
-        //Todo no se porque pero no esta agregando los atributos a los métodos
         String varName = token.getLexeme();
         // Observa si ya existe una variable con este nombre
         if (this.currentMethod.getDefinedVar().containsKey(varName)) { // Si existe tira error
-             // throw throwException("DuplicateVariable", token); //Todo aca tira error cuando no deberia
+            throw throwException("DuplicateVariable", token);
         } else { // si no existe una variable con ese mismo nombre entonces la crea en el currentMethod
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
