@@ -25,6 +25,7 @@ public abstract class SemanticException extends RuntimeException {
     /**
      * Método que va a retornar un string con el mensaje de la excepción
      * @return String
+     * @author Yeumen Silva
      */
     public abstract String getExceptionType();
 
