@@ -31,6 +31,9 @@ public class Json{
         jsonString += "\n" + "]";
         jsonString += "\n" + "}";
 
+        //Agrego el Start
+        jsonString += addStart(tab, table);
+
 
         saveJson(jsonString,inputPath);
 
@@ -46,6 +49,30 @@ public class Json{
             tabString+="\t";
         }
         return  tabString;
+    }
+
+    private String addStart(int tabs, SymbolTable table){
+        Methods start = table.getStart();
+        String jsonString = "\n";
+        jsonString+= "\"" + "start" + "\"" + ": {";
+        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "nombre" + "\"" + ": " + "\"" + "start" + "\"" + ",";
+        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "retorno" + "\"" + ": " + "\"" + "void" + "\"" + ",";
+        jsonString+= "\n" + addtabs(+1) + "\"" + "posicion" + "\"" + ": " + 0 + ",";
+        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "atributos" + "\"" + ": [";
+
+        if (table.getStart().getDefinedVar().isEmpty()){
+            jsonString+="]";
+        }
+        else {
+            Map<String,Variable> variableMap = start.getDefinedVar();
+            for (Map.Entry<String,Variable> variable : variableMap.entrySet()){
+                jsonString +=variable.getValue().toJson(tabs+1);
+            }
+            jsonString = jsonString.substring(0,jsonString.length()-1);
+            jsonString += "\n" + addtabs(tabs) + "]";
+        }
+
+        return jsonString;
     }
 
     private void saveJson(String jsonString, String inputPath){
