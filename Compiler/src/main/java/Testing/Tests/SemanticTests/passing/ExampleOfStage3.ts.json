@@ -1,0 +1,339 @@
+{ 
+ "nombre": "/home/yeu/Documentos/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/passing/ExampleOfStage3.ru",
+"structs": [
+ 	 {
+		"nombre": "Object",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Int",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Str",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "length",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": [],
+				"atributos": []
+			},
+			{
+				"nombre": "concat",
+				"static": false,
+				"retorno": "Str",
+				"posicion": 1,
+				"paramF": [
+						{
+						"nombre": "s",
+						"tipo": "Str",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Bool",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Char",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Array",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "length",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": [],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "IO",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "out_str",
+				"static": true,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [
+						{
+						"nombre": "s",
+						"tipo": "Str",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_int",
+				"static": true,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [
+						{
+						"nombre": "i",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_bool",
+				"static": true,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [
+						{
+						"nombre": "b",
+						"tipo": "Bool",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_char",
+				"static": true,
+				"retorno": "void",
+				"posicion": 3,
+				"paramF": [
+						{
+						"nombre": "c",
+						"tipo": "Char",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_array_int",
+				"static": true,
+				"retorno": "void",
+				"posicion": 4,
+				"paramF": [
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_array_bool",
+				"static": true,
+				"retorno": "void",
+				"posicion": 5,
+				"paramF": [
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_array_str",
+				"static": true,
+				"retorno": "void",
+				"posicion": 6,
+				"paramF": [
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "out_array_char",
+				"static": true,
+				"retorno": "void",
+				"posicion": 7,
+				"paramF": [
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "in_str",
+				"static": true,
+				"retorno": "Str",
+				"posicion": 8,
+				"paramF": [],
+				"atributos": []
+			},
+			{
+				"nombre": "in_int",
+				"static": true,
+				"retorno": "Int",
+				"posicion": 9,
+				"paramF": [],
+				"atributos": []
+			},
+			{
+				"nombre": "in_bool",
+				"static": true,
+				"retorno": "Bool",
+				"posicion": 10,
+				"paramF": [],
+				"atributos": []
+			},
+			{
+				"nombre": "in_char",
+				"static": true,
+				"retorno": "Char",
+				"posicion": 11,
+				"paramF": [],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Derivada",
+		"heredaDe": "Base",
+		"atributos": [
+			{
+			"nombre": "s",
+			"tipo": "Str",
+			"public": true,
+			"posicion": 0
+			},
+			{
+			"nombre": "a",
+			"tipo": "Int",
+			"public": false,
+			"posicion": 1
+			},
+			{
+			"nombre": "x",
+			"tipo": "Int",
+			"public": false,
+			"posicion": 2
+			}
+		],
+		"metodos": [
+			{
+				"nombre": "m1",
+				"static": false,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [],
+				"atributos": []
+			},
+			{
+				"nombre": "m2",
+				"static": false,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [
+						{
+						"nombre": "a",
+						"tipo": "Str",
+						"posicion": 0
+						}
+				],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "Base",
+		"heredaDe": "Object",
+		"atributos": [
+			{
+			"nombre": "s",
+			"tipo": "Str",
+			"public": true,
+			"posicion": 0
+			},
+			{
+			"nombre": "a",
+			"tipo": "Int",
+			"public": false,
+			"posicion": 1
+			}
+		],
+		"metodos": [
+			{
+				"nombre": "m1",
+				"static": false,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	}
+],
+	"start": {
+			"nombre": "start",
+			"retorno": "void",
+			"posicion": 0,
+			"atributos": [
+					{
+					"nombre": "b1",
+					"tipo": "Base",
+					"posicion": 0
+					}
+			]
+	}
+}
