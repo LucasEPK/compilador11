@@ -30,6 +30,10 @@ public class Attributes extends Variable {
         this.isPublic = isPublic;
     }
 
+    public void setInherited(boolean inherited) {
+        isInherited = inherited;
+    }
+
     public String toJson(int tabs){
 
         String jsonString = "";

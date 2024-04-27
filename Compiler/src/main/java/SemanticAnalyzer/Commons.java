@@ -16,6 +16,10 @@ public abstract class Commons {
         this.token = token;
     }
 
+    public Token getToken() {
+        return token;
+    }
+
     protected String toJson(int tabs){
         return null;
     }
