@@ -153,16 +153,18 @@ public class SymbolTable extends Commons {
         }
 
         //Defino el nuevo constructor
-        Methods newMethod = new Methods(token.getLexeme());
+        Methods newConstructor = new Methods(token.getLexeme());
 
         //Seteo su pos como el tamaño de la lista de métodos
-        newMethod.setPos(0);
+        newConstructor.setPos(0);
         //Seteo su token
-        newMethod.setToken(token);
+        newConstructor.setToken(token);
         //Seteo este método como actual
-        this.currentMethod = newMethod;
+        this.currentMethod = newConstructor;
+        // Agrego el constructor al struct actual
+        this.currentStruct.setConstructor(newConstructor);
     }
-    
+
     public void addHeritance(Token token){
         String heritanceName = token.getLexeme();
 

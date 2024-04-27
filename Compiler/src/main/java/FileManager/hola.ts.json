@@ -315,7 +315,13 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [
+				{
+				"nombre": "xd",
+				"tipo": "Int",
+				"posicion": 0
+				}
+		]
 		}
 	},
  	 {
