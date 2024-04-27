@@ -14,76 +14,45 @@ import SyntacticAnalyzer.SyntacticExecutor;
 public class Test {
 
 
-    /**
-     * Método que es ejecuta los tests del analizador lexico
-     * @throws LexicalException
-     * @author Yeumen Silva
-     */
-    public void lexicalTest(){
-        folderExecutorLexical("src/main/java/Testing/Tests/LexicalTests/passing", "Pass");
-        folderExecutorLexical("src/main/java/Testing/Tests/LexicalTests/failing", "Fail");
-    }
+
 
     /**
      * Método que es ejecuta los tests del analizador sintáctico
-     * @throws LexicalException
      * @author Yeumen Silva
      */
 
-    public void SyntacticTest(){
-        folderExecutorSyntactic("src/main/java/Testing/Tests/SemanticTests/passing", "Pass");
-        folderExecutorSyntactic("src/main/java/Testing/Tests/SemanticTests/failing", "Fail");
+    public void executorTest(){
+        folderExecutor("src/main/java/Testing/Tests/SemanticTests/passing", "Pass");
+        folderExecutor("src/main/java/Testing/Tests/SemanticTests/failing", "Fail");
     }
 
 
-    private void folderExecutorLexical(String path, String type){
 
-        Executor executor = new Executor();
-
-        //guardo todos los archivos de la carpeta
-        File[] files = readFolder(path);
-
-        if (type.equals("Pass")) {
-            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL LEXICO\n");
-        }else {
-            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL LEXICO\n");
-        }
-
-        for (File file : files) {
-
-            //Imprimo el nombre del archivo para identificarlo
-            System.out.println("Resultado de prueba: " + file.getName());
-
-            //Ejecuto con executor como se haria desde el main
-            executor.startExecution(file.getAbsolutePath(),null);
-            System.out.println("\n");
-        }
-
-    }
-
-    private void folderExecutorSyntactic(String path, String type){
+    private void folderExecutor(String path, String type) {
 
         SyntacticExecutor syntacticExecutor;
-        //guardo todos los archivos de la carpeta
+        // Guardo todos los archivos de la carpeta
         File[] files = readFolder(path);
 
         if (type.equals("Pass")) {
-            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL SEMANTICO\n");
-        }else {
-            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL SEMANTICO\n");
+            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL SEMÁNTICO\n");
+        } else {
+            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL SEMÁNTICO\n");
         }
 
         for (File file : files) {
+            // Solo procesa archivos con extensión .ru
+            if (file.getName().endsWith(".ru")) {
+                // Imprimo el nombre del archivo para identificarlo
+                System.out.println("Resultado de prueba: " + file.getName());
 
-            //Imprimo el nombre del archivo para identificarlo
-            System.out.println("Resultado de prueba: " + file.getName());
-
-            //Ejecuto con executor como se haria desde el Sintáctico
-            syntacticExecutor = new SyntacticExecutor(file.getAbsolutePath(),null);
-            System.out.println("\n");
+                // Ejecuto con executor como se haría desde el Sintáctico
+                syntacticExecutor = new SyntacticExecutor(file.getAbsolutePath(), null);
+                System.out.println("\n");
+            }
         }
-
     }
+
 
     /**
      * Método que dado un path de una carpeta, lee todos los
@@ -105,9 +74,8 @@ public class Test {
 
         Test tester = new Test();
 
-        tester.SyntacticTest();
+        tester.executorTest();
 
-        //tester.lexicalTest();
 
     }
 
