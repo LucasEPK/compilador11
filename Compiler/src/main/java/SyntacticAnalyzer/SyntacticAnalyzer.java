@@ -407,15 +407,18 @@ public class    SyntacticAnalyzer {
 
         //Primeros visibilidad
         if(verifyEquals("pri")){
+            // Analisis semantico ----------------------------------
+            boolean isPublic = false;
+            // -----------------------------------------------------
             visibilidad();
             // Analisis semantico ----------------------------------
             String attrType = this.actualToken.getLexeme();
             // -----------------------------------------------------
             tipo();
             // Analisis semantico ----------------------------------
-            this.symbolTable.addAttrToStruct(this.actualToken, attrType);
+            this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
             // -----------------------------------------------------
-            listaDeclaracionVariables();
+            listaDeclaracionVariables(attrType, true, isPublic);
             match(";");
         }
         else {
@@ -423,13 +426,14 @@ public class    SyntacticAnalyzer {
             if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
             , "StructID")){
                 // Analisis semantico ----------------------------------
+                boolean isPublic = true;
                 String attrType = this.actualToken.getLexeme();
                 // -----------------------------------------------------
                 tipo();
                 // Analisis semantico ----------------------------------
-                this.symbolTable.addAttrToStruct(this.actualToken, attrType);
+                this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
                 // -----------------------------------------------------
-                listaDeclaracionVariables();
+                listaDeclaracionVariables(attrType, true, isPublic);
                 match(";");
             }
             else {
@@ -498,9 +502,6 @@ public class    SyntacticAnalyzer {
      * */
 
     private void visibilidad(){
-        // Analisis semantico ----------------------------------
-        //this.symbolTable.setVisibility(this.actualToken);
-        // -----------------------------------------------------
         match("pri");
     }
 
@@ -655,39 +656,52 @@ public class    SyntacticAnalyzer {
 
     private void declVarLocales(){
         // Analisis semantico ----------------------------------
-        //this.symbolTable.setVarType(this.actualToken);
+        String varType = this.actualToken.getLexeme();
         // -----------------------------------------------------
         tipo();
         // Analisis semantico ----------------------------------
-        //this.symbolTable.addVarToMethod(this.actualToken);
+        this.symbolTable.addVarToMethod(this.actualToken, varType);
         // -----------------------------------------------------
-        listaDeclaracionVariables();
+        listaDeclaracionVariables(varType, false, true);
         match(";");
     }
 
     /**
      * Regla Lista-Declaracion-Variables
+     * @param type este es el tipo de variable/atributo
+     * @param isAttribute indica si es un atributo, en caso contrario se asume que es una variable
+     * @param isPublic indica si el atributo es publico (no se usa en caso de ser una variable)
      * @author Yeumen Silva
+     * @author Lucas Moyano
      * */
 
-    private void listaDeclaracionVariables(){
-        // TODO: acá hay un problema porque al iniciar varias variables/attributos como puedo saber
-        //       si es un attributo o una variable? Lo unico que se me ocurre es pasarle un parametro
-        //       a esta funcion
+    private void listaDeclaracionVariables(String type, boolean isAttribute, boolean isPublic){
+
+        // Analisis semantico ----------------------------------
+        // Esto se hace porque llegado a este punto no podemos saber si estamos declarando variables o atributos
+        if (isAttribute){
+            this.symbolTable.addAttrToStruct(this.actualToken, type, isPublic);
+        } else {
+            this.symbolTable.addVarToMethod(this.actualToken, type);
+        }
+        // -----------------------------------------------------
         match("ObjID");
-        listaDeclaracionVariablesF();
+        listaDeclaracionVariablesF(type, isAttribute, isPublic);
     }
 
     /**
      * Regla Lista-Declaracion-Variables-F
+     * @param type este es el tipo de variable/atributo
+     * @param isAttribute indica si es un atributo, en caso contrario se asume que es una variable
+     * @param isPublic indica si el atributo es publico (no se usa en caso de ser una variable)
      * @author Yeumen Silva
      * */
 
-    private void listaDeclaracionVariablesF(){
+    private void listaDeclaracionVariablesF(String type, boolean isAttribute, boolean isPublic){
         //Primeros ,
         if(verifyEquals(",")){
             match(",");
-            listaDeclaracionVariables();
+            listaDeclaracionVariables(type, isAttribute, isPublic);
         }
         else {
             //Siguientes Lista-Declaracion-Variables-F
@@ -770,12 +784,16 @@ public class    SyntacticAnalyzer {
     /**
      * Regla Argumento-Formal
      * @author Yeumen Silva
+     * @author Lucas Moyano
      * */
 
     private void argumentoFormal(){
+        // Analisis semantico ----------------------------------
+        String paramType = actualToken.getLexeme();
+        //-----------------------------------------------------
         tipo();
         // Analisis semantico ----------------------------------
-        //this.symbolTable.addParameterToMethod(this.actualToken);
+        this.symbolTable.addParameterToMethod(this.actualToken, paramType);
         //-----------------------------------------------------
         match("ObjID");
     }
@@ -791,7 +809,7 @@ public class    SyntacticAnalyzer {
         if (verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" ,
                 "StructID")){
             // Analisis semantico ----------------------------------
-            //this.symbolTable.setMethodType(this.actualToken); // como sabemos si es una herencia, una variable o un parametro?
+            // el tipo del metodo ya se guardó en la tabla
             // -----------------------------------------------------
             tipo();
         }
@@ -799,7 +817,7 @@ public class    SyntacticAnalyzer {
             //Primeros void
             if (verifyEquals("void")){
                 // Analisis semantico ----------------------------------
-                //this.symbolTable.setMethodType(this.actualToken);
+                // el tipo del metodo ya se guardó en la tabla
                 // -----------------------------------------------------
                 match("void");
             }

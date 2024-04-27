@@ -172,29 +172,87 @@ public class SymbolTable extends Commons {
         if(this.structs.containsKey(returnName)){
             //Si contiene la clave, solo seteo el return
             this.currentMethod.setGiveBack(this.structs.get(returnName));
+        } else {
+
+            //De otro modo, creo la nueva clase
+            Struct newClass = new Struct(returnName);
+            this.currentMethod.setGiveBack(newClass);
         }
 
-        //De otro modo, creo la nueva clase
-        Struct newClass = new Struct(returnName);
-        this.currentMethod.setGiveBack(newClass);
     }
 
     /**
-     * Agrega un atributo al currentStruct
+     * Agrega un atributo al currentStruct seteando el nombre, el tipo, la visibilidad y la posicion
+     * @param token es un token del lexico
+     * @param type un string con el tipo del atributo
+     * @param isPublic un booleano que indica si el atributo es publico o no
      * @author Lucas Moyano
      * */
-    public void addAttrToStruct(Token token, String type){
+    public void addAttrToStruct(Token token, String type, boolean isPublic){
         String attributeName = token.getLexeme();
         // Observa si ya existe un attribute con este nombre
         if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
             throw throwException("DuplicateAttribute", token);
         } else { // si no existe un attribute con ese mismo nombre entonces lo crea en el currentStruct
-            // Chequea si existe el tipo
+            // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
+                int pos = structType.getAttributes().size();
                 // si existe agregamos el nuevo atributo
-                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos); // TODO: no entendí muy bien que tengo que poner en pos
+                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos, isPublic);
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
+            } else {
+                // Si no existe tiramos error
+                throw throwException("InvalidType", token);
+            }
+        }
+    }
+
+    /**
+     * Agrega una variable a currentMethod seteando el nombre, el tipo, y la posicion
+     * @param token es un token del lexico
+     * @param type un string con el tipo de la variable
+     * @author Lucas Moyano
+     * */
+    public void addVarToMethod(Token token, String type){
+        String varName = token.getLexeme();
+        // Observa si ya existe una variable con este nombre
+        if (this.currentMethod.getDefinedVar().containsKey(varName)) { // Si existe tira error
+            throw throwException("DuplicateVariable", token);
+        } else { // si no existe una variable con ese mismo nombre entonces la crea en el currentMethod
+            // Chequea si existe el tipo en las clases de la tabla
+            if (this.structs.containsKey(type)) {
+                Struct structType = this.structs.get(type);
+                int pos = this.currentMethod.getDefinedVar().size();
+                // si existe agregamos la nueva variable
+                Variable newVariable = new Variable(token.getLexeme(), structType, pos);
+                this.currentMethod.addVariable(newVariable.getName(), newVariable);
+            } else {
+                // Si no existe tiramos error
+                throw throwException("InvalidType", token);
+            }
+        }
+    }
+
+    /**
+     * Agrega una parametro a currentMethod seteando el nombre, el tipo, y la posicion
+     * @param token es un token del lexico
+     * @param type un string con el tipo de la variable
+     * @author Lucas Moyano
+     * */
+    public void addParameterToMethod(Token token, String type) {
+        String parName = token.getLexeme();
+        // Observa si ya existe un parametro con este nombre
+        if (this.currentMethod.getParamsOfMethod().containsKey(parName)) { // Si existe tira error
+            throw throwException("DuplicateParameter", token);
+        } else { // si no existe un parametro con ese mismo nombre entonces se crea en el currentMethod
+            // Chequea si existe el tipo en las clases de la tabla
+            if (this.structs.containsKey(type)) {
+                Struct structType = this.structs.get(type);
+                int pos = this.currentMethod.getParamsOfMethod().size();
+                // si existe agregamos el nuevo parametro
+                Variable newParameter = new Variable(token.getLexeme(), structType, pos);
+                this.currentMethod.addParameter(newParameter.getName(), newParameter);
             } else {
                 // Si no existe tiramos error
                 throw throwException("InvalidType", token);
@@ -548,6 +606,13 @@ public class SymbolTable extends Commons {
             case ("InvalidType"):
                 semanticException = new InvalidType(token);
                 break;
+
+            case("DuplicateVariable") :
+                semanticException = new DuplicateVariable(token);
+                break;
+            case ("DuplicateParameter") :
+                semanticException = new DuplicateParameter(token);
+                break;
             case ("UndefinedStruct"):
                 semanticException = new UndefinedStruct(token);
                 break;
@@ -559,6 +624,7 @@ public class SymbolTable extends Commons {
                 break;
             case ("InvalidOverride"):
                 semanticException = new InvalidOverride(token);
+
         }
 
         return semanticException;

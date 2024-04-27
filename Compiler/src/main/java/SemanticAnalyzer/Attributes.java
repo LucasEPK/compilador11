@@ -4,7 +4,7 @@ public class Attributes extends Variable {
 
 
     //Si es o no pública
-    private boolean isPublic;
+    private boolean isPublic = true;
 
     //Es heredado o no
     private boolean isInherited;
@@ -17,8 +17,9 @@ public class Attributes extends Variable {
      * @param type tipo de la variable
      * @param pos  posición de la variable
      */
-    public Attributes(String name, Struct type, int pos) {
+    public Attributes(String name, Struct type, int pos, boolean isPublic) {
         super(name, type, pos);
+        this.isPublic = isPublic;
     }
 
     /**
