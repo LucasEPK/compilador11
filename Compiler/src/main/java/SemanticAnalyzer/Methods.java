@@ -19,7 +19,7 @@ public class Methods extends Commons {
     private Map<String,Variable> paramsOfMethod = new LinkedHashMap<>();
 
     //Lista de variables declaradas dentro del método
-    private Map<String,Variable> definedVar;
+    private Map<String,Variable> definedVar = new LinkedHashMap<>();
 
     //Pos del método
     private int pos;
@@ -164,7 +164,7 @@ public class Methods extends Commons {
         jsonString += "\n" + addtabs(tabs) + "\"" + "paramF" + "\"" + ": [";
         //Debo imprimir los parametros que recibe el método
         if(this.paramsOfMethod.isEmpty()){
-            jsonString += "]";
+            jsonString += "],";
         }
         else {
             //Llamo a toJson de Variable
@@ -175,10 +175,22 @@ public class Methods extends Commons {
 
             }
             jsonString = jsonString.substring(0,jsonString.length()-1);
+            jsonString += "\n" + addtabs(tabs) + "],";
+        }
+        //Debo imprimir las Variables de cada método
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "atributos" + "\"" + ": [";
+        if(this.definedVar.isEmpty()){
+            jsonString+="]";
+        }else {
+            for(Variable variable: this.definedVar.values()){
+                variable.toJson(tabs);
+            }
+            jsonString = jsonString.substring(0,jsonString.length()-1);
             jsonString += "\n" + addtabs(tabs) + "]";
         }
         tabs=tabs-1;
         jsonString += "\n" + addtabs(tabs) + "}" + ",";
+        //Debo imprimir
 
 
 

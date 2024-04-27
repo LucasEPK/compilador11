@@ -23,7 +23,8 @@
 				"static": false,
 				"retorno": "Int",
 				"posicion": 0,
-				"paramF": []
+				"paramF": [],
+				"atributos": []
 			},
 			{
 				"nombre": "concat",
@@ -36,7 +37,8 @@
 							"tipo": "Str",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			}
 		]
 	},
@@ -62,7 +64,8 @@
 				"static": false,
 				"retorno": "Int",
 				"posicion": 0,
-				"paramF": []
+				"paramF": [],
+				"atributos": []
 			}
 		]
 	},
@@ -82,7 +85,8 @@
 							"tipo": "Str",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_int",
@@ -95,7 +99,8 @@
 							"tipo": "Int",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_bool",
@@ -108,7 +113,8 @@
 							"tipo": "Bool",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_char",
@@ -121,7 +127,8 @@
 							"tipo": "Char",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_array_int",
@@ -134,7 +141,8 @@
 							"tipo": "Array",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_array_bool",
@@ -147,7 +155,8 @@
 							"tipo": "Array",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_array_str",
@@ -160,7 +169,8 @@
 							"tipo": "Array",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "out_array_char",
@@ -173,49 +183,126 @@
 							"tipo": "Array",
 							"posicion": 0
 						}
-				]
+				],
+				"atributos": []
 			},
 			{
 				"nombre": "in_str",
 				"static": true,
 				"retorno": "Str",
 				"posicion": 8,
-				"paramF": []
+				"paramF": [],
+				"atributos": []
 			},
 			{
 				"nombre": "in_int",
 				"static": true,
 				"retorno": "Int",
 				"posicion": 9,
-				"paramF": []
+				"paramF": [],
+				"atributos": []
 			},
 			{
 				"nombre": "in_bool",
 				"static": true,
 				"retorno": "Bool",
 				"posicion": 10,
-				"paramF": []
+				"paramF": [],
+				"atributos": []
 			},
 			{
 				"nombre": "in_char",
 				"static": true,
 				"retorno": "Char",
 				"posicion": 11,
-				"paramF": []
+				"paramF": [],
+				"atributos": []
 			}
 		]
 	},
  	 {
 		"nombre": "Fibonacci",
-		"heredaDe": "null",
-		"atributos": [],
-		"metodos": []
-	},
- 	 {
-		"nombre": "A",
-		"heredaDe": "null",
-		"atributos": [],
-		"metodos": []
+		"heredaDe": "Object",
+		"atributos": [
+			{
+				"nombre": "suma",
+				"tipo": "Int",
+				"public": true,
+				"posicion": 0
+			},
+			{
+				"nombre": "i",
+				"tipo": "Int",
+				"public": true,
+				"posicion": 0
+			},
+			{
+				"nombre": "j",
+				"tipo": "Int",
+				"public": true,
+				"posicion": 0
+			}
+		],
+		"metodos": [
+			{
+				"nombre": "sucesion_fib",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": [
+							{
+							"nombre": "n",
+							"tipo": "Int",
+							"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "imprimo_numero",
+				"static": false,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [
+							{
+							"nombre": "num",
+							"tipo": "Int",
+							"posicion": 0
+						}
+				],
+				"atributos": []
+			},
+			{
+				"nombre": "imprimo_sucesion",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [
+							{
+							"nombre": "s",
+							"tipo": "Int",
+							"posicion": 0
+						}
+				],
+				"atributos": []
+			}
+		]
 	}
 ]
 }
+"start": {
+		"nombre": "start",
+		"retorno": "void",
+		"posicion": 0,
+		"atributos": [
+					{
+					"nombre": "fib",
+					"tipo": "Fibonacci",
+					"posicion": 0
+				},
+					{
+					"nombre": "n",
+					"tipo": "Int",
+					"posicion": 1
+				}
+		]

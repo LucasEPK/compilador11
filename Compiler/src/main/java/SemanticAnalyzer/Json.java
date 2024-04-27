@@ -55,10 +55,10 @@ public class Json{
         Methods start = table.getStart();
         String jsonString = "\n";
         jsonString+= "\"" + "start" + "\"" + ": {";
-        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "nombre" + "\"" + ": " + "\"" + "start" + "\"" + ",";
-        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "retorno" + "\"" + ": " + "\"" + "void" + "\"" + ",";
-        jsonString+= "\n" + addtabs(+1) + "\"" + "posicion" + "\"" + ": " + 0 + ",";
-        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "atributos" + "\"" + ": [";
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + "start" + "\"" + ",";
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" + ": " + "\"" + "void" + "\"" + ",";
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " + 0 + ",";
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "atributos" + "\"" + ": [";
 
         if (table.getStart().getDefinedVar().isEmpty()){
             jsonString+="]";
