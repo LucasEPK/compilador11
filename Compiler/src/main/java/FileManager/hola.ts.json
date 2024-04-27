@@ -275,7 +275,7 @@
 				"nombre": "sucesion_fib",
 				"static": false,
 				"retorno": "Int",
-				"posicion": 0,
+				"posicion": 4,
 				"paramF": [
 						{
 						"nombre": "n",

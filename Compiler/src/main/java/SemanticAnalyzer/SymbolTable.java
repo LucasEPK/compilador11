@@ -3,7 +3,6 @@ package SemanticAnalyzer;
 import Exceptions.SemanticExceptions.*;
 import LexicalAnalyzer.Token;
 
-import java.lang.reflect.Method;
 import java.util.*;
 
 public class SymbolTable extends Commons {
@@ -603,16 +602,16 @@ public class SymbolTable extends Commons {
                 //Verifico que la sobreescritura sea correcta
                 //Verifico que tenga la misma cantidad
                 if(ancestralMethodEquals.getParamsOfMethod().size() != method.getParamsOfMethod().size()){
-                    throw throwException("InvalidOverride",method.token);
+                    throw throwException("InvalidOverrideLength",method.token);
                 }
                 //Verifico el tipo de parámetros
                 boolean equals = compareMethods(method.getParamsOfMethod(),ancestralMethodEquals.getParamsOfMethod());
                 if(equals == false){
-                    throw throwException("InvalidOverride",method.token);
+                    throw throwException("InvalidOverrideType",method.token);
                 }
                 //Verifico el tipo de return
                 if(Objects.equals(method.getGiveBack(), ancestralMethodEquals.getGiveBack()) == false){
-                    throw throwException("InvalidOverride",method.token);
+                    throw throwException("InvalidOverrideReturn",method.token);
                 }
                 method.setPos(methodsList.size());
                 method.setInherited(true);
@@ -696,8 +695,14 @@ public class SymbolTable extends Commons {
             case ("DuplicateAttributeHeritance"):
                 semanticException = new DuplicateAttributeHeritance(token);
                 break;
-            case ("InvalidOverride"):
-                semanticException = new InvalidOverride(token);
+            case ("InvalidOverrideLength"):
+                semanticException = new InvalidOverrideLength(token);
+                break;
+            case ("InvalidOverrideType"):
+                semanticException = new InvalidOverrideType(token);
+                break;
+            case ("InvalidOverrideReturn"):
+                semanticException = new InvalidOverrideReturn(token);
                 break;
             case("UndefinedImpl"):
                 semanticException = new UndefinedImpl(token);

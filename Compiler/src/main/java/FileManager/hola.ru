@@ -6,6 +6,8 @@ impl Pepe{
         Int xd;
     }
     .(Int xd){}
+
+    fn sucesion_fib(Int n) -> Int{}
 }
 struct Fibonacci {
 	Int suma;
