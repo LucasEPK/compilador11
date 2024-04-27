@@ -44,6 +44,7 @@ public class SyntacticExecutor {
     public SyntacticExecutor(String inputPath, String outputPath) {
         this.fileManager = new FileManager(inputPath, outputPath);
         String file = this.fileManager.getInputFile();
+        boolean flag = true;
         try {
             lexicalAnalyzer = new LexicalAnalyzer(file);
             symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
@@ -58,7 +59,7 @@ public class SyntacticExecutor {
         }
         catch (SemanticException exception){
             this.printExceptionSemanticDecl(exception);
-            exit(0);
+            flag = false;
         }
 
         /*
@@ -69,8 +70,11 @@ public class SyntacticExecutor {
             fileManager.saveResults(List.of("CORRECTO: ANALISIS SINTACTICO"));
         }
          */
+        if (flag){
+            this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
+            printCorrectSemnatic();
+        }
 
-        this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
 
     }
 
@@ -131,9 +135,15 @@ public class SyntacticExecutor {
      * @author Yeumen Silva
      */
 
-    public void printCorrect(){
+    public void printCorrectSyntactic(){
         System.out.println("CORRECTO: ANALISIS SINTACTICO");
     }
+
+    public void printCorrectSemnatic(){
+        System.out.println("CORRECTO: SEMANTICO - DECLARACIONES");
+    }
+
+
 
 
 

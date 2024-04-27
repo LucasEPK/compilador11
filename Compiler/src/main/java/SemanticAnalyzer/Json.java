@@ -82,7 +82,6 @@ public class Json{
     private void saveJson(String jsonString, String inputPath){
 
         String output = inputPath.replace(".ru",".ts.json");
-        System.out.println(output);
         try {
             // Crear un FileWriter para escribir en el archivo de salida
             FileWriter escritor = new FileWriter(output);
@@ -93,7 +92,6 @@ public class Json{
             // Cerrar el FileWriter
             escritor.close();
 
-            System.out.println("Archivo de salida guardado exitosamente como: " + output);
         } catch (IOException e) {
             System.err.println("Error al escribir en el archivo de salida: " + e.getMessage());
         }
