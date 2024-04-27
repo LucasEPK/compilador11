@@ -83,7 +83,6 @@ public class SymbolTable extends Commons {
 
     }
 
-    //ToDo agregar Constructor aparte, struct.setConstructor
 
     public void addStructByImpl(Token token){
         String structName = token.getLexeme();
@@ -139,6 +138,30 @@ public class SymbolTable extends Commons {
         this.currentMethod = newMethod;
         //Agrego el método al struct actual
         this.currentStruct.getMethods().put(newMethod.getName(), newMethod);
+    }
+
+    /**
+     * Función que añade a la tabla de simbolos un constructor al struct actual
+     * @author Lucas Moyano
+     * */
+    public void addConstructorToStruct(Token token) {
+        //Verifico si el constructor ya existe
+        if(currentStruct.getConstructor() != null){
+            //Si existe deberia tirar error
+            throw throwException("DuplicateConstructor",token);
+        }
+
+        //Defino el nuevo constructor
+        Methods newConstructor = new Methods(token.getLexeme());
+
+        //Seteo su pos como el tamaño de la lista de métodos
+        newConstructor.setPos(0);
+        //Seteo su token
+        newConstructor.setToken(token);
+        //Seteo este método como actual
+        this.currentMethod = newConstructor;
+        // Agrego el constructor al struct actual
+        this.currentStruct.setConstructor(newConstructor);
     }
 
     public void addHeritance(Token token){
@@ -208,7 +231,7 @@ public class SymbolTable extends Commons {
         String attributeName = token.getLexeme();
         // Observa si ya existe un attribute con este nombre
         if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
-             // throw throwException("DuplicateAttribute", token); //Todo aca tira error cuando no deberia
+            throw throwException("DuplicateAttribute", token);
         } else { // si no existe un attribute con ese mismo nombre entonces lo crea en el currentStruct
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
@@ -232,11 +255,10 @@ public class SymbolTable extends Commons {
      * @author Lucas Moyano
      * */
     public void addVarToMethod(Token token, String type){
-        //Todo no se porque pero no esta agregando los atributos a los métodos
         String varName = token.getLexeme();
         // Observa si ya existe una variable con este nombre
         if (this.currentMethod.getDefinedVar().containsKey(varName)) { // Si existe tira error
-             // throw throwException("DuplicateVariable", token); //Todo aca tira error cuando no deberia
+            throw throwException("DuplicateVariable", token);
         } else { // si no existe una variable con ese mismo nombre entonces la crea en el currentMethod
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
@@ -659,7 +681,6 @@ public class SymbolTable extends Commons {
             case ("InvalidType"):
                 semanticException = new InvalidType(token);
                 break;
-
             case("DuplicateVariable") :
                 semanticException = new DuplicateVariable(token);
                 break;
@@ -681,7 +702,9 @@ public class SymbolTable extends Commons {
             case("UndefinedImpl"):
                 semanticException = new UndefinedImpl(token);
                 break;
-
+            case("DuplicateConstructor"):
+                semanticException = new DuplicateConstructor(token);
+                break;
         }
 
         return semanticException;

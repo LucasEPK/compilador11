@@ -391,9 +391,13 @@ public class    SyntacticAnalyzer {
     /**
      * Regla Constructor
      * @author Yeumen Silva
+     * @author Lucas Moyano
      * */
 
     private void constructor(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.addConstructorToStruct(this.actualToken);
+        // -----------------------------------------------------
         match(".");
         argumentosFormales();
         bloqueMetodo();
@@ -416,9 +420,6 @@ public class    SyntacticAnalyzer {
             String attrType = this.actualToken.getLexeme();
             // -----------------------------------------------------
             tipo();
-            // Analisis semantico ----------------------------------
-            this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
-            // -----------------------------------------------------
             listaDeclaracionVariables(attrType, true, isPublic);
             match(";");
         }
@@ -431,9 +432,6 @@ public class    SyntacticAnalyzer {
                 String attrType = this.actualToken.getLexeme();
                 // -----------------------------------------------------
                 tipo();
-                // Analisis semantico ----------------------------------
-                this.symbolTable.addAttrToStruct(this.actualToken, attrType, isPublic);
-                // -----------------------------------------------------
                 listaDeclaracionVariables(attrType, true, isPublic);
                 match(";");
             }
@@ -660,9 +658,6 @@ public class    SyntacticAnalyzer {
         String varType = this.actualToken.getLexeme();
         // -----------------------------------------------------
         tipo();
-        // Analisis semantico ----------------------------------
-        this.symbolTable.addVarToMethod(this.actualToken, varType);
-        // -----------------------------------------------------
         listaDeclaracionVariables(varType, false, true);
         match(";");
     }

@@ -10,6 +10,6 @@ public class DuplicateAttribute extends SemanticException{
 
     @Override
     public String getExceptionType() {
-        return "EL ATRIBUTO YA ESTÁ DECLARADO";
+        return "EL ATRIBUTO " + getToken().getLexeme() + " YA ESTA DECLARADO EN EL ALCANCE";
     }
 }
