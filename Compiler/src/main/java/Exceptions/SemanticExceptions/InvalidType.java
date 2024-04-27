@@ -9,6 +9,6 @@ public class InvalidType extends SemanticException{
 
     @Override
     public String getExceptionType() {
-        return "EL TIPO " + this.getToken().getLexeme() + " NO EXISTE";
+        return "EL TIPO NO EXISTE";
     }
 }
