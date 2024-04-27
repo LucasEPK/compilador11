@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\ModifiedFibonacci.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\OneLineDeclaration.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -242,173 +242,52 @@
 		}
 	},
  	 {
-		"nombre": "Pepe",
-		"heredaDe": "Fibonacci",
-		"atributos": [
-			{
-			"nombre": "suma",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
-			},
-			{
-			"nombre": "i",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
-			},
-			{
-			"nombre": "j",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 2
-			},
-			{
-			"nombre": "a",
-			"tipo": "Array",
-			"public": true,
-			"posicion": 3
-			}
-		],
-		"metodos": [
-			{
-				"nombre": "sucesion_fib",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 4,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_numero",
-				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [
-						{
-						"nombre": "num",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_sucesion",
-				"static": false,
-				"retorno": "void",
-				"posicion": 2,
-				"paramF": [
-						{
-						"nombre": "s",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "hola",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 3,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": [
-					{
-					"nombre": "xd",
-					"tipo": "Int",
-					"posicion": 0
-					}
-				]
-			}
-		],
-		"constructor": {
-			"paramF": [
-				{
-				"nombre": "xd",
-				"tipo": "Int",
-				"posicion": 0
-				}
-		]
-		}
-	},
- 	 {
-		"nombre": "Fibonacci",
+		"nombre": "Hola",
 		"heredaDe": "Object",
 		"atributos": [
 			{
-			"nombre": "suma",
+			"nombre": "xd",
 			"tipo": "Int",
-			"public": true,
+			"public": false,
 			"posicion": 0
 			},
 			{
-			"nombre": "i",
+			"nombre": "xdnt",
 			"tipo": "Int",
-			"public": true,
+			"public": false,
 			"posicion": 1
 			},
 			{
-			"nombre": "j",
+			"nombre": "xdddd",
 			"tipo": "Int",
-			"public": true,
+			"public": false,
 			"posicion": 2
 			}
 		],
 		"metodos": [
 			{
-				"nombre": "sucesion_fib",
+				"nombre": "m1",
 				"static": false,
-				"retorno": "Int",
+				"retorno": "void",
 				"posicion": 0,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_numero",
-				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [
-						{
-						"nombre": "num",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_sucesion",
-				"static": false,
-				"retorno": "void",
-				"posicion": 2,
-				"paramF": [
-						{
-						"nombre": "s",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
+				"paramF": [],
+				"atributos": [
+					{
+					"nombre": "ola",
+					"tipo": "Str",
+					"posicion": 0
+					},
+					{
+					"nombre": "la",
+					"tipo": "Str",
+					"posicion": 1
+					},
+					{
+					"nombre": "a",
+					"tipo": "Str",
+					"posicion": 2
+					}
+				]
 			}
 		],
 		"constructor": {
@@ -420,17 +299,6 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"atributos": [
-					{
-					"nombre": "fib",
-					"tipo": "Fibonacci",
-					"posicion": 0
-					},
-					{
-					"nombre": "n",
-					"tipo": "Int",
-					"posicion": 1
-					}
-			]
+			"atributos": []
 	}
 }

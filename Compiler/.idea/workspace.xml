@@ -10,12 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/OneLineDeclaration.ru" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/OneLineDeclaration.ts.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Exceptions/SemanticExceptions/DuplicateAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Exceptions/SemanticExceptions/DuplicateAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ts.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/SymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/ModifiedFibonacci.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/ModifiedFibonacci.ts.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "constructorFix",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "last_opened_file_path": "/home/yeu/Documentos/compilador11/Compiler",
@@ -81,7 +79,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler" />
@@ -208,12 +206,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Testing/Test.java</url>
-          <line>78</line>
+          <line>56</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SemanticAnalyzer/SymbolTable.java</url>
-          <line>230</line>
+          <line>252</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
