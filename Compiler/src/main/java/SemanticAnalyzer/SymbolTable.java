@@ -72,6 +72,8 @@ public class SymbolTable extends Commons {
             newStruct.setHaveStruct(true);
             //Seteo que hereda de Object
             newStruct.setInheritFrom(this.structs.get("Object"));
+            //Seteo su token
+            newStruct.setToken(token);
 
             //Lo seteo como struct actual
             this.currentStruct = newStruct;
@@ -88,7 +90,6 @@ public class SymbolTable extends Commons {
             //Seteo la clase com oactual
             this.currentStruct = this.structs.get(structName);
             //Si existe, verifico que no haya otro impl con ese nombre
-            System.out.println(this.currentStruct.getName());
             if(this.currentStruct.getHaveImpl()){
                 //Lanzo error de que ya existe
                 throw throwException("DuplicateImpl",token);
@@ -104,6 +105,8 @@ public class SymbolTable extends Commons {
             newStruct.setHaveImpl(true);
             //Seteo que hereda de Object
             newStruct.setInheritFrom(this.structs.get("Object"));
+            //Seteo su Token
+            newStruct.setToken(token);
 
             //Lo seteo como struct actual
             this.currentStruct = newStruct;
@@ -128,6 +131,8 @@ public class SymbolTable extends Commons {
         newMethod.setPos(currentStruct.getMethods().size());
         //Defino si es estático o no
         newMethod.setStatic(isEstatic);
+        //Seteo su token
+        newMethod.setToken(token);
         //Seteo este método como actual
         this.currentMethod = newMethod;
         //Agrego el método al struct actual
@@ -156,6 +161,7 @@ public class SymbolTable extends Commons {
         } else {
             //La declaro como clase
             Struct newClass = new Struct(heritanceName);
+            newClass.setToken(token);
             this.currentStruct.setInheritFrom(newClass);
         }
 
@@ -179,8 +185,11 @@ public class SymbolTable extends Commons {
         } else {
 
             //De otro modo, creo la nueva clase
-            Struct newClass = new Struct(returnName);
-            this.currentMethod.setGiveBack(newClass);
+            Struct newStruct = new Struct(returnName);
+            //Seteo que hereda de Object
+            newStruct.setInheritFrom(this.structs.get("Object"));
+            newStruct.setToken(token);
+            this.currentMethod.setGiveBack(newStruct);
         }
 
     }
@@ -202,6 +211,7 @@ public class SymbolTable extends Commons {
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
                 int pos = structType.getAttributes().size();
+                structType.setToken(token);
                 // si existe agregamos el nuevo atributo
                 Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos, isPublic);
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
@@ -228,6 +238,7 @@ public class SymbolTable extends Commons {
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
+                structType.setToken(token);
                 int pos = this.currentMethod.getDefinedVar().size();
                 // si existe agregamos la nueva variable
                 Variable newVariable = new Variable(token.getLexeme(), structType, pos);
@@ -254,6 +265,7 @@ public class SymbolTable extends Commons {
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
+                structType.setToken(token);
                 int pos = this.currentMethod.getParamsOfMethod().size();
                 // si existe agregamos el nuevo parametro
                 Variable newParameter = new Variable(token.getLexeme(), structType, pos);
@@ -269,6 +281,8 @@ public class SymbolTable extends Commons {
         Struct Int = new Struct("Int");
         //Agrego que Int hereda de Object
         Int.setInheritFrom(this.structs.get("Object"));
+        Int.setHaveStruct(true);
+        Int.setHaveImpl(true);
 
         this.structs.put("Int",Int);
     }
@@ -278,6 +292,8 @@ public class SymbolTable extends Commons {
 
         //Agrego que Str hereda de Object
         Str.setInheritFrom(this.structs.get("Object"));
+        Str.setHaveStruct(true);
+        Str.setHaveImpl(true);
 
         //fn length()->Int
         Methods length = new Methods("length",false,this.structs.get("Int"), new LinkedHashMap<String,Variable>(),0);
@@ -305,6 +321,8 @@ public class SymbolTable extends Commons {
 
         //Agrego que Bool hereda de Object
         Bool.setInheritFrom(this.structs.get("Object"));
+        Bool.setHaveStruct(true);
+        Bool.setHaveImpl(true);
 
         this.structs.put("Bool",Bool);
     }
@@ -314,6 +332,8 @@ public class SymbolTable extends Commons {
 
         //Agrego que Char hereda de Object
         Char.setInheritFrom(this.structs.get("Object"));
+        Char.setHaveStruct(true);
+        Char.setHaveImpl(true);
 
         this.structs.put("Char",Char);
     }
@@ -323,6 +343,8 @@ public class SymbolTable extends Commons {
 
         //Agrego que Array hereda de Object
         Array.setInheritFrom(this.structs.get("Object"));
+        Array.setHaveStruct(true);
+        Array.setHaveImpl(true);
 
         // fn length()->Int.
         Methods length = new Methods("length",false,this.structs.get("Int"),new LinkedHashMap<>(),0);
@@ -338,6 +360,9 @@ public class SymbolTable extends Commons {
 
     private void addObject(){
         Struct Object = new Struct("Object");
+        Object.setHaveStruct(true);
+        Object.setHaveImpl(true);
+        Object.setInheritFrom(Object);
         //Creo constructor
         Methods constructor = new Methods("constructor",new LinkedHashMap<>());
         //Lo agrego
@@ -350,6 +375,8 @@ public class SymbolTable extends Commons {
 
         //Agrego que IO hereda de Object
         IO.setInheritFrom(this.structs.get("Object"));
+        IO.setHaveStruct(true);
+        IO.setHaveImpl(true);
 
         // st fn out_str(Str s)->void
         Variable s = new Variable("s",this.structs.get("Str"),0);
@@ -431,11 +458,15 @@ public class SymbolTable extends Commons {
             y su haveStruct como true ya que de otro modo significa que por ej
             se heredo pero nunca se declaro
              */
-            if(actualStruct.getHaveStruct() == false
-                    || actualStruct.getHaveImpl() == false){
+            if(actualStruct.getHaveStruct() == false){
                 //Lanzo error de que la clase no está definida
                 throw throwException("UndefinedStruct",actualStruct.getToken());
             }
+            if(actualStruct.getHaveImpl() == false){
+                //Lanzo error de que el impl no está definido
+                throw throwException("UndefinedImpl",actualStruct.getToken());
+            }
+
 
             //Verifico atributos y métodos de ancestros siempre y cuando no herede de Object
             if(actualStruct.getInheritFrom() != this.structs.get("Object")){
@@ -461,6 +492,17 @@ public class SymbolTable extends Commons {
 
     private boolean haveCycles(Struct initialStruct, Struct actualStruct){
         boolean haveCycle = false;
+
+        //Verifico que algun Struct de dentro no esté definido
+        if(actualStruct.getHaveStruct() == false){
+            //Lanzo error de que la clase no está definida
+            throw throwException("UndefinedStruct",actualStruct.getToken());
+        }
+        if(actualStruct.getHaveImpl() == false){
+            //Lanzo error de que el impl no está definido
+            throw throwException("UndefinedImpl",actualStruct.getToken());
+        }
+
         if(actualStruct.getInheritFrom() == initialStruct){
             //Quiere decir que hay un ciclo
             haveCycle = true;
@@ -629,6 +671,10 @@ public class SymbolTable extends Commons {
                 break;
             case ("InvalidOverride"):
                 semanticException = new InvalidOverride(token);
+                break;
+            case("UndefinedImpl"):
+                semanticException = new UndefinedImpl(token);
+                break;
 
         }
 

@@ -34,6 +34,7 @@ public class    SyntacticAnalyzer {
         this.lexicalAnalyzer = lexicalAnalyzer;
         this.actualToken = lexicalAnalyzer.getNextToken();
         program();
+        symbolTable.consolidate();
         return this.symbolTable;
 
     }

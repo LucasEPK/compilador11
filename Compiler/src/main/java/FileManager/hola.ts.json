@@ -3,15 +3,21 @@
 "structs": [
  	 {
 		"nombre": "Object",
-		"heredaDe": "null",
+		"heredaDe": "Object",
 		"atributos": [],
-		"metodos": []
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "Int",
 		"heredaDe": "Object",
 		"atributos": [],
-		"metodos": []
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "Str",
@@ -32,27 +38,36 @@
 				"retorno": "Str",
 				"posicion": 1,
 				"paramF": [
-							{
-							"nombre": "s",
-							"tipo": "Str",
-							"posicion": 0
+						{
+						"nombre": "s",
+						"tipo": "Str",
+						"posicion": 0
 						}
 				],
 				"atributos": []
 			}
-		]
+		],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "Bool",
 		"heredaDe": "Object",
 		"atributos": [],
-		"metodos": []
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "Char",
 		"heredaDe": "Object",
 		"atributos": [],
-		"metodos": []
+		"metodos": [],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "Array",
@@ -67,7 +82,10 @@
 				"paramF": [],
 				"atributos": []
 			}
-		]
+		],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "IO",
@@ -80,10 +98,10 @@
 				"retorno": "void",
 				"posicion": 0,
 				"paramF": [
-							{
-							"nombre": "s",
-							"tipo": "Str",
-							"posicion": 0
+						{
+						"nombre": "s",
+						"tipo": "Str",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -94,10 +112,10 @@
 				"retorno": "void",
 				"posicion": 1,
 				"paramF": [
-							{
-							"nombre": "i",
-							"tipo": "Int",
-							"posicion": 0
+						{
+						"nombre": "i",
+						"tipo": "Int",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -108,10 +126,10 @@
 				"retorno": "void",
 				"posicion": 2,
 				"paramF": [
-							{
-							"nombre": "b",
-							"tipo": "Bool",
-							"posicion": 0
+						{
+						"nombre": "b",
+						"tipo": "Bool",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -122,10 +140,10 @@
 				"retorno": "void",
 				"posicion": 3,
 				"paramF": [
-							{
-							"nombre": "c",
-							"tipo": "Char",
-							"posicion": 0
+						{
+						"nombre": "c",
+						"tipo": "Char",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -136,10 +154,10 @@
 				"retorno": "void",
 				"posicion": 4,
 				"paramF": [
-							{
-							"nombre": "a",
-							"tipo": "Array",
-							"posicion": 0
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -148,12 +166,12 @@
 				"nombre": "out_array_bool",
 				"static": true,
 				"retorno": "void",
-				"posicion": 6,
+				"posicion": 5,
 				"paramF": [
-							{
-							"nombre": "a",
-							"tipo": "Array",
-							"posicion": 0
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -162,12 +180,12 @@
 				"nombre": "out_array_str",
 				"static": true,
 				"retorno": "void",
-				"posicion": 5,
+				"posicion": 6,
 				"paramF": [
-							{
-							"nombre": "a",
-							"tipo": "Array",
-							"posicion": 0
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -178,10 +196,10 @@
 				"retorno": "void",
 				"posicion": 7,
 				"paramF": [
-							{
-							"nombre": "a",
-							"tipo": "Array",
-							"posicion": 0
+						{
+						"nombre": "a",
+						"tipo": "Array",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -218,29 +236,32 @@
 				"paramF": [],
 				"atributos": []
 			}
-		]
+		],
+		"constructor": {
+			"paramF": []
+		}
 	},
  	 {
 		"nombre": "Fibonacci",
 		"heredaDe": "Object",
 		"atributos": [
 			{
-				"nombre": "suma",
-				"tipo": "Int",
-				"public": true,
-				"posicion": 0
+			"nombre": "suma",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 0
 			},
 			{
-				"nombre": "i",
-				"tipo": "Int",
-				"public": true,
-				"posicion": 0
+			"nombre": "i",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 1
 			},
 			{
-				"nombre": "j",
-				"tipo": "Int",
-				"public": true,
-				"posicion": 0
+			"nombre": "j",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 2
 			}
 		],
 		"metodos": [
@@ -250,10 +271,10 @@
 				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [
-							{
-							"nombre": "n",
-							"tipo": "Int",
-							"posicion": 0
+						{
+						"nombre": "n",
+						"tipo": "Int",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -264,10 +285,10 @@
 				"retorno": "void",
 				"posicion": 1,
 				"paramF": [
-							{
-							"nombre": "num",
-							"tipo": "Int",
-							"posicion": 0
+						{
+						"nombre": "num",
+						"tipo": "Int",
+						"posicion": 0
 						}
 				],
 				"atributos": []
@@ -278,31 +299,35 @@
 				"retorno": "void",
 				"posicion": 2,
 				"paramF": [
-							{
-							"nombre": "s",
-							"tipo": "Int",
-							"posicion": 0
+						{
+						"nombre": "s",
+						"tipo": "Int",
+						"posicion": 0
 						}
 				],
 				"atributos": []
 			}
-		]
+		],
+		"constructor": {
+			"paramF": []
+		}
 	}
-]
-}
-"start": {
-		"nombre": "start",
-		"retorno": "void",
-		"posicion": 0,
-		"atributos": [
+],
+	"start": {
+			"nombre": "start",
+			"retorno": "void",
+			"posicion": 0,
+			"atributos": [
 					{
 					"nombre": "fib",
 					"tipo": "Fibonacci",
 					"posicion": 0
-				},
+					},
 					{
 					"nombre": "n",
 					"tipo": "Int",
 					"posicion": 1
-				}
-		]
+					}
+			]
+	}
+}
