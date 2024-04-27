@@ -72,6 +72,7 @@ public class SyntacticExecutor {
          */
         if (flag){
             this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
+            printCorrectSemnatic();
         }
 
 
@@ -139,7 +140,7 @@ public class SyntacticExecutor {
     }
 
     public void printCorrectSemnatic(){
-        System.out.println("CORRECTO: ANALISIS SEMANTICO");
+        System.out.println("CORRECTO: SEMANTICO - DECLARACIONES");
     }
 
 
