@@ -391,9 +391,13 @@ public class    SyntacticAnalyzer {
     /**
      * Regla Constructor
      * @author Yeumen Silva
+     * @author Lucas Moyano
      * */
 
     private void constructor(){
+        // Analisis semantico ----------------------------------
+        this.symbolTable.addConstructorToStruct(this.actualToken);
+        // -----------------------------------------------------
         match(".");
         argumentosFormales();
         bloqueMetodo();

@@ -12,7 +12,6 @@ public class Main {
 
     public static void main(String[] args) {
         String inputPath;
-
         /* Verifica si hay algun argumento de entrada, de otro modo
         lanza un error
          */

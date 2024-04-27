@@ -141,6 +141,28 @@ public class SymbolTable extends Commons {
         this.currentStruct.getMethods().put(newMethod.getName(), newMethod);
     }
 
+    /**
+     * Función que añade a la tabla de simbolos un constructor al struct actual
+     * @author Lucas Moyano
+     * */
+    public void addConstructorToStruct(Token token) {
+        //Verifico si el constructor ya existe
+        if(currentStruct.getConstructor() != null){
+            //Si existe deberia tirar error
+            throw throwException("DuplicateConstructor",token);
+        }
+
+        //Defino el nuevo constructor
+        Methods newMethod = new Methods(token.getLexeme());
+
+        //Seteo su pos como el tamaño de la lista de métodos
+        newMethod.setPos(0);
+        //Seteo su token
+        newMethod.setToken(token);
+        //Seteo este método como actual
+        this.currentMethod = newMethod;
+    }
+    
     public void addHeritance(Token token){
         String heritanceName = token.getLexeme();
 
@@ -659,7 +681,6 @@ public class SymbolTable extends Commons {
             case ("InvalidType"):
                 semanticException = new InvalidType(token);
                 break;
-
             case("DuplicateVariable") :
                 semanticException = new DuplicateVariable(token);
                 break;
@@ -681,7 +702,9 @@ public class SymbolTable extends Commons {
             case("UndefinedImpl"):
                 semanticException = new UndefinedImpl(token);
                 break;
-
+            case("DuplicateConstructor"):
+                semanticException = new DuplicateConstructor(token);
+                break;
         }
 
         return semanticException;
