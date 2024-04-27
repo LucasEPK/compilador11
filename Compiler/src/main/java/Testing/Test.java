@@ -31,8 +31,8 @@ public class Test {
      */
 
     public void SyntacticTest(){
-        folderExecutorSyntactic("src/main/java/Testing/Tests/SyntacticTests/passing", "Pass");
-        folderExecutorSyntactic("src/main/java/Testing/Tests/SyntacticTests/failing", "Fail");
+        folderExecutorSyntactic("src/main/java/Testing/Tests/SemanticTests/passing", "Pass");
+        folderExecutorSyntactic("src/main/java/Testing/Tests/SemanticTests/failing", "Fail");
     }
 
 
