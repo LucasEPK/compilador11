@@ -183,7 +183,7 @@ public class Methods extends Commons {
             jsonString+="]";
         }else {
             for(Variable variable: this.definedVar.values()){
-                variable.toJson(tabs);
+                jsonString+=variable.toJson(tabs);
             }
             jsonString = jsonString.substring(0,jsonString.length()-1);
             jsonString += "\n" + addtabs(tabs) + "]";

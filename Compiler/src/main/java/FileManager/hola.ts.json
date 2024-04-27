@@ -325,7 +325,12 @@
 						"posicion": 0
 						}
 				],
-				"atributos": 
+				"atributos": [
+					{
+					"nombre": "xd",
+					"tipo": "Int",
+					"posicion": 0
+					}
 				]
 			}
 		],
