@@ -10,6 +10,6 @@ public class UndefinedStruct extends  SemanticException{
 
     @Override
     public String getExceptionType() {
-        return "EL STRUCT NO ESTA DEFINIUDO";
+        return "EL STRUCT NO ESTA DEFINIDO";
     }
 }

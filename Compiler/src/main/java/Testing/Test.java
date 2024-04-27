@@ -68,9 +68,9 @@ public class Test {
         File[] files = readFolder(path);
 
         if (type.equals("Pass")) {
-            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL SINTÁCTICO\n");
+            System.out.println("ARCHIVOS QUE DEBERÍAN PASAR EL SEMANTICO\n");
         }else {
-            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL SINTÁCTICO\n");
+            System.out.println("ARCHIVOS QUE NO DEBERÍAN PASAR EL SEMANTICO\n");
         }
 
         for (File file : files) {
