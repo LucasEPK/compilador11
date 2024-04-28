@@ -610,7 +610,7 @@ public class SymbolTable extends Commons {
                     throw throwException("InvalidOverrideType",method.token);
                 }
                 //Verifico el tipo de return
-                if(Objects.equals(method.getGiveBack(), ancestralMethodEquals.getGiveBack()) == false){
+                if(Objects.equals(method.getGiveBack().getName(), ancestralMethodEquals.getGiveBack().getName()) == false){
                     throw throwException("InvalidOverrideReturn",method.token);
                 }
                 method.setPos(methodsList.size());
