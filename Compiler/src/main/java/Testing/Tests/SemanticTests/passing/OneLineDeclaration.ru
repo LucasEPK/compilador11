@@ -1,4 +1,4 @@
-/? Descripción: caso de prueba que chequea que no se reconozca como error declaraciones de varias
+/? Descripción: caso de prueba que verifica que no se reconozca como error declaraciones de varias
 /? variables/atributos del mismo tipo en una linea
 /? Salida esperada:
 /? CORRECTO: SEMANTICO - DECLARACIONES

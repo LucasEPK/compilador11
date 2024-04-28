@@ -1,4 +1,4 @@
-/? Descripción: caso de prueba que chequea que los metodos redefinidos no tiren error
+/? Descripción: caso de prueba que verifica que los metodos redefinidos no tiren error
 /? y se muestren correctamente en el JSON
 /? Salida esperada:
 /? CORRECTO: SEMANTICO - DECLARACIONES

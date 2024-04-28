@@ -1,4 +1,4 @@
-/? Descripción: caso de prueba que chequea que una variable privada sea heredada
+/? Descripción: caso de prueba que verifica que una variable privada sea heredada
 /? Salida esperada:
 /? CORRECTO: SEMANTICO - DECLARACIONES
 

@@ -1,5 +1,5 @@
 /? Descripción: caso de prueba que verifica que no se
-/? declaren dos variables iguales
+/? declaren dos variables con igual nombre
 /? Salida esperada:
 /? ERROR: SEMÁNTICO - DECLARACIONES
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |

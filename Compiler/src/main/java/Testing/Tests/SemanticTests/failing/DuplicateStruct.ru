@@ -1,5 +1,5 @@
 /? Descripción: caso de prueba que verifica que no se declaren dos structs
-/? de una misma clase
+/? con el mismo nombre
 /? Salida esperada:
 /? ERROR: SEMÁNTICO - DECLARACIONES
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |

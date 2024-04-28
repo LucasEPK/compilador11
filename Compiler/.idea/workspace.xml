@@ -10,7 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateAttribute.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateAttribute.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateMethod.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateMethod.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateStruct.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateStruct.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateVariable.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/DuplicateVariable.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/UndefinedStrcut.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/failing/UndefinedStruct.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/OneLineDeclaration.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/OneLineDeclaration.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/PrivateInheritance.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/PrivateInheritance.ru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/RedefinedMethod.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/passing/RedefinedMethod.ru" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +169,7 @@
       <workItem from="1714140111489" duration="3966000" />
       <workItem from="1714153212777" duration="4322000" />
       <workItem from="1714162808196" duration="3829000" />
-      <workItem from="1714321905535" duration="6608000" />
+      <workItem from="1714321905535" duration="8771000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />

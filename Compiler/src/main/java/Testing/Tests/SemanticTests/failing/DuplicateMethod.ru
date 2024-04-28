@@ -1,4 +1,4 @@
-/? Descripción: caso de prueba que verifica que un struct no tenga dos
+/? Descripción: caso de prueba que verifica que un impl no tenga dos
 /? metodos con el mismo nombre
 /? Salida esperada:
 /? ERROR: SEMÁNTICO - DECLARACIONES
