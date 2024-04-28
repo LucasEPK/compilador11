@@ -1,6 +1,6 @@
 /? Descripción: caso de prueba que chequea que una variable privada sea heredada
 /? Salida esperada:
-/? El json construido correctamente con la variable v4 en B y C
+/? CORRECTO: SEMANTICO - DECLARACIONES
 
 struct A{
     Int v1, v2;

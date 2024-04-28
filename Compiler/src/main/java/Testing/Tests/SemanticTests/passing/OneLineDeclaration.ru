@@ -1,7 +1,7 @@
 /? Descripción: caso de prueba que chequea que no se reconozca como error declaraciones de varias
 /? variables/atributos del mismo tipo en una linea
 /? Salida esperada:
-/? El json construido correctamente
+/? CORRECTO: SEMANTICO - DECLARACIONES
 struct Hola {
     pri Int xd, xdnt, xdddd;
 }

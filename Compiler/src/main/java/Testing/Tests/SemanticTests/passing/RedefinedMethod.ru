@@ -1,7 +1,7 @@
 /? Descripción: caso de prueba que chequea que los metodos redefinidos no tiren error
 /? y se muestren correctamente en el JSON
 /? Salida esperada:
-/? El json construido correctamente
+/? CORRECTO: SEMANTICO - DECLARACIONES
 
 struct A{}
 impl A{

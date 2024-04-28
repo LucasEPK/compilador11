@@ -1,6 +1,6 @@
 /? Descripción: caso de prueba generico
 /? Salida esperada:
-/? El json construido correctamente
+/? CORRECTO: SEMANTICO - DECLARACIONES
 
 struct Pepe : Fibonacci {
     Array Bool a;

@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ts.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +162,7 @@
       <workItem from="1714140111489" duration="3966000" />
       <workItem from="1714153212777" duration="4322000" />
       <workItem from="1714162808196" duration="3829000" />
-      <workItem from="1714321905535" duration="4486000" />
+      <workItem from="1714321905535" duration="6212000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />
