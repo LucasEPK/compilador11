@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\ExampleOfStage3.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\MultiplDeclaration.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -240,88 +240,6 @@
 		"constructor": {
 			"paramF": []
 		}
-	},
- 	 {
-		"nombre": "Derivada",
-		"heredaDe": "Base",
-		"atributos": [
-			{
-			"nombre": "s",
-			"tipo": "Str",
-			"public": true,
-			"posicion": 0
-			},
-			{
-			"nombre": "a",
-			"tipo": "Int",
-			"public": false,
-			"posicion": 1
-			},
-			{
-			"nombre": "x",
-			"tipo": "Int",
-			"public": false,
-			"posicion": 2
-			}
-		],
-		"metodos": [
-			{
-				"nombre": "m1",
-				"static": false,
-				"retorno": "void",
-				"posicion": 0,
-				"paramF": [],
-				"atributos": []
-			},
-			{
-				"nombre": "m2",
-				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [
-						{
-						"nombre": "a",
-						"tipo": "Str",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			}
-		],
-		"constructor": {
-			"paramF": []
-		}
-	},
- 	 {
-		"nombre": "Base",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "s",
-			"tipo": "Str",
-			"public": true,
-			"posicion": 0
-			},
-			{
-			"nombre": "a",
-			"tipo": "Int",
-			"public": false,
-			"posicion": 1
-			}
-		],
-		"metodos": [
-			{
-				"nombre": "m1",
-				"static": false,
-				"retorno": "void",
-				"posicion": 0,
-				"paramF": [],
-				"atributos": []
-			}
-		],
-		"constructor": {
-			"paramF": []
-		}
 	}
 ],
 	"start": {
@@ -330,9 +248,29 @@
 			"posicion": 0,
 			"atributos": [
 					{
-					"nombre": "b1",
-					"tipo": "Base",
+					"nombre": "a",
+					"tipo": "Bool",
 					"posicion": 0
+					},
+					{
+					"nombre": "b",
+					"tipo": "Bool",
+					"posicion": 1
+					},
+					{
+					"nombre": "c",
+					"tipo": "Bool",
+					"posicion": 2
+					},
+					{
+					"nombre": "j",
+					"tipo": "Char",
+					"posicion": 3
+					},
+					{
+					"nombre": "f",
+					"tipo": "Int",
+					"posicion": 4
 					}
 			]
 	}

@@ -242,172 +242,127 @@
 		}
 	},
  	 {
-		"nombre": "Pepe",
-		"heredaDe": "Fibonacci",
+		"nombre": "A",
+		"heredaDe": "Object",
 		"atributos": [
 			{
-			"nombre": "suma",
+			"nombre": "v1",
 			"tipo": "Int",
 			"public": true,
 			"posicion": 0
 			},
 			{
-			"nombre": "i",
+			"nombre": "v2",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 1
+			}
+		],
+		"metodos": [
+			{
+				"nombre": "m1",
+				"static": false,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [],
+				"atributos": []
+			}
+		],
+		"constructor": {
+			"paramF": []
+		}
+	},
+ 	 {
+		"nombre": "B",
+		"heredaDe": "A",
+		"atributos": [
+			{
+			"nombre": "v1",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 0
+			},
+			{
+			"nombre": "v2",
 			"tipo": "Int",
 			"public": true,
 			"posicion": 1
 			},
 			{
-			"nombre": "j",
-			"tipo": "Int",
+			"nombre": "v3",
+			"tipo": "Str",
 			"public": true,
 			"posicion": 2
 			},
 			{
-			"nombre": "a",
-			"tipo": "Array",
-			"public": true,
+			"nombre": "v4",
+			"tipo": "Bool",
+			"public": false,
 			"posicion": 3
 			}
 		],
 		"metodos": [
 			{
-				"nombre": "sucesion_fib",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 4,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_numero",
+				"nombre": "m1",
 				"static": false,
 				"retorno": "void",
 				"posicion": 1,
-				"paramF": [
-						{
-						"nombre": "num",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
+				"paramF": [],
 				"atributos": []
-			},
-			{
-				"nombre": "imprimo_sucesion",
-				"static": false,
-				"retorno": "void",
-				"posicion": 2,
-				"paramF": [
-						{
-						"nombre": "s",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "hola",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 3,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": [
-					{
-					"nombre": "xd",
-					"tipo": "Int",
-					"posicion": 0
-					}
-				]
 			}
 		],
 		"constructor": {
-			"paramF": [
-				{
-				"nombre": "xd",
-				"tipo": "Int",
-				"posicion": 0
-				}
-		]
+			"paramF": []
 		}
 	},
  	 {
-		"nombre": "Fibonacci",
-		"heredaDe": "Object",
+		"nombre": "C",
+		"heredaDe": "B",
 		"atributos": [
 			{
-			"nombre": "suma",
+			"nombre": "v1",
 			"tipo": "Int",
 			"public": true,
 			"posicion": 0
 			},
 			{
-			"nombre": "i",
+			"nombre": "v2",
 			"tipo": "Int",
 			"public": true,
 			"posicion": 1
 			},
 			{
-			"nombre": "j",
-			"tipo": "Int",
+			"nombre": "v3",
+			"tipo": "Str",
 			"public": true,
 			"posicion": 2
+			},
+			{
+			"nombre": "v4",
+			"tipo": "Bool",
+			"public": false,
+			"posicion": 3
+			},
+			{
+			"nombre": "v5",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 4
+			},
+			{
+			"nombre": "v6",
+			"tipo": "Int",
+			"public": true,
+			"posicion": 5
 			}
 		],
 		"metodos": [
 			{
-				"nombre": "sucesion_fib",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 0,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_numero",
+				"nombre": "m1",
 				"static": false,
 				"retorno": "void",
 				"posicion": 1,
-				"paramF": [
-						{
-						"nombre": "num",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"atributos": []
-			},
-			{
-				"nombre": "imprimo_sucesion",
-				"static": false,
-				"retorno": "void",
-				"posicion": 2,
-				"paramF": [
-						{
-						"nombre": "s",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
+				"paramF": [],
 				"atributos": []
 			}
 		],
@@ -420,17 +375,6 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"atributos": [
-					{
-					"nombre": "fib",
-					"tipo": "Fibonacci",
-					"posicion": 0
-					},
-					{
-					"nombre": "n",
-					"tipo": "Int",
-					"posicion": 1
-					}
-			]
+			"atributos": []
 	}
 }
