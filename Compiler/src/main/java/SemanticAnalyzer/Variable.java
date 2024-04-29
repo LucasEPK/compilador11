@@ -43,6 +43,10 @@ public class Variable extends Commons {
         this.pos = pos;
     }
 
+    public boolean getIsArray() { return isArray;}
+
+    public void setIsArray(boolean isArray) {this.isArray = isArray;}
+
     public String toJson(int tabs){
         String jsonString = "";
         jsonString += "\n" + addtabs(tabs+1) + "{";
