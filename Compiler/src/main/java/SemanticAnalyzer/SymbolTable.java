@@ -676,23 +676,30 @@ public class SymbolTable extends Commons {
         boolean equals = true;
         //Creo dos arreglos para almacenar los valores de los tipos
         Struct[] methodTypes = new Struct[method.size()];
+        Boolean[] parametterIsArray = new Boolean[method.size()];
         Struct[] methodAncestralTypes = new Struct[ancestralMethod.size()];
+        Boolean[] ancestralParametterIsArray = new Boolean[ancestralMethod.size()];
 
         //Recorro ambas listas para almacenar los tipos
         int i = 0;
         for(Variable variable : method.values()){
             methodTypes[i] = variable.getType();
+            parametterIsArray[i] = variable.getIsArray();
             i++;
         }
         i = 0;
         for (Variable variable : ancestralMethod.values()){
             methodAncestralTypes[i] = variable.getType();
+            ancestralParametterIsArray[i] = variable.getIsArray();
             i++;
         }
         //Comparo los tipos
         for(i = 0; i < methodTypes.length;i++){
             //Si el tipo de algun parametro es distinto, esta mal sobrescrito
             if(Objects.equals(methodTypes[i],methodAncestralTypes[i]) == false){
+                equals = false;
+            }
+            if(parametterIsArray[i] != ancestralParametterIsArray[i] ){
                 equals = false;
             }
         }
