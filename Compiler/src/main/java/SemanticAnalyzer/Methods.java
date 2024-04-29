@@ -15,6 +15,8 @@ public class Methods extends Commons {
     //El tipo de retorno
     private Struct giveBack;
 
+    private boolean isGiveBackArray = false;
+
     //Lista de variables que recibe el método
     private Map<String,Variable> paramsOfMethod = new LinkedHashMap<>();
 
@@ -104,6 +106,11 @@ public class Methods extends Commons {
         this.definedVar = definedVar;
     }
 
+    public void setIsGiveBackArray(boolean isGiveBackArray) {
+        this.isGiveBackArray = isGiveBackArray;
+    }
+
+    public boolean getIsGiveBackArray() { return this.isGiveBackArray;}
 
     public Map<String, Variable> getDefinedVar() {
         return definedVar;
