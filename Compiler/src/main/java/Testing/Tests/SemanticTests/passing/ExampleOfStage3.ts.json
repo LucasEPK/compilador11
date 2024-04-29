@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\ExampleOfStage3.ru",
+ "nombre": "/home/yeu/Documentos/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/passing/ExampleOfStage3.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -328,7 +328,7 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"atributos": [
+			"variables": [
 					{
 					"nombre": "b1",
 					"tipo": "Base",

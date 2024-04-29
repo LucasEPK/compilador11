@@ -613,6 +613,9 @@ public class SymbolTable extends Commons {
                 if(Objects.equals(method.getGiveBack().getName(), ancestralMethodEquals.getGiveBack().getName()) == false){
                     throw throwException("InvalidOverrideReturn",method.token);
                 }
+                if(Objects.equals(method.getIsStatic(),ancestralMethodEquals.getIsStatic()) == false){
+                    throw throwException("InvalidOverrideStatic", method.token);
+                }
                 method.setPos(methodsList.size());
                 method.setInherited(true);
                 methodsList.replace(method.getName(),ancestralMethodEquals,method);
@@ -709,6 +712,9 @@ public class SymbolTable extends Commons {
                 break;
             case("DuplicateConstructor"):
                 semanticException = new DuplicateConstructor(token);
+                break;
+            case ("InvalidOverrideStatic"):
+                semanticException = new InvalidOverrideStatic(token);
                 break;
         }
 
