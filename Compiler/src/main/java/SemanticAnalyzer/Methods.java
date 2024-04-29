@@ -52,6 +52,7 @@ public class Methods extends Commons {
         this.paramsOfMethod = paramsOfMethod;
     }
 
+
     /**
      * Constructor vo
      */
@@ -88,6 +89,10 @@ public class Methods extends Commons {
 
     public Struct getGiveBack() {
         return giveBack;
+    }
+
+    public boolean getIsStatic(){
+        return this.isStatic;
     }
 
     /**

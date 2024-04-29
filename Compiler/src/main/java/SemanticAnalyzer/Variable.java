@@ -8,6 +8,9 @@ public class Variable extends Commons {
     //Tipo de la variable
     private Struct type;
 
+    //Si es array o no
+    private boolean isArray = false;
+
     //Posición de la variable
     private int pos;
 
