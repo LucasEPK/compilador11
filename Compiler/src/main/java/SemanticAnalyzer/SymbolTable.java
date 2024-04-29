@@ -459,18 +459,32 @@ public class SymbolTable extends Commons {
         Methods out_char = new Methods("out_char",true,new Struct("void"),hashMapAtributes,3);
 
         // st fn out_array_int(Array a)->void
-        Variable a = new Variable("a",this.structs.get("Array"),0);
+        Variable a = new Variable("a",this.structs.get("Int"),0);
+        //Seteo que es un Array
+        a.setIsArray(true);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("a",a);
         Methods out_array_int = new Methods("out_array_int",true,new Struct("void"),hashMapAtributes,4);
 
         // st fn out_array_str(Array a)->void
+        a = new Variable("a", this.structs.get("Str"),0);
+        a.setIsArray(true);
+        hashMapAtributes = new LinkedHashMap<>();
+        hashMapAtributes.put("a",a);
         Methods out_array_str = new Methods("out_array_str",true,new Struct("void"),hashMapAtributes,5);
 
         // st fn out_array_bool(Array a)->void
+        a = new Variable("a", this.structs.get("Bool"),0);
+        a.setIsArray(true);
+        hashMapAtributes = new LinkedHashMap<>();
+        hashMapAtributes.put("a",a);
         Methods out_array_bool = new Methods("out_array_bool",true,new Struct("void"),hashMapAtributes,6);
 
         // st fn out_array_char(Array a)->void
+        a = new Variable("a", this.structs.get("Char"),0);
+        a.setIsArray(true);
+        hashMapAtributes = new LinkedHashMap<>();
+        hashMapAtributes.put("a",a);
         Methods out_array_char = new Methods("out_array_char", true,new Struct("void"),hashMapAtributes,7);
 
         // st fn in_str()->Str

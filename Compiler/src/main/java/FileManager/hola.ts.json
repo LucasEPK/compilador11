@@ -157,6 +157,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Int",
 						"posicion": 0
 						}
 				],
@@ -171,6 +172,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Bool",
 						"posicion": 0
 						}
 				],
@@ -185,6 +187,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Str",
 						"posicion": 0
 						}
 				],
@@ -199,6 +202,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Char",
 						"posicion": 0
 						}
 				],
