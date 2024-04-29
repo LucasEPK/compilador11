@@ -310,6 +310,11 @@ public class SymbolTable extends Commons {
         Int.setHaveStruct(true);
         Int.setHaveImpl(true);
 
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        Int.setConstructor(constructor);
+
         this.structs.put("Int",Int);
     }
 
@@ -320,6 +325,11 @@ public class SymbolTable extends Commons {
         Str.setInheritFrom(this.structs.get("Object"));
         Str.setHaveStruct(true);
         Str.setHaveImpl(true);
+
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        Str.setConstructor(constructor);
 
         //fn length()->Int
         Methods length = new Methods("length",false,this.structs.get("Int"), new LinkedHashMap<String,Variable>(),0);
@@ -350,6 +360,11 @@ public class SymbolTable extends Commons {
         Bool.setHaveStruct(true);
         Bool.setHaveImpl(true);
 
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        Bool.setConstructor(constructor);
+
         this.structs.put("Bool",Bool);
     }
 
@@ -361,6 +376,11 @@ public class SymbolTable extends Commons {
         Char.setHaveStruct(true);
         Char.setHaveImpl(true);
 
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        Char.setConstructor(constructor);
+
         this.structs.put("Char",Char);
     }
 
@@ -371,6 +391,11 @@ public class SymbolTable extends Commons {
         Array.setInheritFrom(this.structs.get("Object"));
         Array.setHaveStruct(true);
         Array.setHaveImpl(true);
+
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        Array.setConstructor(constructor);
 
         // fn length()->Int.
         Methods length = new Methods("length",false,this.structs.get("Int"),new LinkedHashMap<>(),0);
@@ -403,6 +428,11 @@ public class SymbolTable extends Commons {
         IO.setInheritFrom(this.structs.get("Object"));
         IO.setHaveStruct(true);
         IO.setHaveImpl(true);
+
+        //Creo constructor
+        Methods constructor = new Methods("constructor",new LinkedHashMap<>());
+        //Lo agrego
+        IO.setConstructor(constructor);
 
         // st fn out_str(Str s)->void
         Variable s = new Variable("s",this.structs.get("Str"),0);
@@ -587,7 +617,7 @@ public class SymbolTable extends Commons {
         }
         //Si la clase no tiene constructor, lo hereda
         if(children.getConstructor() == null){
-            children.setConstructor(children.getInheritFrom().getConstructor());
+            throw  throwException("UndefinedConstructor",children.getToken());
         }
         //Guardo métodos y actualizo su pos
         for(Methods method : children.getMethods().values()){
@@ -715,6 +745,9 @@ public class SymbolTable extends Commons {
                 break;
             case ("InvalidOverrideStatic"):
                 semanticException = new InvalidOverrideStatic(token);
+                break;
+            case ("UndefinedConstructor"):
+                semanticException = new UndefinedConstructor(token);
                 break;
         }
 
