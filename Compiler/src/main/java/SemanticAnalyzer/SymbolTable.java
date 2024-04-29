@@ -226,7 +226,7 @@ public class SymbolTable extends Commons {
      * @param isPublic un booleano que indica si el atributo es publico o no
      * @author Lucas Moyano
      * */
-    public void addAttrToStruct(Token token, String type, boolean isPublic){
+    public void addAttrToStruct(Token token, String type, boolean isPublic, boolean isArray){
         String attributeName = token.getLexeme();
         // Observa si ya existe un attribute con este nombre
         if (this.currentStruct.getAttributes().containsKey(attributeName)) { // Si existe tira error
@@ -237,7 +237,7 @@ public class SymbolTable extends Commons {
                 Struct structType = this.structs.get(type);
                 int pos = structType.getAttributes().size();
                 // si existe agregamos el nuevo atributo
-                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos, isPublic);
+                Attributes newAttribute = new Attributes(token.getLexeme(), structType, pos, isPublic, isArray);
                 newAttribute.setToken(token);
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
             } else {
@@ -253,7 +253,7 @@ public class SymbolTable extends Commons {
      * @param type un string con el tipo de la variable
      * @author Lucas Moyano
      * */
-    public void addVarToMethod(Token token, String type){
+    public void addVarToMethod(Token token, String type, boolean isArray){
         String varName = token.getLexeme();
         // Observa si ya existe una variable con este nombre
         if (this.currentMethod.getDefinedVar().containsKey(varName)) { // Si existe tira error
@@ -265,7 +265,7 @@ public class SymbolTable extends Commons {
                 structType.setToken(token);
                 int pos = this.currentMethod.getDefinedVar().size();
                 // si existe agregamos la nueva variable
-                Variable newVariable = new Variable(token.getLexeme(), structType, pos);
+                Variable newVariable = new Variable(token.getLexeme(), structType, pos, isArray);
                 newVariable.setToken(token);
                 this.currentMethod.addVariable(newVariable.getName(), newVariable);
             } else {
@@ -281,7 +281,7 @@ public class SymbolTable extends Commons {
      * @param type un string con el tipo de la variable
      * @author Lucas Moyano
      * */
-    public void addParameterToMethod(Token token, String type) {
+    public void addParameterToMethod(Token token, String type, boolean isArray) {
         String parName = token.getLexeme();
         // Observa si ya existe un parametro con este nombre
         if (this.currentMethod.getParamsOfMethod().containsKey(parName)) { // Si existe tira error
@@ -293,7 +293,7 @@ public class SymbolTable extends Commons {
                 structType.setToken(token);
                 int pos = this.currentMethod.getParamsOfMethod().size();
                 // si existe agregamos el nuevo parametro
-                Variable newParameter = new Variable(token.getLexeme(), structType, pos);
+                Variable newParameter = new Variable(token.getLexeme(), structType, pos, isArray);
                 newParameter.setToken(token);
                 this.currentMethod.addParameter(newParameter.getName(), newParameter);
             } else {
@@ -335,7 +335,7 @@ public class SymbolTable extends Commons {
         Methods length = new Methods("length",false,this.structs.get("Int"), new LinkedHashMap<String,Variable>(),0);
 
         //fn concat(Str s)->Str
-        Variable s = new Variable("s",Str,0);
+        Variable s = new Variable("s",Str,0, false);
         Map<String, Variable> hashMapS = new LinkedHashMap<>();
         hashMapS.put("s", s);
 
@@ -435,31 +435,31 @@ public class SymbolTable extends Commons {
         IO.setConstructor(constructor);
 
         // st fn out_str(Str s)->void
-        Variable s = new Variable("s",this.structs.get("Str"),0);
+        Variable s = new Variable("s",this.structs.get("Str"),0, false);
         Map<String,Variable> hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("s",s);
         Methods out_str = new Methods("out_str",true,new Struct("void"),hashMapAtributes,0 );
 
         // st fn out_int(Int i)->void
-        Variable i = new Variable("i",this.structs.get("Int"),0);
+        Variable i = new Variable("i",this.structs.get("Int"),0, false);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("i",i);
         Methods out_int = new Methods("out_int",true,new Struct("void"),hashMapAtributes,1);
 
         // st fn out_bool(Bool b)->void
-        Variable b = new Variable("b",this.structs.get("Bool"),0);
+        Variable b = new Variable("b",this.structs.get("Bool"),0, false);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("b",b);
         Methods out_bool = new Methods("out_bool",true,new Struct("void"),hashMapAtributes,2);
 
         // st fn out_char(Char c)->void
-        Variable c = new Variable("c",this.structs.get("Char"),0);
+        Variable c = new Variable("c",this.structs.get("Char"),0, false);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("c",c);
         Methods out_char = new Methods("out_char",true,new Struct("void"),hashMapAtributes,3);
 
         // st fn out_array_int(Array a)->void
-        Variable a = new Variable("a",this.structs.get("Array"),0);
+        Variable a = new Variable("a",this.structs.get("Array"),0, true);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("a",a);
         Methods out_array_int = new Methods("out_array_int",true,new Struct("void"),hashMapAtributes,4);

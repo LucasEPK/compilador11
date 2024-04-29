@@ -418,9 +418,13 @@ public class    SyntacticAnalyzer {
             visibilidad();
             // Analisis semantico ----------------------------------
             String attrType = this.actualToken.getLexeme();
+            boolean isArray = false;
+            if (Objects.equals(attrType, "Array")){
+                isArray = true;
+            }
             // -----------------------------------------------------
-            tipo();
-            listaDeclaracionVariables(attrType, true, isPublic);
+            attrType = tipo();
+            listaDeclaracionVariables(attrType, true, isPublic, isArray);
             match(";");
         }
         else {
@@ -430,9 +434,13 @@ public class    SyntacticAnalyzer {
                 // Analisis semantico ----------------------------------
                 boolean isPublic = true;
                 String attrType = this.actualToken.getLexeme();
+                boolean isArray = false;
+                if (Objects.equals(attrType, "Array")){
+                    isArray = true;
+                }
                 // -----------------------------------------------------
-                tipo();
-                listaDeclaracionVariables(attrType, true, isPublic);
+                attrType = tipo();
+                listaDeclaracionVariables(attrType, true, isPublic, isArray);
                 match(";");
             }
             else {
@@ -656,9 +664,13 @@ public class    SyntacticAnalyzer {
     private void declVarLocales(){
         // Analisis semantico ----------------------------------
         String varType = this.actualToken.getLexeme();
+        boolean isArray = false;
+        if (Objects.equals(varType, "Array")){
+            isArray = true;
+        }
         // -----------------------------------------------------
-        tipo();
-        listaDeclaracionVariables(varType, false, true);
+        varType = tipo();
+        listaDeclaracionVariables(varType, false, true, isArray);
         match(";");
     }
 
@@ -671,18 +683,18 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
 
-    private void listaDeclaracionVariables(String type, boolean isAttribute, boolean isPublic){
+    private void listaDeclaracionVariables(String type, boolean isAttribute, boolean isPublic, boolean isArray){
 
         // Analisis semantico ----------------------------------
         // Esto se hace porque llegado a este punto no podemos saber si estamos declarando variables o atributos
         if (isAttribute){
-            this.symbolTable.addAttrToStruct(this.actualToken, type, isPublic);
+            this.symbolTable.addAttrToStruct(this.actualToken, type, isPublic, isArray);
         } else {
-            this.symbolTable.addVarToMethod(this.actualToken, type);
+            this.symbolTable.addVarToMethod(this.actualToken, type, isArray);
         }
         // -----------------------------------------------------
         match("ObjID");
-        listaDeclaracionVariablesF(type, isAttribute, isPublic);
+        listaDeclaracionVariablesF(type, isAttribute, isPublic, isArray);
     }
 
     /**
@@ -693,11 +705,11 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void listaDeclaracionVariablesF(String type, boolean isAttribute, boolean isPublic){
+    private void listaDeclaracionVariablesF(String type, boolean isAttribute, boolean isPublic, boolean isArray){
         //Primeros ,
         if(verifyEquals(",")){
             match(",");
-            listaDeclaracionVariables(type, isAttribute, isPublic);
+            listaDeclaracionVariables(type, isAttribute, isPublic, isArray);
         }
         else {
             //Siguientes Lista-Declaracion-Variables-F
@@ -786,10 +798,14 @@ public class    SyntacticAnalyzer {
     private void argumentoFormal(){
         // Analisis semantico ----------------------------------
         String paramType = actualToken.getLexeme();
+        boolean isArray = false;
+        if (Objects.equals(paramType, "Array")){
+            isArray = true;
+        }
         //-----------------------------------------------------
-        tipo();
+        paramType = tipo();
         // Analisis semantico ----------------------------------
-        this.symbolTable.addParameterToMethod(this.actualToken, paramType);
+        this.symbolTable.addParameterToMethod(this.actualToken, paramType, isArray);
         //-----------------------------------------------------
         match("ObjID");
     }
@@ -829,20 +845,20 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void tipo(){
+    private String tipo(){
         //Primeros Tipo-Primitivo
         if (verifyEquals("Bool" , "Char" , "Int" , "Str")){
-            tipoPrimitivo();
+            return tipoPrimitivo();
         }
         else {
             //Primeros Tipo-Referencia
             if(verifyEquals("StructID")){
-                tipoReferencia();
+                return tipoReferencia();
             }
             else {
                 //Primeros Tipo-Arreglo
                 if(verifyEquals("Array")){
-                    tipoArreglo();
+                    return tipoArreglo();
                 }
                 else {
                     throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" ,
@@ -857,11 +873,17 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void tipoPrimitivo(){
+    private String tipoPrimitivo(){
 
         if(moreOneMatch("Str") || moreOneMatch("Bool")
                 || moreOneMatch("Int") || moreOneMatch("Char")){
+            // Analisis semantico ----------------------------------
+            String type = this.actualToken.getLexeme();
+            // -----------------------------------------------------
             this.actualToken = this.lexicalAnalyzer.getNextToken();
+            // Analisis semantico ----------------------------------
+            return type;
+            // -----------------------------------------------------
         }
         else {
             throw createException(this.actualToken, List.of( "Bool" , "Char" , "Int" , "Str"),this.actualToken.getLexeme());
@@ -874,8 +896,14 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void tipoReferencia(){
+    private String tipoReferencia(){
+        // Analisis semantico ----------------------------------
+        String type = actualToken.getLexeme();
+        //-----------------------------------------------------
         match("StructID");
+        // Analisis semantico ----------------------------------
+        return type;
+        //-----------------------------------------------------
     }
 
 
@@ -883,9 +911,9 @@ public class    SyntacticAnalyzer {
      * Regla Tipo-Arreglo
      * @author Yeumen Silva
      * */
-    private void tipoArreglo(){
+    private String tipoArreglo(){
         match("Array");
-        tipoPrimitivo();
+        return tipoPrimitivo();
     }
 
     /**
