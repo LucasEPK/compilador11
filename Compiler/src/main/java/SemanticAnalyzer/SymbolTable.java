@@ -413,7 +413,6 @@ public class SymbolTable extends Commons {
         Struct Object = new Struct("Object");
         Object.setHaveStruct(true);
         Object.setHaveImpl(true);
-        Object.setInheritFrom(Object);
         //Creo constructor
         Methods constructor = new Methods("constructor",new LinkedHashMap<>());
         //Lo agrego
@@ -581,13 +580,15 @@ public class SymbolTable extends Commons {
             //Sigo recorriendo mientras la herencia no sea Object
             if(actualStruct.getInheritFrom() != this.structs.get("Object")){
                 //Como Object hereda de null
-                if(actualStruct.getInheritFrom().getInheritFrom() == null){
-                    Struct newActualStruct = this.structs.get(actualStruct.getInheritFrom().getName());
-                    if(newActualStruct != null){
-                        actualStruct.setInheritFrom(newActualStruct);
+                if(actualStruct.getInheritFrom() != null) {
+                    if (actualStruct.getInheritFrom().getInheritFrom() == null) {
+                        Struct newActualStruct = this.structs.get(actualStruct.getInheritFrom().getName());
+                        if (newActualStruct != null) {
+                            actualStruct.setInheritFrom(newActualStruct);
+                        }
                     }
+                    haveCycle = haveCycles(initialStruct, actualStruct.getInheritFrom());
                 }
-                haveCycle = haveCycles(initialStruct,actualStruct.getInheritFrom());
             }
 
         }
@@ -595,76 +596,78 @@ public class SymbolTable extends Commons {
     }
 
     private LinkedHashMap<String,Attributes> findAncestralAtributtes(Struct children, LinkedHashMap<String,Attributes> attributesList){
-        if(children.getInheritFrom() != this.structs.get("Object")){
-            //Si esta clase todavia no ha heredado
-            if(!children.getIsConsolidate()){
-                attributesList = findAncestralAtributtes(children.getInheritFrom(),attributesList);
-            }
-        }
-        //Voy a almacenar todos los atributos actualizando su pos
-        for(Attributes attribute : children.getAttributes().values()){
-            //Verifico que el atributo no este declarado
-            if(attributesList.get(attribute.getName()) == null ){
-                if(attributesList.isEmpty()){
-                    //Seteo booleano de que es heredado
-                    attribute.setInherited(true);
-                    attributesList.put(attribute.getName(),attribute);
+        if(children.getInheritFrom() != null) {
+            if (children.getInheritFrom() != this.structs.get("Object")) {
+                //Si esta clase todavia no ha heredado
+                if (!children.getIsConsolidate()) {
+                    attributesList = findAncestralAtributtes(children.getInheritFrom(), attributesList);
                 }
-                else {
-                    //Seteo su nueva pos
-                    attribute.setPos(attributesList.size());
-                    //Seteo booleano de que es heredado
-                    attribute.setInherited(true);
-                    attributesList.put(attribute.getName(),attribute);
-                }
-            }else {
-                throw throwException("DuplicateAttributeHeritance",attribute.getToken());
             }
+            //Voy a almacenar todos los atributos actualizando su pos
+            for (Attributes attribute : children.getAttributes().values()) {
+                //Verifico que el atributo no este declarado
+                if (attributesList.get(attribute.getName()) == null) {
+                    if (attributesList.isEmpty()) {
+                        //Seteo booleano de que es heredado
+                        attribute.setInherited(true);
+                        attributesList.put(attribute.getName(), attribute);
+                    } else {
+                        //Seteo su nueva pos
+                        attribute.setPos(attributesList.size());
+                        //Seteo booleano de que es heredado
+                        attribute.setInherited(true);
+                        attributesList.put(attribute.getName(), attribute);
+                    }
+                } else {
+                    throw throwException("DuplicateAttributeHeritance", attribute.getToken());
+                }
 
+            }
         }
         return attributesList;
     }
 
     private LinkedHashMap<String,Methods> findAncestralMethods(Struct children, LinkedHashMap<String,Methods> methodsList){
-        if(children.getInheritFrom() != this.structs.get("Object")){
-            methodsList = findAncestralMethods(children.getInheritFrom(),methodsList);
-        }
-        //Si la clase no tiene constructor, lo hereda
-        if(children.getConstructor() == null){
-            throw  throwException("UndefinedConstructor",children.getToken());
-        }
-        //Guardo métodos y actualizo su pos
-        for(Methods method : children.getMethods().values()){
-            Methods ancestralMethodEquals = methodsList.get(method.getName());
-            //Si existe un método ya declarado en la lista con mismo nombre
-            if(ancestralMethodEquals == null){
-                method.setInherited(true);
-                method.setPos(methodsList.size());
-                methodsList.put(method.getName(),method);
+        if(children.getInheritFrom() != null) {
+            if (children.getInheritFrom() != this.structs.get("Object")) {
+                methodsList = findAncestralMethods(children.getInheritFrom(), methodsList);
             }
-            else {
-                //Verifico que la sobreescritura sea correcta
-                //Verifico que tenga la misma cantidad
-                if(ancestralMethodEquals.getParamsOfMethod().size() != method.getParamsOfMethod().size()){
-                    throw throwException("InvalidOverrideLength",method.token);
-                }
-                //Verifico el tipo de parámetros
-                boolean equals = compareMethods(method.getParamsOfMethod(),ancestralMethodEquals.getParamsOfMethod());
-                if(equals == false){
-                    throw throwException("InvalidOverrideType",method.token);
-                }
-                //Verifico el tipo de return
-                if(Objects.equals(method.getGiveBack().getName(), ancestralMethodEquals.getGiveBack().getName()) == false){
-                    throw throwException("InvalidOverrideReturn",method.token);
-                }
-                if(Objects.equals(method.getIsStatic(),ancestralMethodEquals.getIsStatic()) == false){
-                    throw throwException("InvalidOverrideStatic", method.token);
-                }
-                method.setPos(methodsList.size());
-                method.setInherited(true);
-                methodsList.replace(method.getName(),ancestralMethodEquals,method);
+            //Si la clase no tiene constructor, lo hereda
+            if (children.getConstructor() == null) {
+                throw throwException("UndefinedConstructor", children.getToken());
             }
+            //Guardo métodos y actualizo su pos
+            for (Methods method : children.getMethods().values()) {
+                Methods ancestralMethodEquals = methodsList.get(method.getName());
+                //Si existe un método ya declarado en la lista con mismo nombre
+                if (ancestralMethodEquals == null) {
+                    method.setInherited(true);
+                    method.setPos(methodsList.size());
+                    methodsList.put(method.getName(), method);
+                } else {
+                    //Verifico que la sobreescritura sea correcta
+                    //Verifico que tenga la misma cantidad
+                    if (ancestralMethodEquals.getParamsOfMethod().size() != method.getParamsOfMethod().size()) {
+                        throw throwException("InvalidOverrideLength", method.token);
+                    }
+                    //Verifico el tipo de parámetros
+                    boolean equals = compareMethods(method.getParamsOfMethod(), ancestralMethodEquals.getParamsOfMethod());
+                    if (equals == false) {
+                        throw throwException("InvalidOverrideType", method.token);
+                    }
+                    //Verifico el tipo de return
+                    if (Objects.equals(method.getGiveBack().getName(), ancestralMethodEquals.getGiveBack().getName()) == false) {
+                        throw throwException("InvalidOverrideReturn", method.token);
+                    }
+                    if (Objects.equals(method.getIsStatic(), ancestralMethodEquals.getIsStatic()) == false) {
+                        throw throwException("InvalidOverrideStatic", method.token);
+                    }
+                    method.setPos(methodsList.size());
+                    method.setInherited(true);
+                    methodsList.replace(method.getName(), ancestralMethodEquals, method);
+                }
 
+            }
         }
         return methodsList;
     }
