@@ -40,6 +40,7 @@ public class Attributes extends Variable {
 
         jsonString += "\n" + addtabs(tabs) + "{";
         jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" +  ": " + "\"" + this.getName() + "\"" + ",";
+        //Verifico si el tipo es Array
         if(this.getIsArray()){
             jsonString += "\n" + addtabs(tabs) + "\"" + "tipo" + "\"" +  ": "  + "\"" + "Array" + "\"" + ",";
             jsonString += "\n" + addtabs(tabs) + "\"" + "tipoArray" + "\"" +  ": "  + "\"" + this.getType().getName() + "\"" + ",";
