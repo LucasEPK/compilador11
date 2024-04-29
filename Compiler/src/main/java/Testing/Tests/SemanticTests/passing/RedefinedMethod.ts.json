@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\PrivateInheritance.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\RedefinedMethod.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -244,21 +244,31 @@
  	 {
 		"nombre": "A",
 		"heredaDe": "Object",
-		"atributos": [
+		"atributos": [],
+		"metodos": [
 			{
-			"nombre": "v1",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
+				"nombre": "m1",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [],
+				"variables": []
 			},
 			{
-			"nombre": "v2",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
+				"nombre": "m2",
+				"static": false,
+				"retorno": "void",
+				"posicion": 1,
+				"paramF": [
+						{
+						"nombre": "p",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"variables": []
 			}
 		],
-		"metodos": [],
 		"constructor": {
 			"paramF": []
 		}
@@ -266,33 +276,39 @@
  	 {
 		"nombre": "B",
 		"heredaDe": "A",
-		"atributos": [
+		"atributos": [],
+		"metodos": [
 			{
-			"nombre": "v1",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
+				"nombre": "m1",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [],
+				"variables": []
 			},
 			{
-			"nombre": "v2",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
+				"nombre": "m2",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [
+						{
+						"nombre": "x",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"variables": []
 			},
 			{
-			"nombre": "v3",
-			"tipo": "Str",
-			"public": true,
-			"posicion": 2
-			},
-			{
-			"nombre": "v4",
-			"tipo": "Bool",
-			"public": false,
-			"posicion": 3
+				"nombre": "m3",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [],
+				"variables": []
 			}
 		],
-		"metodos": [],
 		"constructor": {
 			"paramF": []
 		}
@@ -300,45 +316,47 @@
  	 {
 		"nombre": "C",
 		"heredaDe": "B",
-		"atributos": [
+		"atributos": [],
+		"metodos": [
 			{
-			"nombre": "v1",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
+				"nombre": "m1",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [],
+				"variables": []
 			},
 			{
-			"nombre": "v2",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
+				"nombre": "m2",
+				"static": false,
+				"retorno": "void",
+				"posicion": 2,
+				"paramF": [
+						{
+						"nombre": "x",
+						"tipo": "Int",
+						"posicion": 0
+						}
+				],
+				"variables": []
 			},
 			{
-			"nombre": "v3",
-			"tipo": "Str",
-			"public": true,
-			"posicion": 2
+				"nombre": "m3",
+				"static": false,
+				"retorno": "void",
+				"posicion": 3,
+				"paramF": [],
+				"variables": []
 			},
 			{
-			"nombre": "v4",
-			"tipo": "Bool",
-			"public": false,
-			"posicion": 3
-			},
-			{
-			"nombre": "v5",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 4
-			},
-			{
-			"nombre": "v6",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 5
+				"nombre": "m4",
+				"static": false,
+				"retorno": "void",
+				"posicion": 3,
+				"paramF": [],
+				"variables": []
 			}
 		],
-		"metodos": [],
 		"constructor": {
 			"paramF": []
 		}

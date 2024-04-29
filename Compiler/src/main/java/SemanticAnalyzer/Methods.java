@@ -178,7 +178,7 @@ public class Methods extends Commons {
             jsonString += "\n" + addtabs(tabs) + "],";
         }
         //Debo imprimir las Variables de cada método
-        jsonString+= "\n" + addtabs(tabs) + "\"" + "atributos" + "\"" + ": [";
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "variables" + "\"" + ": [";
         if(this.definedVar.isEmpty()){
             jsonString+="]";
         }else {

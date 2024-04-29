@@ -30,7 +30,7 @@
 				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "concat",
@@ -44,7 +44,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {
@@ -80,7 +80,7 @@
 				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {
@@ -104,7 +104,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_int",
@@ -118,7 +118,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_bool",
@@ -132,7 +132,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_char",
@@ -146,7 +146,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_int",
@@ -160,7 +160,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_bool",
@@ -174,7 +174,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_str",
@@ -188,7 +188,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_char",
@@ -202,7 +202,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_str",
@@ -210,7 +210,7 @@
 				"retorno": "Str",
 				"posicion": 8,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_int",
@@ -218,7 +218,7 @@
 				"retorno": "Int",
 				"posicion": 9,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_bool",
@@ -226,7 +226,7 @@
 				"retorno": "Bool",
 				"posicion": 10,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_char",
@@ -234,7 +234,7 @@
 				"retorno": "Char",
 				"posicion": 11,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {
@@ -299,7 +299,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {

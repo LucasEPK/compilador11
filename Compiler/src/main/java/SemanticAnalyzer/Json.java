@@ -62,7 +62,7 @@ public class Json{
         jsonString+= "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + "start" + "\"" + ",";
         jsonString+= "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" + ": " + "\"" + "void" + "\"" + ",";
         jsonString+= "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " + 0 + ",";
-        jsonString+= "\n" + addtabs(tabs) + "\"" + "atributos" + "\"" + ": [";
+        jsonString+= "\n" + addtabs(tabs) + "\"" + "variables" + "\"" + ": [";
 
         if (table.getStart().getDefinedVar().isEmpty()){
             jsonString+="]";
