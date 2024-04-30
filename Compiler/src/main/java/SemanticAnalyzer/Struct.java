@@ -245,7 +245,7 @@ public class Struct extends Commons {
                 jsonString +=variable.getValue().toJson(tabs+1);
             }
             jsonString = jsonString.substring(0,jsonString.length()-1);
-            jsonString += "\n" + addtabs(tabs) + "],";
+            jsonString += "\n" + addtabs(tabs+1) + "],";
         }
 
         //Agrego variables definidas dentro del constructor
@@ -259,7 +259,7 @@ public class Struct extends Commons {
                 jsonString+= actualVariable.toJson(tabs+1);
             }
             jsonString = jsonString.substring(0,jsonString.length()-1);
-            jsonString += "\n" + addtabs(tabs) + "],";
+            jsonString += "\n" + addtabs(tabs+1) + "]";
         }
 
         jsonString+=  "\n" + addtabs(tabs) + "}";
