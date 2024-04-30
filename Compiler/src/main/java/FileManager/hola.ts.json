@@ -30,7 +30,7 @@
 				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "concat",
@@ -44,7 +44,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {
@@ -80,7 +80,7 @@
 				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {
@@ -104,7 +104,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_int",
@@ -118,7 +118,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_bool",
@@ -132,7 +132,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_char",
@@ -146,7 +146,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_int",
@@ -160,7 +160,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_bool",
@@ -174,7 +174,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_str",
@@ -188,7 +188,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "out_array_char",
@@ -202,7 +202,7 @@
 						"posicion": 0
 						}
 				],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_str",
@@ -210,7 +210,7 @@
 				"retorno": "Str",
 				"posicion": 8,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_int",
@@ -218,7 +218,7 @@
 				"retorno": "Int",
 				"posicion": 9,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_bool",
@@ -226,7 +226,7 @@
 				"retorno": "Bool",
 				"posicion": 10,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			},
 			{
 				"nombre": "in_char",
@@ -234,7 +234,7 @@
 				"retorno": "Char",
 				"posicion": 11,
 				"paramF": [],
-				"atributos": []
+				"variables": []
 			}
 		],
 		"constructor": {
@@ -242,128 +242,36 @@
 		}
 	},
  	 {
-		"nombre": "A",
+		"nombre": "Xd",
 		"heredaDe": "Object",
 		"atributos": [
 			{
-			"nombre": "v1",
+			"nombre": "ola",
 			"tipo": "Int",
 			"public": true,
 			"posicion": 0
-			},
-			{
-			"nombre": "v2",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
 			}
 		],
 		"metodos": [
 			{
-				"nombre": "m1",
+				"nombre": "m2",
 				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [],
-				"atributos": []
-			}
-		],
-		"constructor": {
-			"paramF": []
-		}
-	},
- 	 {
-		"nombre": "B",
-		"heredaDe": "A",
-		"atributos": [
-			{
-			"nombre": "v1",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
-			},
-			{
-			"nombre": "v2",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
-			},
-			{
-			"nombre": "v3",
-			"tipo": "Str",
-			"public": true,
-			"posicion": 2
-			},
-			{
-			"nombre": "v4",
-			"tipo": "Bool",
-			"public": false,
-			"posicion": 3
-			}
-		],
-		"metodos": [
-			{
-				"nombre": "m1",
-				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [],
-				"atributos": []
-			}
-		],
-		"constructor": {
-			"paramF": []
-		}
-	},
- 	 {
-		"nombre": "C",
-		"heredaDe": "B",
-		"atributos": [
-			{
-			"nombre": "v1",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
-			},
-			{
-			"nombre": "v2",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 1
-			},
-			{
-			"nombre": "v3",
-			"tipo": "Str",
-			"public": true,
-			"posicion": 2
-			},
-			{
-			"nombre": "v4",
-			"tipo": "Bool",
-			"public": false,
-			"posicion": 3
-			},
-			{
-			"nombre": "v5",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 4
-			},
-			{
-			"nombre": "v6",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 5
-			}
-		],
-		"metodos": [
-			{
-				"nombre": "m1",
-				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [],
-				"atributos": []
+				"retorno": "Str",
+				"posicion": 0,
+				"paramF": [
+						{
+						"nombre": "comoEstas",
+						"tipo": "Bool",
+						"posicion": 0
+						}
+				],
+				"variables": [
+					{
+					"nombre": "chau",
+					"tipo": "Str",
+					"posicion": 0
+					}
+				]
 			}
 		],
 		"constructor": {
@@ -375,6 +283,6 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"atributos": []
+			"variables": []
 	}
 }
