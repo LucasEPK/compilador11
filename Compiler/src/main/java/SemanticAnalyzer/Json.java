@@ -4,11 +4,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Clase encargada de generar el Json a partir
+ * de nuestra tabla de simbolos
+ * @author Yeumen Silva
+ */
+
 public class Json{
 
     //Concateno el principio
     private String jsonString = "{ \n \"nombre\": ";
 
+    /**
+     * Método que va a construir el Json con el formato adecuado
+     * @param table Nuestra tabla de simbolos
+     * @param outputPath String con ruta de salida
+     * @param inputPath string con ruta de entrada
+     * @return String en formato Json con todo el contenido de la tabla
+     * @author Yeumen Silva
+     */
 
     public String buildJson(SymbolTable table, String outputPath, String inputPath){
 
@@ -45,6 +59,14 @@ public class Json{
 
     }
 
+    /**
+     * Método que dada una cantida de tabs, devuelve un string
+     * con tabs
+     * @param tabs int que representa cantidad de tabs
+     * @return string con tabs
+     * @author Yeumen Silva
+     */
+
     private String addtabs(int tabs){
         String tabString = "";
         for (int i = 0; i < tabs; i++) {
@@ -52,6 +74,15 @@ public class Json{
         }
         return  tabString;
     }
+
+    /**
+     * Método que se encarga de añadir el start de nuestra tabla de simbolos
+     * en formato json
+     * @param tabs cantidad de tabs de identación
+     * @param table tabla de simbolos
+     * @return String con start en formato json
+     * @author Yeumen Silva
+     */
 
     private String addStart(int tabs, SymbolTable table){
         Methods start = table.getStart();
@@ -78,6 +109,14 @@ public class Json{
 
         return jsonString;
     }
+
+    /**
+     * Método que va a guardar el Json en un archivo, almacenandolo en el mismo lugar
+     * que la ruta del archivo de entrada, en formato .ts.json
+     * @param jsonString string con todo el json de nuestra tabla de simbolos
+     * @param inputPath string con ruta de archivo de entrada
+     * @author Yeumen Silva
+     */
 
     private void saveJson(String jsonString, String inputPath){
 

@@ -4,6 +4,11 @@ package SemanticAnalyzer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Clase que representa nuestros structs de TinyRu
+ * @author Yeumen Silva
+ */
+
 public class Struct extends Commons {
 
     //Id de la clase
@@ -41,6 +46,7 @@ public class Struct extends Commons {
     /**
      * Constructor con solo id de clase
      * @param name id de la clase
+     * @author Yeumen Silva
      */
 
     public Struct(String name){
@@ -51,6 +57,7 @@ public class Struct extends Commons {
     /**
      * Método que retorna el nombre de la clase
      * @return id del struct
+     * @author Yeumen Silva
      */
     public String getName() {
         return name;
@@ -60,6 +67,7 @@ public class Struct extends Commons {
     /**
      * Método que modifica el set de métodos
      * @param methods lista de métodos
+     * @author Yeumen Silva
      */
 
     public void setMethods(Map<String,Methods> methods) {
@@ -70,14 +78,27 @@ public class Struct extends Commons {
     /**
      * Método que define el constructor del Struct
      * @param method
+     * @author Yeumen Silva
      */
     public void setConstructor(Methods method){
         this.constructor = method;
     }
 
+    /**
+     * Método que define si una clase fue consolidada o no
+     * @return booleano, true si fue consolidada, false en caso contrario
+     * @author Yeumen Silva
+     */
+
     public boolean getIsConsolidate(){
         return  this.isConsolidate;
     }
+
+    /**
+     * Método que devuelve el constructor de la struct
+     * @return Method con el constructor
+     * @author Yeumen Silva
+     */
 
     public Methods getConstructor() {
         return constructor;
@@ -102,9 +123,22 @@ public class Struct extends Commons {
         this.attributes = attributes;
     }
 
+    /**
+     * Método que devuelve la lista con los atributos declarados en la clase
+     * @return lista con atributos declarados
+     * @author Yeumen Silva
+     */
+
     public Map<String, Attributes> getAttributes() {
         return attributes;
     }
+
+    /**
+     * Método que agrega un atributo a la lista de atributos declarados
+     * @param attributeName nombre del atributo que representa la key
+     * @param attribute Objeto atributo
+     * @author Lucas Moyano
+     */
 
     public void addAttribute(String attributeName, Attributes attribute) {
         this.attributes.put(attributeName, attribute);
@@ -113,6 +147,7 @@ public class Struct extends Commons {
     /**
      * Método que setea si se consololido la tabla
      * @param consolidate
+     * @author Yeumen Silva
      */
 
     public void setConsolidate(boolean consolidate) {
@@ -122,6 +157,7 @@ public class Struct extends Commons {
     /**
      * Método que setea el nombre de la clase
      * @param name
+     * @author Yeumen Silva
      */
 
     public void setName(String name) {
@@ -131,21 +167,35 @@ public class Struct extends Commons {
     /**
      * Método que setea si el struct ya tiene impl
      * @param haveImpl booleano
+     * @author Lucas Moyano
      */
 
     public void setHaveImpl(boolean haveImpl) {
         this.haveImpl = haveImpl;
     }
 
+    /**
+     * Método que retorna si una clase tiene impl o no
+     * @return booleano, true si tiene impl, false en caso contrario
+     * @author Lucas Moyano
+     */
+
     public boolean getHaveImpl() {return this.haveImpl;}
     /**
      * Método que setea si el struct ya tiene struct
      * @param haveStruct
+     * @author Yeumen Silva
      */
 
     public void setHaveStruct(boolean haveStruct) {
         this.haveStruct = haveStruct;
     }
+
+    /**
+     * Método que devuelve si la clase tiene struct
+     * @return boolean, true si la clase tiene struct, false en caso contrario
+     * @author Yeumen Silva
+     */
 
     public boolean getHaveStruct(){
         return this.haveStruct;
@@ -154,6 +204,7 @@ public class Struct extends Commons {
     /**
      * Método que setea si la clase hereda o no
      * @param haveInherit
+     * @author Yeumen Silva
      */
 
     public void setHaveInherit(boolean haveInherit){
@@ -163,14 +214,28 @@ public class Struct extends Commons {
     /**
      * Método que retorna los métodos del struct
      * @return lista con los métodos del struct
+     * @author Yeumen Silva
      */
     public Map<String, Methods> getMethods() {
         return methods;
     }
 
+    /**
+     * Método que devuelve la clase de la cual hereda
+     * @return Struct de clase padre
+     * @author Yeumen Silva
+     */
+
     public Struct getInheritFrom() {
         return inheritFrom;
     }
+
+    /**
+     * Método que convierte el struct en formato json
+     * @param tabs cantida de tabs de identación
+     * @return string en formato json
+     * @author Yeumen Silva
+     */
 
     public String toJson(int tabs){
 
@@ -230,6 +295,13 @@ public class Struct extends Commons {
 
         return jsonSting;
     }
+
+    /**
+     * Método que agrega el constructor de la clase en formato json
+     * @param tabs cantida de tabs de identación
+     * @return string del constructor en formato json
+     * @author Yeumen Silva
+     */
 
     private String addConstructor(int tabs){
         String jsonString = "";

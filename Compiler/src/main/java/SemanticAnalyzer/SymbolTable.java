@@ -5,6 +5,12 @@ import LexicalAnalyzer.Token;
 
 import java.util.*;
 
+/**
+ * Clase representate de nuestra tabla de simbolos
+ * en donde almacenamos toda la información
+ * @author Yeumen Silva
+ */
+
 public class SymbolTable extends Commons {
 
     //Lista con todos los structs
@@ -23,9 +29,21 @@ public class SymbolTable extends Commons {
 
     private  Methods start;
 
+    /**
+     * Método que devuelve el start
+     * @return Method que representa el start
+     * @author Yeumen Silva
+     */
+
     public Methods getStart() {
         return start;
     }
+
+    /**
+     * Constructor de clase que inicia todas las
+     * clases predefinidas
+     * @author Yeumen Silva
+     */
 
     public SymbolTable(){
         addObject();
@@ -37,6 +55,12 @@ public class SymbolTable extends Commons {
         addIO();
     }
 
+    /**
+     * Método que agrega el start a la tabla de simbolos
+     * @param token Token que contiene linea, columna y lexema
+     * @author Yeumen Silva
+     */
+
     public void addStart(Token token){
         Methods start = new Methods();
         start.setName(token.getLexeme());
@@ -45,6 +69,14 @@ public class SymbolTable extends Commons {
         this.currentMethod = start;
 
     }
+
+    /**
+     * Método que agrega un struct a la tabla de simbolos,
+     * Si el stuct ya existe, lo seteo como actual y sino
+     * lo creo
+     * @param token Token que contiene linea, columna y lexema
+     * @author Yeumen Silva
+     */
 
     public void addStructByStruct(Token token){
 
@@ -82,6 +114,13 @@ public class SymbolTable extends Commons {
 
     }
 
+    /**
+     * Método que dado un impl, agrega ese struct a la tabla,
+     * si ya existe lo seteo como actual, sino debo crearlo
+     * @param token Token que contiene linea, columna y lexema
+     * @author Lucas Moyano
+     */
+
 
     public void addStructByImpl(Token token){
         String structName = token.getLexeme();
@@ -114,6 +153,13 @@ public class SymbolTable extends Commons {
             this.structs.put(structName,newStruct);
         }
     }
+
+    /**
+     * Método que añade un Método al struct actual
+     * @param token Token que contiene linea, columna y lexema
+     * @param isEstatic booleano si el metodo es estatico o no
+     * @author Yeumen Silva
+     */
 
     public void addMethodToStruct(Token token, boolean isEstatic){
 
@@ -163,6 +209,12 @@ public class SymbolTable extends Commons {
         this.currentStruct.setConstructor(newConstructor);
     }
 
+    /**
+     * Método que agrega herencia a un struct
+     * @param token Token que contiene linea, columna y lexema
+     * @author Yeumen Silva
+     */
+
     public void addHeritance(Token token){
         String heritanceName = token.getLexeme();
 
@@ -193,6 +245,14 @@ public class SymbolTable extends Commons {
         this.currentStruct.setHaveInherit(true);
 
     }
+
+    /**
+     * Método que agrega tipo de return a un método
+     * @param token Token que contiene linea, columna y lexema
+     * @param type string con tipo que retorna
+     * @param isArray booleano para saber si es o no un array
+     * @author Lucas Moyano
+     */
 
     public void addReturnToMethod(Token token, String type, boolean isArray){
 
@@ -321,7 +381,12 @@ public class SymbolTable extends Commons {
             }
         }
     }
-    
+
+    /**
+     * Agrega clase predfinida Int a la tabla
+     * @author Yeumen Silva
+     */
+
     private void addInt(){
         Struct Int = new Struct("Int");
         //Agrego que Int hereda de Object
@@ -336,6 +401,12 @@ public class SymbolTable extends Commons {
 
         this.structs.put("Int",Int);
     }
+
+    /**
+     * Agrega clase predfinida Str a la tabla,
+     * tambien agrega sus métodos
+     * @author Yeumen Silva
+     */
 
     private void addStr(){
         Struct Str = new Struct("Str");
@@ -371,6 +442,11 @@ public class SymbolTable extends Commons {
         this.structs.put("Str",Str);
     }
 
+    /**
+     * Agrega clase predfinida Bool a la tabla,
+     * @author Yeumen Silva
+     */
+
     private void addBool(){
         Struct Bool = new Struct("Bool");
 
@@ -387,6 +463,11 @@ public class SymbolTable extends Commons {
         this.structs.put("Bool",Bool);
     }
 
+    /**
+     * Agrega clase predfinida Char a la tabla,
+     * @author Yeumen Silva
+     */
+
     private void addChar(){
         Struct Char = new Struct("Char");
 
@@ -402,6 +483,12 @@ public class SymbolTable extends Commons {
 
         this.structs.put("Char",Char);
     }
+
+    /**
+     * Agrega clase predfinida Array a la tabla,
+     * tambien agrega sus métodos
+     * @author Yeumen Silva
+     */
 
     private void addArray(){
         Struct Array = new Struct("Array");
@@ -428,6 +515,11 @@ public class SymbolTable extends Commons {
         this.structs.put("Array",Array);
     }
 
+    /**
+     * Agrega clase predfinida Object a la tabla,
+     * @author Yeumen Silva
+     */
+
     private void addObject(){
         Struct Object = new Struct("Object");
         Object.setHaveStruct(true);
@@ -438,6 +530,12 @@ public class SymbolTable extends Commons {
         Object.setConstructor(constructor);
         this.structs.put("Object",Object);
     }
+
+    /**
+     * Agrega clase predfinida IO a la tabla,
+     * tambien agrega sus métodos
+     * @author Yeumen Silva
+     */
 
     private void addIO(){
         Struct IO = new Struct("IO");
@@ -536,6 +634,13 @@ public class SymbolTable extends Commons {
 
     }
 
+    /**
+     * Método que se encarga de hacer la consolidación de la tabla,
+     * chequeando herencia de atributos y métodos, herencia ciclica,
+     * ,tipos no definidos y structs que no poseen impl o struct
+     * @author Yeumen Silva
+     */
+
     public void consolidate(){
         Map<String,Struct> structs = this.structs;
         for (String structName : structs.keySet()){
@@ -591,6 +696,12 @@ public class SymbolTable extends Commons {
         }
 
     }
+
+    /**
+     * Método encargado de verificar que ningun tipo delcarado en el código
+     * no este definido
+     * @author Yeumen Silva
+     */
 
     private void verificateUndeclaredTypes(){
         //Recorro todas las structs
@@ -649,6 +760,12 @@ public class SymbolTable extends Commons {
 
     }
 
+    /**
+     * Método encargado de verificar que no produzca herencia ciclica
+     * @param initialStruct Struct la cual quiero verificar que no tenga ciclos
+     * @param actualStruct Ancestro actual
+     * @return boolean, true si hay ciclos, false en otro caso
+     */
     private boolean haveCycles(Struct initialStruct, Struct actualStruct){
         boolean haveCycle = false;
 
@@ -685,6 +802,16 @@ public class SymbolTable extends Commons {
         return haveCycle;
     }
 
+    /**
+     * Método que se encarga de agregar a una clase todos los atributos
+     * de sus clases ancestro, verificando que no hayan errores en estos
+     * y corrigiendo su posición
+     * @param children Struct actual
+     * @param attributesList Lista donde voy a almacenar los atributos
+     * @return Lista con todos los atriutos heredads
+     * @author Yeumen silva
+     */
+
     private LinkedHashMap<String,Attributes> findAncestralAtributtes(Struct children, LinkedHashMap<String,Attributes> attributesList){
         if(children.getInheritFrom() != null) {
             if (children.getInheritFrom() != this.structs.get("Object")) {
@@ -716,6 +843,16 @@ public class SymbolTable extends Commons {
         }
         return attributesList;
     }
+
+    /**
+     * Método que se encarga de agregar a una clase todos los métodos
+     * de sus clases ancestro, verificando que no hayan errores en estos
+     * y corrigiendo su posición
+     * @param children Struct actual
+     * @param methodsList Lista donde voy a almacenar los métodos
+     * @return Lista con todos le métodos heredados
+     * @author Yeumen Silva
+     */
 
     private LinkedHashMap<String,Methods> findAncestralMethods(Struct children, LinkedHashMap<String,Methods> methodsList){
         if(children.getInheritFrom() != null) {
@@ -763,6 +900,15 @@ public class SymbolTable extends Commons {
         return methodsList;
     }
 
+    /**
+     * Método que se encarga de verificar que los tipos de una
+     * sobreescritura sean correcots
+     * @param method Método redefinido
+     * @param ancestralMethod Método de clase ancestro
+     * @return booleano, true si son iguales, false si son distintos
+     * @author Yeumen Silva
+     */
+
     private boolean compareMethods(Map<String,Variable> method, Map<String,Variable> ancestralMethod){
         boolean equals = true;
         //Creo dos arreglos para almacenar los valores de los tipos
@@ -797,10 +943,24 @@ public class SymbolTable extends Commons {
 
     }
 
+    /**
+     * Método que devuelve la lista de strcuts declarados
+     * @return Lista de structs
+     * @Author Yeumen Silva
+     */
+
 
     public      Map<String, Struct> getStructs() {
         return structs;
     }
+
+    /**
+     * Método encargado de asignar los diferentes tipos de errores
+     * @param type String con el tipo de error
+     * @param token es un token del lexico
+     * @return Exepcion de tipo semántico
+     * @author Lucas Moyano, Yeumen Silva
+     */
 
     private SemanticException throwException(String type, Token token){
 

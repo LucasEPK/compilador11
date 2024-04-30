@@ -1,5 +1,12 @@
 package SemanticAnalyzer;
 
+
+/**
+ * Clase que representa las variables declaradas en start, métodos
+ * y/o enviadas como parametro
+ * @author Yeumen Silva
+ */
+
 public class Variable extends Commons {
 
     //Id que identifica la variable
@@ -19,6 +26,7 @@ public class Variable extends Commons {
      * @param name id de la variable
      * @param type tipo de la variable
      * @param pos posición de la variable
+     * @author Lucas Moyano
      */
 
     public Variable(String name, Struct type, int pos, boolean isArray){
@@ -28,25 +36,68 @@ public class Variable extends Commons {
         this.isArray = isArray;
     }
 
+    /**
+     * Método que devuelve el nombre de la variable
+     * @return string nombre
+     * @author Yeumen Silva
+     */
+
     public String getName() {
         return name;
     }
+
+    /**
+     * Método que devuelve el tipo de la variable
+     * @return Struct con el tipo
+     * @author Yeumen Silva
+     */
 
     public Struct getType() {
         return type;
     }
 
+    /**
+     * Método que devuele la pos de la variable
+     * @return int pos
+     * @author Yeumen Silva
+     */
+
     public int getPos() {
         return pos;
     }
+
+    /**
+     * Método que setea la pos de la variable
+     * @param pos int posición en donde esta definida
+     * @author Yeumen Silva
+     */
 
     public void setPos(int pos) {
         this.pos = pos;
     }
 
+    /**
+     * Método que devuelve si el tipo es un array
+     * @return boolean, true si es un array,false en caso contrario
+     * @author Lucas Moyano
+     */
+
     public boolean getIsArray() { return isArray;}
 
+    /**
+     * Método que setea si la variable es un array
+     * @param isArray boolean, true si es arrray, false en caso contrario
+     * @author Yeumen Silva
+     */
+
     public void setIsArray(boolean isArray) {this.isArray = isArray;}
+
+    /**
+     * Método que convierte la variable en formato json
+     * @param tabs cantida de tabs de identación
+     * @return String con variable en formato json
+     * @author Yeumen Silva
+     */
 
     public String toJson(int tabs){
         String jsonString = "";

@@ -1,5 +1,13 @@
 package SemanticAnalyzer;
 
+import Exceptions.LexicalExceptions.LexicalException;
+
+/**
+ * Clase que será la encargada de representar los atributos declarados
+ * en cada clase
+ * @author Yeumen Silva
+ */
+
 public class Attributes extends Variable {
 
 
@@ -30,9 +38,21 @@ public class Attributes extends Variable {
         this.isPublic = isPublic;
     }
 
+    /**
+     * método que setea si el atirubto es heredado o no
+     * @param inherited booleano
+     */
+
     public void setInherited(boolean inherited) {
         isInherited = inherited;
     }
+
+    /**
+     * Constructor de formato Json para atributos
+     * @param tabs cantidad de tabs de identación
+     * @return string con json de atributos
+     * @author Yeumen Silva
+     */
 
     public String toJson(int tabs){
 
