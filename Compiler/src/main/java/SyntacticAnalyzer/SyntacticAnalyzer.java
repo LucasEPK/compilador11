@@ -470,9 +470,17 @@ public class    SyntacticAnalyzer {
             argumentosFormales();
             match("->");
             //Análisis semántico-----------------------------------------
-            this.symbolTable.addReturnToMethod(this.actualToken);
+            String returnType = this.actualToken.getLexeme();
+            boolean isArray = false;
+            if (Objects.equals(returnType, "Array")){
+                isArray = true;
+            }
+            Token typeToken = this.actualToken;
             //------------------------------------------------------------
-            tipoMetodo();
+            returnType = tipoMetodo();
+            //Análisis semántico-----------------------------------------
+            this.symbolTable.addReturnToMethod(typeToken, returnType, isArray);
+            //------------------------------------------------------------
             bloqueMetodo();
         }
         else {
@@ -490,10 +498,18 @@ public class    SyntacticAnalyzer {
                 match("->");
 
                 //Análisis semántico-----------------------------------------
-                this.symbolTable.addReturnToMethod(this.actualToken);
+                String returnType = this.actualToken.getLexeme();
+                boolean isArray = false;
+                if (Objects.equals(returnType, "Array")){
+                    isArray = true;
+                }
+                Token typeToken = this.actualToken;
                 //------------------------------------------------------------
 
-                tipoMetodo();
+                returnType = tipoMetodo();
+                //Análisis semántico-----------------------------------------
+                this.symbolTable.addReturnToMethod(typeToken, returnType, isArray);
+                //------------------------------------------------------------
                 bloqueMetodo();
 
             }
@@ -815,7 +831,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void tipoMetodo(){
+    private String tipoMetodo(){
 
         //Primeros Tipo
         if (verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str" ,
@@ -823,15 +839,18 @@ public class    SyntacticAnalyzer {
             // Analisis semantico ----------------------------------
             // el tipo del metodo ya se guardó en la tabla
             // -----------------------------------------------------
-            tipo();
+            return tipo();
         }
         else {
             //Primeros void
             if (verifyEquals("void")){
                 // Analisis semantico ----------------------------------
-                // el tipo del metodo ya se guardó en la tabla
+                String type = this.actualToken.getLexeme();
                 // -----------------------------------------------------
                 match("void");
+                // Analisis semantico ----------------------------------
+                return type;
+                // -----------------------------------------------------
             }
             else {
                 throw createException(this.actualToken, List.of("Array" , "Bool" , "Char" , "Int" , "Str" ,

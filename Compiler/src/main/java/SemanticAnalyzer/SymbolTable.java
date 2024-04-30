@@ -194,29 +194,30 @@ public class SymbolTable extends Commons {
 
     }
 
-    public void addReturnToMethod(Token token){
+    public void addReturnToMethod(Token token, String type, boolean isArray){
 
-        String returnName = token.getLexeme();
         //Si retorna void lo agrego
-        if(Objects.equals(returnName, "void")){
+        if(Objects.equals(type, "void")){
             Struct newVoid = new Struct("void");
             this.setToken(token);
             this.currentMethod.setGiveBack(newVoid);
         }
         //Como puede ser una referencia, debo verificar si existe el struct
-        if(this.structs.containsKey(returnName)){
+        if(this.structs.containsKey(type)){
             //Si contiene la clave, solo seteo el return
-            this.currentMethod.setGiveBack(this.structs.get(returnName));
+            this.currentMethod.setGiveBack(this.structs.get(type));
         } else {
 
             //De otro modo, creo la nueva clase
-            Struct newStruct = new Struct(returnName);
+            Struct newStruct = new Struct(type);
             //Seteo que hereda de Object
             newStruct.setInheritFrom(this.structs.get("Object"));
             newStruct.setToken(token);
             this.currentMethod.setGiveBack(newStruct);
         }
 
+        // definimos si es un array o no
+        this.currentMethod.setIsGiveBackArray(isArray);
     }
 
     /**
