@@ -98,9 +98,6 @@ public class Methods extends Commons {
         return this.isStatic;
     }
 
-    public boolean getGiveBackIsArray() {
-        return giveBackIsArray;
-    }
 
     /**
      * Método que setea la lista de variables declaradas
@@ -135,9 +132,6 @@ public class Methods extends Commons {
         this.paramsOfMethod = paramsOfMethod;
     }
 
-    public void setGiveBackIsArray(boolean giveBackIsArray) {
-        this.giveBackIsArray = giveBackIsArray;
-    }
 
     public void addParameter(String paramName, Variable param) {
         this.getParamsOfMethod().put(paramName, param);
@@ -181,7 +175,7 @@ public class Methods extends Commons {
         jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + this.name + "\"" + ",";
         jsonString += "\n" + addtabs(tabs) +  "\"" + "static" +  "\"" + ": "  + this.isStatic + ",";
         //Si es un array debo imprimir ambos tipos
-        if(this.giveBackIsArray){
+        if(this.getIsGiveBackArray()){
             jsonString += "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" +  ": " + "\"" + "Array" + "\"" + ",";
             jsonString += "\n" + addtabs(tabs) + "\"" + "TipoArray" + "\"" +  ": " + "\"" + this.giveBack.getName() + "\"" + ",";
         }

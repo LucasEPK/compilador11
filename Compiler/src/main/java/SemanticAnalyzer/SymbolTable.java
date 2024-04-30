@@ -465,21 +465,21 @@ public class SymbolTable extends Commons {
         Methods out_array_int = new Methods("out_array_int",true,new Struct("void"),hashMapAtributes,4);
 
         // st fn out_array_str(Array a)->void
-        a = new Variable("a", this.structs.get("Str"),0);
+        a = new Variable("a", this.structs.get("Str"),0, true);
         a.setIsArray(true);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("a",a);
         Methods out_array_str = new Methods("out_array_str",true,new Struct("void"),hashMapAtributes,5);
 
         // st fn out_array_bool(Array a)->void
-        a = new Variable("a", this.structs.get("Bool"),0);
+        a = new Variable("a", this.structs.get("Bool"),0, true);
         a.setIsArray(true);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("a",a);
         Methods out_array_bool = new Methods("out_array_bool",true,new Struct("void"),hashMapAtributes,6);
 
         // st fn out_array_char(Array a)->void
-        a = new Variable("a", this.structs.get("Char"),0);
+        a = new Variable("a", this.structs.get("Char"),0, true);
         a.setIsArray(true);
         hashMapAtributes = new LinkedHashMap<>();
         hashMapAtributes.put("a",a);
@@ -655,7 +655,8 @@ public class SymbolTable extends Commons {
                         throw throwException("InvalidOverrideType", method.token);
                     }
                     //Verifico el tipo de return
-                    if (Objects.equals(method.getGiveBack().getName(), ancestralMethodEquals.getGiveBack().getName()) == false) {
+                    if (Objects.equals(method.getGiveBack().getName(), ancestralMethodEquals.getGiveBack().getName()) == false
+                    || method.getIsGiveBackArray() != ancestralMethodEquals.getIsGiveBackArray()) {
                         throw throwException("InvalidOverrideReturn", method.token);
                     }
                     if (Objects.equals(method.getIsStatic(), ancestralMethodEquals.getIsStatic()) == false) {
@@ -695,10 +696,7 @@ public class SymbolTable extends Commons {
         //Comparo los tipos
         for(i = 0; i < methodTypes.length;i++){
             //Si el tipo de algun parametro es distinto, esta mal sobrescrito
-            if(Objects.equals(methodTypes[i],methodAncestralTypes[i]) == false){
-                equals = false;
-            }
-            if(parametterIsArray[i] != ancestralParametterIsArray[i] ){
+            if(Objects.equals(methodTypes[i],methodAncestralTypes[i]) == false || parametterIsArray[i] != ancestralParametterIsArray[i]){
                 equals = false;
             }
         }
