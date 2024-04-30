@@ -236,7 +236,7 @@ public class Struct extends Commons {
         jsonString+= "\n" + addtabs(tabs) + "\"" + "constructor" + "\""  +  ": {";
         jsonString+= "\n" + addtabs(tabs+1) + "\"" + "paramF" + "\"" + ": [";
         if(this.constructor.getParamsOfMethod().isEmpty()){
-            jsonString += "]";
+            jsonString += "],";
         }
         else {
             //Llamo a toJson de variable
@@ -245,9 +245,26 @@ public class Struct extends Commons {
                 jsonString +=variable.getValue().toJson(tabs+1);
             }
             jsonString = jsonString.substring(0,jsonString.length()-1);
-            jsonString += "\n" + addtabs(tabs) + "]";
+            jsonString += "\n" + addtabs(tabs+1) + "],";
         }
+
+        //Agrego variables definidas dentro del constructor
+        jsonString+= "\n" + addtabs(tabs+1) + "\"" + "variables" + "\"" + ": [";
+        if(this.constructor.getParamsOfMethod().isEmpty()){
+            jsonString += "]";
+        }
+        else {
+            //Llamo a tojson de variable
+            for(Variable actualVariable : this.constructor.getDefinedVar().values()){
+                jsonString+= actualVariable.toJson(tabs+1);
+            }
+            jsonString = jsonString.substring(0,jsonString.length()-1);
+            jsonString += "\n" + addtabs(tabs+1) + "]";
+        }
+
         jsonString+=  "\n" + addtabs(tabs) + "}";
+
+
 
         return jsonString;
     }
