@@ -394,14 +394,14 @@ public class    SyntacticAnalyzer {
      * @author Lucas Moyano
      * */
 
-    private void constructor(){
-        // Analisis semantico ----------------------------------
-        this.symbolTable.addConstructorToStruct(this.actualToken);
-        // -----------------------------------------------------
-        match(".");
-        argumentosFormales();
-        bloqueMetodo();
-    }
+        private void constructor(){
+            // Analisis semantico ----------------------------------
+            this.symbolTable.addConstructorToStruct(this.actualToken);
+            // -----------------------------------------------------
+            match(".");
+            argumentosFormales();
+            bloqueMetodo();
+        }
 
     /**
      * Regla atributo

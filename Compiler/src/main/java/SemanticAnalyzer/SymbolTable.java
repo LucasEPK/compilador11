@@ -324,7 +324,13 @@ public class SymbolTable extends Commons {
         // Observa si ya existe una variable con este nombre
         if (this.currentMethod.getDefinedVar().containsKey(varName)) { // Si existe tira error
             throw throwException("DuplicateVariable", token);
-        } else { // si no existe una variable con ese mismo nombre entonces la crea en el currentMethod
+        } else {
+            //Chequeo que no exista un parámetro con mismo nombre que la variable
+            if(currentMethod.getParamsOfMethod().containsKey(token.getLexeme())){
+                //Lanzo error
+                throw throwException("IvalidVariableName",token);
+            }
+            // si no existe una variable con ese mismo nombre entonces la crea en el currentMethod
             // Chequea si existe el tipo en las clases de la tabla
             if (this.structs.containsKey(type)) {
                 Struct structType = this.structs.get(type);
@@ -742,20 +748,26 @@ public class SymbolTable extends Commons {
                 /*Verifico que el constructor no reciba un parametro
                 con un tipo inexistente
                  */
-            for(Variable actualVariable : actualStruct.getConstructor().getParamsOfMethod().values()){
-                if(this.structs.containsKey(actualVariable.getType().getName()) == false){
-                    throw throwException("InvalidType", actualVariable.getToken());
+            if(actualStruct.getConstructor() != null){
+                for(Variable actualVariable : actualStruct.getConstructor().getParamsOfMethod().values()){
+                    if(this.structs.containsKey(actualVariable.getType().getName()) == false){
+                        throw throwException("InvalidType", actualVariable.getToken());
+                    }
                 }
             }
+
             /*
             Verifico que no se declare una variable que tenga
             tipo inexistente
              */
-            for(Variable actualVariable : actualStruct.getConstructor().getDefinedVar().values()){
-                if(this.structs.containsKey(actualVariable.getType().getName()) == false){
-                    throw throwException("InvalidType", actualVariable.getToken());
+            if(actualStruct.getConstructor() != null){
+                for(Variable actualVariable : actualStruct.getConstructor().getDefinedVar().values()){
+                    if(this.structs.containsKey(actualVariable.getType().getName()) == false){
+                        throw throwException("InvalidType", actualVariable.getToken());
+                    }
                 }
             }
+
         }
 
     }
@@ -1020,6 +1032,9 @@ public class SymbolTable extends Commons {
                 break;
             case ("UndefinedConstructor"):
                 semanticException = new UndefinedConstructor(token);
+                break;
+            case ("IvalidVariableName"):
+                semanticException = new InvalidVariableName(token);
                 break;
         }
 
