@@ -604,9 +604,11 @@ public class SymbolTable extends Commons {
                 }
                 //Recorro sus métodos
                 for (Methods actualMethod : actualStruct.getMethods().values()) {
+
                     //Verifico que los tipos de return esten definidos
                     if (Objects.equals(actualMethod.getGiveBack().getName(), "void") == false) {
-                        if (this.structs.containsKey(actualMethod.getGiveBack())) {
+                        if (this.structs.containsKey(actualMethod.getGiveBack().getName() ) == false) {
+
                             throw throwException("InvalidType", actualMethod.getToken());
                         }
                     }
