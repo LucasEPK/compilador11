@@ -627,6 +627,24 @@ public class SymbolTable extends Commons {
                         }
                     }
                 }
+
+                /*Verifico que el constructor no reciba un parametro
+                con un tipo inexistente
+                 */
+            for(Variable actualVariable : actualStruct.getConstructor().getParamsOfMethod().values()){
+                if(this.structs.containsKey(actualVariable.getType().getName()) == false){
+                    throw throwException("InvalidType", actualVariable.getToken());
+                }
+            }
+            /*
+            Verifico que no se declare una variable que tenga
+            tipo inexistente
+             */
+            for(Variable actualVariable : actualStruct.getConstructor().getDefinedVar().values()){
+                if(this.structs.containsKey(actualVariable.getType().getName()) == false){
+                    throw throwException("InvalidType", actualVariable.getToken());
+                }
+            }
         }
 
     }
