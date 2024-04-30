@@ -21,10 +21,11 @@ public class Variable extends Commons {
      * @param pos posición de la variable
      */
 
-    public Variable(String name, Struct type, int pos){
+    public Variable(String name, Struct type, int pos, boolean isArray){
         this.name = name;
         this.type = type;
         this.pos = pos;
+        this.isArray = isArray;
     }
 
     public String getName() {

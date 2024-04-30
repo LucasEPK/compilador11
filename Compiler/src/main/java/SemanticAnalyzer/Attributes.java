@@ -17,8 +17,8 @@ public class Attributes extends Variable {
      * @param type tipo de la variable
      * @param pos  posición de la variable
      */
-    public Attributes(String name, Struct type, int pos, boolean isPublic) {
-        super(name, type, pos);
+    public Attributes(String name, Struct type, int pos, boolean isPublic, boolean isArray) {
+        super(name, type, pos, isArray);
         this.isPublic = isPublic;
     }
 

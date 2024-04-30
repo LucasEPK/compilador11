@@ -1,5 +1,5 @@
 { 
- "nombre": "/home/yeu/Documentos/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/passing/ValidHeritance.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\ValidHeritance.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,7 +253,7 @@
 			},
 			{
 			"nombre": "b",
-			"tipo": "Array",
+			"tipo": "Bool",
 			"public": true,
 			"posicion": 1
 			}
@@ -275,7 +275,7 @@
 			},
 			{
 			"nombre": "b",
-			"tipo": "Array",
+			"tipo": "Bool",
 			"public": true,
 			"posicion": 1
 			},
