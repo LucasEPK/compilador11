@@ -53,7 +53,15 @@ public class Variable extends Commons {
         jsonString += "\n" + addtabs(tabs+1) + "{";
         tabs=tabs+1;
         jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + this.name + "\"" + ",";
-        jsonString += "\n" + addtabs(tabs) + "\"" + "tipo" + "\"" + ": " + "\"" + this.type.getName() + "\"" + ",";
+        //Verifico si el tipo es Array
+        if(this.isArray){
+            jsonString += "\n" + addtabs(tabs) + "\"" + "tipo" + "\"" + ": " + "\"" + "Array" + "\"" + ",";
+            jsonString += "\n" + addtabs(tabs) + "\"" + "tipoArray" + "\"" + ": " + "\"" + this.type.getName() + "\"" + ",";
+        }
+        else {
+            jsonString += "\n" + addtabs(tabs) + "\"" + "tipo" + "\"" + ": " + "\"" + this.type.getName() + "\"" + ",";
+        }
+
         jsonString += "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " +  this.pos  ;
         jsonString += "\n" + addtabs(tabs) + "}" + ",";
 

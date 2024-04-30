@@ -3,6 +3,7 @@ package SemanticAnalyzer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Methods extends Commons {
 
@@ -97,6 +98,10 @@ public class Methods extends Commons {
         return this.isStatic;
     }
 
+    public boolean getGiveBackIsArray() {
+        return giveBackIsArray;
+    }
+
     /**
      * Método que setea la lista de variables declaradas
      * @param definedVar
@@ -128,6 +133,10 @@ public class Methods extends Commons {
 
     public void setParamsOfMethod(Map<String, Variable> paramsOfMethod) {
         this.paramsOfMethod = paramsOfMethod;
+    }
+
+    public void setGiveBackIsArray(boolean giveBackIsArray) {
+        this.giveBackIsArray = giveBackIsArray;
     }
 
     public void addParameter(String paramName, Variable param) {
@@ -171,7 +180,14 @@ public class Methods extends Commons {
         tabs=tabs+1;
         jsonString += "\n" + addtabs(tabs) + "\"" + "nombre" + "\"" + ": " + "\"" + this.name + "\"" + ",";
         jsonString += "\n" + addtabs(tabs) +  "\"" + "static" +  "\"" + ": "  + this.isStatic + ",";
-        jsonString += "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" +  ": " + "\"" + this.giveBack.getName() + "\"" + ",";
+        //Si es un array debo imprimir ambos tipos
+        if(this.giveBackIsArray){
+            jsonString += "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" +  ": " + "\"" + "Array" + "\"" + ",";
+            jsonString += "\n" + addtabs(tabs) + "\"" + "TipoArray" + "\"" +  ": " + "\"" + this.giveBack.getName() + "\"" + ",";
+        }
+        else {
+            jsonString += "\n" + addtabs(tabs) + "\"" + "retorno" + "\"" +  ": " + "\"" + this.giveBack.getName() + "\"" + ",";
+        }
         jsonString += "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" + ": " +this.pos + ",";
         jsonString += "\n" + addtabs(tabs) + "\"" + "paramF" + "\"" + ": [";
         //Debo imprimir los parametros que recibe el método
