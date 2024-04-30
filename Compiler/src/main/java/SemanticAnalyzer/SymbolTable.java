@@ -242,8 +242,13 @@ public class SymbolTable extends Commons {
                 newAttribute.setToken(token);
                 this.currentStruct.addAttribute(newAttribute.getName(), newAttribute);
             } else {
-                // Si no existe tiramos error
-                throw throwException("InvalidType", token);
+                // Si no existe debo agregarla
+                // throw throwException("InvalidType", token);
+                Struct newStruct = new Struct(type);
+                int pos = newStruct.getAttributes().size();
+                Attributes newAttribute = new Attributes(token.getLexeme(),newStruct,pos,isPublic,isArray);
+                newAttribute.setToken(token);
+                this.currentStruct.addAttribute(newAttribute.getName(),newAttribute);
             }
         }
     }
@@ -270,8 +275,14 @@ public class SymbolTable extends Commons {
                 newVariable.setToken(token);
                 this.currentMethod.addVariable(newVariable.getName(), newVariable);
             } else {
-                // Si no existe tiramos error
-                throw throwException("InvalidType", token);
+                // Si no existe debo agregarla
+                // throw throwException("InvalidType", token);
+                Struct newStruct = new Struct(type);
+                newStruct.setToken(token);
+                int pos = this.currentMethod.getDefinedVar().size();
+                Variable newVariable = new Variable(token.getLexeme(),newStruct,pos,isArray);
+                newVariable.setToken(token);
+                this.currentMethod.addVariable(newVariable.getName(),newVariable);
             }
         }
     }
@@ -298,8 +309,15 @@ public class SymbolTable extends Commons {
                 newParameter.setToken(token);
                 this.currentMethod.addParameter(newParameter.getName(), newParameter);
             } else {
-                // Si no existe tiramos error
-                throw throwException("InvalidType", token);
+                // Si no existe debo agregarla
+                // throw throwException("InvalidType", token);
+                Struct newStruct = new Struct(type);
+                newStruct.setToken(token);
+                newStruct.setToken(token);
+                int pos = this.currentMethod.getParamsOfMethod().size();
+                Variable newParameter = new Variable(token.getLexeme(),newStruct,pos,isArray);
+                newParameter.setToken(token);
+                this.currentMethod.addParameter(newParameter.getName(),newParameter);
             }
         }
     }
@@ -535,6 +553,22 @@ public class SymbolTable extends Commons {
                 throw throwException("UndefinedImpl",actualStruct.getToken());
             }
 
+            /*
+            Verifico que ningun tipo de algun atributo,
+             variable o parametro de las structs no este declarado
+             */
+
+            verificateUndeclaredTypes();
+
+            /*
+            Hago lo mismo pero para start
+             */
+            for(Variable actualVariable : this.start.getDefinedVar().values()){
+                if(this.structs.containsKey(actualVariable.getType().getName()) == false){
+                    throw throwException("InvalidType", actualVariable.getToken());
+                }
+            }
+
 
             //Verifico atributos y métodos de ancestros siempre y cuando no herede de Object
             if(actualStruct.getInheritFrom() != this.structs.get("Object")){
@@ -554,6 +588,43 @@ public class SymbolTable extends Commons {
 
             actualStruct.setConsolidate(true);
 
+        }
+
+    }
+
+    private void verificateUndeclaredTypes(){
+        //Recorro todas las structs
+        for(Struct actualStruct : this.structs.values()){
+                //Recorro sus atributos
+                for (Attributes actualAttribute : actualStruct.getAttributes().values()) {
+                    //Verifico que el tipo declarado en el atributo este definido
+                    if (this.structs.containsKey(actualAttribute.getType().getName()) == false) {
+                        throw throwException("InvalidType", actualAttribute.getToken());
+                    }
+                }
+                //Recorro sus métodos
+                for (Methods actualMethod : actualStruct.getMethods().values()) {
+                    //Verifico que los tipos de return esten definidos
+                    if (Objects.equals(actualMethod.getGiveBack().getName(), "void") == false) {
+                        if (this.structs.containsKey(actualMethod.getGiveBack())) {
+                            throw throwException("InvalidType", actualMethod.getToken());
+                        }
+                    }
+                    //Recorro los parametros de los métodos
+                    for (Variable actualVariable : actualMethod.getParamsOfMethod().values()) {
+                        //Verifico que los tipos esten definidos
+                        if (this.structs.containsKey(actualVariable.getType().getName()) == false) {
+                            throw throwException("InvalidType", actualVariable.getToken());
+                        }
+                    }
+                    //Recorro las variables declaradas dentro de cada metodo
+                    for (Variable actualVariable : actualMethod.getDefinedVar().values()) {
+                        //Verifico que los tipos esten definidos
+                        if (this.structs.containsKey(actualVariable.getType().getName()) == false) {
+                            throw throwException("InvalidType", actualVariable.getToken());
+                        }
+                    }
+                }
         }
 
     }

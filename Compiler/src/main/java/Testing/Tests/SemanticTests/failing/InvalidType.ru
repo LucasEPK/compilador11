@@ -3,7 +3,7 @@
 /? Salida esperada:
 /? ERROR: SEMÁNTICO - DECLARACIONES
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 9 | COLUMNA 6 | EL TIPO NO EXISTE
+/? | Linea 9 | COLUMNA 6 | EL TIPO DECLARADO NO EXISTE
 
 start{
 Pepe hola;}
