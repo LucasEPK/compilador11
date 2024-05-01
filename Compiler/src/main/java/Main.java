@@ -2,6 +2,8 @@ import Exceptions.LexicalExceptions.NoArgsException;
 import LexicalAnalyzer.Executor;
 import SyntacticAnalyzer.SyntacticExecutor;
 
+import static java.lang.System.exit;
+
 /**
  * Clase que recibe los argumentos de archivo de entrada y salida
  * @throws NoArgsException si no se recibe ningun argumento de entrada
@@ -24,6 +26,11 @@ public class Main {
         } catch (NoArgsException e) {
             System.err.println(e.getExceptionType());
             return;
+        }
+        if (inputPath.endsWith(".ru")) {
+        } else {
+            System.err.println("Error: La extensión del archivo no es .ru");
+            exit(0);
         }
 
 
