@@ -8,11 +8,11 @@
 struct A{}
 impl A{
 .(){}
-fn m1() -> void{}}
+st fn m1() -> void{}}
 
 struct B : A{}
 impl B{
 .(){}
-st fn m1() -> void{}}
+fn m1() -> void{}}
 
 start{}

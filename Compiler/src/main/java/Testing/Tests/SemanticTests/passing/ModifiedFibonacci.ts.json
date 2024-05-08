@@ -1,13 +1,14 @@
 { 
- "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\ModifiedFibonacci.ru",
+ "nombre": "/home/yeu/Documentos/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/passing/ModifiedFibonacci.ru",
 "structs": [
  	 {
 		"nombre": "Object",
-		"heredaDe": "Object",
+		"heredaDe": "null",
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -16,7 +17,8 @@
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -48,7 +50,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -57,7 +60,8 @@
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -66,7 +70,8 @@
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -84,7 +89,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -157,6 +163,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Int",
 						"posicion": 0
 						}
 				],
@@ -171,6 +178,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Bool",
 						"posicion": 0
 						}
 				],
@@ -185,6 +193,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Str",
 						"posicion": 0
 						}
 				],
@@ -199,6 +208,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Char",
 						"posicion": 0
 						}
 				],
@@ -238,7 +248,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -265,7 +276,8 @@
 			},
 			{
 			"nombre": "a",
-			"tipo": "Bool",
+			"tipo": "Array",
+			"tipoArray": "Bool",
 			"public": true,
 			"posicion": 3
 			}
@@ -275,7 +287,7 @@
 				"nombre": "sucesion_fib",
 				"static": false,
 				"retorno": "Int",
-				"posicion": 4,
+				"posicion": 0,
 				"paramF": [
 						{
 						"nombre": "n",
@@ -341,7 +353,9 @@
 				"tipo": "Int",
 				"posicion": 0
 				}
-		]
+			],
+			"variables": 
+			]
 		}
 	},
  	 {
@@ -412,7 +426,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	}
 ],

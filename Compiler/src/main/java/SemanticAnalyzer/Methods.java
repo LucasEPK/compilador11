@@ -242,10 +242,20 @@ public class Methods extends Commons {
     }
 
     /**
+     * Método que devuelve la pos del método
+     * @return int con pos
+     */
+    public int getPos() {
+        return pos;
+    }
+
+    /**
      * Método que devuelve los parametros que recibe el método
      * @return lista con los parametros definidos en el método
      * @author Yeumen Silva
      */
+
+
 
     public Map<String, Variable> getParamsOfMethod() {
         return paramsOfMethod;
