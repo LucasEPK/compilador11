@@ -1,6 +1,8 @@
 package SemanticAnalyzer.SymbolTable;
 
 import Exceptions.SemanticExceptions.*;
+import Exceptions.SemanticExceptions.SymbolTable.*;
+
 import LexicalAnalyzer.Token;
 
 import java.util.*;
