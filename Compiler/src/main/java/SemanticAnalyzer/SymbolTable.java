@@ -839,6 +839,7 @@ public class SymbolTable extends Commons {
                     if (attributesList.isEmpty()) {
                         //Seteo booleano de que es heredado
                         attribute.setInherited(true);
+                        attribute.setPos(attributesList.size());
                         attributesList.put(attribute.getName(), attribute);
                     } else {
                         //Seteo su nueva pos
@@ -899,10 +900,10 @@ public class SymbolTable extends Commons {
                     || method.getIsGiveBackArray() != ancestralMethodEquals.getIsGiveBackArray()) {
                         throw throwException("InvalidOverrideReturn", method.token);
                     }
-                    if (Objects.equals(method.getIsStatic(), ancestralMethodEquals.getIsStatic()) == false) {
+                    if (ancestralMethodEquals.getIsStatic() || method.getIsStatic()) {
                         throw throwException("InvalidOverrideStatic", method.token);
                     }
-                    method.setPos(methodsList.size());
+                    method.setPos(ancestralMethodEquals.getPos());
                     method.setInherited(true);
                     methodsList.replace(method.getName(), ancestralMethodEquals, method);
                 }

@@ -21,6 +21,6 @@ public class InvalidOverrideStatic extends SemanticException{
      */
     @Override
     public String getExceptionType() {
-        return "SOBRESCRITURA INCORRECTA: DECLARACION ESTATICA DIFERENTE";
+        return "SOBRESCRITURA INCORRECTA: NO SE PUEDE REDEFINIR UN METODO ESTATICO";
     }
 }

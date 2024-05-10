@@ -1,13 +1,14 @@
 { 
- "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\passing\OneLineDeclaration.ru",
+ "nombre": "/home/yeu/Documentos/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/passing/OneLineDeclaration.ru",
 "structs": [
  	 {
 		"nombre": "Object",
-		"heredaDe": "Object",
+		"heredaDe": "null",
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -16,7 +17,8 @@
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -48,7 +50,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -57,7 +60,8 @@
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -66,7 +70,8 @@
 		"atributos": [],
 		"metodos": [],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -84,7 +89,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -157,6 +163,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Int",
 						"posicion": 0
 						}
 				],
@@ -171,6 +178,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Bool",
 						"posicion": 0
 						}
 				],
@@ -185,6 +193,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Str",
 						"posicion": 0
 						}
 				],
@@ -199,6 +208,7 @@
 						{
 						"nombre": "a",
 						"tipo": "Array",
+						"tipoArray": "Char",
 						"posicion": 0
 						}
 				],
@@ -238,7 +248,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	},
  	 {
@@ -291,7 +302,8 @@
 			}
 		],
 		"constructor": {
-			"paramF": []
+			"paramF": [],
+			"variables": []
 		}
 	}
 ],
