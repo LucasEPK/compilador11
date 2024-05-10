@@ -1,5 +1,6 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**

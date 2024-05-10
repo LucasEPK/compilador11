@@ -1,5 +1,6 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
@@ -7,7 +8,7 @@ import LexicalAnalyzer.Token;
  * parametro de distinto tipo
  * @author Yeumen Silva
  */
-public class InvalidOverrideType extends SemanticException{
+public class InvalidOverrideType extends SemanticException {
 
     public  InvalidOverrideType(Token token){
         super(token);

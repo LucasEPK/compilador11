@@ -1,6 +1,4 @@
-package SemanticAnalyzer;
-
-import Exceptions.LexicalExceptions.LexicalException;
+package SemanticAnalyzer.SymbolTable;
 
 /**
  * Clase que será la encargada de representar los atributos declarados

@@ -1,15 +1,17 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
+
 
 /**
  * Clase que representa los errores de sobreescribir un metodo y declarar
- * un tipo de return distinto
+ * un metodo estatico y el otro no
  * @author Yeumen Silva
  */
-public class InvalidOverrideReturn extends  SemanticException{
+public class InvalidOverrideStatic extends SemanticException {
 
-    public InvalidOverrideReturn(Token token){
+    public InvalidOverrideStatic(Token token){
         super(token);
     }
 
@@ -20,6 +22,6 @@ public class InvalidOverrideReturn extends  SemanticException{
      */
     @Override
     public String getExceptionType() {
-        return "SOBRESCRITURA INCORRECTA: TIPO DE RET DISTINTO";
+        return "SOBRESCRITURA INCORRECTA: NO SE PUEDE REDEFINIR UN METODO ESTATICO";
     }
 }

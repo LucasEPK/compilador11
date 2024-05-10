@@ -1,5 +1,6 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 
@@ -7,7 +8,7 @@ import LexicalAnalyzer.Token;
  * Clase que representa que no se declaro un constructor
  * @author Yeumen Silva
  */
-public class UndefinedConstructor extends  SemanticException{
+public class UndefinedConstructor extends SemanticException {
 
     public UndefinedConstructor(Token token){
         super(token);

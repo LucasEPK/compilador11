@@ -1,9 +1,8 @@
-package SemanticAnalyzer;
+package SemanticAnalyzer.SymbolTable;
 
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Clase que representa nuestros metodos de TinyRu

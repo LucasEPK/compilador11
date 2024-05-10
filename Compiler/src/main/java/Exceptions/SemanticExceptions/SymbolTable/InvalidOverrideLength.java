@@ -1,5 +1,6 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
@@ -8,7 +9,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class InvalidOverrideLength extends  SemanticException{
+public class InvalidOverrideLength extends SemanticException {
 
     public InvalidOverrideLength(Token token){
         super(token);

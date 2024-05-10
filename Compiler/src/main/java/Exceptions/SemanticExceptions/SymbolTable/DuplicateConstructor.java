@@ -1,5 +1,6 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
@@ -7,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Lucas Moyano
  */
 
-public class DuplicateConstructor extends SemanticException{
+public class DuplicateConstructor extends SemanticException {
 
     public DuplicateConstructor(Token token){
         super(token);

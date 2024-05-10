@@ -6,10 +6,8 @@ import Exceptions.SyntacticExceptions.SyntacticException;
 import FileManager.FileManager;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
-import SemanticAnalyzer.Json;
-import SemanticAnalyzer.SymbolTable;
-
-import java.util.List;
+import SemanticAnalyzer.SymbolTable.Json;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import static java.lang.System.exit;
 

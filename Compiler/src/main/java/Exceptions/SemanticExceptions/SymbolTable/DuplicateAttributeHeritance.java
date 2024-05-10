@@ -1,5 +1,6 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
@@ -7,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class DuplicateAttributeHeritance  extends  SemanticException{
+public class DuplicateAttributeHeritance  extends SemanticException {
 
     public DuplicateAttributeHeritance(Token token){
         super(token);

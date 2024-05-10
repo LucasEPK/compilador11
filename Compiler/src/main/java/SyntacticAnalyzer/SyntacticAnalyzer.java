@@ -3,7 +3,7 @@ package SyntacticAnalyzer;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
-import SemanticAnalyzer.SymbolTable;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.List;
 import java.util.Objects;

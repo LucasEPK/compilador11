@@ -1,12 +1,13 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
  * Clase que representa los errores de declarar dos struct para una misma struct
  * @author Yeumen Silva
  */
-public class DuplicateStruct extends  SemanticException{
+public class DuplicateStruct extends SemanticException {
 
     public DuplicateStruct(Token token){
         super(token);

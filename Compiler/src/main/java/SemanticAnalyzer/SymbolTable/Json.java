@@ -1,4 +1,4 @@
-package SemanticAnalyzer;
+package SemanticAnalyzer.SymbolTable;
 
 import java.io.FileWriter;
 import java.io.IOException;

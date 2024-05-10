@@ -1,12 +1,13 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 /**
  * Clase que representa los errores de declarar dos parámetros
  * con mismo id
  * @author Lucas Moyano
  */
-public class DuplicateParameter extends SemanticException{
+public class DuplicateParameter extends SemanticException {
 
     public DuplicateParameter(Token token){
         super(token);

@@ -1,15 +1,15 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
  * Clase que representa los errores de declarar
- * una variable con mismo nombre que parametro de método
+ * una variable de un tipo no definido
  * @author Yeumen Silva
  */
-public class InvalidVariableName extends SemanticException{
-
-    public InvalidVariableName(Token token){
+public class InvalidType extends SemanticException {
+    public InvalidType( Token token) {
         super(token);
     }
 
@@ -18,9 +18,8 @@ public class InvalidVariableName extends SemanticException{
      * @return String que contiene el mesnaje de error
      * @author Yeumen Silva
      */
-
     @Override
     public String getExceptionType() {
-        return "EL IDENTIFICADOR YA ESTA DECLARADO EN LOS PARAMETROS";
+        return "EL TIPO DECLARADO NO EXISTE";
     }
 }

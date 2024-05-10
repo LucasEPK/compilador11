@@ -1,14 +1,15 @@
-package Exceptions.SemanticExceptions;
+package Exceptions.SemanticExceptions.SymbolTable;
 
+import Exceptions.SemanticExceptions.SemanticException;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase que representa los errores de heredar de una clase primitiva
+ * Clase que representa que no se declaro impl para un struct
  * @author Yeumen Silva
  */
-public class InvalidHeritance extends SemanticException{
+public class UndefinedImpl extends SemanticException {
 
-    public InvalidHeritance(Token token){
+    public UndefinedImpl(Token token){
         super(token);
     }
 
@@ -20,6 +21,6 @@ public class InvalidHeritance extends SemanticException{
 
     @Override
     public String getExceptionType() {
-        return "NO ES POSIBLE HEREDAR DE ESA CLASE";
+        return "EL IMPL NO ESTA DEFINIDO";
     }
 }
