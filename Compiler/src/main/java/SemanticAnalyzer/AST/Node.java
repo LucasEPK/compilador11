@@ -10,9 +10,9 @@ import LexicalAnalyzer.Token;
 public class Node {
 
     //Token con token, lexema, fila y columna
-    Token tokenNodo;
+    Token nodeToken;
 
-    String tipo;
+    String type;
 
-    String lexema;
+    String lexeme;
 }

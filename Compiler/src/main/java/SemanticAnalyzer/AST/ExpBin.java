@@ -9,5 +9,5 @@ public class ExpBin extends ExpressionNode {
 
     Node left;
 
-    Node rigth;
+    Node right;
 }

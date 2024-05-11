@@ -7,5 +7,5 @@ package SemanticAnalyzer.AST;
 
 public class ReturnNode extends SentenceNode {
 
-    ExpressionNode returValueNode;
+    ExpressionNode returnValueNode;
 }

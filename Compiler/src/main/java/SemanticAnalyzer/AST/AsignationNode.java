@@ -8,7 +8,7 @@ package SemanticAnalyzer.AST;
 public class AsignationNode extends SentenceNode {
 
     Node left;
-    Node rigth;
+    Node right;
 
 
 }
