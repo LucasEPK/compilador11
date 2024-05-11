@@ -1046,4 +1046,11 @@ public class SymbolTable extends Commons {
     }
 
 
+    public Struct getCurrentStruct() {
+        return currentStruct;
+    }
+
+    public Methods getCurrentMethod() {
+        return currentMethod;
+    }
 }

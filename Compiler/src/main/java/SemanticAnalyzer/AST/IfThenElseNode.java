@@ -12,4 +12,8 @@ public class IfThenElseNode extends  SentenceNode {
     SentenceNode thenNode;
 
     SentenceNode elseNode;
+
+    public IfThenElseNode(SemanticContext currentContext){
+        super(currentContext);
+    }
 }

@@ -7,6 +7,13 @@ package SemanticAnalyzer.AST;
 
 public abstract class SentenceNode {
 
-    String structName;
-    String methodName;
+    SemanticContext currentContext;
+
+    /**
+     * En este constructor se pasa el contexto de la tabla de simbolos desde el bloque
+     * @author Lucas Moyano
+     * */
+    public SentenceNode(SemanticContext currentContext) {
+        this.currentContext = currentContext;
+    }
 }

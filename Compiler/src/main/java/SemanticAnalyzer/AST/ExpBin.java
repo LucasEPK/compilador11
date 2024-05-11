@@ -10,4 +10,8 @@ public class ExpBin extends ExpressionNode {
     Node left;
 
     Node right;
+
+    public ExpBin(SemanticContext currentContext) {
+        super(currentContext);
+    }
 }

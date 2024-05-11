@@ -8,4 +8,8 @@ package SemanticAnalyzer.AST;
 public class ReturnNode extends SentenceNode {
 
     ExpressionNode returnValueNode;
+
+    public ReturnNode(SemanticContext currentContext) {
+        super(currentContext);
+    }
 }

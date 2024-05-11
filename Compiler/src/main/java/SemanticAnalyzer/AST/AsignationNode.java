@@ -10,5 +10,8 @@ public class AsignationNode extends SentenceNode {
     Node left;
     Node right;
 
+    public AsignationNode(SemanticContext currentContext){
+        super(currentContext);
+    }
 
 }
