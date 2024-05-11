@@ -10,18 +10,17 @@ import java.util.List;
  * @author Yeumen Silva
  */
 
-public class BlockNode {
+public class BlockNode extends SentenceNode {
 
     private List<SentenceNode> sentenceList = new ArrayList<SentenceNode>();
-
-    private SemanticContext currentContext;
 
     /**
      * En este constructor se establece el contexto de la tabla de simbolos en donde está el bloque
      * @author Lucas Moyano
      * */
     public BlockNode(SymbolTable symbolTable) {
-        currentContext = new SemanticContext(symbolTable.getCurrentStruct(), symbolTable.getCurrentMethod());
+        // Con esto se agrega el currentStruct y currentMethod al contexto semantico del sentenceNode
+        super(new SemanticContext(symbolTable.getCurrentStruct(), symbolTable.getCurrentMethod()));
     }
 
     /**
