@@ -10,4 +10,8 @@ public class WhileNode extends SentenceNode {
     ExpressionNode whileNode;
 
     SentenceNode doNode;
+
+    public WhileNode(SemanticContext currentContext){
+        super(currentContext);
+    }
 }

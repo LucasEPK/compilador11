@@ -9,4 +9,7 @@ public class ExpUn extends ExpressionNode {
 
     Node right;
 
+    public ExpUn(SemanticContext currentContext) {
+        super(currentContext);
+    }
 }

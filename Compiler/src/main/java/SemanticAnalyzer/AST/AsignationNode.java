@@ -8,7 +8,10 @@ package SemanticAnalyzer.AST;
 public class AsignationNode extends SentenceNode {
 
     Node left;
-    Node rigth;
+    Node right;
 
+    public AsignationNode(SemanticContext currentContext){
+        super(currentContext);
+    }
 
 }
