@@ -46,7 +46,7 @@ public class BlockNode {
             case "While":
                 newSentence = new WhileNode(getCurrentContext());
             default:
-                // TODO: error el tipo de sentencia no existe
+                assert newSentence != null: "ERROR: el tipo de sentencia no existe";
         }
 
         sentenceList.add(newSentence);
