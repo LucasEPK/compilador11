@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class BlockNode {
 
-    private List<SentenceNode> sentenceList;
+    private List<SentenceNode> sentenceList = new ArrayList<SentenceNode>();
 
     private SemanticContext currentContext;
 
