@@ -9,5 +9,5 @@ import java.util.LinkedHashMap;
 
 public class BlockNode {
 
-    LinkedHashMap<String, SentenceNode> sentenceList;
+    SentenceNode[] sentenceList;
 }
