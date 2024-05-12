@@ -1029,7 +1029,7 @@ public class    SyntacticAnalyzer {
                         match("if");
                         match("(");
                         //----------------------------------------------------------
-                        ExpressionNode expNode = expresion();
+                        AbstractExpressionNode expNode = expresion();
                         //----------------------------------------------------------
                         match(")");
                         //----------------------------------------------------------
@@ -1046,7 +1046,7 @@ public class    SyntacticAnalyzer {
                             match("while");
                             match("(");
                             //----------------------------------------------------------
-                            ExpressionNode expressionNode = expresion();
+                            AbstractExpressionNode expressionNode = expresion();
                             //----------------------------------------------------------
                             match(")");
                             //----------------------------------------------------------
@@ -1090,7 +1090,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private AbstractSentenceNode sentenciaF(Token ifToken, ExpressionNode expNode, AbstractSentenceNode sentenceNode1){
+    private AbstractSentenceNode sentenciaF(Token ifToken, AbstractExpressionNode expNode, AbstractSentenceNode sentenceNode1){
         // Analisis semantico AST ----------------------------------
         AbstractSentenceNode sentenceNode;
         //----------------------------------------------------------
@@ -1141,7 +1141,7 @@ public class    SyntacticAnalyzer {
                     , "StrLiteral", "CharLiteral" , "false" , "ObjID"
                     , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true")){
                 // Analisis semantico AST ----------------------------------
-                ExpressionNode expressionNode = expresion();
+                AbstractExpressionNode expressionNode = expresion();
                 node = new ReturnNode(retToken,
                         this.symbolTable.getCurrentStruct().getName(),
                         this.symbolTable.getCurrentMethod().getName(),
@@ -1233,7 +1233,7 @@ public class    SyntacticAnalyzer {
             accesoVarSimple(callNode);
             Token tokenOperation = this.actualToken;
             match("=");
-            ExpressionNode expressionNode = expresion();
+            AbstractExpressionNode expressionNode = expresion();
             node = new AsignationNode(tokenOperation,
                     this.symbolTable.getCurrentStruct().getName(),
                     this.symbolTable.getCurrentMethod().getName(),
@@ -1250,7 +1250,7 @@ public class    SyntacticAnalyzer {
                 accesoSelfSimple(callNode);
                 Token tokenOperation = this.actualToken;
                 match("=");
-                ExpressionNode expressionNode = expresion();
+                AbstractExpressionNode expressionNode = expresion();
                 node = new AsignationNode(tokenOperation,
                         this.symbolTable.getCurrentStruct().getName(),
                         this.symbolTable.getCurrentMethod().getName(),
@@ -1290,7 +1290,7 @@ public class    SyntacticAnalyzer {
                 // Analisis semantico AST ----------------------------------
                 callNode.setIsArray(true);
                 match("[");
-                AbstractSentenceNode expressionNode = expresion();
+                AbstractExpressionNode expressionNode = expresion();
                 callNode.setAccesPos(expressionNode);
                 match("]");
                 //-----------------------------------------------------------
@@ -1404,7 +1404,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      */
 
-    private ExpressionNode expresion(){
+    private AbstractExpressionNode expresion(){
         return expOr();
     }
 
@@ -1412,13 +1412,13 @@ public class    SyntacticAnalyzer {
      * Función para la regla 55 <ExpOr> de la Gramatica
      * @author Lucas Moyano
      * */
-    private ExpressionNode expOr() {
+    private AbstractExpressionNode expOr() {
         String[] firstExpAnd = {"!", "(", "+" , "++" , "-" , "--" ,
                 "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if(verifyEquals(firstExpAnd)){
-            ExpressionNode expressionNode = expAnd();
+            AbstractExpressionNode expressionNode = expAnd();
             expressionNode = expOrF(expressionNode);
             return  expressionNode;
 
@@ -1434,7 +1434,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 56 <ExpOr-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expOrF(ExpressionNode expressionNode) {
+    private AbstractExpressionNode expOrF(AbstractExpressionNode expressionNode) {
         String[] followExpOrF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
 
@@ -1442,30 +1442,36 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpOrR)){
-                expOrR(expressionNode);
+                 expressionNode = expOrR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("||", ")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 57 <ExpOrR> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expOrR(ExpressionNode expressionNode){
-
+    private AbstractExpressionNode expOrR(AbstractExpressionNode expressionNode){
+        Token operation = this.actualToken;
         match("||");
-        expAnd();
-        expOrRF();
+        AbstractExpressionNode rightNode = expAnd();
+        expressionNode = new ExpressionNode(operation,
+                this.symbolTable.getCurrentStruct().getName(),
+                this.symbolTable.getCurrentMethod().getName(),
+                expressionNode,rightNode);
+         expressionNode = expOrRF(expressionNode);
+         return  expressionNode;
     }
 
     /**
      * Función para la regla 58 <ExpOrR-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expOrRF() {
+    private AbstractExpressionNode expOrRF(AbstractExpressionNode expressionNode) {
         String[] followExpOrRF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
 
@@ -1473,25 +1479,28 @@ public class    SyntacticAnalyzer {
             // Lambda
         } else {
             if (verifyEquals(firstExpOrR)) {
-                expOrR(expressionNode);
+                 expressionNode = expOrR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("||" ,")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 59 <ExpAnd> de la Gramatica
+     * @return Nodo con expresion
      * @author Lucas Moyano
-     * */
-    private void expAnd() {
+     */
+    private AbstractExpressionNode expAnd() {
         String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
                 "false" , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpIgual)) {
-            expIgual();
-            expAndF();
+            AbstractExpressionNode expNode = expIgual();
+            expNode = expAndF(expNode);
+            return expNode;
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
                     "false" , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
@@ -1502,7 +1511,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 60 <ExpAnd-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAndF() {
+    private AbstractExpressionNode expAndF(AbstractExpressionNode expNode) {
         String[] followExpAndF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpAndR = {"&&"};
 
@@ -1510,29 +1519,36 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpAndR)) {
-                expAndR();
+                expNode = expAndR(expNode);
             } else {
                 throw createException(this.actualToken, List.of("&&", ")" , "," , ";" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expNode;
     }
 
     /**
      * Función para la regla 61 <ExpAndR> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAndR() {
+    private AbstractExpressionNode expAndR(AbstractExpressionNode expNode) {
+        Token operation = this.actualToken;
         match("&&");
-        expIgual();
-        expAndRF();
+        AbstractExpressionNode rigthNode = expIgual();
+        expNode = new ExpressionNode(operation,
+                this.symbolTable.getCurrentStruct().getName(),
+                this.symbolTable.getCurrentMethod().getName(),
+                expNode,rigthNode);
+        expNode = expAndRF(expNode);
+        return expNode;
     }
 
     /**
      * Función para la regla 62 <ExpAndR-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAndRF() {
+    private AbstractExpressionNode expAndRF(AbstractExpressionNode expNode) {
         String[] followExpAndRF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpAndR = {"&&"};
 
@@ -1540,27 +1556,29 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpAndR)) {
-                expAndR();
+                expNode = expAndR(expNode);
             } else {
                 throw createException(this.actualToken, List.of("&&" , ")" , "," , ";" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expNode;
     }
 
     /**
      * Función para la regla 63 <ExpIgual> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expIgual() {
+    private AbstractExpressionNode expIgual() {
         String[] firstExpCompuesta = {"!" , "(" , "+" , "++" , "-"
                 , "--" , "StrLiteral" , "CharLiteral" , "false"
                 , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil"
                 , "self" , "true"};
 
         if (verifyEquals(firstExpCompuesta)) {
-            expCompuesta();
-            expIgualF();
+            AbstractExpressionNode expressionNode = expCompuesta();
+            expressionNode = expIgualF(expressionNode);
+            return expressionNode;
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-"
                     , "--" , "StrLiteral" , "CharLiteral" , "false"
@@ -1573,7 +1591,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 64 <ExpIgual-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expIgualF() {
+    private AbstractExpressionNode expIgualF(AbstractExpressionNode expressionNode) {
         String[] followExpIgualF = {"&&" , ")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpIgualR = {"!=" , "=="};
 
@@ -1581,24 +1599,31 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpIgualR)) {
-                expIgualR();
+                expressionNode = expIgualR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("!=" , "==" ,"&&" ,
                         ")" , "," , ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 65 <ExpIgualR> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expIgualR() {
+    private AbstractExpressionNode expIgualR(AbstractExpressionNode expressionNode) {
         String[] firstOpIgual = {"!=" , "=="};
         if (verifyEquals(firstOpIgual)){
+            Token operation = this.actualToken;
             opIgual();
-            expCompuesta();
-            expIgualRF();
+            AbstractExpressionNode rigthNode = expCompuesta();
+            expressionNode = new ExpressionNode(operation,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    expressionNode,rigthNode);
+            expressionNode = expIgualRF(expressionNode);
+            return expressionNode;
         } else {
             throw createException(this.actualToken, List.of("!=" , "=="),this.actualToken.getLexeme());
         }
@@ -1608,7 +1633,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 66 <ExpIgualR-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expIgualRF() {
+    private AbstractExpressionNode expIgualRF(AbstractExpressionNode expressionNode) {
         String[] followExpIgualRF = {"&&" , ")" , "," ,
                 ";" , "]" , "||" , "$EOF$"};
         String[] firstExpIgualR = {"!=" , "=="};
@@ -1617,27 +1642,29 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpIgualR)) {
-                expIgualR();
+                 expressionNode = expIgualR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("!=" , "==", "&&" , ")" , "," ,
                         ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 67 <ExpCompuesta> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expCompuesta() {
+    private AbstractExpressionNode expCompuesta() {
         String[] firstExpAd = {"!" , "(" , "+" , "++"
                 , "-" , "--" , "StrLiteral" , "CharLiteral"
                 , "false" , "ObjID" , "StructID" , "IntLiteral"
                 , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpAd)) {
-            expAd();
-            expCompuestaF();
+            AbstractExpressionNode expressionNode = expAd();
+            expCompuestaF(expressionNode);
+            return  expressionNode;
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++"
                     , "-" , "--" , "StrLiteral" , "CharLiteral"
@@ -1650,7 +1677,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 68 <ExpCompuestaF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expCompuestaF() {
+    private AbstractExpressionNode expCompuestaF(AbstractExpressionNode expressionNode) {
         String[] followExpCompuestaF = {"!=" , "&&" , ")" ,
                 "," , ";" , "==" ,
                 "]" , "||" , "$EOF$"};
@@ -1660,8 +1687,13 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstOpCompuesto)) {
+                Token operation = this.actualToken;
                 opCompuesto();
-                expAd();
+                AbstractExpressionNode rightNode = expAd();
+                expressionNode = new ExpressionNode(operation,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        expressionNode,rightNode);
             } else {
                 throw createException(this.actualToken, List.of("<" , "<=" , ">" , ">=",
                         "!=" , "&&" , ")" ,
@@ -1669,21 +1701,23 @@ public class    SyntacticAnalyzer {
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 69 <ExpAd> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAd() {
+    private AbstractExpressionNode expAd() {
         String[] firstExpMul = {"!" , "(" , "+" , "++" ,
                 "-" , "--" , "StrLiteral" , "CharLiteral" ,
                 "false" , "ObjID" , "StructID" , "IntLiteral" ,
                 "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpMul)) {
-            expMul();
-            expAdF();
+            AbstractExpressionNode expressionNode = expMul();
+            expressionNode = expAdF(expressionNode);
+            return  expressionNode;
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" ,
                     "-" , "--" , "StrLiteral" , "CharLiteral" ,
@@ -1696,7 +1730,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 70 <ExpAdF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAdF() {
+    private AbstractExpressionNode expAdF(AbstractExpressionNode expressionNode) {
         String[] followExpAdF = {"!=" , "&&" , ")" ,
                 "," , ";" , "<" , "<=" , "==" ,
                 ">" , ">=" , "]" , "||" , "$EOF$"};
@@ -1706,26 +1740,33 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpAdR)) {
-                expAdR();
+                expressionNode = expAdR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("+" , "-", "!=" , "&&" , ")" ,
                         "," , ";" , "<" , "<=" , "==" ,
                         ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 71 <ExpAdR> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAdR() {
+    private AbstractExpressionNode expAdR(AbstractExpressionNode expressionNode) {
         String[] firstOpAd = {"+" , "-"};
 
         if (verifyEquals(firstOpAd)) {
+            Token operation = this.actualToken;
             opAd();
-            expMul();
-            expAdRF();
+            AbstractExpressionNode rigthNode = expMul();
+            expressionNode = new ExpressionNode(operation,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    expressionNode,rigthNode);
+            expressionNode = expAdRF(expressionNode);
+            return expressionNode;
         } else {
             throw createException(this.actualToken, List.of("+" , "-"),this.actualToken.getLexeme());
         }
@@ -1735,7 +1776,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 72 <ExpAdRF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expAdRF() {
+    private AbstractExpressionNode expAdRF(AbstractExpressionNode expressionNode) {
         String[] followExpAdRF = {"!=" , "&&" , ")" , "," ,
                 ";" , "<" , "<=" , "==" , ">" , ">=" ,
                 "]" , "||" , "$EOF$"};
@@ -1745,28 +1786,30 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpAdR)) {
-                expAdR();
+                 expressionNode = expAdR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("+" , "-", "!=" , "&&" , ")" , "," ,
                         ";" , "<" , "<=" , "==" , ">" , ">=" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 73 <ExpMul> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expMul() {
+    private AbstractExpressionNode expMul() {
         String[] firstExpUn = {"!" , "(" , "+" , "++" , "-" ,
                 "--" , "StrLiteral" , "CharLiteral" , "false" ,
                 "ObjID" , "StructID" , "IntLiteral" , "new" ,
                 "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpUn)) {
-            expUn();
-            expMulF();
+            AbstractExpressionNode expressionNode = expUn();
+            expressionNode = expMulF(expressionNode);
+            return expressionNode;
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" ,
                     "--" , "StrLiteral" , "CharLiteral" , "false" ,
@@ -1779,7 +1822,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 74 <ExpMulF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expMulF() {
+    private AbstractExpressionNode expMulF(AbstractExpressionNode expressionNode) {
         String[] followExpMulF = {"!=" , "&&" , ")" ,
                 "+" , "," , "-" , ";" , "<" ,
                 "<=" , "==" , ">" , ">=" , "]" ,
@@ -1790,7 +1833,7 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstMulR)) {
-                expMulR();
+                expressionNode = expMulR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" ,
                         "+" , "," , "-" , ";" , "<" ,
@@ -1798,19 +1841,26 @@ public class    SyntacticAnalyzer {
                         "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 75 <ExpMulR> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expMulR() {
+    private AbstractExpressionNode expMulR(AbstractExpressionNode expressionNode) {
         String[] firstOpMul = {"%" , "*" , "/"};
 
         if (verifyEquals(firstOpMul)) {
+            Token operation = this.actualToken;
             opMul();
-            expUn();
-            expMulRF();
+            AbstractExpressionNode rightNode = expUn();
+            expressionNode = new ExpressionNode(operation,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    expressionNode,rightNode);
+            expressionNode = expMulRF(expressionNode);
+            return expressionNode;
         } else {
             throw createException(this.actualToken, List.of("%" , "*" , "/"),this.actualToken.getLexeme());
         }
@@ -1820,7 +1870,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 76 <ExpMulRF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expMulRF() {
+    private AbstractExpressionNode expMulRF(AbstractExpressionNode expressionNode) {
         String[] followExpMulRF = {"!=" , "&&" , ")" , "+" ,
                 "," , "-" , ";" , "<" , "<=" , "==" ,
                 ">" , ">=" , "]" , "||" , "$EOF$"};
@@ -1830,31 +1880,40 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpMulR)) {
-                expMulR();
+                expressionNode = expMulR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" , "+" ,
                         "," , "-" , ";" , "<" , "<=" , "==" ,
                         ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+        return expressionNode;
     }
 
     /**
      * Función para la regla 77 <ExpUn> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expUn() {
+    private AbstractExpressionNode expUn() {
         String[] firstOpUnario = {"!" , "+" , "++" , "-" , "--"};
         String[] firstOperando = {"(" , "StrLiteral" ,
                 "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
+        AbstractExpressionNode node;
+
         if (verifyEquals(firstOpUnario)) {
+            Token operation = this.actualToken;
             opUnario();
-            expUn();
+            node = expUn();
+            node = new ExpUn(operation,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName());
+            return node;
         } else {
             if (verifyEquals(firstOperando)) {
-                operando();
+                node = operando();
+                return node;
             } else {
                 throw createException(this.actualToken, List.of("!" , "+" , "++" , "-" , "--", "(" , "StrLiteral" ,
                         "CharLiteral" , "false" , "ObjID" , "StructID" ,
@@ -1966,18 +2025,21 @@ public class    SyntacticAnalyzer {
      * Función para la regla 83 <Operando> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void operando() {
+    private AbstractPrimaryNode operando() {
         String[] firstLiteral = {"StrLiteral" ,
                 "CharLiteral" , "false" , "IntLiteral" ,
                 "nil" , "true"};
         String[] firstPrimario = {"(" , "ObjID" , "StructID" ,
                 "new" , "self"};
 
+        AbstractPrimaryNode node;
+
         if (verifyEquals(firstLiteral)){
-            literal();
+            node = literal();
         } else {
             if (verifyEquals(firstPrimario)){
-                primario();
+                 node = primario();
+                 //ToDo
                 operandoF();
             } else {
                 throw createException(this.actualToken, List.of("StrLiteral" ,
@@ -1986,6 +2048,7 @@ public class    SyntacticAnalyzer {
                         "new" , "self"),this.actualToken.getLexeme());
             }
         }
+        return node;
     }
 
     /**
@@ -2017,46 +2080,69 @@ public class    SyntacticAnalyzer {
      * Función para la regla 85 <Literal> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void literal(){
+    private AbstractPrimaryNode literal(){
         String[] firstNil = {"nil"};
         String[] firstTrue = {"true"};
         String[] firstFalse = {"false"};
         String[] firstIntLiteral = {"IntLiteral"};
         String[] firstStrLiteral = {"StrLiteral"};
 
+        AbstractPrimaryNode node;
+
         if (verifyEquals(firstNil)){
+            node = new LiteralNode(this.actualToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),"nil");
             match("nil");
         }else {
             if (verifyEquals(firstTrue)){
+                node = new LiteralNode(this.actualToken,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),"Bool");
                 match("true");
             } else {
                 if (verifyEquals(firstFalse)) {
+                    node = new LiteralNode(this.actualToken,
+                            this.symbolTable.getCurrentStruct().getName(),
+                            this.symbolTable.getCurrentMethod().getName(),"Bool");
                     match("false");
                 } else {
                     if (verifyEquals(firstIntLiteral)){
+                        node = new LiteralNode(this.actualToken,
+                                this.symbolTable.getCurrentStruct().getName(),
+                                this.symbolTable.getCurrentMethod().getName(),"Int");
                         match("IntLiteral");
                     } else {
                         if (verifyEquals(firstStrLiteral)){
+                            node = new LiteralNode(this.actualToken,
+                                    this.symbolTable.getCurrentStruct().getName(),
+                                    this.symbolTable.getCurrentMethod().getName(),"Str");
                             match("StrLiteral");
                         } else {
+                            node = new LiteralNode(this.actualToken,
+                                    this.symbolTable.getCurrentStruct().getName(),
+                                    this.symbolTable.getCurrentMethod().getName(),"Char");
                             match("CharLiteral");
                         }
                     }
                 }
             }
         }
+        return node;
     }
 
     /**
      * Función para la regla 86 <Primario> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void primario() {
+    private PrimaryNode primario() {
         String[] firstExpresionParentizada = {"("};
         String[] firstAccesoSelf = {"self"};
         String[] firstAccesoVarAndMethod = {"ObjID"};
         String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
+
+        PrimaryNode node;
 
         if (verifyEquals(firstExpresionParentizada)) {
             expresionParentizada();
@@ -2086,6 +2172,7 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+        return node;
     }
 
     private void primarioF(){

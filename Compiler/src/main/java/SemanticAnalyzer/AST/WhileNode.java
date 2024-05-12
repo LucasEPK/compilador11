@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
 
 public class WhileNode extends AbstractSentenceNode {
 
-    AbstractSentenceNode whileNode;
+    AbstractExpressionNode whileNode;
 
     AbstractSentenceNode doNode;
 
@@ -35,7 +35,7 @@ public class WhileNode extends AbstractSentenceNode {
      * @param doNode sentencia dentro de node
      * @author Yeumen Silva
      */
-    public WhileNode(Token token, String struct, String method, ExpressionNode whileNode, AbstractSentenceNode doNode) {
+    public WhileNode(Token token, String struct, String method, AbstractExpressionNode whileNode, AbstractSentenceNode doNode) {
         super(token, struct, method,"WhileNode");
         this.whileNode = whileNode;
         this.doNode = doNode;

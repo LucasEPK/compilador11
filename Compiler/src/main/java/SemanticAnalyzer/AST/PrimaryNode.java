@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class PrimaryNode extends AbstractSentenceNode{
+public class PrimaryNode extends AbstractPrimaryNode{
 
     PrimaryNode right;
 

@@ -54,4 +54,11 @@ public class ASTNode {
         this.nodeName = nodeName;
     }
 
+    /**
+     * Método para setear el tipo
+     * @param type string con tipo
+     */
+    public void setType(String type) {
+        this.type = type;
     }
+}

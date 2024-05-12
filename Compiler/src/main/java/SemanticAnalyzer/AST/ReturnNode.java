@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
 
 public class ReturnNode extends AbstractSentenceNode {
 
-    ExpressionNode returnValueNode;
+    AbstractExpressionNode returnValueNode;
 
     /**
      * Constructor que asigna token, struct y método
@@ -22,7 +22,7 @@ public class ReturnNode extends AbstractSentenceNode {
         super(token, struct, method,"RetNode");
     }
 
-    public ReturnNode(Token token, String struct, String method, ExpressionNode returnValueNode) {
+    public ReturnNode(Token token, String struct, String method, AbstractExpressionNode returnValueNode) {
         super(token, struct, method,"RetNode");
         this.returnValueNode = returnValueNode;
     }

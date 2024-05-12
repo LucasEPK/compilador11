@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
 
 public class IfThenElseNode extends  AbstractSentenceNode {
 
-    AbstractSentenceNode ifExpressionNode;
+    AbstractExpressionNode ifExpressionNode;
 
     AbstractSentenceNode thenNode;
 
@@ -38,7 +38,7 @@ public class IfThenElseNode extends  AbstractSentenceNode {
      */
 
     public IfThenElseNode(Token token, String struct, String method
-            , ExpressionNode expressionNode, AbstractSentenceNode thenNode, AbstractSentenceNode elseNode){
+            , AbstractExpressionNode expressionNode, AbstractSentenceNode thenNode, AbstractSentenceNode elseNode){
         super(token,struct,method,"IfThenElseNode");
         this.ifExpressionNode = expressionNode;
         this.thenNode = thenNode;
@@ -58,7 +58,7 @@ public class IfThenElseNode extends  AbstractSentenceNode {
 
 
     public IfThenElseNode(Token token, String struct, String method
-            , ExpressionNode expressionNode, AbstractSentenceNode thenNode){
+            , AbstractExpressionNode expressionNode, AbstractSentenceNode thenNode){
         super(token,struct,method,"IfThenElseNode");
         this.ifExpressionNode = expressionNode;
         this.thenNode = thenNode;
