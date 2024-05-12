@@ -21,11 +21,11 @@ public class ExpressionNode extends  AbstractExpressionNode {
      * @param method nombre del método al que pertenece
      */
     public ExpressionNode(Token token, String struct, String method) {
-        super(token, struct, method);
+        super(token, struct, method,"ExpressionNode");
     }
 
     public ExpressionNode(Token token, String struct, String method, AbstractSentenceNode left, AbstractSentenceNode rigth) {
-        super(token, struct, method);
+        super(token, struct, method,"ExpressionNode");
         this.left = left;
         this.rigth = rigth;
     }
