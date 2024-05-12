@@ -1229,6 +1229,7 @@ public class    SyntacticAnalyzer {
 
         //Primeros AccesoVar-Simple
         if (verifyEquals("ObjID")){
+            // Analisis semantico AST ----------------------------------
             AbstractSentenceNode callNode = new AsignationNode(this.actualToken,
                     this.symbolTable.getCurrentStruct().getName(),
                     this.symbolTable.getCurrentMethod().getName());
@@ -1240,6 +1241,7 @@ public class    SyntacticAnalyzer {
                     this.symbolTable.getCurrentStruct().getName(),
                     this.symbolTable.getCurrentMethod().getName(),
                     callNode,expressionNode);
+            //----------------------------------------------------------
         }
         else {
             //`Primeros AccesoSelf-Simple
@@ -1249,7 +1251,6 @@ public class    SyntacticAnalyzer {
                         this.symbolTable.getCurrentStruct().getName(),
                         this.symbolTable.getCurrentMethod().getName());
                 accesoSelfSimple(callNode);
-                //-----------------------------------------------------------
                 Token tokenOperation = this.actualToken;
                 match("=");
                 ExpressionNode expressionNode = expresion();
@@ -1257,6 +1258,7 @@ public class    SyntacticAnalyzer {
                         this.symbolTable.getCurrentStruct().getName(),
                         this.symbolTable.getCurrentMethod().getName(),
                         callNode,expressionNode);
+                //----------------------------------------------------------
             }
             else {
                 throw createException(this.actualToken, List.of("ObjID" , "self"),this.actualToken.getLexeme());
