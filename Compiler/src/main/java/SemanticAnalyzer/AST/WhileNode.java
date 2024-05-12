@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
 
 public class WhileNode extends AbstractSentenceNode {
 
-    ExpressionNode whileNode;
+    AbstractSentenceNode whileNode;
 
     AbstractSentenceNode doNode;
 

@@ -607,9 +607,6 @@ public class    SyntacticAnalyzer {
     private void bloqueMetodoF1(){
 
 
-
-
-
         //Primeros }
         if(verifyEquals("}")){
             match("}");
@@ -1230,7 +1227,7 @@ public class    SyntacticAnalyzer {
         //Primeros AccesoVar-Simple
         if (verifyEquals("ObjID")){
             // Analisis semantico AST ----------------------------------
-            AbstractSentenceNode callNode = new AsignationNode(this.actualToken,
+            AsignationVariableCallNode callNode = new AsignationVariableCallNode(this.actualToken,
                     this.symbolTable.getCurrentStruct().getName(),
                     this.symbolTable.getCurrentMethod().getName());
             accesoVarSimple(callNode);
@@ -1247,7 +1244,7 @@ public class    SyntacticAnalyzer {
             //`Primeros AccesoSelf-Simple
             if(verifyEquals("self")){
                 // Analisis semantico AST ----------------------------------
-                AbstractSentenceNode callNode = new AsignationNode(this.actualToken,
+                AsignationVariableCallNode callNode = new AsignationVariableCallNode(this.actualToken,
                         this.symbolTable.getCurrentStruct().getName(),
                         this.symbolTable.getCurrentMethod().getName());
                 accesoSelfSimple(callNode);
@@ -1272,12 +1269,9 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoVarSimple(){
-        // Analisis semantico ----------------------------------
-        // acá ya debería existir este objeto
-        // -----------------------------------------------------
+    private void accesoVarSimple(AsignationVariableCallNode callNode){
         match("ObjID");
-        accesoVarSimpleF();
+        accesoVarSimpleF(callNode);
     }
 
     /**
@@ -1285,17 +1279,22 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoVarSimpleF(){
+    private void accesoVarSimpleF(AsignationVariableCallNode callNode){
         //Primeros Encadenado-Simple-Estrella
         if(verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            encadenadoSimpleEstrella(callNode);
         }
         else {
             //Primeros [
             if(verifyEquals("[")){
+                // Analisis semantico AST ----------------------------------
+                callNode.setIsArray(true);
                 match("[");
-                expresion();
+                AbstractSentenceNode expressionNode = expresion();
+                callNode.setAccesPos(expressionNode);
                 match("]");
+                //-----------------------------------------------------------
+
             }
             else {
                 //Siguientes AccesoVar-Simple-F
@@ -1314,9 +1313,9 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimpleEstrella(){
-        encadenadoSimple();
-        encadenadoSimpleEstrellaF();
+    private void encadenadoSimpleEstrella(AsignationVariableCallNode callNode){
+        encadenadoSimple(callNode);
+        encadenadoSimpleEstrellaF(callNode);
     }
 
     /**
@@ -1324,10 +1323,10 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimpleEstrellaF(){
+    private void encadenadoSimpleEstrellaF(AsignationVariableCallNode callNode){
         //Primeros Encadenado-Simple-Estrella
         if (verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            encadenadoSimpleEstrella(callNode.getCallNode());
         }
         else {
             //Siguientes Encadenado-Simple-Estrella-F
@@ -1345,9 +1344,9 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoSelfSimple(){
+    private void accesoSelfSimple(AsignationVariableCallNode callNode){
         match("self");
-        accesoSelfSimpleF();
+        accesoSelfSimpleF(callNode);
     }
 
     /**
@@ -1355,10 +1354,10 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoSelfSimpleF(){
+    private void accesoSelfSimpleF(AsignationVariableCallNode callNode){
         //Primeros Encadenado-Simple-Estrella
         if (verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            encadenadoSimpleEstrella(callNode);
         }else {
             //Siguientes AccesoSelf-Simple-F
             if(verifyEquals("=","$EOF$")){
@@ -1375,12 +1374,16 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimple(){
+    private void encadenadoSimple(AsignationVariableCallNode callNode){
         match(".");
-        // Analisis semantico ----------------------------------
-        // ya debería existir este objeto
-        // -----------------------------------------------------
+        // Analisis semantico AST ----------------------------------
+        AsignationVariableCallNode nextCallNode;
+        nextCallNode = new AsignationVariableCallNode(this.actualToken,
+                this.symbolTable.getCurrentStruct().getName(),
+                this.symbolTable.getCurrentMethod().getName());
         match("ObjID");
+        callNode.setCallNode(nextCallNode);
+        //-----------------------------------------------------------
     }
 
     /**
@@ -1388,33 +1391,37 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaSimple(){
+    private AbstractSentenceNode sentenciaSimple(){
         match("(");
-        expresion();
+        AbstractSentenceNode node = expresion();
         match(")");
+        return node;
     }
 
     /**
      * Regla Expresion
+     * @return Nodo con expresion
      * @author Yeumen Silva
-     * */
+     */
 
-    private void expresion(){
-        expOr();
+    private ExpressionNode expresion(){
+        return expOr();
     }
 
     /**
      * Función para la regla 55 <ExpOr> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expOr() {
+    private ExpressionNode expOr() {
         String[] firstExpAnd = {"!", "(", "+" , "++" , "-" , "--" ,
                 "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if(verifyEquals(firstExpAnd)){
-            expAnd();
-            expOrF();
+            ExpressionNode expressionNode = expAnd();
+            expressionNode = expOrF(expressionNode);
+            return  expressionNode;
+
         } else {
             throw createException(this.actualToken, List.of("!", "(", "+" , "++" , "-" , "--" ,
                     "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
@@ -1427,7 +1434,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 56 <ExpOr-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expOrF() {
+    private void expOrF(ExpressionNode expressionNode) {
         String[] followExpOrF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
 
@@ -1435,7 +1442,7 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstExpOrR)){
-                expOrR();
+                expOrR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("||", ")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
@@ -1447,7 +1454,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 57 <ExpOrR> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expOrR(){
+    private void expOrR(ExpressionNode expressionNode){
 
         match("||");
         expAnd();
@@ -1466,7 +1473,7 @@ public class    SyntacticAnalyzer {
             // Lambda
         } else {
             if (verifyEquals(firstExpOrR)) {
-                expOrR();
+                expOrR(expressionNode);
             } else {
                 throw createException(this.actualToken, List.of("||" ,")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());

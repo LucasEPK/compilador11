@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
 
 public class IfThenElseNode extends  AbstractSentenceNode {
 
-    ExpressionNode ifExpressionNode;
+    AbstractSentenceNode ifExpressionNode;
 
     AbstractSentenceNode thenNode;
 
