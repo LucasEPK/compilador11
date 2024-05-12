@@ -19,19 +19,12 @@ public class AST {
         this.symbolTable = symbolTable;
     }
 
-    /**
-     * Agrega un nuevo bloque a la lista
-     * @return El nuevo bloque añadido a la lista
-     * @author Lucas Moyano
-     * */
-    public BlockNode addNewBlock() {
-        BlockNode newBlock = new BlockNode(symbolTable);
-        blockList.add(newBlock);
-
-        return  newBlock;
-    }
 
     public List<BlockNode> getBlockList() {
         return blockList;
+    }
+
+    public void addBlock(BlockNode blockNode){
+        this.blockList.add(blockNode);
     }
 }

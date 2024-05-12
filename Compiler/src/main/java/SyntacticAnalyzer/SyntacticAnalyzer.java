@@ -3,8 +3,12 @@ package SyntacticAnalyzer;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.AST.AST;
+import SemanticAnalyzer.AST.BlockNode;
+import SemanticAnalyzer.AST.AbstractSentenceNode;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +24,8 @@ public class    SyntacticAnalyzer {
     private LexicalAnalyzer lexicalAnalyzer;
 
     private SymbolTable symbolTable = new SymbolTable();
+
+    private AST ast = new AST(symbolTable);
 
 
     /**
@@ -555,6 +561,8 @@ public class    SyntacticAnalyzer {
 
     private void bloqueMetodoF(){
 
+
+
         //Primeros Decl-Var-Locales-Estrella
         if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
                 , "StructID")){
@@ -564,7 +572,21 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if (verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
-                sentenciaEstrella();
+
+
+                //Análisis semántico AST-----------------------------------------
+                BlockNode sentenceBlockNode;
+                ArrayList<AbstractSentenceNode> sentenceNodesList = new ArrayList<>();
+                sentenciaEstrella(sentenceNodesList);
+                sentenceBlockNode = new BlockNode(
+                        this.actualToken,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        sentenceNodesList
+                );
+                this.ast.addBlock(sentenceBlockNode);
+                //---------------------------------------------------------------
+
                 match("}");
             }else {
                 if(verifyEquals("}")) {
@@ -585,6 +607,11 @@ public class    SyntacticAnalyzer {
      * */
 
     private void bloqueMetodoF1(){
+
+
+
+
+
         //Primeros }
         if(verifyEquals("}")){
             match("}");
@@ -593,6 +620,19 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
+
+                //Análisis semántico AST-----------------------------------------
+                BlockNode sentenceBlockNode;
+                ArrayList<AbstractSentenceNode> sentenceNodesList = new ArrayList<>();
+                sentenciaEstrella(sentenceNodesList);
+                sentenceBlockNode = new BlockNode(
+                        this.actualToken,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        sentenceNodesList
+                );
+                this.ast.addBlock(sentenceBlockNode);
+                //---------------------------------------------------------------
                 sentenciaEstrella();
                 match("}");
             }

@@ -1,17 +1,25 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase representate la asignación en nustro AST
  * @author Yeumen Silva
  */
 
-public class AsignationNode extends SentenceNode {
+public class AsignationNode extends AbstractSentenceNode {
 
-    Node left;
-    Node right;
+    AbstractSentenceNode left;
+    AbstractSentenceNode right;
 
-    public AsignationNode(SemanticContext currentContext){
-        super(currentContext);
+    /**
+     * Constructor que asigna token, struct y método
+     * @param token token que contiene, lexema, fila y columna
+     * @param struct nombre del struct al que pertenece
+     * @param method nombre del método al que pertenece
+     */
+
+    public AsignationNode(Token token, String struct, String method) {
+        super(token, struct, method);
     }
-
 }

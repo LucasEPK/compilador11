@@ -3,23 +3,21 @@ package SemanticAnalyzer.AST;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase representate //ToDo
+ * Clase representate un ToDo en nustro AST
  * @author Yeumen Silva
  */
 
-public abstract class ExpressionNode extends  AbstractSentenceNode {
-
-    String operator;
+public abstract class AbstractSentenceNode extends ASTNode {
 
 
     /**
      * Constructor que asigna token, struct y método
-     *
-     * @param token  token que contiene, lexema, fila y columna
+     * @param token token que contiene, lexema, fila y columna
      * @param struct nombre del struct al que pertenece
      * @param method nombre del método al que pertenece
      */
-    public ExpressionNode(Token token, String struct, String method) {
+
+    public AbstractSentenceNode(Token token, String struct, String method) {
         super(token, struct, method);
     }
 }
