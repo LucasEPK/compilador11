@@ -24,7 +24,7 @@ public class BlockNode extends AbstractSentenceNode {
      * @param method nombre del método al que pertenece
      */
     public BlockNode(Token token, String struct, String method, ArrayList<AbstractSentenceNode> sentenceList) {
-        super(token, struct, method);
+        super(token, struct, method,"BlockNode");
         this.sentenceList = sentenceList;
     }
 }

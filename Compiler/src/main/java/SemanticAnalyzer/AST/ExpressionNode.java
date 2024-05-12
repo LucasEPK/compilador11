@@ -20,6 +20,6 @@ public abstract class ExpressionNode extends  AbstractSentenceNode {
      * @param method nombre del método al que pertenece
      */
     public ExpressionNode(Token token, String struct, String method) {
-        super(token, struct, method);
+        super(token, struct, method,"ExpressionNode");
     }
 }

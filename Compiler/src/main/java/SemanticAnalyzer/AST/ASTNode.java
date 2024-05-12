@@ -28,12 +28,30 @@ public class ASTNode {
      * @param token token que contiene, lexema, fila y columna
      * @param struct nombre del struct al que pertenece
      * @param method nombre del método al que pertenece
+     * @author Yeumen Silva
      */
 
     public ASTNode(Token token, String struct, String method){
         this.token = token;
         this.struct = struct;
         this.method = method;
+    }
+
+    /**
+     * Constructor que asigna token, struct y método
+     * @param token token que contiene, lexema, fila y columna
+     * @param struct nombre del struct al que pertenece
+     * @param method nombre del método al que pertenece
+     * @param nodeName nombre del nodo
+     * @author Yeumen Silva
+     */
+
+
+    public ASTNode(Token token, String struct, String method, String nodeName){
+        this.token = token;
+        this.struct = struct;
+        this.method = method;
+        this.nodeName = nodeName;
     }
 
     }

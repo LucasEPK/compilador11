@@ -3,9 +3,7 @@ package SyntacticAnalyzer;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
-import SemanticAnalyzer.AST.AST;
-import SemanticAnalyzer.AST.BlockNode;
-import SemanticAnalyzer.AST.AbstractSentenceNode;
+import SemanticAnalyzer.AST.*;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
@@ -633,7 +631,7 @@ public class    SyntacticAnalyzer {
                 );
                 this.ast.addBlock(sentenceBlockNode);
                 //---------------------------------------------------------------
-                sentenciaEstrella();
+                sentenciaEstrella(sentenceNodesList);
                 match("}");
             }
             else {
@@ -684,9 +682,14 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaEstrella(){
-        sentencia();
-        sentenciaEstrellaF();
+    private void sentenciaEstrella(ArrayList<AbstractSentenceNode> nodeList){
+
+        //Análisis semántico AST-----------------------------------------
+        AbstractSentenceNode node = sentencia();
+        nodeList.add(node);
+        sentenciaEstrellaF(nodeList);
+        //----------------------------------------------------------------
+
     }
 
     /**
@@ -694,11 +697,14 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaEstrellaF(){
+    private void sentenciaEstrellaF(ArrayList<AbstractSentenceNode> nodeList){
         //Primeros Sentencia-Estrella
         if(verifyEquals("(" , ";" , "ObjID" , "if"
                 , "ret" , "self" , "while", "{")){
-            sentenciaEstrella();
+
+            //Análisis semántico AST-----------------------------------------
+            sentenciaEstrella(nodeList);
+            //----------------------------------------------------------------
         }
         else {
             //Siguientes Sentencia-Estrella-F
@@ -980,52 +986,92 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentencia(){
+    private AbstractSentenceNode sentencia(){
+
+        // Analisis semantico AST ----------------------------------
+        AbstractSentenceNode node;
+        //----------------------------------------------------------
+
         //Primeros ;
         if (verifyEquals(";")){
+
+            // Analisis semantico AST ----------------------------------
+             node = new NothingNode(
+                    this.actualToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName());
+            //----------------------------------------------------------
+
             match(";");
         }
         else {
             //Primeros Asignacion
             if(verifyEquals("ObjID","self")){
-                asignacion();
+
+                // Analisis semantico AST ----------------------------------
+                node = asignacion();
+                //-----------------------------------------------------------
                 match(";");
             }
             else {
                 //Primeros Sentencia-Simple
                 if(verifyEquals("(")){
-                    sentenciaSimple();
+
+                    // Analisis semantico AST ----------------------------------
+                    node = sentenciaSimple();
+                    //----------------------------------------------------------
+
                     match(";");
                 }
                 else {
                     //Primeros if
                     if (verifyEquals("if")){
+                        // Analisis semantico AST ----------------------------------
+                        Token ifToken = this.actualToken;
+                        //----------------------------------------------------------
                         match("if");
                         match("(");
-                        expresion();
+                        //----------------------------------------------------------
+                        ExpressionNode expNode = expresion();
+                        //----------------------------------------------------------
                         match(")");
-                        sentencia();
-                        sentenciaF();
+                        //----------------------------------------------------------
+                        AbstractSentenceNode sentenceNode1 = sentencia();
+                        node = sentenciaF(ifToken,expNode,sentenceNode1);
+                        //----------------------------------------------------------
                     }
                     else {
                         //Primeros while
                         if (verifyEquals("while")){
+                            // Analisis semantico AST ----------------------------------
+                            Token whileToken = this.actualToken;
+                            //----------------------------------------------------------
                             match("while");
                             match("(");
-                            expresion();
+                            //----------------------------------------------------------
+                            ExpressionNode expressionNode = expresion();
+                            //----------------------------------------------------------
                             match(")");
-                            sentencia();
+                            //----------------------------------------------------------
+                            AbstractSentenceNode sentenceNode = sentencia();
+                            node = new WhileNode(whileToken,
+                                    this.symbolTable.getCurrentStruct().getName(),
+                                    this.symbolTable.getCurrentMethod().getName(),
+                                    expressionNode,
+                                    sentenceNode);
+                            //----------------------------------------------------------
                         }
                         else {
                             //Primeros Bloque
                             if (verifyEquals("{")){
-                                bloque();
+                                node = bloque();
                             }
                             else {
                                 //Primeros ret
                                 if (verifyEquals("ret")){
+                                    Token retToken = this.actualToken;
                                     match("ret");
-                                    sentenciaF1();
+                                    node = sentenciaF1(retToken);
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
@@ -1039,6 +1085,7 @@ public class    SyntacticAnalyzer {
             }
 
         }
+        return node;
     }
 
     /**
@@ -1046,16 +1093,33 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaF(){
+    private AbstractSentenceNode sentenciaF(Token ifToken, ExpressionNode expNode, AbstractSentenceNode sentenceNode1){
+        // Analisis semantico AST ----------------------------------
+        AbstractSentenceNode sentenceNode;
+        //----------------------------------------------------------
+
         //Primeros else
         if (verifyEquals("else")){
             match("else");
-            sentencia();
+            // Analisis semantico AST ----------------------------------
+            AbstractSentenceNode sentenceNode2 = sentencia();
+            sentenceNode = new IfThenElseNode(ifToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    expNode,sentenceNode1,sentenceNode2);
+            //----------------------------------------------------------
         }
-        /*Aca deberian estar los siguientes de SentenciaF
-        pero como tambien tienen "else", lo mejor es patear el error
-        para daspues, ya que con los siguientes solo hacemos lambda
-         */
+        else {
+            //Creamos nodo con datos del if
+            // Analisis semantico AST ----------------------------------
+            sentenceNode = new IfThenElseNode(ifToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    expNode,sentenceNode1);
+            //----------------------------------------------------------
+        }
+
+        return sentenceNode;
     }
 
     /**
@@ -1063,9 +1127,15 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaF1(){
+    private AbstractSentenceNode sentenciaF1(Token retToken){
+        AbstractSentenceNode node;
         //Primeros ;
         if (verifyEquals(";")){
+            // Analisis semantico AST ----------------------------------
+            node = new ReturnNode(retToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName());
+            //----------------------------------------------------------
             match(";");
         }
         else {
@@ -1073,7 +1143,13 @@ public class    SyntacticAnalyzer {
             if (verifyEquals("!" , "(" , "+" , "++" , "-" , "--"
                     , "StrLiteral", "CharLiteral" , "false" , "ObjID"
                     , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true")){
-                expresion();
+                // Analisis semantico AST ----------------------------------
+                ExpressionNode expressionNode = expresion();
+                node = new ReturnNode(retToken,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        expressionNode);
+                //----------------------------------------------------------
                 match(";");
             }
             else {
@@ -1082,6 +1158,7 @@ public class    SyntacticAnalyzer {
                         , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
             }
         }
+        return node;
     }
 
     /**
@@ -1089,9 +1166,14 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void bloque(){
+    private AbstractSentenceNode bloque(){
+        // Analisis semantico AST ----------------------------------
+        AbstractSentenceNode node;
+        Token blockToken = this.actualToken;
+        //-----------------------------------------------------------
         match("{");
-        bloqueF();
+        node = bloqueF(blockToken);
+        return  node;
 
     }
 
@@ -1100,23 +1182,40 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void bloqueF(){
+    private AbstractSentenceNode bloqueF(Token blockToken){
+
+        ArrayList<AbstractSentenceNode> sentenceNodeList = new ArrayList<>();
+        AbstractSentenceNode node;
+
         //Primeros }
         if(verifyEquals("}")){
             match("}");
+            // Analisis semantico AST ----------------------------------
+            node = new BlockNode(blockToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    sentenceNodeList);
+            this.ast.addBlock((BlockNode) node);
+            //-----------------------------------------------------------
         }
         else {
             //Primeros Setntencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if" , "ret" ,
                     "self" , "while" , "{")){
-                sentenciaEstrella();
+                sentenciaEstrella(sentenceNodeList);
                 match("}");
+                node = new BlockNode(blockToken,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        sentenceNodeList);
+                this.ast.addBlock((BlockNode) node);
             }
             else {
                 throw createException(this.actualToken, List.of("}" ,"(" , ";" , "ObjID" , "if" , "ret" ,
                         "self" , "while" , "{"),this.actualToken.getLexeme());
             }
         }
+        return node;
     }
 
     /**

@@ -20,6 +20,6 @@ public class AsignationNode extends AbstractSentenceNode {
      */
 
     public AsignationNode(Token token, String struct, String method) {
-        super(token, struct, method);
+        super(token, struct, method,"AsignationNode");
     }
 }
