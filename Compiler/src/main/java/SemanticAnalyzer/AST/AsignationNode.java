@@ -22,4 +22,10 @@ public class AsignationNode extends AbstractSentenceNode {
     public AsignationNode(Token token, String struct, String method) {
         super(token, struct, method,"AsignationNode");
     }
+
+    public AsignationNode(Token token, String struct, String method, AbstractSentenceNode left, AbstractSentenceNode right {
+        super(token, struct, method,"AsignationNode");
+        this.left = left;
+        this.right = right;
+    }
 }

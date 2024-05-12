@@ -1223,24 +1223,46 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void asignacion(){
+    private AbstractSentenceNode asignacion(){
+
+        AbstractSentenceNode node;
+
         //Primeros AccesoVar-Simple
         if (verifyEquals("ObjID")){
-            accesoVarSimple();
+            AbstractSentenceNode callNode = new AsignationNode(this.actualToken,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName());
+            accesoVarSimple(callNode);
+            Token tokenOperation = this.actualToken;
             match("=");
-            expresion();
+            ExpressionNode expressionNode = expresion();
+            node = new AsignationNode(tokenOperation,
+                    this.symbolTable.getCurrentStruct().getName(),
+                    this.symbolTable.getCurrentMethod().getName(),
+                    callNode,expressionNode);
         }
         else {
             //`Primeros AccesoSelf-Simple
             if(verifyEquals("self")){
-                accesoSelfSimple();
+                // Analisis semantico AST ----------------------------------
+                AbstractSentenceNode callNode = new AsignationNode(this.actualToken,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName());
+                accesoSelfSimple(callNode);
+                //-----------------------------------------------------------
+                Token tokenOperation = this.actualToken;
                 match("=");
-                expresion();
+                ExpressionNode expressionNode = expresion();
+                node = new AsignationNode(tokenOperation,
+                        this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        callNode,expressionNode);
             }
             else {
                 throw createException(this.actualToken, List.of("ObjID" , "self"),this.actualToken.getLexeme());
             }
         }
+        return  node;
     }
 
     /**
