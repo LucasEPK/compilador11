@@ -9,7 +9,11 @@ import LexicalAnalyzer.Token;
 
 public class PrimaryNode extends AbstractPrimaryNode{
 
-    PrimaryNode right;
+    AbstractCallNode callNode;
+
+    PrimaryNode chainedNode;
+
+    String lastChainedType;
 
     /**
      * Constructor que asigna token, struct y método
@@ -20,5 +24,18 @@ public class PrimaryNode extends AbstractPrimaryNode{
      */
     public PrimaryNode(Token token, String struct, String method) {
         super(token, struct, method,"PrimaryNode");
+    }
+
+    public PrimaryNode(Token token, String struct, String method, AbstractCallNode callNode, PrimaryNode chainedNode) {
+        super(token, struct, method,"PrimaryNode");
+        this.callNode = callNode;
+        this.chainedNode = chainedNode;
+        this.setType(callNode.getType());
+    }
+
+    public PrimaryNode(Token token, String struct, String method, AbstractCallNode callNode) {
+        super(token, struct, method,"PrimaryNode");
+        this.callNode = callNode;
+        this.setType(callNode.getType());
     }
 }

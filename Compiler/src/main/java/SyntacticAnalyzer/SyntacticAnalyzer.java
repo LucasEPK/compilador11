@@ -2036,10 +2036,10 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstLiteral)){
             node = literal();
+            return node;
         } else {
             if (verifyEquals(firstPrimario)){
-                 node = primario();
-                 //ToDo
+                node = primario();
                 operandoF();
             } else {
                 throw createException(this.actualToken, List.of("StrLiteral" ,
@@ -2055,12 +2055,14 @@ public class    SyntacticAnalyzer {
      * Función para la regla 84 <OperandoF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void operandoF() {
+    private void operandoF(AbstractCallNode callNode) {
         String[] followOperandoF = {"!=" , "%" , "&&" ,
                 ")" , "*" , "+" , "," , "-" , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" ,
                 "$EOF$"};
         String[] firstEncadenado = {"."};
+
+        PrimaryNode node = null;
 
         if (verifyEquals(followOperandoF)) {
             //Lambda
@@ -2135,14 +2137,13 @@ public class    SyntacticAnalyzer {
      * Función para la regla 86 <Primario> de la Gramatica
      * @author Lucas Moyano
      * */
-    private PrimaryNode primario() {
+    private void primario() {
         String[] firstExpresionParentizada = {"("};
         String[] firstAccesoSelf = {"self"};
         String[] firstAccesoVarAndMethod = {"ObjID"};
         String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
 
-        PrimaryNode node;
 
         if (verifyEquals(firstExpresionParentizada)) {
             expresionParentizada();
@@ -2172,7 +2173,6 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
-        return node;
     }
 
     private void primarioF(){
@@ -2215,7 +2215,7 @@ public class    SyntacticAnalyzer {
         match("(");
         expresion();
         match(")");
-        expresionParentizadaF();
+       expresionParentizadaF();
     }
 
     /**

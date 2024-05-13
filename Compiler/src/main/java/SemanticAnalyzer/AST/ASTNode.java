@@ -61,4 +61,22 @@ public class ASTNode {
     public void setType(String type) {
         this.type = type;
     }
+
+
+    /**
+     * Método que devuelve el token
+     * @return Token
+     */
+    public Token getToken() {
+        return token;
+    }
+
+    /**
+     * Método que devuelve el type
+     * @return String con tipo
+     */
+
+    public String getType() {
+        return type;
+    }
 }
