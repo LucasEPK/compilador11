@@ -2144,7 +2144,6 @@ public class    SyntacticAnalyzer {
         String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
 
-
         if (verifyEquals(firstExpresionParentizada)) {
             expresionParentizada();
         } else {
