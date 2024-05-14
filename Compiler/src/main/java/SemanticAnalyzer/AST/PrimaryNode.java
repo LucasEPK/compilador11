@@ -11,9 +11,9 @@ public class PrimaryNode extends AbstractPrimaryNode{
 
     AbstractCallNode callNode;
 
-    PrimaryNode chainedNode;
+    PrimaryNode chainedNode = null;
 
-    String lastChainedType;
+    String lastChainedType = "void";
 
     /**
      * Constructor que asigna token, struct y método
