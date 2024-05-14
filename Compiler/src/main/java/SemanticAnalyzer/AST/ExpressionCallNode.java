@@ -13,5 +13,6 @@ public class ExpressionCallNode extends AbstractCallNode{
     public ExpressionCallNode(Token token, String struct, String method, AbstractExpressionNode expressionNode) {
         super(token, struct, method, "ExpressionCallNode");
         this.expressionNode = expressionNode;
+        this.setType(expressionNode.getType());
     }
 }

@@ -9,19 +9,19 @@ public class ASTNode {
     Token token;
 
     //Nombre de la clase a la cual pertence el nodo
-    String struct;
+    String struct = "";
 
     //Método al cual pertenece el nodo
 
-    String method;
+    String method = "";
 
     //Nombre del nodo
 
-    String nodeName;
+    String nodeName = "ASTNode";
 
     //Tipo del nodo
 
-    String type;
+    String type = "void";
 
     /**
      * Constructor que asigna token, struct y método

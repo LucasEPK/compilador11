@@ -43,6 +43,7 @@ public class IfThenElseNode extends  AbstractSentenceNode {
         this.ifExpressionNode = expressionNode;
         this.thenNode = thenNode;
         this.elseNode = elseNode;
+        this.setType(this.thenNode.getType());
 
     }
 
@@ -62,6 +63,7 @@ public class IfThenElseNode extends  AbstractSentenceNode {
         super(token,struct,method,"IfThenElseNode");
         this.ifExpressionNode = expressionNode;
         this.thenNode = thenNode;
+        this.setType(this.thenNode.getType());
 
     }
 }

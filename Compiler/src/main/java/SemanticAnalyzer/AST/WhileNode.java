@@ -39,5 +39,6 @@ public class WhileNode extends AbstractSentenceNode {
         super(token, struct, method,"WhileNode");
         this.whileNode = whileNode;
         this.doNode = doNode;
+        this.setType(doNode.getType());
     }
 }

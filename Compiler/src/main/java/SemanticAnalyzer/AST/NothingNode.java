@@ -12,5 +12,6 @@ public class NothingNode extends AbstractSentenceNode{
      */
     public NothingNode(Token token, String struct, String method) {
         super(token, struct, method,"NothingNode");
+        this.setType("void");
     }
 }

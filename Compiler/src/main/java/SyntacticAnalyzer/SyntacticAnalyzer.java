@@ -559,8 +559,6 @@ public class    SyntacticAnalyzer {
 
     private void bloqueMetodoF(){
 
-
-
         //Primeros Decl-Var-Locales-Estrella
         if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
                 , "StructID")){
@@ -570,12 +568,12 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if (verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
-
-
                 //Análisis semántico AST-----------------------------------------
                 BlockNode sentenceBlockNode;
                 ArrayList<AbstractSentenceNode> sentenceNodesList = new ArrayList<>();
+                //---------------------------------------------------------------
                 sentenciaEstrella(sentenceNodesList);
+                //---------------------------------------------------------------
                 sentenceBlockNode = new BlockNode(
                         this.actualToken,
                         this.symbolTable.getCurrentStruct().getName(),
@@ -619,7 +617,9 @@ public class    SyntacticAnalyzer {
                 //Análisis semántico AST-----------------------------------------
                 BlockNode sentenceBlockNode;
                 ArrayList<AbstractSentenceNode> sentenceNodesList = new ArrayList<>();
+                //---------------------------------------------------------------
                 sentenciaEstrella(sentenceNodesList);
+                //---------------------------------------------------------------
                 sentenceBlockNode = new BlockNode(
                         this.actualToken,
                         this.symbolTable.getCurrentStruct().getName(),
@@ -628,7 +628,6 @@ public class    SyntacticAnalyzer {
                 );
                 this.ast.addBlock(sentenceBlockNode);
                 //---------------------------------------------------------------
-                sentenciaEstrella(sentenceNodesList);
                 match("}");
             }
             else {
@@ -1687,13 +1686,17 @@ public class    SyntacticAnalyzer {
             //Lambda
         } else {
             if (verifyEquals(firstOpCompuesto)) {
+                //Analisis Semantico AST----------------------------------------
                 Token operation = this.actualToken;
+                //---------------------------------------------------------------
                 opCompuesto();
                 AbstractExpressionNode rightNode = expAd();
+                //---------------------------------------------------------------
                 expressionNode = new ExpressionNode(operation,
                         this.symbolTable.getCurrentStruct().getName(),
                         this.symbolTable.getCurrentMethod().getName(),
                         expressionNode,rightNode);
+                //---------------------------------------------------------------
             } else {
                 throw createException(this.actualToken, List.of("<" , "<=" , ">" , ">=",
                         "!=" , "&&" , ")" ,
@@ -2032,14 +2035,15 @@ public class    SyntacticAnalyzer {
         String[] firstPrimario = {"(" , "ObjID" , "StructID" ,
                 "new" , "self"};
 
-        AbstractPrimaryNode node;
+        AbstractPrimaryNode node = null;
 
         if (verifyEquals(firstLiteral)){
             node = literal();
             return node;
         } else {
             if (verifyEquals(firstPrimario)){
-                node = primario();
+                //node = primario();
+                primario();
                 operandoF();
             } else {
                 throw createException(this.actualToken, List.of("StrLiteral" ,
@@ -2055,7 +2059,7 @@ public class    SyntacticAnalyzer {
      * Función para la regla 84 <OperandoF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void operandoF(AbstractCallNode callNode) {
+    private void operandoF() {
         String[] followOperandoF = {"!=" , "%" , "&&" ,
                 ")" , "*" , "+" , "," , "-" , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" ,
