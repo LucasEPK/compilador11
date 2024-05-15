@@ -20,10 +20,13 @@ public class ReturnNode extends AbstractSentenceNode {
      */
     public ReturnNode(Token token, String struct, String method) {
         super(token, struct, method,"RetNode");
+        this.setType("void");
+        this.returnValueNode = null;
     }
 
     public ReturnNode(Token token, String struct, String method, AbstractExpressionNode returnValueNode) {
         super(token, struct, method,"RetNode");
         this.returnValueNode = returnValueNode;
+        //ToDo this.setType(this.returnValueNode.getType());
     }
 }

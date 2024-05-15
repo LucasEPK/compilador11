@@ -7,9 +7,9 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class ExpUn extends ExpressionNode {
+public class ExpUn extends AbstractExpressionNode {
 
-    AbstractSentenceNode expresion;
+    AbstractExpressionNode expresion;
 
     /**
      * Constructor que asigna token, struct y método
@@ -19,7 +19,7 @@ public class ExpUn extends ExpressionNode {
      * @param method nombre del método al que pertenece
      */
     public ExpUn(Token token, String struct, String method) {
-        super(token, struct, method);
+        super(token, struct, method,"UnaryExpressionNode");
     }
 
 }

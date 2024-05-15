@@ -10,7 +10,7 @@ import LexicalAnalyzer.Token;
 public class AsignationNode extends AbstractSentenceNode {
 
     AsignationVariableCallNode left;
-    AbstractSentenceNode right;
+    AbstractExpressionNode right;
 
     /**
      * Constructor que asigna token, struct y método
@@ -33,9 +33,10 @@ public class AsignationNode extends AbstractSentenceNode {
      * @param right Nodo derecho
      */
 
-    public AsignationNode(Token token, String struct, String method, AsignationVariableCallNode left, AbstractSentenceNode right) {
+    public AsignationNode(Token token, String struct, String method, AsignationVariableCallNode left, AbstractExpressionNode right) {
         super(token, struct, method,"AsignationNode");
         this.left = left;
         this.right = right;
+        this.setType("void");
     }
 }

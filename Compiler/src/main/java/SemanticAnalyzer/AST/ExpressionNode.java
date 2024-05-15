@@ -9,8 +9,8 @@ import LexicalAnalyzer.Token;
 
 public class ExpressionNode extends  AbstractExpressionNode {
 
-    AbstractSentenceNode left;
-    AbstractSentenceNode rigth;
+    AbstractExpressionNode left;
+    AbstractExpressionNode rigth;
 
 
     /**
@@ -24,7 +24,7 @@ public class ExpressionNode extends  AbstractExpressionNode {
         super(token, struct, method,"ExpressionNode");
     }
 
-    public ExpressionNode(Token token, String struct, String method, AbstractSentenceNode left, AbstractSentenceNode rigth) {
+    public ExpressionNode(Token token, String struct, String method, AbstractExpressionNode left, AbstractExpressionNode rigth) {
         super(token, struct, method,"ExpressionNode");
         this.left = left;
         this.rigth = rigth;

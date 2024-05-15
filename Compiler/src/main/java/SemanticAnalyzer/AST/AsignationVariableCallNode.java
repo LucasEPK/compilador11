@@ -2,7 +2,7 @@ package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
 
-public class AsignationVariableCallNode extends  AbstractSentenceNode{
+public class    AsignationVariableCallNode extends  AbstractCallNode{
 
 
     //booleano para saber si es o no array
@@ -10,7 +10,7 @@ public class AsignationVariableCallNode extends  AbstractSentenceNode{
 
     //Como accedo a la posición
 
-    AbstractSentenceNode accesPos;
+    AbstractSentenceNode accesPos = null;
 
     //Nodo que llama
     AsignationVariableCallNode callNode;
@@ -19,6 +19,7 @@ public class AsignationVariableCallNode extends  AbstractSentenceNode{
 
     public AsignationVariableCallNode(Token token, String struct, String method) {
         super(token, struct, method,"AsignationVariableCallNode");
+        this.setType(struct);
     }
 
     /**
