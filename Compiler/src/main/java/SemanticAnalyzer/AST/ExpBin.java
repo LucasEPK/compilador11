@@ -13,8 +13,8 @@ public class ExpBin extends ExpressionNode {
 
     Node right;
 
-    public ExpBin(Token token, String struct, String method) {
-        super(token, struct, method);
+    public ExpBin(String struct, String method) {
+        super(struct, method);
     }
 
     @Override

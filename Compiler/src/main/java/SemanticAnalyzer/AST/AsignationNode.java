@@ -10,11 +10,11 @@ import LexicalAnalyzer.Token;
 public class AsignationNode extends SentenceNode implements Commons {
 
     Node left;
-    Node right;
+    ExpressionNode right;
 
 
     public AsignationNode(Token token, String struct, String method) {
-        super(token, struct, method);
+        super(struct, method);
     }
 
     @Override

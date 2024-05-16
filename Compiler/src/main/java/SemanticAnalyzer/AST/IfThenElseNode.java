@@ -16,8 +16,8 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
     SentenceNode elseNode;
 
 
-    public IfThenElseNode(Token token, String struct, String method) {
-        super(token, struct, method);
+    public IfThenElseNode(String struct, String method) {
+        super(struct, method);
     }
 
     @Override

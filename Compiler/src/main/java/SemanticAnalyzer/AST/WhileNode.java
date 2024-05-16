@@ -14,8 +14,8 @@ public class WhileNode extends SentenceNode {
     SentenceNode doNode;
 
 
-    public WhileNode(Token token, String struct, String method) {
-        super(token, struct, method);
+    public WhileNode(String struct, String method) {
+        super(struct, method);
     }
 
     @Override

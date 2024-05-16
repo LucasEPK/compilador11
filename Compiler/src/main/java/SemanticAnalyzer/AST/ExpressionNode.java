@@ -11,7 +11,7 @@ public abstract class ExpressionNode extends  SentenceNode implements Commons {
 
     String operator;
 
-    public ExpressionNode(Token token, String struct, String method) {
-        super(token, struct, method);
+    public ExpressionNode(String struct, String method) {
+        super(struct, method);
     }
 }

@@ -12,8 +12,8 @@ public class ExpUn extends ExpressionNode {
     Node right;
 
 
-    public ExpUn(Token token, String struct, String method) {
-        super(token, struct, method);
+    public ExpUn(String struct, String method) {
+        super(struct, method);
     }
 
     @Override

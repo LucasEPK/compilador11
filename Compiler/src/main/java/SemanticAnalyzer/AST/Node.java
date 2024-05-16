@@ -7,11 +7,18 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class Node extends SentenceNode implements Commons {
+public class Node implements Commons {
 
+    Token token;
+
+    String struct;
+
+    String method;
 
     public Node(Token token, String struct, String method) {
-        super(token, struct, method);
+        this.token = token;
+        this.struct = struct;
+        this.method = method;
     }
 
     @Override

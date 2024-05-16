@@ -12,8 +12,8 @@ public class ReturnNode extends SentenceNode implements Commons {
     ExpressionNode returnValueNode;
 
 
-    public ReturnNode(Token token, String struct, String method) {
-        super(token, struct, method);
+    public ReturnNode(String struct, String method) {
+        super(struct, method);
     }
 
     @Override
