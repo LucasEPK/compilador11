@@ -11,14 +11,14 @@ public class Node implements Commons {
 
     Token token;
 
-    String struct;
+    String type;
 
-    String method;
+    String lexeme;
 
-    public Node(Token token, String struct, String method) {
+    public Node(Token token, String type) {
         this.token = token;
-        this.struct = struct;
-        this.method = method;
+        this.type = type;
+        this.lexeme = token.getLexeme();
     }
 
     @Override

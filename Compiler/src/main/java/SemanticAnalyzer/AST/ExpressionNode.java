@@ -7,7 +7,7 @@ package SemanticAnalyzer.AST;
 
 public abstract class ExpressionNode extends  SentenceNode implements Commons {
 
-    String operator;
+    String operator = null;
 
     public ExpressionNode(String struct, String method) {
         super(struct, method);
