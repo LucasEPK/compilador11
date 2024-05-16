@@ -1,19 +1,57 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
+
 /**
- * Clase representate un ToDo en nustro AST
+ * Clase representate de las sentencias en nustro AST
  * @author Yeumen Silva
  */
 
-public abstract class SentenceNode {
+public abstract class SentenceNode implements Commons {
 
-    SemanticContext currentContext;
+    String struct;
 
-    /**
-     * En este constructor se pasa el contexto de la tabla de simbolos desde el bloque
-     * @author Lucas Moyano
-     * */
-    public SentenceNode(SemanticContext currentContext) {
-        this.currentContext = currentContext;
+    String method;
+
+    Token token;
+
+    String type;
+    public SentenceNode(Token token, String struct, String method ) {
+
+        this.token = token;
+        this.struct = struct;
+        this.method = method;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public String getStruct() {
+        return struct;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public void setStruct(String struct) {
+        this.struct = struct;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 }

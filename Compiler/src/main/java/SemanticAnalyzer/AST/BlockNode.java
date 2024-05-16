@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
@@ -10,25 +11,40 @@ import java.util.List;
  * @author Yeumen Silva
  */
 
-public class BlockNode extends SentenceNode {
+public class BlockNode extends SentenceNode implements Commons {
 
     private List<SentenceNode> sentenceList = new ArrayList<SentenceNode>();
 
-    /**
+    public BlockNode(Token token, String struct, String method) {
+        super(token, struct, method);
+    }
+
+    @Override
+    public void toJson(int tabs) {
+
+    }
+
+    @Override
+    public void consolidate() {
+
+    }
+
+    /*/**
      * En este constructor se establece el contexto de la tabla de simbolos en donde está el bloque
      * @author Lucas Moyano
-     * */
+     *
     public BlockNode(SymbolTable symbolTable) {
         // Con esto se agrega el currentStruct y currentMethod al contexto semantico del sentenceNode
         super(new SemanticContext(symbolTable.getCurrentStruct(), symbolTable.getCurrentMethod()));
     }
-
+    */
+    /*
     /**
      * Esta función se encarga de elegir el tipo de sentencia que se va a agregar en la lista
      * después de eso la agrega a la sentenceList
      * @param sentenceType el tipo de sentencia que se quiere en String
      * @author Lucas Moyano
-     * */
+     *
     public void addNewSentence(String sentenceType){
         SentenceNode newSentence = null;
 
@@ -51,8 +67,7 @@ public class BlockNode extends SentenceNode {
 
         sentenceList.add(newSentence);
     }
+    */
 
-    public SemanticContext getCurrentContext() {
-        return currentContext;
-    }
+
 }

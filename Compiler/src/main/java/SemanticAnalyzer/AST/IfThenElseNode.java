@@ -1,11 +1,13 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase representate una sentencia if-else en nustro AST
  * @author Yeumen Silva
  */
 
-public class IfThenElseNode extends  SentenceNode {
+public class IfThenElseNode extends  SentenceNode implements Commons {
 
     ExpressionNode ifNode;
 
@@ -13,7 +15,18 @@ public class IfThenElseNode extends  SentenceNode {
 
     SentenceNode elseNode;
 
-    public IfThenElseNode(SemanticContext currentContext){
-        super(currentContext);
+
+    public IfThenElseNode(Token token, String struct, String method) {
+        super(token, struct, method);
+    }
+
+    @Override
+    public void toJson(int tabs) {
+
+    }
+
+    @Override
+    public void consolidate() {
+
     }
 }
