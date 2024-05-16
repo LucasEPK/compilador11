@@ -43,9 +43,10 @@ public class BlockNode extends SentenceNode implements Commons {
      * Esta función se encarga de elegir el tipo de sentencia que se va a agregar en la lista
      * después de eso la agrega a la sentenceList
      * @param sentenceType el tipo de sentencia que se quiere en String
+     * @return devuelve la nueva sentencia creada
      * @author Lucas Moyano
      */
-    public void addNewSentence(String sentenceType){
+    public SentenceNode addNewSentence(String sentenceType){
         SentenceNode newSentence = null;
 
         switch (sentenceType) {
@@ -72,6 +73,8 @@ public class BlockNode extends SentenceNode implements Commons {
         }
 
         sentenceList.add(newSentence);
+
+        return newSentence;
     }
 
 }
