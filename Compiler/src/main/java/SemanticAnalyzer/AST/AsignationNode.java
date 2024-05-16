@@ -13,7 +13,7 @@ public class AsignationNode extends SentenceNode implements Commons {
     ExpressionNode right;
 
 
-    public AsignationNode(Token token, String struct, String method) {
+    public AsignationNode(String struct, String method) {
         super(struct, method);
     }
 

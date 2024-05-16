@@ -52,17 +52,23 @@ public class BlockNode extends SentenceNode implements Commons {
 
         switch (sentenceType) {
             case "Asignation":
-                newSentence = new AsignationNode(getCurrentContext());
+                newSentence = new AsignationNode(getStruct(), getMethod());
+                break;
             case "ExpBin":
-                newSentence = new ExpBin(getCurrentContext());
+                newSentence = new ExpBin(getStruct(), getMethod());
+                break;
             case "ExpUn":
-                newSentence = new ExpUn(getCurrentContext());
+                newSentence = new ExpUn(getStruct(), getMethod());
+                break;
             case "IfThenElse":
-                newSentence = new IfThenElseNode(getCurrentContext());
+                newSentence = new IfThenElseNode(getStruct(), getMethod());
+                break;
             case "Return":
-                newSentence = new ReturnNode(getCurrentContext());
+                newSentence = new ReturnNode(getStruct(), getMethod());
+                break;
             case "While":
-                newSentence = new WhileNode(getCurrentContext());
+                newSentence = new WhileNode(getStruct(), getMethod());
+                break;
             default:
                 assert newSentence != null: "ERROR: el tipo de sentencia no existe";
         }
