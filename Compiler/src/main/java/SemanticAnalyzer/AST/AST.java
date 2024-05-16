@@ -32,6 +32,11 @@ public class AST implements Commons {
         return  newBlock;
     }
     */
+
+    /**
+     * Agrega un bloque a la lista
+     * @param block bloque a agregar
+     */
     public void addBlock(BlockNode block) {
         blockList.add(block);
     }
