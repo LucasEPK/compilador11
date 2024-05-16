@@ -3,8 +3,12 @@ package SyntacticAnalyzer;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.AST.AST;
+import SemanticAnalyzer.AST.BlockNode;
+import SemanticAnalyzer.AST.SentenceNode;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +24,8 @@ public class    SyntacticAnalyzer {
     private LexicalAnalyzer lexicalAnalyzer;
 
     private SymbolTable symbolTable = new SymbolTable();
+
+    private AST ast = new AST(symbolTable);
 
 
     /**
@@ -564,7 +570,14 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if (verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
-                sentenciaEstrella();
+                //Análisis semántico AST-----------------------------------------
+                ArrayList<SentenceNode> sentenceNodeList = new ArrayList<>();
+                sentenciaEstrella(sentenceNodeList);
+                BlockNode blockNode = new BlockNode(this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        sentenceNodeList);
+                this.ast.addBlock(blockNode);
+                //---------------------------------------------------------------
                 match("}");
             }else {
                 if(verifyEquals("}")) {
@@ -593,7 +606,14 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
-                sentenciaEstrella();
+                //Análisis semántico AST-----------------------------------------
+                ArrayList<SentenceNode> sentenceNodeList = new ArrayList<>();
+                sentenciaEstrella(sentenceNodeList);
+                BlockNode blockNode = new BlockNode(this.symbolTable.getCurrentStruct().getName(),
+                        this.symbolTable.getCurrentMethod().getName(),
+                        sentenceNodeList);
+                this.ast.addBlock(blockNode);
+                //---------------------------------------------------------------
                 match("}");
             }
             else {
@@ -644,7 +664,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaEstrella(){
+    private void sentenciaEstrella(ArrayList<SentenceNode> sentenceNodeList){
         sentencia();
         sentenciaEstrellaF();
     }
@@ -658,7 +678,7 @@ public class    SyntacticAnalyzer {
         //Primeros Sentencia-Estrella
         if(verifyEquals("(" , ";" , "ObjID" , "if"
                 , "ret" , "self" , "while", "{")){
-            sentenciaEstrella();
+            sentenciaEstrella(sentenceNodeList);
         }
         else {
             //Siguientes Sentencia-Estrella-F
@@ -1069,7 +1089,7 @@ public class    SyntacticAnalyzer {
             //Primeros Setntencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if" , "ret" ,
                     "self" , "while" , "{")){
-                sentenciaEstrella();
+                sentenciaEstrella(sentenceNodeList);
                 match("}");
             }
             else {
