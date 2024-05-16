@@ -15,6 +15,10 @@ public class ExpUn extends ExpressionNode {
         super(struct, method);
     }
 
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
     @Override
     public void toJson(int tabs) {
 
