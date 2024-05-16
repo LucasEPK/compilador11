@@ -3,7 +3,7 @@ package SemanticAnalyzer.AST;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase representate un ToDo nustro AST
+ * Clase representate un primario
  * @author Yeumen Silva
  */
 

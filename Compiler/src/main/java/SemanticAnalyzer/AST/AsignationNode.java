@@ -1,6 +1,5 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
  * Clase representate la asignación en nustro AST

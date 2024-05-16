@@ -1,7 +1,5 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
-
 /**
  * Clase representate una sentencia while en nustro AST
  * @author Yeumen Silva

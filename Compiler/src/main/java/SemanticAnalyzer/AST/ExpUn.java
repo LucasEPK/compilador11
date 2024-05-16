@@ -1,6 +1,5 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
  * Clase representate una expresión unaria en nustro AST

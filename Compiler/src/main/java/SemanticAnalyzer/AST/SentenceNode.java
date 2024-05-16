@@ -1,9 +1,8 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
- * Clase representate de las sentencias en nustro AST
+ * Clase representate de las sentencias en nuestro AST
  * @author Yeumen Silva
  */
 

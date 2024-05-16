@@ -1,9 +1,8 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
- * Clase representate un return en nustro AST
+ * Clase representate un return en nuestro AST
  * @author Yeumen Silva
  */
 

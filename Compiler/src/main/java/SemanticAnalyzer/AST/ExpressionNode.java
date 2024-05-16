@@ -1,7 +1,7 @@
 package SemanticAnalyzer.AST;
 
 /**
- * Clase representate //ToDo
+ * Clase abstracta representate una expresión en general
  * @author Yeumen Silva
  */
 

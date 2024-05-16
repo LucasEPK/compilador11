@@ -3,7 +3,7 @@ package SemanticAnalyzer.AST;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase representate un ToDo en nustro AST
+ * Clase representate una variable o un literal
  * @author Yeumen Silva
  */
 
