@@ -11,7 +11,8 @@ public class PrimaryNode extends Node{
 
     PrimaryNode right;
 
-    public PrimaryNode(Token token, String struct, String method) {
-        super(token, struct, method);
+    public PrimaryNode(Token token) {
+        //TODO: agregar un tipo a primo en vez de poner null
+        super(token, null);
     }
 }
