@@ -1,7 +1,5 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
-
 /**
  * Clase representate //ToDo
  * @author Yeumen Silva

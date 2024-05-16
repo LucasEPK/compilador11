@@ -40,15 +40,6 @@ public class BlockNode extends SentenceNode implements Commons {
 
     }
 
-    /**
-     * En este constructor se establece el contexto de la tabla de simbolos en donde está el bloque
-     * @author Lucas Moyano
-     *
-    public BlockNode(SymbolTable symbolTable) {
-        // Con esto se agrega el currentStruct y currentMethod al contexto semantico del sentenceNode
-        super(new SemanticContext(symbolTable.getCurrentStruct(), symbolTable.getCurrentMethod()));
-    }
-    */
 
     /**
      * Esta función se encarga de elegir el tipo de sentencia que se va a agregar en la lista
@@ -79,6 +70,5 @@ public class BlockNode extends SentenceNode implements Commons {
         sentenceList.add(newSentence);
     }
     */
-
 
 }

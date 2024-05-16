@@ -19,21 +19,17 @@ public class AST implements Commons {
         this.symbolTable = symbolTable;
     }
 
-    /*
+
     /**
      * Agrega un nuevo bloque a la lista
      * @return El nuevo bloque añadido a la lista
      * @author Lucas Moyano
-     *
+     */
     public BlockNode addNewBlock() {
-        BlockNode newBlock = new BlockNode(symbolTable);
+        BlockNode newBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         blockList.add(newBlock);
 
         return  newBlock;
-    }
-    */
-    public void addBlock(BlockNode block) {
-        blockList.add(block);
     }
 
     public List<BlockNode> getBlockList() {
