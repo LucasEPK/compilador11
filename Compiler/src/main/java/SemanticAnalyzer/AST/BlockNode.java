@@ -46,7 +46,7 @@ public class BlockNode extends SentenceNode implements Commons {
      * después de eso la agrega a la sentenceList
      * @param sentenceType el tipo de sentencia que se quiere en String
      * @author Lucas Moyano
-     *
+     */
     public void addNewSentence(String sentenceType){
         SentenceNode newSentence = null;
 
@@ -69,6 +69,5 @@ public class BlockNode extends SentenceNode implements Commons {
 
         sentenceList.add(newSentence);
     }
-    */
 
 }
