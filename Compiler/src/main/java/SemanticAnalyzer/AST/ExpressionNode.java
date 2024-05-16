@@ -5,11 +5,11 @@ package SemanticAnalyzer.AST;
  * @author Yeumen Silva
  */
 
-public abstract class ExpressionNode extends  SentenceNode {
+public abstract class ExpressionNode extends  SentenceNode implements Commons {
 
     String operator;
 
-    public ExpressionNode(SemanticContext currentContext) {
-        super(currentContext);
+    public ExpressionNode(String struct, String method) {
+        super(struct, method);
     }
 }

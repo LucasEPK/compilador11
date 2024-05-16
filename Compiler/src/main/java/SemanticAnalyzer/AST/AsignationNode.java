@@ -1,17 +1,29 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase representate la asignación en nustro AST
  * @author Yeumen Silva
  */
 
-public class AsignationNode extends SentenceNode {
+public class AsignationNode extends SentenceNode implements Commons {
 
     Node left;
-    Node right;
+    ExpressionNode right;
 
-    public AsignationNode(SemanticContext currentContext){
-        super(currentContext);
+
+    public AsignationNode(Token token, String struct, String method) {
+        super(struct, method);
     }
 
+    @Override
+    public void toJson(int tabs) {
+
+    }
+
+    @Override
+    public void consolidate() {
+
+    }
 }

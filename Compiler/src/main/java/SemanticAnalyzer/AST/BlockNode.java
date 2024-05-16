@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
@@ -10,25 +11,42 @@ import java.util.List;
  * @author Yeumen Silva
  */
 
-public class BlockNode extends SentenceNode {
+public class BlockNode extends SentenceNode implements Commons {
 
     private List<SentenceNode> sentenceList = new ArrayList<SentenceNode>();
 
-    /**
-     * En este constructor se establece el contexto de la tabla de simbolos en donde está el bloque
-     * @author Lucas Moyano
-     * */
-    public BlockNode(SymbolTable symbolTable) {
-        // Con esto se agrega el currentStruct y currentMethod al contexto semantico del sentenceNode
-        super(new SemanticContext(symbolTable.getCurrentStruct(), symbolTable.getCurrentMethod()));
+    public BlockNode(String struct, String method) {
+        super(struct, method);
     }
+
+    /**
+     * Constructor de la clase que recibe una lista de sentencias
+     * @param struct nombre de la clase
+     * @param method nombre del metodo
+     * @param sentenceList lista de sentencias que contiene el bloque
+     */
+    public BlockNode(String struct, String method, ArrayList<SentenceNode> sentenceList) {
+        super(struct, method);
+        this.sentenceList = sentenceList;
+    }
+
+    @Override
+    public void toJson(int tabs) {
+
+    }
+
+    @Override
+    public void consolidate() {
+
+    }
+
 
     /**
      * Esta función se encarga de elegir el tipo de sentencia que se va a agregar en la lista
      * después de eso la agrega a la sentenceList
      * @param sentenceType el tipo de sentencia que se quiere en String
      * @author Lucas Moyano
-     * */
+     *
     public void addNewSentence(String sentenceType){
         SentenceNode newSentence = null;
 
@@ -51,8 +69,6 @@ public class BlockNode extends SentenceNode {
 
         sentenceList.add(newSentence);
     }
+    */
 
-    public SemanticContext getCurrentContext() {
-        return currentContext;
-    }
 }

@@ -7,12 +7,27 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class Node {
+public class Node implements Commons {
 
-    //Token con token, lexema, fila y columna
-    Token nodeToken;
+    Token token;
 
-    String type;
+    String struct;
 
-    String lexeme;
+    String method;
+
+    public Node(Token token, String struct, String method) {
+        this.token = token;
+        this.struct = struct;
+        this.method = method;
+    }
+
+    @Override
+    public void toJson(int tabs) {
+
+    }
+
+    @Override
+    public void consolidate() {
+
+    }
 }
