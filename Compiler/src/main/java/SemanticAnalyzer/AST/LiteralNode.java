@@ -9,8 +9,8 @@ import LexicalAnalyzer.Token;
 
 public class LiteralNode extends ExpressionNode{
 
-    public LiteralNode(String struct, String method, Token token){
-        super(struct, method, token);
+    public LiteralNode(String struct, String method, Token token, Types type){
+        super(struct, method, token, type);
     }
 
     @Override
