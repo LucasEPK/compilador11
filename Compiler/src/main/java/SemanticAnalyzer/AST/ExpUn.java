@@ -29,12 +29,17 @@ public class ExpUn extends ExpOp {
     }
 
     @Override
-    public void toJson(int tabs) {
-
+    public String toJson(int tabs) {
+        return null;
     }
 
     @Override
     public void consolidate() {
 
+    }
+
+    @Override
+    public String addtabs(int tabs) {
+        return null;
     }
 }

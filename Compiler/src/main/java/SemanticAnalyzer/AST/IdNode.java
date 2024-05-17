@@ -21,4 +21,9 @@ public class IdNode extends PrimaryNode{
     }
 
 
+    @Override
+    public String addtabs(int tabs) {
+        return null;
+    }
+
 }

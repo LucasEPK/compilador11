@@ -44,8 +44,9 @@ public class AST implements Commons {
     }
 
     @Override
-    public void toJson(int tabs) {
-
+    public String toJson(int tabs) {
+        return null;
+    }
 
     /**
      * Método que recorre la lista de bloques y llama al método toJson de cada uno
@@ -53,9 +54,9 @@ public class AST implements Commons {
      * @return void
      * @autor Yeumen Silva
      * */
-    public String toJson(int tabs,String imputPath) {
+    public String toJson(int tabs,String inputPath) {
         String json = "{\n";
-        json += addtabs(tabs) + "\"nombre\": + \"" + imputPath + "\",\n";
+        json += addtabs(tabs) + "\"nombre\": + \"" + inputPath + "\",\n";
         json += addtabs(tabs) + "\"clases\": [\n";
 
         //Recorro todos los bloques del AST
@@ -67,15 +68,11 @@ public class AST implements Commons {
         json += "}\n";
 
         //Llamo a funcion para gaurdar json como archivo
-        saveJson(json,imputPath);
+        saveJson(json,inputPath);
 
         return json;
     }
 
-    @Override
-    public String toJson(int tabs) {
-        return null;
-    }
 
     @Override
     public void consolidate() {

@@ -29,8 +29,8 @@ public abstract class PrimaryNode extends Operands {
     }
 
     @Override
-    public void toJson(int tabs) {
-
+    public String toJson(int tabs) {
+        return null;
     }
 
     @Override
