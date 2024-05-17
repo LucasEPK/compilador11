@@ -1649,7 +1649,7 @@ public class    SyntacticAnalyzer {
                 "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpUn)) {
-            ExpressionNode expNode = expUn();
+            ExpressionNode expNode = expUn(null);
             expMulF();
             // Analisis Semantico AST -------------------------
             return expNode;
@@ -1696,7 +1696,7 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstOpMul)) {
             opMul();
-            expUn();
+            expUn(null);
             expMulRF();
         } else {
             throw createException(this.actualToken, List.of("%" , "*" , "/"),this.actualToken.getLexeme());
@@ -1728,23 +1728,35 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 77 <ExpUn> de la Gramatica
+     * además se fija si se ha realizado una expresión unaria
+     * @param operator token que nos sirve a identificar si se ha realizado una expresión unaria
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private ExpressionNode expUn() {
+    private ExpressionNode expUn(Token operator) {
         String[] firstOpUnario = {"!" , "+" , "++" , "-" , "--"};
         String[] firstOperando = {"(" , "StrLiteral" ,
                 "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
+        // AST------------------------------
+        ExpressionNode expNode;
+        // ----------------------------------
+
         if (verifyEquals(firstOpUnario)) {
-            opUnario();
-            expUn();
+            operator = opUnario();
+            expNode = expUn(operator);
         } else {
             if (verifyEquals(firstOperando)) {
-                ExpressionNode expNode = operando();
+                expNode = operando();
+
                 // Analisis Semantico AST -------------------------
-                return expNode;
+                if (operator != null) { // Esto significa que se ha hecho una expresión unaria
+                    // devolvemos la expresión unaria
+                    ExpressionNode newExpNode = new ExpUn(symbolTable.getCurrentStruct().getName(),
+                            symbolTable.getCurrentMethod().getName(), operator, expNode);
+                    return newExpNode;
+                }
                 // ------------------------------------------------
             } else {
                 throw createException(this.actualToken, List.of("!" , "+" , "++" , "-" , "--", "(" , "StrLiteral" ,
@@ -1753,7 +1765,7 @@ public class    SyntacticAnalyzer {
             }
         }
 
-        return null;
+        return expNode;
     }
 
     /**
@@ -1809,13 +1821,18 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 81 <OpUnario> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opUnario() {
+    private Token opUnario() {
         String[] firstPlus = {"+"};
         String[] firstMinus = {"-"};
         String[] firstExclamation = {"!"};
         String[] firstPlusPlus = {"++"};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstPlus)){
             match("+");
@@ -1834,6 +1851,10 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST-------------------------
+        return operator;
+        // ------------------------------
     }
 
     /**

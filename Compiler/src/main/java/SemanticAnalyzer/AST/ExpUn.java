@@ -20,6 +20,11 @@ public class ExpUn extends ExpOp {
         super(struct, method, operator);
     }
 
+    public ExpUn(String struct, String method, Token operator, ExpressionNode right) {
+        super(struct, method, operator);
+        this.right = right;
+    }
+
     public void setRight(ExpressionNode right) {
         this.right = right;
     }
