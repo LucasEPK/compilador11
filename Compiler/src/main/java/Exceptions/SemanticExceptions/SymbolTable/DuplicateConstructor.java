@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Lucas Moyano
  */
 
-public class DuplicateConstructor extends SemanticException {
+public class DuplicateConstructor extends SymbolTableException {
 
     public DuplicateConstructor(Token token){
         super(token);

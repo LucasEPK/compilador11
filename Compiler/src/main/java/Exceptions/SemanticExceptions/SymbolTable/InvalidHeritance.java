@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * Clase que representa los errores de heredar de una clase primitiva
  * @author Yeumen Silva
  */
-public class InvalidHeritance extends SemanticException {
+public class InvalidHeritance extends SymbolTableException {
 
     public InvalidHeritance(Token token){
         super(token);

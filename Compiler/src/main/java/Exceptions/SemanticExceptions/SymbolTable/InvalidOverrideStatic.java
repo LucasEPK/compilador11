@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
  * un metodo estatico y el otro no
  * @author Yeumen Silva
  */
-public class InvalidOverrideStatic extends SemanticException {
+public class InvalidOverrideStatic extends SymbolTableException {
 
     public InvalidOverrideStatic(Token token){
         super(token);

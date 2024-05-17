@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class InvalidOverrideLength extends SemanticException {
+public class InvalidOverrideLength extends SymbolTableException {
 
     public InvalidOverrideLength(Token token){
         super(token);

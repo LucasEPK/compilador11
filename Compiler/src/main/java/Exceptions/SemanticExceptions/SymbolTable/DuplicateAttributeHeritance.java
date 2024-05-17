@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class DuplicateAttributeHeritance  extends SemanticException {
+public class DuplicateAttributeHeritance  extends SymbolTableException {
 
     public DuplicateAttributeHeritance(Token token){
         super(token);

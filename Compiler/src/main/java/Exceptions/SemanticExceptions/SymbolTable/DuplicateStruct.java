@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * Clase que representa los errores de declarar dos struct para una misma struct
  * @author Yeumen Silva
  */
-public class DuplicateStruct extends SemanticException {
+public class DuplicateStruct extends SymbolTableException {
 
     public DuplicateStruct(Token token){
         super(token);

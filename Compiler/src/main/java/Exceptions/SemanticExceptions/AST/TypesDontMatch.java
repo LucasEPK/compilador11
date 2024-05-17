@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class TypesDontMatch extends SemanticException {
+public class TypesDontMatch extends ASTExcpetion {
 
     public TypesDontMatch(Token token){
         super(token);

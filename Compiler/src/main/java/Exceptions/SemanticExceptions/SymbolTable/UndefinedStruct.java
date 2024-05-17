@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class UndefinedStruct extends SemanticException {
+public class UndefinedStruct extends SymbolTableException {
 
     public UndefinedStruct(Token token){
         super(token);

@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * un tipo de return distinto
  * @author Yeumen Silva
  */
-public class InvalidOverrideReturn extends SemanticException {
+public class InvalidOverrideReturn extends SymbolTableException {
 
     public InvalidOverrideReturn(Token token){
         super(token);

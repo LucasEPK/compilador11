@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * con igual nombre para una misma struct
  * @author Lucas Moyano
  */
-public class DuplicateMethod extends SemanticException {
+public class DuplicateMethod extends SymbolTableException {
 
     public DuplicateMethod(Token token){
         super(token);

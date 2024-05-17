@@ -1,7 +1,9 @@
 package SyntacticAnalyzer;
 
 import Exceptions.LexicalExceptions.LexicalException;
+import Exceptions.SemanticExceptions.AST.ArrayOutOfRange;
 import Exceptions.SemanticExceptions.SemanticException;
+import Exceptions.SemanticExceptions.SymbolTable.SymbolTableException;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import FileManager.FileManager;
 import LexicalAnalyzer.LexicalAnalyzer;
@@ -46,6 +48,8 @@ public class SyntacticExecutor {
         try {
             lexicalAnalyzer = new LexicalAnalyzer(file);
             symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
+            this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
+            printCorrectSemnaticSentence();
         }
         catch (LexicalException exception){
             this.printExceptionLexical(exception);
@@ -56,8 +60,7 @@ public class SyntacticExecutor {
             exit(0);
         }
         catch (SemanticException exception){
-            this.printExceptionSemanticDecl(exception);
-            flag = false;
+            this.printExceptionSemantic(exception);
         }
 
         /*
@@ -68,10 +71,6 @@ public class SyntacticExecutor {
             fileManager.saveResults(List.of("CORRECTO: ANALISIS SINTACTICO"));
         }
          */
-        if (flag){
-            this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
-            printCorrectSemnatic();
-        }
 
 
     }
@@ -114,16 +113,28 @@ public class SyntacticExecutor {
 
     }
 
-    public void printExceptionSemanticDecl(SemanticException exception){
+    public void printExceptionSemantic(SemanticException exception){
 
         Token tokenException = exception.getToken();
 
-        System.out.println("ERROR: SEMÁNTICO - DECLARACIONES");
-        System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
+        if(exception instanceof SymbolTableException){
+            System.out.println("ERROR: SEMÁNTICO - DECLARACIONES");
+            System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
 
-        System.out.println("| Linea " + tokenException.getRow() +
-                " | COLUMNA " + tokenException.getColumn() +
-                " | " + exception.getExceptionType() );
+            System.out.println("| Linea " + tokenException.getRow() +
+                    " | COLUMNA " + tokenException.getColumn() +
+                    " | " + exception.getExceptionType() );
+        }
+        else {
+            System.out.println("ERROR: SEMÁNTICO - SENTENCIAS");
+            System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
+
+            System.out.println("| Linea " + tokenException.getRow() +
+                    " | COLUMNA " + tokenException.getColumn() +
+                    " | " + exception.getExceptionType() );
+        }
+
+
 
     }
 
@@ -138,6 +149,11 @@ public class SyntacticExecutor {
     }
 
     public void printCorrectSemnatic(){
+        System.out.println("CORRECTO: SEMANTICO - DECLARACIONES");
+    }
+
+
+    public void printCorrectSemnaticSentence(){
         System.out.println("CORRECTO: SEMANTICO - DECLARACIONES");
     }
 
