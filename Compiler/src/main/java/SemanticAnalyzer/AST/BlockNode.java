@@ -28,14 +28,49 @@ public class BlockNode extends SentenceNode implements Commons {
         this.sentenceList = sentenceList;
     }
 
-    @Override
-    public void toJson(int tabs) {
+    /**
+     * Método que recorre la lista de sentencias y llama al método toJson de cada una
+     * @param tabs Cantidad de tabulaciones a agregar al archivo JSON
+     * @return void
+     * @autor Yeumen Silva
+     */
 
+    @Override
+    public String toJson(int tabs) {
+
+        String json = addtabs(tabs) + "{\n";
+        json += addtabs(tabs+1) + "\"nombre\": \"" + "Block" + "\",\n";
+        json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
+        json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
+        json += addtabs(tabs+1) + "\"sentences\": [\n";
+        for (SentenceNode sentence : sentenceList) {
+            json += sentence.toJson(tabs+2);
+        }
+        json += addtabs(tabs+1) + "]\n";
+        json += addtabs(tabs) + "},\n";
+
+        return json;
     }
 
     @Override
     public void consolidate() {
 
+    }
+
+    /**
+     * Método que agrega una cantidad de tabulaciones a un string
+     * @param tabs cantidad de tabulaciones a agregar
+     * @return string con las tabulaciones agregadas
+     * @autor Yeumen Silva
+     */
+
+    @Override
+    public String addtabs(int tabs) {
+        String tabsString = "";
+        for (int i = 0; i < tabs; i++) {
+            tabsString += "\t";
+        }
+        return tabsString;
     }
 
 
