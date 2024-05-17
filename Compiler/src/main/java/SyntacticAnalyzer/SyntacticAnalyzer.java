@@ -1892,15 +1892,15 @@ public class    SyntacticAnalyzer {
         }else {
             if (verifyEquals(firstTrue)){
                 // Analisis Semantico AST -------------------------
-                Node newNode = new Node(actualToken, "Bool");
-                ((ExpUn) expresionUnaria).setRight(newNode);
+                //ExpressionNode newNode = new Node(actualToken, "Bool");
+                //((ExpUn) expresionUnaria).setRight(newNode);
                 // ------------------------------------------------
                 match("true");
             } else {
                 if (verifyEquals(firstFalse)) {
                     // Analisis Semantico AST -------------------------
-                    Node newNode = new Node(actualToken, "Bool");
-                    ((ExpUn) expresionUnaria).setRight(newNode);
+                    //Node newNode = new Node(actualToken, "Bool");
+                    //((ExpUn) expresionUnaria).setRight(newNode);
                     // ------------------------------------------------
                     match("false");
                 } else {

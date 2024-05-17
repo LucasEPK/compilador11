@@ -1,21 +1,26 @@
 package SemanticAnalyzer.AST;
 
 
+import LexicalAnalyzer.Token;
+
 /**
- * Clase representate una expresión unaria en nustro AST
+ * Clase representate una expresión unaria en nuestro AST
  * @author Yeumen Silva
  */
 
 public class ExpUn extends ExpressionNode {
 
-    Node right;
-
+    ExpressionNode right;
 
     public ExpUn(String struct, String method) {
         super(struct, method);
     }
 
-    public void setRight(Node right) {
+    public ExpUn(String struct, String method, Token operator) {
+        super(struct, method, operator);
+    }
+
+    public void setRight(ExpressionNode right) {
         this.right = right;
     }
 

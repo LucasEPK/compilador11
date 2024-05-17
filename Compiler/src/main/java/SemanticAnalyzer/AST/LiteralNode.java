@@ -3,15 +3,13 @@ package SemanticAnalyzer.AST;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase representate un primario
- * @author Yeumen Silva
+ * Clase representate un literal en nuestro AST
+ * @author Lucas Moyano
  */
 
-public class PrimaryNode extends ExpressionNode{
+public class LiteralNode extends ExpressionNode{
 
-    PrimaryNode right;
-
-    public PrimaryNode(String struct, String method, Token token) {
+    public LiteralNode(String struct, String method, Token token){
         super(struct, method, token);
     }
 
@@ -22,6 +20,5 @@ public class PrimaryNode extends ExpressionNode{
 
     @Override
     public void consolidate() {
-
     }
 }

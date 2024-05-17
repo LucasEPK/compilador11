@@ -1,19 +1,25 @@
 package SemanticAnalyzer.AST;
 
 
+import LexicalAnalyzer.Token;
+
 /**
- * Clase representate una expresión binaria en nustro AST
+ * Clase representate una expresión binaria en nuestro AST
  * @author Yeumen Silva
  */
 
 public class ExpBin extends ExpressionNode {
 
-    Node left;
+    ExpressionNode left;
 
-    Node right;
+    ExpressionNode right;
 
     public ExpBin(String struct, String method) {
         super(struct, method);
+    }
+
+    public ExpBin(String struct, String method, Token operator) {
+        super(struct, method, operator);
     }
 
     @Override

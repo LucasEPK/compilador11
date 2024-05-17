@@ -8,7 +8,7 @@ package SemanticAnalyzer.AST;
 
 public class AsignationNode extends SentenceNode implements Commons {
 
-    Node left;
+    ExpressionNode left;
     ExpressionNode right;
 
 
