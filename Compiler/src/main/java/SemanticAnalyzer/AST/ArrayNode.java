@@ -21,8 +21,41 @@ public class ArrayNode extends PrimaryNode{
         this.length = length;
     }
 
+    /**
+     * Método que convierte un objeto a un string en formato JSON
+     * @param tabs Cantidad de tabulaciones a agregar al archivo JSON
+     * @return string en formato JSON
+     */
+    @Override
+    public String toJson(int tabs) {
+
+        String json = addtabs(tabs) + "{\n";
+        json += addtabs(tabs+1) + "\"nombre\": \"" + "Array" + "\",\n";
+        json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
+        json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
+        json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+        json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
+        json += addtabs(tabs+1) + "\"length\": \"" + getLength() + "\"\n";
+        json += addtabs(tabs) + "},\n";
+        return json;
+    }
+
+    @Override
+    public void consolidate() {
+    }
+
+    /**
+     * Método que convierte un objeto a un string en formato JSON
+     * @param tabs Cantidad de tabulaciones a agregar al archivo JSON
+     * @return string en formato JSON
+     */
+
     @Override
     public String addtabs(int tabs) {
-        return null;
+        String tabsString = "";
+        for (int i = 0; i < tabs; i++) {
+            tabsString += "\t";
+        }
+        return tabsString;
     }
 }

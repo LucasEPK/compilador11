@@ -38,9 +38,24 @@ public class ExpBin extends ExpOp {
         return left;
     }
 
+    /**
+     * Método que convierte un objeto a un string en formato JSON
+     * @param tabs Cantidad de tabulaciones a agregar al archivo JSON
+     * @return string en formato JSON
+     */
+
     @Override
     public String toJson(int tabs) {
-        return null;
+
+                String json = addtabs(tabs) + "{\n";
+                json += addtabs(tabs+1) + "\"nombre\": \"" + "ExpBin" + "\",\n";
+                json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
+                json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
+                json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
+                json += addtabs(tabs+1) + "\"operator\": \"" + getOperator().getLexeme() + "\",\n";
+                json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
+                json += addtabs(tabs) + "},\n";
+                return json;
     }
 
     @Override
@@ -48,8 +63,19 @@ public class ExpBin extends ExpOp {
 
     }
 
+    /**
+     * Método que agrega una cantidad de tabulaciones a un string
+     * @param tabs cantidad de tabulaciones a agregar
+     * @return string con las tabulaciones agregadas
+     * @autor Yeumen Silva
+     */
+
     @Override
     public String addtabs(int tabs) {
-        return null;
+        String tabsString = "";
+        for (int i = 0; i < tabs; i++) {
+            tabsString += "\t";
+        }
+        return tabsString;
     }
 }
