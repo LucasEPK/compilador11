@@ -1873,36 +1873,36 @@ public class    SyntacticAnalyzer {
      * @param sentence representa una sentencia en el AST
      * @author Lucas Moyano
      * */
-    private void literal(SentenceNode sentence){
+    private ExpressionNode literal(SentenceNode sentence){
         String[] firstNil = {"nil"};
         String[] firstTrue = {"true"};
         String[] firstFalse = {"false"};
         String[] firstIntLiteral = {"IntLiteral"};
         String[] firstStrLiteral = {"StrLiteral"};
 
-        // Analisis Semantico AST -------------------------
-        ExpressionNode expresionUnaria = null;
+        ExpressionNode newLiteral = null;
         if (sentence instanceof ReturnNode) {
-            expresionUnaria = ((ReturnNode) sentence).setReturnValueNode("ExpUn");
+            newLiteral = ((ReturnNode) sentence).setReturnValueNode("Literal");
         }
-        // ------------------------------------------------
 
         if (verifyEquals(firstNil)){
             match("nil");
         }else {
             if (verifyEquals(firstTrue)){
                 // Analisis Semantico AST -------------------------
-                //ExpressionNode newNode = new Node(actualToken, "Bool");
-                //((ExpUn) expresionUnaria).setRight(newNode);
+                newLiteral.setTokenOrOperator(actualToken);
+                newLiteral.setType(Types.BOOL);
                 // ------------------------------------------------
                 match("true");
+                return newLiteral;
             } else {
                 if (verifyEquals(firstFalse)) {
                     // Analisis Semantico AST -------------------------
-                    //Node newNode = new Node(actualToken, "Bool");
-                    //((ExpUn) expresionUnaria).setRight(newNode);
+                    newLiteral.setTokenOrOperator(actualToken);
+                    newLiteral.setType(Types.BOOL);
                     // ------------------------------------------------
                     match("false");
+                    return newLiteral;
                 } else {
                     if (verifyEquals(firstIntLiteral)){
                         match("IntLiteral");
@@ -1916,6 +1916,7 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+        return null;
     }
 
     /**

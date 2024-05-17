@@ -10,7 +10,7 @@ import LexicalAnalyzer.Token;
 public abstract class ExpressionNode extends  SentenceNode implements Commons {
 
     private Token tokenOrOperator;
-    private String type;
+    private Types type;
     private String lexeme;
 
     public ExpressionNode(String struct, String method) {
@@ -23,7 +23,7 @@ public abstract class ExpressionNode extends  SentenceNode implements Commons {
         this.lexeme = token.getLexeme();
     }
 
-    public ExpressionNode(String struct, String method, Token token, String type) {
+    public ExpressionNode(String struct, String method, Token token, Types type) {
         super(struct, method);
         this.tokenOrOperator = token;
         this.lexeme = token.getLexeme();
@@ -34,7 +34,7 @@ public abstract class ExpressionNode extends  SentenceNode implements Commons {
         return tokenOrOperator;
     }
 
-    public String getType() {
+    public Types getType() {
         return type;
     }
 
@@ -42,7 +42,7 @@ public abstract class ExpressionNode extends  SentenceNode implements Commons {
         return lexeme;
     }
 
-    public void setType(String type) {
+    public void setType(Types type) {
         this.type = type;
     }
 
