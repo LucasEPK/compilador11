@@ -20,4 +20,9 @@ public class ArrayNode extends PrimaryNode{
     public void setLength(int length) {
         this.length = length;
     }
+
+    @Override
+    public String addtabs(int tabs) {
+        return null;
+    }
 }
