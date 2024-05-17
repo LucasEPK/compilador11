@@ -11,6 +11,10 @@ public class PrimaryNode extends ExpressionNode{
 
     PrimaryNode right;
 
+    public PrimaryNode(String struct, String method) {
+        super(struct, method);
+    }
+
     public PrimaryNode(String struct, String method, Token token) {
         super(struct, method, token);
     }

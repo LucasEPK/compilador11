@@ -9,7 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios" />
+    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/LiteralNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/LiteralNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/PrimaryNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/PrimaryNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ReturnNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ReturnNode.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +56,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.Test.executor": "Run",
     "Application.xd.executor": "Run",
     "JUnit.MiClaseTest.executor": "Run",

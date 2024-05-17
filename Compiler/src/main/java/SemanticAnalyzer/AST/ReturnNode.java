@@ -24,10 +24,10 @@ public class ReturnNode extends SentenceNode implements Commons {
                 this.returnValueNode = new ExpUn(getStruct(), getMethod());
                 break;
             case "Primary":
-                this.returnValueNode = new PrimaryNode(getStruct(), getMethod(), null);
+                this.returnValueNode = new PrimaryNode(getStruct(), getMethod());
                 break;
             case "Literal":
-                this.returnValueNode = new LiteralNode(getStruct(), getMethod(), null, null);
+                this.returnValueNode = new LiteralNode(getStruct(), getMethod());
                 break;
             default:
                 assert this.returnValueNode != null: "ERROR: el tipo de expresion no existe";
