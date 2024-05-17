@@ -7,7 +7,11 @@ import LexicalAnalyzer.Token;
  * @author Lucas Moyano
  */
 
-public class LiteralNode extends ExpressionNode{
+public class LiteralNode extends Operands {
+
+    public LiteralNode(String struct, String method){
+        super(struct, method);
+    }
 
     public LiteralNode(String struct, String method, Token token, String type){
         super(struct, method, token, type);

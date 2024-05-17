@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class ExpUn extends ExpressionNode {
+public class ExpUn extends ExpOp {
 
     ExpressionNode right;
 
@@ -22,6 +22,10 @@ public class ExpUn extends ExpressionNode {
 
     public void setRight(ExpressionNode right) {
         this.right = right;
+    }
+
+    public ExpressionNode getRight() {
+        return right;
     }
 
     @Override

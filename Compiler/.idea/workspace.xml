@@ -9,7 +9,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios" />
+    <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ArrayNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ArrayNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AsignationNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AsignationNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpBin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpBin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpOp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpUn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpUn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IdNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IdNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IfThenElseNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IfThenElseNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/Operands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/Operands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ReturnNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ReturnNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/WhileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/WhileNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -52,7 +67,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.Test.executor": "Run",
     "Application.xd.executor": "Run",
     "JUnit.MiClaseTest.executor": "Run",
@@ -170,6 +185,7 @@
       <workItem from="1715862719012" duration="714000" />
       <workItem from="1715905693449" duration="3345000" />
       <workItem from="1715947281616" duration="3700000" />
+      <workItem from="1715966054602" duration="6283000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />
@@ -187,6 +203,17 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.ru" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="solucioné vista de error de comentarios" />
@@ -216,7 +243,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java</url>
-          <line>1880</line>
+          <line>1915</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>

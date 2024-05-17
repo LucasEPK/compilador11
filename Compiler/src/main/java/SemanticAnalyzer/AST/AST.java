@@ -36,6 +36,10 @@ public class AST implements Commons {
         return blockList;
     }
 
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
+
     @Override
     public void toJson(int tabs) {
 
