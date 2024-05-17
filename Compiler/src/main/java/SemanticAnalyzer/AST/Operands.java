@@ -11,4 +11,10 @@ public abstract class Operands extends ExpressionNode{
 
         this.token = token;
     }
+
+    public Operands(String struct, String method, Token token, String type){
+        super(struct, method, type);
+
+        this.token = token;
+    }
 }
