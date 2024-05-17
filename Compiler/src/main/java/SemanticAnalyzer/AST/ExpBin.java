@@ -22,6 +22,22 @@ public class ExpBin extends ExpOp {
         super(struct, method, operator);
     }
 
+    public void setLeft(ExpressionNode left) {
+        this.left = left;
+    }
+
+    public void setRight(ExpressionNode right) {
+        this.right = right;
+    }
+
+    public ExpressionNode getRight() {
+        return right;
+    }
+
+    public ExpressionNode getLeft() {
+        return left;
+    }
+
     @Override
     public void toJson(int tabs) {
 

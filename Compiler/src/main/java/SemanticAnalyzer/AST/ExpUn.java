@@ -24,6 +24,10 @@ public class ExpUn extends ExpOp {
         this.right = right;
     }
 
+    public ExpressionNode getRight() {
+        return right;
+    }
+
     @Override
     public void toJson(int tabs) {
 

@@ -1915,7 +1915,7 @@ public class    SyntacticAnalyzer {
         String[] firstIntLiteral = {"IntLiteral"};
         String[] firstStrLiteral = {"StrLiteral"};
         // Analisis Semantico AST -------------------------
-        ExpressionNode newLiteral = new LiteralNode(symbolTable.getCurrentStruct().getName()
+        LiteralNode newLiteral = new LiteralNode(symbolTable.getCurrentStruct().getName()
                 , symbolTable.getCurrentMethod().getName());
         // ------------------------------------------------
         if (verifyEquals(firstNil)){
@@ -1923,7 +1923,7 @@ public class    SyntacticAnalyzer {
         }else {
             if (verifyEquals(firstTrue)){
                 // Analisis Semantico AST -------------------------
-                newLiteral.setTokenOrOperator(actualToken);
+                newLiteral.setToken(actualToken);
                 newLiteral.setType("Bool");
                 // ------------------------------------------------
                 match("true");
@@ -1931,7 +1931,7 @@ public class    SyntacticAnalyzer {
             } else {
                 if (verifyEquals(firstFalse)) {
                     // Analisis Semantico AST -------------------------
-                    newLiteral.setTokenOrOperator(actualToken);
+                    newLiteral.setToken(actualToken);
                     newLiteral.setType("Bool");
                     // ------------------------------------------------
                     match("false");

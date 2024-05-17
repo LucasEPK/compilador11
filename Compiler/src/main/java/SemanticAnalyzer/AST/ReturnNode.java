@@ -19,6 +19,10 @@ public class ReturnNode extends SentenceNode implements Commons {
         this.returnValueNode = returnValueNode;
     }
 
+    public ExpressionNode getReturnValueNode() {
+        return returnValueNode;
+    }
+
     @Override
     public void toJson(int tabs) {
 

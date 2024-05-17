@@ -3,7 +3,7 @@ package SemanticAnalyzer.AST;
 import LexicalAnalyzer.Token;
 
 /**
- * Clase representate un primario
+ * Clase abstracta que encapsula Arrays y Ids en el AST
  * @author Yeumen Silva
  */
 

@@ -19,6 +19,30 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
         super(struct, method);
     }
 
+    public void setIfNode(ExpressionNode ifNode) {
+        this.ifNode = ifNode;
+    }
+
+    public void setThenNode(SentenceNode thenNode) {
+        this.thenNode = thenNode;
+    }
+
+    public void setElseNode(SentenceNode elseNode) {
+        this.elseNode = elseNode;
+    }
+
+    public ExpressionNode getIfNode() {
+        return ifNode;
+    }
+
+    public SentenceNode getThenNode() {
+        return thenNode;
+    }
+
+    public SentenceNode getElseNode() {
+        return elseNode;
+    }
+
     @Override
     public void toJson(int tabs) {
 

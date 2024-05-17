@@ -12,4 +12,12 @@ public class ArrayNode extends PrimaryNode{
     public ArrayNode(String struct, String method, Token token, String type) {
         super(struct, method, token, type);
     }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 }
