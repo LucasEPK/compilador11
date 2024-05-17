@@ -951,6 +951,7 @@ public class    SyntacticAnalyzer {
      * */
 
     private void sentencia(BlockNode block){
+
         //Primeros ;
         if (verifyEquals(";")){
             match(";");
@@ -972,7 +973,7 @@ public class    SyntacticAnalyzer {
                     if (verifyEquals("if")){
                         match("if");
                         match("(");
-                        expresion(null);
+                        expresion();
                         match(")");
                         sentencia(null);
                         sentenciaF();
@@ -982,7 +983,7 @@ public class    SyntacticAnalyzer {
                         if (verifyEquals("while")){
                             match("while");
                             match("(");
-                            expresion(null);
+                            expresion();
                             match(")");
                             sentencia(null);
                         }
@@ -995,7 +996,11 @@ public class    SyntacticAnalyzer {
                                 //Primeros ret
                                 if (verifyEquals("ret")){
                                     match("ret");
-                                    sentenciaF1(block);
+                                    // Analisis Semantico AST -------------------------
+                                    SentenceNode newReturnSentence = block.addNewSentence("Return");
+                                    // ------------------------------------------------
+
+                                    sentenciaF1((ReturnNode)newReturnSentence);
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
@@ -1030,15 +1035,12 @@ public class    SyntacticAnalyzer {
 
     /**
      * Regla Sentencia-F1
-     * Además crea una sentencia return
-     * @param block bloque del ast en donde estamos
+     * Además añade un return value al nodo Return
+     * @param newReturnSentence nodo return del AST en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void sentenciaF1(BlockNode block){
-        // Analisis Semantico AST -------------------------
-        SentenceNode newReturnSentence = block.addNewSentence("Return");
-        // ------------------------------------------------
+    private void sentenciaF1(ReturnNode newReturnSentence){
 
         //Primeros ;
         if (verifyEquals(";")){
@@ -1049,7 +1051,10 @@ public class    SyntacticAnalyzer {
             if (verifyEquals("!" , "(" , "+" , "++" , "-" , "--"
                     , "StrLiteral", "CharLiteral" , "false" , "ObjID"
                     , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true")){
-                expresion(newReturnSentence);
+                ExpressionNode expNode = expresion();
+                // Analisis Semantico AST -------------------------
+                newReturnSentence.setReturnValueNode(expNode);
+                // ------------------------------------------------
                 match(";");
             }
             else {
@@ -1105,14 +1110,14 @@ public class    SyntacticAnalyzer {
         if (verifyEquals("ObjID")){
             accesoVarSimple();
             match("=");
-            expresion(null);
+            expresion();
         }
         else {
             //`Primeros AccesoSelf-Simple
             if(verifyEquals("self")){
                 accesoSelfSimple();
                 match("=");
-                expresion(null);
+                expresion();
             }
             else {
                 throw createException(this.actualToken, List.of("ObjID" , "self"),this.actualToken.getLexeme());
@@ -1147,7 +1152,7 @@ public class    SyntacticAnalyzer {
             //Primeros [
             if(verifyEquals("[")){
                 match("[");
-                expresion(null);
+                expresion();
                 match("]");
             }
             else {
@@ -1243,33 +1248,38 @@ public class    SyntacticAnalyzer {
 
     private void sentenciaSimple(){
         match("(");
-        expresion(null);
+        expresion();
         match(")");
     }
 
     /**
      * Regla Expresion
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Yeumen Silva
      * */
-
-    private void expresion(SentenceNode sentence){
-        expOr(sentence);
+    private ExpressionNode expresion(){
+        ExpressionNode expNode = expOr();
+        // Analisis Semantico AST -------------------------
+        return expNode;
+        // ------------------------------------------------
     }
 
     /**
      * Función para la regla 55 <ExpOr> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private void expOr(SentenceNode sentence) {
+    private ExpressionNode expOr() {
         String[] firstExpAnd = {"!", "(", "+" , "++" , "-" , "--" ,
                 "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if(verifyEquals(firstExpAnd)){
-            expAnd(sentence);
+            ExpressionNode expNode = expAnd();
             expOrF();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!", "(", "+" , "++" , "-" , "--" ,
                     "StrLiteral" , "CharLiteral" , "false" , "ObjID" , "StructID" ,
@@ -1305,7 +1315,7 @@ public class    SyntacticAnalyzer {
     private void expOrR(){
 
         match("||");
-        expAnd(null);
+        expAnd();
         expOrRF();
     }
 
@@ -1331,16 +1341,19 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 59 <ExpAnd> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private void expAnd(SentenceNode sentence) {
+    private ExpressionNode expAnd() {
         String[] firstExpIgual = {"!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
                 "false" , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpIgual)) {
-            expIgual(sentence);
+            ExpressionNode expNode = expIgual();
             expAndF();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
                     "false" , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
@@ -1373,7 +1386,7 @@ public class    SyntacticAnalyzer {
      * */
     private void expAndR() {
         match("&&");
-        expIgual(null);
+        expIgual();
         expAndRF();
     }
 
@@ -1399,18 +1412,21 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 63 <ExpIgual> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo Expresión del AST
      * @author Lucas Moyano
      * */
-    private void expIgual(SentenceNode sentence) {
+    private ExpressionNode expIgual() {
         String[] firstExpCompuesta = {"!" , "(" , "+" , "++" , "-"
                 , "--" , "StrLiteral" , "CharLiteral" , "false"
                 , "ObjID" , "StructID" , "IntLiteral" , "new" , "nil"
                 , "self" , "true"};
 
         if (verifyEquals(firstExpCompuesta)) {
-            expCompuesta(sentence);
+            ExpressionNode expNode = expCompuesta();
             expIgualF();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-"
                     , "--" , "StrLiteral" , "CharLiteral" , "false"
@@ -1447,7 +1463,7 @@ public class    SyntacticAnalyzer {
         String[] firstOpIgual = {"!=" , "=="};
         if (verifyEquals(firstOpIgual)){
             opIgual();
-            expCompuesta(null);
+            expCompuesta();
             expIgualRF();
         } else {
             throw createException(this.actualToken, List.of("!=" , "=="),this.actualToken.getLexeme());
@@ -1477,18 +1493,21 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 67 <ExpCompuesta> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private void expCompuesta(SentenceNode sentence) {
+    private ExpressionNode expCompuesta() {
         String[] firstExpAd = {"!" , "(" , "+" , "++"
                 , "-" , "--" , "StrLiteral" , "CharLiteral"
                 , "false" , "ObjID" , "StructID" , "IntLiteral"
                 , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpAd)) {
-            expAd(sentence);
+            ExpressionNode expNode = expAd();
             expCompuestaF();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++"
                     , "-" , "--" , "StrLiteral" , "CharLiteral"
@@ -1512,7 +1531,7 @@ public class    SyntacticAnalyzer {
         } else {
             if (verifyEquals(firstOpCompuesto)) {
                 opCompuesto();
-                expAd(null);
+                expAd();
             } else {
                 throw createException(this.actualToken, List.of("<" , "<=" , ">" , ">=",
                         "!=" , "&&" , ")" ,
@@ -1524,18 +1543,21 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 69 <ExpAd> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private void expAd(SentenceNode sentence) {
+    private ExpressionNode expAd() {
         String[] firstExpMul = {"!" , "(" , "+" , "++" ,
                 "-" , "--" , "StrLiteral" , "CharLiteral" ,
                 "false" , "ObjID" , "StructID" , "IntLiteral" ,
                 "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpMul)) {
-            expMul(sentence);
+            ExpressionNode expNode = expMul();
             expAdF();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" ,
                     "-" , "--" , "StrLiteral" , "CharLiteral" ,
@@ -1576,7 +1598,7 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstOpAd)) {
             opAd();
-            expMul(null);
+            expMul();
             expAdRF();
         } else {
             throw createException(this.actualToken, List.of("+" , "-"),this.actualToken.getLexeme());
@@ -1608,18 +1630,21 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 73 <ExpMul> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private void expMul(SentenceNode sentence) {
+    private ExpressionNode expMul() {
         String[] firstExpUn = {"!" , "(" , "+" , "++" , "-" ,
                 "--" , "StrLiteral" , "CharLiteral" , "false" ,
                 "ObjID" , "StructID" , "IntLiteral" , "new" ,
                 "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpUn)) {
-            expUn(sentence);
+            ExpressionNode expNode = expUn();
             expMulF();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" ,
                     "--" , "StrLiteral" , "CharLiteral" , "false" ,
@@ -1662,7 +1687,7 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstOpMul)) {
             opMul();
-            expUn(null);
+            expUn();
             expMulRF();
         } else {
             throw createException(this.actualToken, List.of("%" , "*" , "/"),this.actualToken.getLexeme());
@@ -1694,10 +1719,10 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 77 <ExpUn> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private void expUn(SentenceNode sentence) {
+    private ExpressionNode expUn() {
         String[] firstOpUnario = {"!" , "+" , "++" , "-" , "--"};
         String[] firstOperando = {"(" , "StrLiteral" ,
                 "CharLiteral" , "false" , "ObjID" , "StructID" ,
@@ -1705,16 +1730,21 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstOpUnario)) {
             opUnario();
-            expUn(null);
+            expUn();
         } else {
             if (verifyEquals(firstOperando)) {
-                operando(sentence);
+                ExpressionNode expNode = operando();
+                // Analisis Semantico AST -------------------------
+                return expNode;
+                // ------------------------------------------------
             } else {
                 throw createException(this.actualToken, List.of("!" , "+" , "++" , "-" , "--", "(" , "StrLiteral" ,
                         "CharLiteral" , "false" , "ObjID" , "StructID" ,
                         "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
             }
         }
+
+        return null;
     }
 
     /**
@@ -1818,10 +1848,10 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 83 <Operando> de la Gramatica
-     * @param sentence representa una sentencia en el AST
+     * @return un nodo expresión
      * @author Lucas Moyano
      * */
-    private void operando(SentenceNode sentence) {
+    private ExpressionNode operando() {
         String[] firstLiteral = {"StrLiteral" ,
                 "CharLiteral" , "false" , "IntLiteral" ,
                 "nil" , "true"};
@@ -1829,7 +1859,10 @@ public class    SyntacticAnalyzer {
                 "new" , "self"};
 
         if (verifyEquals(firstLiteral)){
-            literal(sentence);
+            ExpressionNode expNode = literal();
+            // Analisis Semantico AST -------------------------
+            return expNode;
+            // ------------------------------------------------
         } else {
             if (verifyEquals(firstPrimario)){
                 primario();
@@ -1841,6 +1874,8 @@ public class    SyntacticAnalyzer {
                         "new" , "self"),this.actualToken.getLexeme());
             }
         }
+
+        return null;
     }
 
     /**
@@ -1870,27 +1905,25 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 85 <Literal> de la Gramatica
-     * @param sentence representa una sentencia en el AST
      * @author Lucas Moyano
+     * @return un LiteralNode con el tipo y el token correctos
      * */
-    private ExpressionNode literal(SentenceNode sentence){
+    private ExpressionNode literal(){
         String[] firstNil = {"nil"};
         String[] firstTrue = {"true"};
         String[] firstFalse = {"false"};
         String[] firstIntLiteral = {"IntLiteral"};
         String[] firstStrLiteral = {"StrLiteral"};
-
-        ExpressionNode newLiteral = null;
-        if (sentence instanceof ReturnNode) {
-            newLiteral = ((ReturnNode) sentence).setReturnValueNode("Literal");
-        }
-
+        // Analisis Semantico AST -------------------------
+        LiteralNode newLiteral = new LiteralNode(symbolTable.getCurrentStruct().getName()
+                , symbolTable.getCurrentMethod().getName());
+        // ------------------------------------------------
         if (verifyEquals(firstNil)){
             match("nil");
         }else {
             if (verifyEquals(firstTrue)){
                 // Analisis Semantico AST -------------------------
-                newLiteral.setTokenOrOperator(actualToken);
+                newLiteral.setToken(actualToken);
                 newLiteral.setType("Bool");
                 // ------------------------------------------------
                 match("true");
@@ -1898,7 +1931,7 @@ public class    SyntacticAnalyzer {
             } else {
                 if (verifyEquals(firstFalse)) {
                     // Analisis Semantico AST -------------------------
-                    newLiteral.setTokenOrOperator(actualToken);
+                    newLiteral.setToken(actualToken);
                     newLiteral.setType("Bool");
                     // ------------------------------------------------
                     match("false");
@@ -1998,7 +2031,7 @@ public class    SyntacticAnalyzer {
      * */
     private void expresionParentizada() {
         match("(");
-        expresion(null);
+        expresion();
         match(")");
         expresionParentizadaF();
     }
@@ -2091,7 +2124,7 @@ public class    SyntacticAnalyzer {
             } else {
                 if (verifyEquals(firstBracket)){
                     match("[");
-                    expresion(null);
+                    expresion();
                     match("]");
                     accesoVarF1();
                 } else {
@@ -2222,7 +2255,7 @@ public class    SyntacticAnalyzer {
         if (verifyEquals(firstTipoPrimitivo)){
             tipoPrimitivo();
             match("[");
-            expresion(null);
+            expresion();
             match("]");
         } else {
             // Analisis semantico ----------------------------------
@@ -2297,7 +2330,7 @@ public class    SyntacticAnalyzer {
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpresion)){
-            expresion(null);
+            expresion();
             listaExpresionesF();
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" ,
@@ -2444,7 +2477,7 @@ public class    SyntacticAnalyzer {
                 encadenado();
             } else {
                 match("[");
-                expresion(null);
+                expresion();
                 match("]");
                 accesoVariableEncadenadoF1();
             }

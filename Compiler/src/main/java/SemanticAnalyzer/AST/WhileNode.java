@@ -16,6 +16,22 @@ public class WhileNode extends SentenceNode {
         super(struct, method);
     }
 
+    public void setWhileNode(ExpressionNode whileNode) {
+        this.whileNode = whileNode;
+    }
+
+    public void setDoNode(SentenceNode doNode) {
+        this.doNode = doNode;
+    }
+
+    public ExpressionNode getWhileNode() {
+        return whileNode;
+    }
+
+    public SentenceNode getDoNode() {
+        return doNode;
+    }
+
     @Override
     public void toJson(int tabs) {
 

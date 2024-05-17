@@ -112,4 +112,7 @@ public class BlockNode extends SentenceNode implements Commons {
         return newSentence;
     }
 
+    public List<SentenceNode> getSentenceList() {
+        return sentenceList;
+    }
 }

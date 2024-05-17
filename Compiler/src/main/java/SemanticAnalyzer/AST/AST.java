@@ -39,6 +39,14 @@ public class AST implements Commons {
     }
 
 
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
+
+    @Override
+    public void toJson(int tabs) {
+
+
     /**
      * Método que recorre la lista de bloques y llama al método toJson de cada uno
      * @param tabs Cantidad de tabulaciones a agregar al archivo JSON

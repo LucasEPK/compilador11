@@ -16,6 +16,22 @@ public class AsignationNode extends SentenceNode implements Commons {
         super(struct, method);
     }
 
+    public void setLeft(ExpressionNode left) {
+        this.left = left;
+    }
+
+    public void setRight(ExpressionNode right) {
+        this.right = right;
+    }
+
+    public ExpressionNode getLeft() {
+        return left;
+    }
+
+    public ExpressionNode getRight() {
+        return right;
+    }
+
     @Override
     public void toJson(int tabs) {
 
