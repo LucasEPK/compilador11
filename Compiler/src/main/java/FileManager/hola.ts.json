@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "src/main/java/FileManager/hola.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,22 +253,55 @@
 		}
 	},
  	 {
-		"nombre": "Fibonacci",
+		"nombre": "LitTest",
 		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "xd",
-			"tipo": "Int",
-			"public": true,
-			"posicion": 0
-			}
-		],
+		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "bruh",
+				"nombre": "retNil",
 				"static": false,
 				"retorno": "void",
 				"posicion": 0,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retInt",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 1,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retBool",
+				"static": false,
+				"retorno": "Bool",
+				"posicion": 2,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retBool2",
+				"static": false,
+				"retorno": "Bool",
+				"posicion": 3,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retStr",
+				"static": false,
+				"retorno": "Str",
+				"posicion": 4,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retChar",
+				"static": false,
+				"retorno": "Char",
+				"posicion": 5,
 				"paramF": [],
 				"variables": []
 			}
@@ -283,12 +316,6 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"variables": [
-					{
-					"nombre": "fib",
-					"tipo": "Fibonacci",
-					"posicion": 0
-					}
-			]
+			"variables": []
 	}
 }

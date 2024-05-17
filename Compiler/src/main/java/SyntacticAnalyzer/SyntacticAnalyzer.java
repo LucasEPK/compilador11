@@ -1919,7 +1919,12 @@ public class    SyntacticAnalyzer {
         LiteralNode newLiteral = new LiteralNode(symbolTable.getCurrentStruct().getName()
                 , symbolTable.getCurrentMethod().getName());
         // ------------------------------------------------
+
         if (verifyEquals(firstNil)){
+            // Analisis Semantico AST -------------------------
+            newLiteral.setToken(actualToken);
+            newLiteral.setType("nil");
+            // ------------------------------------------------
             match("nil");
         }else {
             if (verifyEquals(firstTrue)){
@@ -1928,7 +1933,6 @@ public class    SyntacticAnalyzer {
                 newLiteral.setType("Bool");
                 // ------------------------------------------------
                 match("true");
-                return newLiteral;
             } else {
                 if (verifyEquals(firstFalse)) {
                     // Analisis Semantico AST -------------------------
@@ -1936,21 +1940,32 @@ public class    SyntacticAnalyzer {
                     newLiteral.setType("Bool");
                     // ------------------------------------------------
                     match("false");
-                    return newLiteral;
                 } else {
                     if (verifyEquals(firstIntLiteral)){
+                        // Analisis Semantico AST -------------------------
+                        newLiteral.setToken(actualToken);
+                        newLiteral.setType("Int");
+                        // ------------------------------------------------
                         match("IntLiteral");
                     } else {
                         if (verifyEquals(firstStrLiteral)){
+                            // Analisis Semantico AST -------------------------
+                            newLiteral.setToken(actualToken);
+                            newLiteral.setType("Str");
+                            // ------------------------------------------------
                             match("StrLiteral");
                         } else {
+                            // Analisis Semantico AST -------------------------
+                            newLiteral.setToken(actualToken);
+                            newLiteral.setType("Char");
+                            // ------------------------------------------------
                             match("CharLiteral");
                         }
                     }
                 }
             }
         }
-        return null;
+        return newLiteral;
     }
 
     /**
