@@ -15,25 +15,8 @@ public class ReturnNode extends SentenceNode implements Commons {
         super(struct, method);
     }
 
-    public ExpressionNode setReturnValueNode(String type) {
-        switch (type) {
-            case "ExpBin":
-                this.returnValueNode = new ExpBin(getStruct(), getMethod());
-                break;
-            case "ExpUn":
-                this.returnValueNode = new ExpUn(getStruct(), getMethod());
-                break;
-            case "Primary":
-                this.returnValueNode = new PrimaryNode(getStruct(), getMethod());
-                break;
-            case "Literal":
-                this.returnValueNode = new LiteralNode(getStruct(), getMethod());
-                break;
-            default:
-                assert this.returnValueNode != null: "ERROR: el tipo de expresion no existe";
-        }
-
-        return this.returnValueNode;
+    public void setReturnValueNode(ExpressionNode returnValueNode) {
+        this.returnValueNode = returnValueNode;
     }
 
     @Override
