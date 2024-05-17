@@ -56,7 +56,7 @@ public class AST implements Commons {
      * */
     public String toJson(int tabs,String inputPath) {
         String json = "{\n";
-        json += addtabs(tabs) + "\"nombre\": + \"" + inputPath + "\",\n";
+        json += addtabs(tabs) + "\"nombre\": \"" + inputPath + "\",\n";
         json += addtabs(tabs) + "\"clases\": [\n";
 
         //Recorro todos los bloques del AST

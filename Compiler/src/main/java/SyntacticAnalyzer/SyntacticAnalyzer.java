@@ -37,9 +37,17 @@ public class    SyntacticAnalyzer {
         this.actualToken = lexicalAnalyzer.getNextToken();
         program();
         symbolTable.consolidate();
-        this.ast.toJson(1);
         return this.symbolTable;
 
+    }
+
+    /**
+     * Método que de generar el Json de AST
+     * @param inputPath path del archivo de entrada
+     * @autor Yeumen Silva
+     */
+    public void generateASTJson(String inputPath){
+        this.ast.toJson(1,inputPath);
     }
     
     /**

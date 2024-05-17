@@ -49,6 +49,7 @@ public class SyntacticExecutor {
             lexicalAnalyzer = new LexicalAnalyzer(file);
             symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
             this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
+            this.syntacticAnalyzer.generateASTJson(inputPath);
             printCorrectSemnaticSentence();
         }
         catch (LexicalException exception){
