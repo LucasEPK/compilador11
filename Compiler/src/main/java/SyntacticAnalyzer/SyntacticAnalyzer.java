@@ -1891,7 +1891,7 @@ public class    SyntacticAnalyzer {
             if (verifyEquals(firstTrue)){
                 // Analisis Semantico AST -------------------------
                 newLiteral.setTokenOrOperator(actualToken);
-                newLiteral.setType(Types.BOOL);
+                newLiteral.setType("Bool");
                 // ------------------------------------------------
                 match("true");
                 return newLiteral;
@@ -1899,7 +1899,7 @@ public class    SyntacticAnalyzer {
                 if (verifyEquals(firstFalse)) {
                     // Analisis Semantico AST -------------------------
                     newLiteral.setTokenOrOperator(actualToken);
-                    newLiteral.setType(Types.BOOL);
+                    newLiteral.setType("Bool");
                     // ------------------------------------------------
                     match("false");
                     return newLiteral;
