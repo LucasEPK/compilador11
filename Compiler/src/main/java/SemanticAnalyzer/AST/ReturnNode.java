@@ -25,7 +25,18 @@ public class ReturnNode extends SentenceNode implements Commons {
 
     @Override
     public String toJson(int tabs) {
-        return null;
+
+            String json = addtabs(tabs) + "{\n";
+            json += addtabs(tabs+1) + "\"nombre\": \"" + "Return" + "\",\n";
+            json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
+            json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
+            if (returnValueNode != null) {
+                json += addtabs(tabs+1) + "\"return\": " + returnValueNode.toJson(tabs+1) + "\n";
+            } else {
+                json += addtabs(tabs+1) + "\"return\": " + "null" + "\n";
+            }
+            json += addtabs(tabs) + "},\n";
+            return json;
 
     }
 
@@ -34,8 +45,18 @@ public class ReturnNode extends SentenceNode implements Commons {
 
     }
 
+    /**
+     * Método que agrega una cantidad de tabulaciones a un string
+     * @param tabs cantidad de tabulaciones a agregar
+     * @return string con las tabulaciones agregadas
+     * @autor Yeumen Silva
+     */
     @Override
     public String addtabs(int tabs) {
-        return null;
+        String tabsString = "";
+        for (int i = 0; i < tabs; i++) {
+            tabsString += "\t";
+        }
+        return tabsString;
     }
 }
