@@ -1,6 +1,5 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
  * Clase representate una sentencia if-else en nustro AST

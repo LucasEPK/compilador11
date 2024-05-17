@@ -1,6 +1,5 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
  * Clase representate la asignación en nustro AST
@@ -9,11 +8,11 @@ import LexicalAnalyzer.Token;
 
 public class AsignationNode extends SentenceNode implements Commons {
 
-    Node left;
+    ExpressionNode left;
     ExpressionNode right;
 
 
-    public AsignationNode(Token token, String struct, String method) {
+    public AsignationNode(String struct, String method) {
         super(struct, method);
     }
 

@@ -1,19 +1,33 @@
 package SemanticAnalyzer.AST;
 
-import LexicalAnalyzer.Token;
 
 /**
- * Clase representate un return en nustro AST
+ * Clase representate un return en nuestro AST
  * @author Yeumen Silva
  */
 
 public class ReturnNode extends SentenceNode implements Commons {
 
-    ExpressionNode returnValueNode;
+    ExpressionNode returnValueNode = null;
 
 
     public ReturnNode(String struct, String method) {
         super(struct, method);
+    }
+
+    public ExpressionNode setReturnValueNode(String type) {
+        switch (type) {
+            case "ExpBin":
+                this.returnValueNode = new ExpBin(getStruct(), getMethod());
+                break;
+            case "ExpUn":
+                this.returnValueNode = new ExpUn(getStruct(), getMethod());
+                break;
+            default:
+                assert this.returnValueNode != null: "ERROR: el tipo de expresion no existe";
+        }
+
+        return this.returnValueNode;
     }
 
     @Override
