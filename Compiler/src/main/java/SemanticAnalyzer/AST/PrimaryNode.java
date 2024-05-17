@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class PrimaryNode extends ExpressionNode{
+public class PrimaryNode extends Operands {
 
     PrimaryNode right;
 

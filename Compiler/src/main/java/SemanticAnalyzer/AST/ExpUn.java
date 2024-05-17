@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class ExpUn extends ExpressionNode {
+public class ExpUn extends ExpOp {
 
     ExpressionNode right;
 

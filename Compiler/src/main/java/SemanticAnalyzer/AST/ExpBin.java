@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class ExpBin extends ExpressionNode {
+public class ExpBin extends ExpOp {
 
     ExpressionNode left;
 
