@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
  * @author Lucas Moyano
  */
 
-public class DuplicateVariable extends SemanticException {
+public class DuplicateVariable extends SymbolTableException {
 
     public DuplicateVariable(Token token){
         super(token);

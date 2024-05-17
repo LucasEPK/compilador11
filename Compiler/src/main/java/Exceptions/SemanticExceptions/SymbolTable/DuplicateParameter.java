@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * con mismo id
  * @author Lucas Moyano
  */
-public class DuplicateParameter extends SemanticException {
+public class DuplicateParameter extends SymbolTableException {
 
     public DuplicateParameter(Token token){
         super(token);

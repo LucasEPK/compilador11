@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * Clase que representa que no se declaro un constructor
  * @author Yeumen Silva
  */
-public class UndefinedConstructor extends SemanticException {
+public class UndefinedConstructor extends SymbolTableException {
 
     public UndefinedConstructor(Token token){
         super(token);

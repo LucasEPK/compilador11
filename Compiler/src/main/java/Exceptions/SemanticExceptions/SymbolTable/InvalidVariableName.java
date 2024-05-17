@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * una variable con mismo nombre que parametro de método
  * @author Yeumen Silva
  */
-public class InvalidVariableName extends SemanticException {
+public class InvalidVariableName extends SymbolTableException {
 
     public InvalidVariableName(Token token){
         super(token);

@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class AttributteOrMethodHeritance extends SemanticException {
+public class AttributteOrMethodHeritance extends SymbolTableException {
     public AttributteOrMethodHeritance(Token token){
         super(token);
     }

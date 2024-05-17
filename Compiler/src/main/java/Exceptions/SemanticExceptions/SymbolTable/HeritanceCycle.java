@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * Clase que representa una herencia ciclica
  * @author Yeumen Silva
  */
-public class HeritanceCycle extends SemanticException {
+public class HeritanceCycle extends SymbolTableException {
 
     public HeritanceCycle(Token token){
         super(token);

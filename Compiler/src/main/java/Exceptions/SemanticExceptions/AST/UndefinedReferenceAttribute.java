@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class UndefinedReferenceAttribute extends SemanticException {
+public class UndefinedReferenceAttribute extends ASTExcpetion {
 
     public UndefinedReferenceAttribute(Token token){
         super(token);

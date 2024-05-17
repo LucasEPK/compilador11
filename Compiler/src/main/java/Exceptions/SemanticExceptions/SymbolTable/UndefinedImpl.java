@@ -7,7 +7,7 @@ import LexicalAnalyzer.Token;
  * Clase que representa que no se declaro impl para un struct
  * @author Yeumen Silva
  */
-public class UndefinedImpl extends SemanticException {
+public class UndefinedImpl extends SymbolTableException {
 
     public UndefinedImpl(Token token){
         super(token);

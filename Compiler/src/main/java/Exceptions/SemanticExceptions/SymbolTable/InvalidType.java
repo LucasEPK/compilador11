@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * una variable de un tipo no definido
  * @author Yeumen Silva
  */
-public class InvalidType extends SemanticException {
+public class InvalidType extends SymbolTableException {
     public InvalidType( Token token) {
         super(token);
     }

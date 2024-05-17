@@ -8,7 +8,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class ArrayOutOfRange extends SemanticException {
+public class ArrayOutOfRange extends ASTExcpetion {
 
     public ArrayOutOfRange(Token token){
         super(token);

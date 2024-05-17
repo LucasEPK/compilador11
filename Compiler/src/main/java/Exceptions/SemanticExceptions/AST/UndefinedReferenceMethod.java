@@ -9,7 +9,7 @@ import LexicalAnalyzer.Token;
  * @author Yeumen Silva
  */
 
-public class UndefinedReferenceMethod extends SemanticException {
+public class UndefinedReferenceMethod extends ASTExcpetion {
 
     public UndefinedReferenceMethod(Token token){
         super(token);
