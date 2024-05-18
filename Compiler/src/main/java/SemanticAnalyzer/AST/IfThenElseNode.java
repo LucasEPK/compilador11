@@ -69,6 +69,13 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
 
     }
 
+    /**
+     * Método que consolida un nodo if-else
+     * @param ast AST que se va a consolidar
+     * @return void
+     * @autor Yeumen Silva
+     */
+
     @Override
     public void consolidate(AST ast) {
 

@@ -49,6 +49,12 @@ public class WhileNode extends SentenceNode {
 
     }
 
+    /**
+     * Método que consolida un nodo while
+     * @param ast AST que contiene la información
+     * @autor Yeumen Silva
+     */
+
     @Override
     public void consolidate(AST ast) {
 

@@ -38,6 +38,12 @@ public class LiteralNode extends Operands {
         return json;
     }
 
+    /**
+     * Método que consolida un nodo literal
+     * @param ast AST que contiene la información
+     * @autor Lucas Moyano
+     */
+
     @Override
     public void consolidate(AST ast) {
         this.setConsolidated(true);
