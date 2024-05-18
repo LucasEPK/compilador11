@@ -40,6 +40,7 @@ public class LiteralNode extends Operands {
 
     @Override
     public void consolidate(AST ast) {
+        this.setConsolidated(true);
     }
 
     /**
