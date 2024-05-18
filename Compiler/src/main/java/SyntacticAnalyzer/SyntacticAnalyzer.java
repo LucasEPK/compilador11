@@ -1006,10 +1006,10 @@ public class    SyntacticAnalyzer {
                                 if (verifyEquals("ret")){
                                     match("ret");
                                     // Analisis Semantico AST -------------------------
-                                    SentenceNode newReturnSentence = block.addNewSentence("Return");
+                                    ReturnNode newReturnSentence = block.addNewReturnSentence();
                                     // ------------------------------------------------
 
-                                    sentenciaF1((ReturnNode)newReturnSentence);
+                                    sentenciaF1(newReturnSentence);
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
