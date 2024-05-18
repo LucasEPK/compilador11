@@ -12,6 +12,9 @@ public abstract class SentenceNode implements Commons {
 
     String method;
 
+    // Variable que indica si la sentencia ya fue consolidada
+    boolean consolidated = false;
+
     public SentenceNode( String struct, String method ) {
 
         this.struct = struct;
@@ -20,6 +23,9 @@ public abstract class SentenceNode implements Commons {
 
 
 
+    public boolean getConsolidated() {
+        return consolidated;
+    }
     public String getMethod() {
         return method;
     }
@@ -35,6 +41,10 @@ public abstract class SentenceNode implements Commons {
 
     public void setStruct(String struct) {
         this.struct = struct;
+    }
+
+    public void setConsolidated(boolean consolidated) {
+        this.consolidated =  consolidated;
     }
 
 }
