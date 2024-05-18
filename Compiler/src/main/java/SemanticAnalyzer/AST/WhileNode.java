@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import Exceptions.SemanticExceptions.AST.NoBooleanCondition;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
@@ -50,6 +51,17 @@ public class WhileNode extends SentenceNode {
 
     @Override
     public void consolidate(AST ast) {
+
+        if(whileNode.getConsolidated() == false){
+            whileNode.consolidate(ast);
+        }
+        if(doNode.getConsolidated() == false){
+            doNode.consolidate(ast);
+        }
+        if(this.whileNode.getType().equals("Bool") == false){
+            //ToDo
+            //throw new NoBooleanCondition(this.whileNode.getToken());
+        }
 
     }
 
