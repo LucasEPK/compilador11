@@ -1350,6 +1350,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 59 <ExpAnd> de la Gramatica
+     * es el encargado de agregar al AST las operaciones binarias con &&
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
@@ -1359,9 +1360,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpIgual)) {
             ExpressionNode expNode = expIgual();
-            expAndF();
+            ExpBin expBinNode = expAndF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones and
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones and
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
@@ -1371,52 +1377,88 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 60 <ExpAnd-F> de la Gramatica
+     * @return una operacion binaria o null
      * @author Lucas Moyano
      * */
-    private void expAndF() {
+    private ExpBin expAndF() {
         String[] followExpAndF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpAndR = {"&&"};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
 
         if(verifyEquals(followExpAndF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpAndR)) {
-                expAndR();
+                expBinNode = expAndR();
             } else {
                 throw createException(this.actualToken, List.of("&&", ")" , "," , ";" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 61 <ExpAndR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expAndR() {
+    private ExpBin expAndR() {
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        Token operator = this.actualToken;
+        // ------------------------
         match("&&");
-        expIgual();
-        expAndRF();
+        ExpressionNode expNode = expIgual();
+        ExpBin expBinNodeR = expAndRF();
+
+        // AST----------------------------------------------------------------------------
+        expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), operator);
+        if (expBinNodeR == null) { // Caso base
+            expBinNode.setRight(expNode);
+        } else { // Caso recursivo
+            expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+            expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual, conectadola con la recursion
+        }
+        expBinNode.setType("Bool"); // Esto es porque el resultado va a ser booleano
+
+        return expBinNode;
+        // --------------------------------------------------------------------------------
     }
 
     /**
      * Función para la regla 62 <ExpAndR-F> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expAndRF() {
+    private ExpBin expAndRF() {
         String[] followExpAndRF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpAndR = {"&&"};
+
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
 
         if(verifyEquals(followExpAndRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpAndR)) {
-                expAndR();
+                expBinNode = expAndR();
             } else {
                 throw createException(this.actualToken, List.of("&&" , ")" , "," , ";" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
@@ -1827,7 +1869,7 @@ public class    SyntacticAnalyzer {
                 expBinNode.setRight(expNode);
             } else { // Caso recursivo
                 expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
-                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual
+                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual conectandolo con la recursión
             }
             expBinNode.setType("Int"); // Esto es porque todas las operaciones deben ser enteras
             // para que funcionen los operadores * / %
