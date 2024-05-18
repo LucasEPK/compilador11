@@ -7,7 +7,7 @@ package SemanticAnalyzer.AST;
 
 public abstract class ExpressionNode extends  SentenceNode implements Commons {
 
-    private String type;
+    private String type = "void";
 
     public ExpressionNode(String struct, String method) {
         super(struct, method);
