@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -47,9 +48,38 @@ public class ExpUn extends ExpOp {
             return json;
     }
 
+    /**
+     * Método que consolida un nodo ExpUn
+     * @param ast AST que contiene la información
+     * @autor Yeumen Silva
+     */
+
     @Override
     public void consolidate(AST ast) {
-
+        if(right.getConsolidated()  == false){
+            right.consolidate(ast);
+        }
+        switch (getOperator().getLexeme()) {
+            case "-", "+", "--", "++":
+                //Si el tipo del dato es int, se mantiene el tipo
+                if(right.getType().equals("Int"))
+                    setType(right.getType());
+                else
+                    //Sino tiro error ToDo
+                    //throw new TypesDontMatch(this.getToken());
+                break;
+            case "!":
+                if(right.getType().equals("Bool"))
+                    setType(right.getType());
+                else
+                    //Sino tiro error ToDo
+                    //throw new TypesDontMatch(this.getToken());
+                break;
+            default:
+                setType("nil");
+                break;
+        }
+        this.setConsolidated(true);
     }
 
     /**
