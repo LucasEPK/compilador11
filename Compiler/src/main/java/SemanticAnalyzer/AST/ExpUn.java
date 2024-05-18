@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
  * Clase representate una expresión unaria en nuestro AST
@@ -47,7 +48,7 @@ public class ExpUn extends ExpOp {
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
 
     }
 

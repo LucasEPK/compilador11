@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
  * Clase representate una expresión binaria en nuestro AST
@@ -59,7 +60,7 @@ public class ExpBin extends ExpOp {
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
 
     }
 

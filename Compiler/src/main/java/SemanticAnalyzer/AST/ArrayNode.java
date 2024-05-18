@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 public class ArrayNode extends PrimaryNode{
     private int length;
@@ -41,8 +42,10 @@ public class ArrayNode extends PrimaryNode{
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
+
     }
+
 
     /**
      * Método que convierte un objeto a un string en formato JSON

@@ -1,5 +1,7 @@
 package SemanticAnalyzer.AST;
 
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 public interface Commons {
 
     /**
@@ -14,11 +16,12 @@ public interface Commons {
 
     /**
      * Método que recorre el AST y consolida los nodos
+     * @param ast AST a consolidar
      * @return void
      * @autor Yeumen Silva
      */
 
-    public void consolidate();
+    public void consolidate(AST ast);
 
     /**
      * Método que agrega una cantidad de tabulaciones a un string

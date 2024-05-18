@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
  * Clase representate un literal en nuestro AST
@@ -38,7 +39,7 @@ public class LiteralNode extends Operands {
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
     }
 
     /**

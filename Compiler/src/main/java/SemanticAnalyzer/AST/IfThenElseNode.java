@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 /**
  * Clase representate una sentencia if-else en nustro AST
  * @author Yeumen Silva
@@ -67,7 +69,7 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
 
     }
 

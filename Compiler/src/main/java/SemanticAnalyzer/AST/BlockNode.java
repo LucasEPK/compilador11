@@ -1,6 +1,9 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.ReturnInStart;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +62,31 @@ public class BlockNode extends SentenceNode implements Commons {
         return json;
     }
 
+    /**
+     * Método que recorre sentencia a sentencia y llama al método consolidate de cada una
+     * @param ast AST que se va a consolidar
+     * @return void
+     * @autor Yeumen Silva
+     */
+
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
+        //Llamo al método consolidate de cada sentencia
+        for(SentenceNode sentence : sentenceList){
+            sentence.consolidate(ast);
+        }
+
+        //Llamo al método consolidate de cada sentencia para verificar los tipos de return
+        for(SentenceNode sentence : sentenceList){
+            //Verifico que start no tenga return
+            if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
+                //throw new ReturnInStart(sentence.getToken());
+            }
+        }
+
+
+
+
 
     }
 

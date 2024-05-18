@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 /**
  * Clase representate la asignación en nustro AST
  * @author Yeumen Silva
@@ -53,12 +55,11 @@ public class AsignationNode extends SentenceNode implements Commons {
 
     }
 
-
-
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast ) {
 
     }
+
 
     /**
      * Método que agrega una cantidad de tabulaciones a un string

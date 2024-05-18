@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class IdNode extends PrimaryNode{
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
     }
 
     /**

@@ -79,9 +79,19 @@ public class AST implements Commons {
         return json;
     }
 
+    /**
+     * Método que recorre la lista de bloques y llama al método consolidate de cada uno
+     * @param ast AST a consolidar
+     * @return void
+     * @autor Yeumen Silva
+     */
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast ) {
+        //Recorro todos los bloques del AST
+        for(BlockNode block : blockList) {
+            block.consolidate(ast);
+        }
 
     }
 

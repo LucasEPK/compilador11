@@ -1,5 +1,7 @@
 package SemanticAnalyzer.AST;
 
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 /**
  * Clase representate una sentencia while en nustro AST
  * @author Yeumen Silva
@@ -47,7 +49,7 @@ public class WhileNode extends SentenceNode {
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
 
     }
 

@@ -69,6 +69,8 @@ public class SymbolTable extends Commons {
         start.setToken(token);
         this.start = start;
         this.currentMethod = start;
+        Struct starts = new Struct("start");
+        this.currentStruct = starts;
 
     }
 
