@@ -1275,6 +1275,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 55 <ExpOr> de la Gramatica
+     * es el encargado de agregar al AST las operaciones binarias con ||
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
@@ -1285,9 +1286,14 @@ public class    SyntacticAnalyzer {
 
         if(verifyEquals(firstExpAnd)){
             ExpressionNode expNode = expAnd();
-            expOrF();
+            ExpBin expBinNode = expOrF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones or
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones or
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!", "(", "+" , "++" , "-" , "--" ,
@@ -1299,53 +1305,87 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 56 <ExpOr-F> de la Gramatica
+     * @return una operación binaria o null
      * @author Lucas Moyano
      * */
-    private void expOrF() {
+    private ExpBin expOrF() {
         String[] followExpOrF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
 
         if(verifyEquals(followExpOrF)){ // Esto es por Lambda
             //Lambda
         } else {
             if (verifyEquals(firstExpOrR)){
-                expOrR();
+                expBinNode = expOrR();
             } else {
                 throw createException(this.actualToken, List.of("||", ")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 57 <ExpOrR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expOrR(){
+    private ExpBin expOrR(){
+        // AST---------------------
+        ExpBin expBinNode = null;
+        Token operator = this.actualToken;
+        // ------------------------
 
         match("||");
-        expAnd();
-        expOrRF();
+        ExpressionNode expNode = expAnd();
+        ExpBin expBinNodeR = expOrRF();
+
+        // AST----------------------------------------------------------------------------
+        expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), operator);
+        if (expBinNodeR == null) { // Caso base
+            expBinNode.setRight(expNode);
+        } else { // Caso recursivo
+            expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+            expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual conectandolo con la recursión
+        }
+        expBinNode.setType("Bool"); // Esto es porque el resultado va a ser booleano
+        return expBinNode;
+        // --------------------------------------------------------------------------------
     }
 
     /**
      * Función para la regla 58 <ExpOrR-F> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expOrRF() {
+    private ExpBin expOrRF() {
         String[] followExpOrRF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
+
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
 
         if (verifyEquals(followExpOrRF)) {
             // Lambda
         } else {
             if (verifyEquals(firstExpOrR)) {
-                expOrR();
+                expBinNode = expOrR();
             } else {
                 throw createException(this.actualToken, List.of("||" ,")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
