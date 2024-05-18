@@ -1421,6 +1421,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 63 <ExpIgual> de la Gramatica
+     * es el encargado de agregar al AST las operaciones binarias con == !=
      * @return un nodo Expresión del AST
      * @author Lucas Moyano
      * */
@@ -1432,9 +1433,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpCompuesta)) {
             ExpressionNode expNode = expCompuesta();
-            expIgualF();
+            ExpBin expBinNode= expIgualF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones igual
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones igual
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-"
@@ -1446,58 +1452,94 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 64 <ExpIgual-F> de la Gramatica
+     * @return una operación binaria o null
      * @author Lucas Moyano
      * */
-    private void expIgualF() {
+    private ExpBin expIgualF() {
         String[] followExpIgualF = {"&&" , ")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpIgualR = {"!=" , "=="};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
 
         if(verifyEquals(followExpIgualF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpIgualR)) {
-                expIgualR();
+                expBinNode = expIgualR();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "==" ,"&&" ,
                         ")" , "," , ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 65 <ExpIgualR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expIgualR() {
+    private ExpBin expIgualR() {
         String[] firstOpIgual = {"!=" , "=="};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(firstOpIgual)){
-            opIgual();
-            expCompuesta();
-            expIgualRF();
+            Token operator = opIgual();
+            ExpressionNode expNode = expCompuesta();
+            ExpBin expBinNodeR = expIgualRF();
+            // AST----------------------------------------------------------------------------
+            expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), operator);
+            if (expBinNodeR == null) { // Caso base
+                expBinNode.setRight(expNode);
+            } else { // Caso recursivo
+                expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual
+            }
+            expBinNode.setType("Bool"); // Esto es porque el resultado va a ser booleano
+            // --------------------------------------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!=" , "=="),this.actualToken.getLexeme());
         }
+
+        // AST-----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 66 <ExpIgualR-F> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expIgualRF() {
+    private ExpBin expIgualRF() {
         String[] followExpIgualRF = {"&&" , ")" , "," ,
                 ";" , "]" , "||" , "$EOF$"};
         String[] firstExpIgualR = {"!=" , "=="};
+
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
 
         if(verifyEquals(followExpIgualRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpIgualR)) {
-                expIgualR();
+                expBinNode = expIgualR();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "==", "&&" , ")" , "," ,
                         ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
