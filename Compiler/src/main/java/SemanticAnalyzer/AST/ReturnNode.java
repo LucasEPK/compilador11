@@ -30,8 +30,6 @@ public class ReturnNode extends SentenceNode implements Commons {
 
             String json = addtabs(tabs) + "{\n";
             json += addtabs(tabs+1) + "\"nombre\": \"" + "Return" + "\",\n";
-            json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-            json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
             if (returnValueNode != null) {
                 json += addtabs(tabs+1) + "\"return\": \n " + returnValueNode.toJson(tabs+1) + "\n";
             } else {

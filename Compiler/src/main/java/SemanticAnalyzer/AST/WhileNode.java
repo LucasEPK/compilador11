@@ -40,8 +40,6 @@ public class WhileNode extends SentenceNode {
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "While" + "\",\n";
-        json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-        json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
         json += addtabs(tabs+1) + "\"Condición\": " + whileNode.toJson(tabs+1) + ",\n";
         json += addtabs(tabs+1) + "\"do\": " + doNode.toJson(tabs+1) + "\n";
         json += addtabs(tabs) + "}\n";

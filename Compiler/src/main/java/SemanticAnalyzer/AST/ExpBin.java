@@ -50,8 +50,6 @@ public class ExpBin extends ExpOp {
 
                 String json = addtabs(tabs) + "{\n";
                 json += addtabs(tabs+1) + "\"nombre\": \"" + "ExpBin" + "\",\n";
-                json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-                json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
                 json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
                 json += addtabs(tabs+1) + "\"operator\": \"" + getOperator().getLexeme() + "\",\n";
                 json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";

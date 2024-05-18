@@ -31,8 +31,6 @@ public class IdNode extends PrimaryNode{
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Id" + "\",\n";
-        json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-        json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
         json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
         json += addtabs(tabs+1) + "\"arguments\": [\n";
