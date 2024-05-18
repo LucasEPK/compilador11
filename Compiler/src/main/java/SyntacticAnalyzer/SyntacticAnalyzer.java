@@ -1770,26 +1770,41 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 78 <OpIgual> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opIgual() {
+    private Token opIgual() {
         String[] firstEqual = {"=="};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstEqual)){
             match("==");
         } else {
             match("!=");
         }
+
+        // AST --------------------------------------------------
+        return operator;
+        // ------------------------------------------------------
     }
 
     /**
      * Función para la regla 79 <OpCompuesto> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opCompuesto() {
+    private Token opCompuesto() {
         String[] firstLesser = {"<"};
         String[] firstGreater = {">"};
         String[] firstLesserEqual = {"<="};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
+
         if (verifyEquals(firstLesser)) {
             match("<");
         } else {
@@ -1803,20 +1818,31 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST ------------------------------
+        return operator;
     }
 
     /**
      * Función para la regla 80 <OpAd> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opAd() {
+    private Token opAd() {
         String[] firstPlus = {"+"};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstPlus)) {
             match("+");
         } else {
             match("-");
         }
+
+        // AST ------------------
+        return operator;
     }
 
     /**
@@ -1859,11 +1885,16 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 82 <OpMul> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opMul() {
+    private Token opMul() {
         String[] firstMultiplication = {"*"};
         String[] firstDivision = {"/"};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstMultiplication)){
             match("*");
@@ -1874,6 +1905,8 @@ public class    SyntacticAnalyzer {
                 match("%");
             }
         }
+
+        return operator;
     }
 
     /**
