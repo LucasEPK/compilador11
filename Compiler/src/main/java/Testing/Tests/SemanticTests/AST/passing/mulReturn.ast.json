@@ -1,0 +1,119 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\mulReturn.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "MulTest",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "MulTest",
+			"method": "retMul1",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "MulTest",
+					"method": "retMul1",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "MulTest",
+						"method": "retMul1",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "MulTest",
+							"method": "retMul1",
+							"value": "3",
+							"type": "Int"
+						},
+,
+						"operator": "*",
+						"right": 						{
+							"nombre": "Literal",
+							"class": "MulTest",
+							"method": "retMul1",
+							"value": "3",
+							"type": "Int"
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "MulTest",
+			"method": "retMul2",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "MulTest",
+					"method": "retMul2",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "MulTest",
+						"method": "retMul2",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "MulTest",
+							"method": "retMul2",
+							"value": "3",
+							"type": "Int"
+						},
+,
+						"operator": "*",
+						"right": 						{
+							"nombre": "ExpBin",
+							"class": "MulTest",
+							"method": "retMul2",
+							"left": 							{
+								"nombre": "Literal",
+								"class": "MulTest",
+								"method": "retMul2",
+								"value": "1",
+								"type": "Int"
+							},
+,
+							"operator": "/",
+							"right": 							{
+								"nombre": "ExpBin",
+								"class": "MulTest",
+								"method": "retMul2",
+								"left": 								{
+									"nombre": "Literal",
+									"class": "MulTest",
+									"method": "retMul2",
+									"value": "8",
+									"type": "Int"
+								},
+,
+								"operator": "%",
+								"right": 								{
+									"nombre": "Literal",
+									"class": "MulTest",
+									"method": "retMul2",
+									"value": "5",
+									"type": "Int"
+								},
+
+							},
+
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "MulTest",
+			"method": "start",
+			"sentences": [
+			]
+		},
+	]
+}

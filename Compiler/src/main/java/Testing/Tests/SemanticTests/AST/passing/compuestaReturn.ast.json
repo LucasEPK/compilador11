@@ -1,0 +1,199 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\compuestaReturn.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "CompuestaTest",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "CompuestaTest",
+			"method": "retCo1",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "CompuestaTest",
+					"method": "retCo1",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "CompuestaTest",
+						"method": "retCo1",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "CompuestaTest",
+							"method": "retCo1",
+							"value": "3",
+							"type": "Int"
+						},
+,
+						"operator": "<",
+						"right": 						{
+							"nombre": "Literal",
+							"class": "CompuestaTest",
+							"method": "retCo1",
+							"value": "3",
+							"type": "Int"
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "CompuestaTest",
+			"method": "retCo2",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "CompuestaTest",
+					"method": "retCo2",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "CompuestaTest",
+						"method": "retCo2",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "CompuestaTest",
+							"method": "retCo2",
+							"value": "2",
+							"type": "Int"
+						},
+,
+						"operator": "<=",
+						"right": 						{
+							"nombre": "ExpBin",
+							"class": "CompuestaTest",
+							"method": "retCo2",
+							"left": 							{
+								"nombre": "Literal",
+								"class": "CompuestaTest",
+								"method": "retCo2",
+								"value": "3",
+								"type": "Int"
+							},
+,
+							"operator": "-",
+							"right": 							{
+								"nombre": "ExpBin",
+								"class": "CompuestaTest",
+								"method": "retCo2",
+								"left": 								{
+									"nombre": "Literal",
+									"class": "CompuestaTest",
+									"method": "retCo2",
+									"value": "4",
+									"type": "Int"
+								},
+,
+								"operator": "-",
+								"right": 								{
+									"nombre": "ExpBin",
+									"class": "CompuestaTest",
+									"method": "retCo2",
+									"left": 									{
+										"nombre": "Literal",
+										"class": "CompuestaTest",
+										"method": "retCo2",
+										"value": "5",
+										"type": "Int"
+									},
+,
+									"operator": "-",
+									"right": 									{
+										"nombre": "Literal",
+										"class": "CompuestaTest",
+										"method": "retCo2",
+										"value": "6",
+										"type": "Int"
+									},
+
+								},
+
+							},
+
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "CompuestaTest",
+			"method": "retCo3",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "CompuestaTest",
+					"method": "retCo3",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "CompuestaTest",
+						"method": "retCo3",
+						"left": 						{
+							"nombre": "ExpBin",
+							"class": "CompuestaTest",
+							"method": "retCo3",
+							"left": 							{
+								"nombre": "Literal",
+								"class": "CompuestaTest",
+								"method": "retCo3",
+								"value": "3",
+								"type": "Int"
+							},
+,
+							"operator": "+",
+							"right": 							{
+								"nombre": "ExpBin",
+								"class": "CompuestaTest",
+								"method": "retCo3",
+								"left": 								{
+									"nombre": "Literal",
+									"class": "CompuestaTest",
+									"method": "retCo3",
+									"value": "1",
+									"type": "Int"
+								},
+,
+								"operator": "/",
+								"right": 								{
+									"nombre": "Literal",
+									"class": "CompuestaTest",
+									"method": "retCo3",
+									"value": "8",
+									"type": "Int"
+								},
+
+							},
+
+						},
+,
+						"operator": ">=",
+						"right": 						{
+							"nombre": "Literal",
+							"class": "CompuestaTest",
+							"method": "retCo3",
+							"value": "5",
+							"type": "Int"
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "CompuestaTest",
+			"method": "start",
+			"sentences": [
+			]
+		},
+	]
+}

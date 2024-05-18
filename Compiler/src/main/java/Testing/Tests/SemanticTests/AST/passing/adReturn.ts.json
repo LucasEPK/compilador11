@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\adReturn.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,30 +253,30 @@
 		}
 	},
  	 {
-		"nombre": "OrTest",
+		"nombre": "AdTest",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "retOr",
+				"nombre": "retAd1",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
 				"variables": []
 			},
 			{
-				"nombre": "retOr2",
+				"nombre": "retAd2",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 1,
 				"paramF": [],
 				"variables": []
 			},
 			{
-				"nombre": "retOr3",
+				"nombre": "retAd3",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 2,
 				"paramF": [],
 				"variables": []

@@ -1,0 +1,139 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\igualReturn.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "retIgu",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "IgualTest",
+					"method": "retIgu",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "IgualTest",
+						"method": "retIgu",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "IgualTest",
+							"method": "retIgu",
+							"value": "3",
+							"type": "Int"
+						},
+,
+						"operator": "==",
+						"right": 						{
+							"nombre": "Literal",
+							"class": "IgualTest",
+							"method": "retIgu",
+							"value": "3",
+							"type": "Int"
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "retIgu2",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "IgualTest",
+					"method": "retIgu2",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "IgualTest",
+						"method": "retIgu2",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "IgualTest",
+							"method": "retIgu2",
+							"value": "2",
+							"type": "Int"
+						},
+,
+						"operator": "!=",
+						"right": 						{
+							"nombre": "Literal",
+							"class": "IgualTest",
+							"method": "retIgu2",
+							"value": "3",
+							"type": "Int"
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "retIgu3",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "IgualTest",
+					"method": "retIgu3",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "IgualTest",
+						"method": "retIgu3",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "IgualTest",
+							"method": "retIgu3",
+							"value": "3",
+							"type": "Int"
+						},
+,
+						"operator": "==",
+						"right": 						{
+							"nombre": "ExpBin",
+							"class": "IgualTest",
+							"method": "retIgu3",
+							"left": 							{
+								"nombre": "Literal",
+								"class": "IgualTest",
+								"method": "retIgu3",
+								"value": "3",
+								"type": "Int"
+							},
+,
+							"operator": "==",
+							"right": 							{
+								"nombre": "Literal",
+								"class": "IgualTest",
+								"method": "retIgu3",
+								"value": "true",
+								"type": "Bool"
+							},
+
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "start",
+			"sentences": [
+			]
+		},
+	]
+}

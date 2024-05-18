@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\mulReturn.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,31 +253,23 @@
 		}
 	},
  	 {
-		"nombre": "OrTest",
+		"nombre": "MulTest",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "retOr",
+				"nombre": "retMul1",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
 				"variables": []
 			},
 			{
-				"nombre": "retOr2",
+				"nombre": "retMul2",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 1,
-				"paramF": [],
-				"variables": []
-			},
-			{
-				"nombre": "retOr3",
-				"static": false,
-				"retorno": "Bool",
-				"posicion": 2,
 				"paramF": [],
 				"variables": []
 			}

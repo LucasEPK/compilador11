@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\unaryReturn.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,31 +253,47 @@
 		}
 	},
  	 {
-		"nombre": "OrTest",
+		"nombre": "LitTest",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "retOr",
+				"nombre": "retInt",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 0,
 				"paramF": [],
 				"variables": []
 			},
 			{
-				"nombre": "retOr2",
+				"nombre": "retInt2",
 				"static": false,
-				"retorno": "Bool",
+				"retorno": "Int",
 				"posicion": 1,
 				"paramF": [],
 				"variables": []
 			},
 			{
-				"nombre": "retOr3",
+				"nombre": "retInt3",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 2,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retInt4",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 3,
+				"paramF": [],
+				"variables": []
+			},
+			{
+				"nombre": "retBool",
 				"static": false,
 				"retorno": "Bool",
-				"posicion": 2,
+				"posicion": 4,
 				"paramF": [],
 				"variables": []
 			}

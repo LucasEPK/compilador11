@@ -1,0 +1,119 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\andReturn.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": "retAnd",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "AndTest",
+					"method": "retAnd",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "AndTest",
+						"method": "retAnd",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "AndTest",
+							"method": "retAnd",
+							"value": "true",
+							"type": "Bool"
+						},
+,
+						"operator": "&&",
+						"right": 						{
+							"nombre": "Literal",
+							"class": "AndTest",
+							"method": "retAnd",
+							"value": "false",
+							"type": "Bool"
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": "retAnd2",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"class": "AndTest",
+					"method": "retAnd2",
+					"return": 					{
+						"nombre": "ExpBin",
+						"class": "AndTest",
+						"method": "retAnd2",
+						"left": 						{
+							"nombre": "Literal",
+							"class": "AndTest",
+							"method": "retAnd2",
+							"value": "false",
+							"type": "Bool"
+						},
+,
+						"operator": "&&",
+						"right": 						{
+							"nombre": "ExpBin",
+							"class": "AndTest",
+							"method": "retAnd2",
+							"left": 							{
+								"nombre": "Literal",
+								"class": "AndTest",
+								"method": "retAnd2",
+								"value": "true",
+								"type": "Bool"
+							},
+,
+							"operator": "&&",
+							"right": 							{
+								"nombre": "ExpBin",
+								"class": "AndTest",
+								"method": "retAnd2",
+								"left": 								{
+									"nombre": "Literal",
+									"class": "AndTest",
+									"method": "retAnd2",
+									"value": "false",
+									"type": "Bool"
+								},
+,
+								"operator": "&&",
+								"right": 								{
+									"nombre": "Literal",
+									"class": "AndTest",
+									"method": "retAnd2",
+									"value": "true",
+									"type": "Bool"
+								},
+
+							},
+
+						},
+
+					},
+
+				},
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": "start",
+			"sentences": [
+			]
+		},
+	]
+}

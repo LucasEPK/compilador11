@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\igualReturn.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,12 +253,12 @@
 		}
 	},
  	 {
-		"nombre": "OrTest",
+		"nombre": "IgualTest",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "retOr",
+				"nombre": "retIgu",
 				"static": false,
 				"retorno": "Bool",
 				"posicion": 0,
@@ -266,7 +266,7 @@
 				"variables": []
 			},
 			{
-				"nombre": "retOr2",
+				"nombre": "retIgu2",
 				"static": false,
 				"retorno": "Bool",
 				"posicion": 1,
@@ -274,7 +274,7 @@
 				"variables": []
 			},
 			{
-				"nombre": "retOr3",
+				"nombre": "retIgu3",
 				"static": false,
 				"retorno": "Bool",
 				"posicion": 2,

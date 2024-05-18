@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\andReturn.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,12 +253,12 @@
 		}
 	},
  	 {
-		"nombre": "OrTest",
+		"nombre": "AndTest",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "retOr",
+				"nombre": "retAnd",
 				"static": false,
 				"retorno": "Bool",
 				"posicion": 0,
@@ -266,18 +266,10 @@
 				"variables": []
 			},
 			{
-				"nombre": "retOr2",
+				"nombre": "retAnd2",
 				"static": false,
 				"retorno": "Bool",
 				"posicion": 1,
-				"paramF": [],
-				"variables": []
-			},
-			{
-				"nombre": "retOr3",
-				"static": false,
-				"retorno": "Bool",
-				"posicion": 2,
 				"paramF": [],
 				"variables": []
 			}

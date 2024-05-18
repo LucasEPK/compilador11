@@ -107,42 +107,90 @@ public class BlockNode extends SentenceNode implements Commons {
         return tabsString;
     }
 
+    /**
+     * Esta función se encarga de agregar la sentencia dada a la lista
+     * @param sentence sentencia que se quiere agregar a la lista
+     * @author Lucas Moyano
+     */
+    public void addNewSentence(SentenceNode sentence){
+        sentenceList.add(sentence);
+    }
 
     /**
-     * Esta función se encarga de elegir el tipo de sentencia que se va a agregar en la lista
-     * después de eso la agrega a la sentenceList
-     * @param sentenceType el tipo de sentencia que se quiere en String
+     * Esta función se encarga de crear un AsignationNode y
+     * lo agrega a la lista de sentencias
      * @return devuelve la nueva sentencia creada
      * @author Lucas Moyano
      */
-    public SentenceNode addNewSentence(String sentenceType){
-        SentenceNode newSentence = null;
-
-        switch (sentenceType) {
-            case "Asignation":
-                newSentence = new AsignationNode(getStruct(), getMethod());
-                break;
-            case "ExpBin":
-                newSentence = new ExpBin(getStruct(), getMethod());
-                break;
-            case "ExpUn":
-                newSentence = new ExpUn(getStruct(), getMethod());
-                break;
-            case "IfThenElse":
-                newSentence = new IfThenElseNode(getStruct(), getMethod());
-                break;
-            case "Return":
-                newSentence = new ReturnNode(getStruct(), getMethod());
-                break;
-            case "While":
-                newSentence = new WhileNode(getStruct(), getMethod());
-                break;
-            default:
-                assert newSentence != null: "ERROR: el tipo de sentencia no existe";
-        }
+    public AsignationNode addNewAsignationSentence() {
+        AsignationNode newSentence = new AsignationNode(getStruct(), getMethod());
 
         sentenceList.add(newSentence);
+        return newSentence;
+    }
 
+    /**
+     * Esta función se encarga de crear un ExpBin y
+     * lo agrega a la lista de sentencias
+     * @return devuelve la nueva sentencia creada
+     * @author Lucas Moyano
+     */
+    public ExpBin addNewExpBinSentence() {
+        ExpBin newSentence = new ExpBin(getStruct(), getMethod());
+
+        sentenceList.add(newSentence);
+        return newSentence;
+    }
+
+    /**
+     * Esta función se encarga de crear un ExpUn y
+     * lo agrega a la lista de sentencias
+     * @return devuelve la nueva sentencia creada
+     * @author Lucas Moyano
+     */
+    public ExpUn addNewExpUnSentence() {
+        ExpUn newSentence = new ExpUn(getStruct(), getMethod());
+
+        sentenceList.add(newSentence);
+        return newSentence;
+    }
+
+    /**
+     * Esta función se encarga de crear un IfThenElseNode y
+     * lo agrega a la lista de sentencias
+     * @return devuelve la nueva sentencia creada
+     * @author Lucas Moyano
+     */
+    public IfThenElseNode addNewIfThenElseSentence() {
+        IfThenElseNode newSentence = new IfThenElseNode(getStruct(), getMethod());
+
+        sentenceList.add(newSentence);
+        return newSentence;
+    }
+
+    /**
+     * Esta función se encarga de crear un ReturnNode y
+     * lo agrega a la lista de sentencias
+     * @return devuelve la nueva sentencia creada
+     * @author Lucas Moyano
+     */
+    public ReturnNode addNewReturnSentence() {
+        ReturnNode newSentence = new ReturnNode(getStruct(), getMethod());
+
+        sentenceList.add(newSentence);
+        return newSentence;
+    }
+
+    /**
+     * Esta función se encarga de crear un WhileNode y
+     * lo agrega a la lista de sentencias
+     * @return devuelve la nueva sentencia creada
+     * @author Lucas Moyano
+     */
+    public WhileNode addNewWhileSentence() {
+        WhileNode newSentence = new WhileNode(getStruct(), getMethod());
+
+        sentenceList.add(newSentence);
         return newSentence;
     }
 

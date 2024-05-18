@@ -959,7 +959,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentencia(BlockNode block){
+    private SentenceNode sentencia(BlockNode block){
 
         //Primeros ;
         if (verifyEquals(";")){
@@ -968,48 +968,110 @@ public class    SyntacticAnalyzer {
         else {
             //Primeros Asignacion
             if(verifyEquals("ObjID","self")){
-                asignacion();
+                // Analisis Semantico AST -------------------------
+                AsignationNode newAsignationSentence = new AsignationNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName());
+                if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                    block.addNewSentence(newAsignationSentence);
+                }
+                // -----------------------------------------------------
+                asignacion(newAsignationSentence);
                 match(";");
+
+                return newAsignationSentence;
             }
             else {
                 //Primeros Sentencia-Simple
                 if(verifyEquals("(")){
-                    sentenciaSimple();
+                    ExpressionNode sentence = sentenciaSimple();
                     match(";");
+
+                    // AST-------------
+                    if (block != null ){ // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                        block.addNewSentence(sentence);
+                    }
+                    return sentence;
+                    // -----------------
                 }
                 else {
                     //Primeros if
                     if (verifyEquals("if")){
+                        // Analisis Semantico AST -------------------------
+                        IfThenElseNode newIfThenElseSentence = new IfThenElseNode(symbolTable.getCurrentStruct().getName(),
+                                symbolTable.getCurrentMethod().getName());
+                        if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                            block.addNewSentence(newIfThenElseSentence);
+                        }
+                        // -----------------------------------------------------
                         match("if");
                         match("(");
-                        expresion();
+                        ExpressionNode expNode = expresion();
                         match(")");
-                        sentencia(null);
-                        sentenciaF();
+                        SentenceNode sentence = sentencia(null);
+                        SentenceNode sentenceR = sentenciaF();
+                        // Analisis Semantico AST -------------------------
+                        newIfThenElseSentence.setIfNode(expNode);
+                        newIfThenElseSentence.setThenNode(sentence);
+                        newIfThenElseSentence.setElseNode(sentenceR);
+                        return newIfThenElseSentence;
+                        // ------------------------------------------------
                     }
                     else {
                         //Primeros while
                         if (verifyEquals("while")){
+
+                            // Analisis Semantico AST -------------------------
+                            WhileNode newWhileSentence = new WhileNode(symbolTable.getCurrentStruct().getName(),
+                                    symbolTable.getCurrentMethod().getName());
+                            if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                                block.addNewSentence(newWhileSentence);
+                            }
+                            // -----------------------------------------------------
+
                             match("while");
                             match("(");
-                            expresion();
+                            ExpressionNode expNode = expresion();
                             match(")");
-                            sentencia(null);
+                            SentenceNode sentence = sentencia(null);
+
+                            // Analisis Semantico AST -------------------------
+                            newWhileSentence.setWhileNode(expNode);
+                            newWhileSentence.setDoNode(sentence);
+                            return newWhileSentence;
+                            // -----------------------------------------------------
                         }
                         else {
                             //Primeros Bloque
                             if (verifyEquals("{")){
-                                bloque();
+                                // AST----------------------------------------------------------------------------------
+                                BlockNode newBlockSentence = new BlockNode(symbolTable.getCurrentStruct().getName(),
+                                        symbolTable.getCurrentMethod().getName());
+                                if (block != null) {
+                                    block.addNewSentence(newBlockSentence);
+                                }
+                                //------------------------------------------------------------------------------------
+
+                                bloque(newBlockSentence);
+                                // AST----------------------
+                                return newBlockSentence;
+                                // -------------------------
                             }
                             else {
                                 //Primeros ret
                                 if (verifyEquals("ret")){
                                     match("ret");
                                     // Analisis Semantico AST -------------------------
-                                    SentenceNode newReturnSentence = block.addNewSentence("Return");
+                                    ReturnNode newReturnSentence = new ReturnNode(symbolTable.getCurrentStruct().getName(),
+                                            symbolTable.getCurrentMethod().getName());
+                                    if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                                        block.addNewSentence(newReturnSentence);
+                                    }
                                     // ------------------------------------------------
 
-                                    sentenciaF1((ReturnNode)newReturnSentence);
+                                    sentenciaF1(newReturnSentence);
+                                    // AST----------------------
+                                    return newReturnSentence;
+                                    // ------------------------
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
@@ -1023,6 +1085,7 @@ public class    SyntacticAnalyzer {
             }
 
         }
+        return null;
     }
 
     /**
@@ -1030,16 +1093,23 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaF(){
+    private SentenceNode sentenciaF(){
+        // AST----------------
+        SentenceNode sentence = null;
+        // --------------------
+
         //Primeros else
         if (verifyEquals("else")){
             match("else");
-            sentencia(null);
+            sentence = sentencia(null);
         }
         /*Aca deberian estar los siguientes de SentenciaF
         pero como tambien tienen "else", lo mejor es patear el error
         para daspues, ya que con los siguientes solo hacemos lambda
          */
+
+        // AST----------------
+        return sentence;
     }
 
     /**
@@ -1079,9 +1149,9 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void bloque(){
+    private void bloque(BlockNode block){
         match("{");
-        bloqueF();
+        bloqueF(block);
 
     }
 
@@ -1090,7 +1160,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void bloqueF(){
+    private void bloqueF(BlockNode block){
         //Primeros }
         if(verifyEquals("}")){
             match("}");
@@ -1099,7 +1169,7 @@ public class    SyntacticAnalyzer {
             //Primeros Setntencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if" , "ret" ,
                     "self" , "while" , "{")){
-                sentenciaEstrella(null);
+                sentenciaEstrella(block);
                 match("}");
             }
             else {
@@ -1111,22 +1181,33 @@ public class    SyntacticAnalyzer {
 
     /**
      * Regla Asignación
+     * @param newAsignationSentence nodo Asignation del AST en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void asignacion(){
+    private void asignacion(AsignationNode newAsignationSentence){
         //Primeros AccesoVar-Simple
         if (verifyEquals("ObjID")){
-            accesoVarSimple();
+            ExpressionNode expNode1 = accesoVarSimple();
             match("=");
-            expresion();
+            ExpressionNode expNode2 = expresion();
+
+            // AST --------------------------------------
+            newAsignationSentence.setLeft(expNode1);
+            newAsignationSentence.setRight(expNode2);
+            // ---------------------------------------------
         }
         else {
             //`Primeros AccesoSelf-Simple
             if(verifyEquals("self")){
-                accesoSelfSimple();
+                ExpressionNode expNode1 = accesoSelfSimple();
                 match("=");
-                expresion();
+                ExpressionNode expNode2 = expresion();
+
+                // AST --------------------------------------
+                newAsignationSentence.setLeft(expNode1);
+                newAsignationSentence.setRight(expNode2);
+                // ---------------------------------------------
             }
             else {
                 throw createException(this.actualToken, List.of("ObjID" , "self"),this.actualToken.getLexeme());
@@ -1139,12 +1220,14 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoVarSimple(){
+    private ExpressionNode accesoVarSimple(){
         // Analisis semantico ----------------------------------
         // acá ya debería existir este objeto
         // -----------------------------------------------------
         match("ObjID");
         accesoVarSimpleF();
+        // TODO: AST
+        return null;
     }
 
     /**
@@ -1212,9 +1295,12 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoSelfSimple(){
+    private ExpressionNode accesoSelfSimple(){
         match("self");
         accesoSelfSimpleF();
+
+        // TODO: AST
+        return null;
     }
 
     /**
@@ -1255,10 +1341,13 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaSimple(){
+    private ExpressionNode sentenciaSimple(){
         match("(");
-        expresion();
+        ExpressionNode expNode = expresion();
         match(")");
+
+        // AST------------------
+        return expNode;
     }
 
     /**
@@ -1275,6 +1364,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 55 <ExpOr> de la Gramatica
+     * es el encargado de agregar al AST las operaciones binarias con ||
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
@@ -1285,9 +1375,14 @@ public class    SyntacticAnalyzer {
 
         if(verifyEquals(firstExpAnd)){
             ExpressionNode expNode = expAnd();
-            expOrF();
+            ExpBin expBinNode = expOrF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones or
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones or
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!", "(", "+" , "++" , "-" , "--" ,
@@ -1299,57 +1394,92 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 56 <ExpOr-F> de la Gramatica
+     * @return una operación binaria o null
      * @author Lucas Moyano
      * */
-    private void expOrF() {
+    private ExpBin expOrF() {
         String[] followExpOrF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
 
         if(verifyEquals(followExpOrF)){ // Esto es por Lambda
             //Lambda
         } else {
             if (verifyEquals(firstExpOrR)){
-                expOrR();
+                expBinNode = expOrR();
             } else {
                 throw createException(this.actualToken, List.of("||", ")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 57 <ExpOrR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expOrR(){
+    private ExpBin expOrR(){
+        // AST---------------------
+        ExpBin expBinNode = null;
+        Token operator = this.actualToken;
+        // ------------------------
 
         match("||");
-        expAnd();
-        expOrRF();
+        ExpressionNode expNode = expAnd();
+        ExpBin expBinNodeR = expOrRF();
+
+        // AST----------------------------------------------------------------------------
+        expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), operator);
+        if (expBinNodeR == null) { // Caso base
+            expBinNode.setRight(expNode);
+        } else { // Caso recursivo
+            expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+            expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual conectandolo con la recursión
+        }
+        expBinNode.setType("Bool"); // Esto es porque el resultado va a ser booleano
+        return expBinNode;
+        // --------------------------------------------------------------------------------
     }
 
     /**
      * Función para la regla 58 <ExpOrR-F> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expOrRF() {
+    private ExpBin expOrRF() {
         String[] followExpOrRF = {")" , "," , ";" , "]" , "$EOF$"};
         String[] firstExpOrR = {"||"};
+
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
 
         if (verifyEquals(followExpOrRF)) {
             // Lambda
         } else {
             if (verifyEquals(firstExpOrR)) {
-                expOrR();
+                expBinNode = expOrR();
             } else {
                 throw createException(this.actualToken, List.of("||" ,")" , "," ,
                         ";" , "]" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 59 <ExpAnd> de la Gramatica
+     * es el encargado de agregar al AST las operaciones binarias con &&
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
@@ -1359,9 +1489,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpIgual)) {
             ExpressionNode expNode = expIgual();
-            expAndF();
+            ExpBin expBinNode = expAndF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones and
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones and
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" , "--" , "StrLiteral" , "CharLiteral" ,
@@ -1371,56 +1506,93 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 60 <ExpAnd-F> de la Gramatica
+     * @return una operacion binaria o null
      * @author Lucas Moyano
      * */
-    private void expAndF() {
+    private ExpBin expAndF() {
         String[] followExpAndF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpAndR = {"&&"};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
 
         if(verifyEquals(followExpAndF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpAndR)) {
-                expAndR();
+                expBinNode = expAndR();
             } else {
                 throw createException(this.actualToken, List.of("&&", ")" , "," , ";" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 61 <ExpAndR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expAndR() {
+    private ExpBin expAndR() {
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        Token operator = this.actualToken;
+        // ------------------------
         match("&&");
-        expIgual();
-        expAndRF();
+        ExpressionNode expNode = expIgual();
+        ExpBin expBinNodeR = expAndRF();
+
+        // AST----------------------------------------------------------------------------
+        expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), operator);
+        if (expBinNodeR == null) { // Caso base
+            expBinNode.setRight(expNode);
+        } else { // Caso recursivo
+            expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+            expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual, conectadola con la recursion
+        }
+        expBinNode.setType("Bool"); // Esto es porque el resultado va a ser booleano
+
+        return expBinNode;
+        // --------------------------------------------------------------------------------
     }
 
     /**
      * Función para la regla 62 <ExpAndR-F> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expAndRF() {
+    private ExpBin expAndRF() {
         String[] followExpAndRF = {")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpAndR = {"&&"};
+
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
 
         if(verifyEquals(followExpAndRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpAndR)) {
-                expAndR();
+                expBinNode = expAndR();
             } else {
                 throw createException(this.actualToken, List.of("&&" , ")" , "," , ";" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 63 <ExpIgual> de la Gramatica
+     * es el encargado de agregar al AST las operaciones binarias con == !=
      * @return un nodo Expresión del AST
      * @author Lucas Moyano
      * */
@@ -1432,9 +1604,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpCompuesta)) {
             ExpressionNode expNode = expCompuesta();
-            expIgualF();
+            ExpBin expBinNode= expIgualF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones igual
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones igual
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-"
@@ -1446,58 +1623,94 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 64 <ExpIgual-F> de la Gramatica
+     * @return una operación binaria o null
      * @author Lucas Moyano
      * */
-    private void expIgualF() {
+    private ExpBin expIgualF() {
         String[] followExpIgualF = {"&&" , ")" , "," , ";" , "]" , "||" , "$EOF$"};
         String[] firstExpIgualR = {"!=" , "=="};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
 
         if(verifyEquals(followExpIgualF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpIgualR)) {
-                expIgualR();
+                expBinNode = expIgualR();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "==" ,"&&" ,
                         ")" , "," , ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 65 <ExpIgualR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expIgualR() {
+    private ExpBin expIgualR() {
         String[] firstOpIgual = {"!=" , "=="};
+
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(firstOpIgual)){
-            opIgual();
-            expCompuesta();
-            expIgualRF();
+            Token operator = opIgual();
+            ExpressionNode expNode = expCompuesta();
+            ExpBin expBinNodeR = expIgualRF();
+            // AST----------------------------------------------------------------------------
+            expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), operator);
+            if (expBinNodeR == null) { // Caso base
+                expBinNode.setRight(expNode);
+            } else { // Caso recursivo
+                expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual
+            }
+            expBinNode.setType("Bool"); // Esto es porque el resultado va a ser booleano
+            // --------------------------------------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!=" , "=="),this.actualToken.getLexeme());
         }
+
+        // AST-----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 66 <ExpIgualR-F> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expIgualRF() {
+    private ExpBin expIgualRF() {
         String[] followExpIgualRF = {"&&" , ")" , "," ,
                 ";" , "]" , "||" , "$EOF$"};
         String[] firstExpIgualR = {"!=" , "=="};
+
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
 
         if(verifyEquals(followExpIgualRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpIgualR)) {
-                expIgualR();
+                expBinNode = expIgualR();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "==", "&&" , ")" , "," ,
                         ";" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
@@ -1513,9 +1726,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpAd)) {
             ExpressionNode expNode = expAd();
-            expCompuestaF();
+            ExpBin expBinNode = expCompuestaF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null){ // Caso con expresion compuesta
+                expBinNode.setLeft(expNode);
+                return expBinNode;
+            } else { // Caso sin expresion compuesta
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++"
@@ -1527,20 +1745,31 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 68 <ExpCompuestaF> de la Gramatica
+     * @return una expresion binaria con el derecho y el tipo seteados o null
      * @author Lucas Moyano
      * */
-    private void expCompuestaF() {
+    private ExpBin expCompuestaF() {
         String[] followExpCompuestaF = {"!=" , "&&" , ")" ,
                 "," , ";" , "==" ,
                 "]" , "||" , "$EOF$"};
         String[] firstOpCompuesto = {"<" , "<=" , ">" , ">="};
 
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
+
         if (verifyEquals(followExpCompuestaF)) {
             //Lambda
         } else {
             if (verifyEquals(firstOpCompuesto)) {
-                opCompuesto();
-                expAd();
+                Token operator = opCompuesto();
+                ExpressionNode expNode = expAd();
+                // AST-----------------------------------------------------------
+                expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), operator);
+                expBinNode.setType("Bool");
+                expBinNode.setRight(expNode);
+                // -------------------------------------------------------------
             } else {
                 throw createException(this.actualToken, List.of("<" , "<=" , ">" , ">=",
                         "!=" , "&&" , ")" ,
@@ -1548,6 +1777,9 @@ public class    SyntacticAnalyzer {
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------
+        return expBinNode;
     }
 
     /**
@@ -1563,9 +1795,15 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpMul)) {
             ExpressionNode expNode = expMul();
-            expAdF();
+            ExpBin expBinNode = expAdF();
+
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones ad
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expAdF
+                return expBinNode;
+            } else { // En este caso no hay expresiones ad
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" ,
@@ -1577,68 +1815,105 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 70 <ExpAdF> de la Gramatica
+     * @return una expresion binaria sin el izquierdo definido o un null
      * @author Lucas Moyano
      * */
-    private void expAdF() {
+    private ExpBin expAdF() {
         String[] followExpAdF = {"!=" , "&&" , ")" ,
                 "," , ";" , "<" , "<=" , "==" ,
                 ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstExpAdR = {"+" , "-"};
 
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
+
         if (verifyEquals(followExpAdF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpAdR)) {
-                expAdR();
+                expBinNode = expAdR();
             } else {
                 throw createException(this.actualToken, List.of("+" , "-", "!=" , "&&" , ")" ,
                         "," , ";" , "<" , "<=" , "==" ,
                         ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST-------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 71 <ExpAdR> de la Gramatica
+     * @return una expresion binaria con el derecho seteado
      * @author Lucas Moyano
      * */
-    private void expAdR() {
+    private ExpBin expAdR() {
         String[] firstOpAd = {"+" , "-"};
 
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(firstOpAd)) {
-            opAd();
-            expMul();
-            expAdRF();
+            Token operator = opAd();
+            ExpressionNode expNode = expMul();
+            ExpBin expBinNodeR = expAdRF();
+
+            // AST----------------------------------------------------------------------------
+            expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), operator);
+            if (expBinNodeR == null) { // Caso base
+                expBinNode.setRight(expNode);
+            } else { // Caso recursivo
+                expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual
+            }
+            // TODO: definir tipo expbin, si es necesario
+            // --------------------------------------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("+" , "-"),this.actualToken.getLexeme());
         }
+
+        // AST---------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 72 <ExpAdRF> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expAdRF() {
+    private ExpBin expAdRF() {
         String[] followExpAdRF = {"!=" , "&&" , ")" , "," ,
                 ";" , "<" , "<=" , "==" , ">" , ">=" ,
                 "]" , "||" , "$EOF$"};
         String[] firstExpAdR = {"+" , "-"};
 
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
+
         if (verifyEquals(followExpAdRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpAdR)) {
-                expAdR();
+                expBinNode = expAdR();
             } else {
                 throw createException(this.actualToken, List.of("+" , "-", "!=" , "&&" , ")" , "," ,
                         ";" , "<" , "<=" , "==" , ">" , ">=" ,
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST-------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 73 <ExpMul> de la Gramatica
+     * es el encargado de agregar las operaciones binarias con * / % al AST
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
@@ -1649,10 +1924,15 @@ public class    SyntacticAnalyzer {
                 "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpUn)) {
-            ExpressionNode expNode = expUn();
-            expMulF();
+            ExpressionNode expNode = expUn(null);
+            ExpBin expBinNode = expMulF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones muls
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones muls
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" ,
@@ -1664,20 +1944,25 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 74 <ExpMulF> de la Gramatica
+     * @return una operacion binaria o null
      * @author Lucas Moyano
      * */
-    private void expMulF() {
+    private ExpBin expMulF() {
         String[] followExpMulF = {"!=" , "&&" , ")" ,
                 "+" , "," , "-" , ";" , "<" ,
                 "<=" , "==" , ">" , ">=" , "]" ,
                 "||" , "$EOF$"};
         String[] firstMulR = {"%" , "*" , "/"};
 
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(followExpMulF)) {
             //Lambda
         } else {
             if (verifyEquals(firstMulR)) {
-                expMulR();
+                expBinNode = expMulR();
             } else {
                 throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" ,
                         "+" , "," , "-" , ";" , "<" ,
@@ -1685,66 +1970,109 @@ public class    SyntacticAnalyzer {
                         "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 75 <ExpMulR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expMulR() {
+    private ExpBin expMulR() {
         String[] firstOpMul = {"%" , "*" , "/"};
 
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(firstOpMul)) {
-            opMul();
-            expUn();
-            expMulRF();
+            Token operator = opMul();
+            ExpressionNode expNode = expUn(null);
+            ExpBin expBinNodeR = expMulRF();
+            // AST----------------------------------------------------------------------------
+            expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), operator);
+            if (expBinNodeR == null) { // Caso base
+                expBinNode.setRight(expNode);
+            } else { // Caso recursivo
+                expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual conectandolo con la recursión
+            }
+            expBinNode.setType("Int"); // Esto es porque todas las operaciones deben ser enteras
+            // para que funcionen los operadores * / %
+            // --------------------------------------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("%" , "*" , "/"),this.actualToken.getLexeme());
         }
+
+        // AST-----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 76 <ExpMulRF> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expMulRF() {
+    private ExpBin expMulRF() {
         String[] followExpMulRF = {"!=" , "&&" , ")" , "+" ,
                 "," , "-" , ";" , "<" , "<=" , "==" ,
                 ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstExpMulR = {"%" , "*" , "/"};
 
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
+
         if (verifyEquals(followExpMulRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpMulR)) {
-                expMulR();
+                expBinNode = expMulR();
             } else {
                 throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" , "+" ,
                         "," , "-" , ";" , "<" , "<=" , "==" ,
                         ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 77 <ExpUn> de la Gramatica
+     * además se fija si se ha realizado una expresión unaria
+     * @param operator token que nos sirve a identificar si se ha realizado una expresión unaria
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
-    private ExpressionNode expUn() {
+    private ExpressionNode expUn(Token operator) {
         String[] firstOpUnario = {"!" , "+" , "++" , "-" , "--"};
         String[] firstOperando = {"(" , "StrLiteral" ,
                 "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
+        // AST------------------------------
+        ExpressionNode expNode;
+        // ----------------------------------
+
         if (verifyEquals(firstOpUnario)) {
-            opUnario();
-            expUn();
+            operator = opUnario();
+            expNode = expUn(operator);
         } else {
             if (verifyEquals(firstOperando)) {
-                ExpressionNode expNode = operando();
+                expNode = operando();
+
                 // Analisis Semantico AST -------------------------
-                return expNode;
+                if (operator != null) { // Esto significa que se ha hecho una expresión unaria
+                    // devolvemos la expresión unaria
+                    ExpressionNode newExpNode = new ExpUn(symbolTable.getCurrentStruct().getName(),
+                            symbolTable.getCurrentMethod().getName(), operator, expNode);
+                    return newExpNode;
+                }
                 // ------------------------------------------------
             } else {
                 throw createException(this.actualToken, List.of("!" , "+" , "++" , "-" , "--", "(" , "StrLiteral" ,
@@ -1753,31 +2081,46 @@ public class    SyntacticAnalyzer {
             }
         }
 
-        return null;
+        return expNode;
     }
 
     /**
      * Función para la regla 78 <OpIgual> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opIgual() {
+    private Token opIgual() {
         String[] firstEqual = {"=="};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstEqual)){
             match("==");
         } else {
             match("!=");
         }
+
+        // AST --------------------------------------------------
+        return operator;
+        // ------------------------------------------------------
     }
 
     /**
      * Función para la regla 79 <OpCompuesto> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opCompuesto() {
+    private Token opCompuesto() {
         String[] firstLesser = {"<"};
         String[] firstGreater = {">"};
         String[] firstLesserEqual = {"<="};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
+
         if (verifyEquals(firstLesser)) {
             match("<");
         } else {
@@ -1791,31 +2134,47 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST ------------------------------
+        return operator;
     }
 
     /**
      * Función para la regla 80 <OpAd> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opAd() {
+    private Token opAd() {
         String[] firstPlus = {"+"};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstPlus)) {
             match("+");
         } else {
             match("-");
         }
+
+        // AST ------------------
+        return operator;
     }
 
     /**
      * Función para la regla 81 <OpUnario> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opUnario() {
+    private Token opUnario() {
         String[] firstPlus = {"+"};
         String[] firstMinus = {"-"};
         String[] firstExclamation = {"!"};
         String[] firstPlusPlus = {"++"};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstPlus)){
             match("+");
@@ -1834,15 +2193,24 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST-------------------------
+        return operator;
+        // ------------------------------
     }
 
     /**
      * Función para la regla 82 <OpMul> de la Gramatica
+     * @return devuelve el token del operador
      * @author Lucas Moyano
      * */
-    private void opMul() {
+    private Token opMul() {
         String[] firstMultiplication = {"*"};
         String[] firstDivision = {"/"};
+
+        // AST --------------------------------------------------
+        Token operator = this.actualToken;
+        // ------------------------------------------------------
 
         if (verifyEquals(firstMultiplication)){
             match("*");
@@ -1853,6 +2221,8 @@ public class    SyntacticAnalyzer {
                 match("%");
             }
         }
+        // AST--------------------------
+        return operator;
     }
 
     /**
