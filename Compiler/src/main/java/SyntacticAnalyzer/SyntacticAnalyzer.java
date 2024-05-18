@@ -1513,9 +1513,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpAd)) {
             ExpressionNode expNode = expAd();
-            expCompuestaF();
+            ExpBin expBinNode = expCompuestaF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null){ // Caso con expresion compuesta
+                expBinNode.setLeft(expNode);
+                return expBinNode;
+            } else { // Caso sin expresion compuesta
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++"
@@ -1527,20 +1532,31 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 68 <ExpCompuestaF> de la Gramatica
+     * @return una expresion binaria con el derecho y el tipo seteados o null
      * @author Lucas Moyano
      * */
-    private void expCompuestaF() {
+    private ExpBin expCompuestaF() {
         String[] followExpCompuestaF = {"!=" , "&&" , ")" ,
                 "," , ";" , "==" ,
                 "]" , "||" , "$EOF$"};
         String[] firstOpCompuesto = {"<" , "<=" , ">" , ">="};
 
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
+
         if (verifyEquals(followExpCompuestaF)) {
             //Lambda
         } else {
             if (verifyEquals(firstOpCompuesto)) {
-                opCompuesto();
-                expAd();
+                Token operator = opCompuesto();
+                ExpressionNode expNode = expAd();
+                // AST-----------------------------------------------------------
+                expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), operator);
+                expBinNode.setType("Bool");
+                expBinNode.setRight(expNode);
+                // -------------------------------------------------------------
             } else {
                 throw createException(this.actualToken, List.of("<" , "<=" , ">" , ">=",
                         "!=" , "&&" , ")" ,
@@ -1548,6 +1564,9 @@ public class    SyntacticAnalyzer {
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------
+        return expBinNode;
     }
 
     /**
