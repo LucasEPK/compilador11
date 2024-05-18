@@ -1639,6 +1639,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 73 <ExpMul> de la Gramatica
+     * es el encargado de agregar las operaciones binarias con * / % al AST
      * @return un nodo expresión del AST
      * @author Lucas Moyano
      * */
@@ -1650,9 +1651,14 @@ public class    SyntacticAnalyzer {
 
         if (verifyEquals(firstExpUn)) {
             ExpressionNode expNode = expUn(null);
-            expMulF();
+            ExpBin expBinNode = expMulF();
             // Analisis Semantico AST -------------------------
-            return expNode;
+            if (expBinNode != null) { // Hay expresiones muls
+                expBinNode.setLeft(expNode); // el lado derecho ya se seteó en expMulF
+                return expBinNode;
+            } else { // En este caso no hay expresiones muls
+                return expNode;
+            }
             // ------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" , "++" , "-" ,
@@ -1664,20 +1670,25 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 74 <ExpMulF> de la Gramatica
+     * @return una operacion binaria o null
      * @author Lucas Moyano
      * */
-    private void expMulF() {
+    private ExpBin expMulF() {
         String[] followExpMulF = {"!=" , "&&" , ")" ,
                 "+" , "," , "-" , ";" , "<" ,
                 "<=" , "==" , ">" , ">=" , "]" ,
                 "||" , "$EOF$"};
         String[] firstMulR = {"%" , "*" , "/"};
 
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(followExpMulF)) {
             //Lambda
         } else {
             if (verifyEquals(firstMulR)) {
-                expMulR();
+                expBinNode = expMulR();
             } else {
                 throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" ,
                         "+" , "," , "-" , ";" , "<" ,
@@ -1685,45 +1696,76 @@ public class    SyntacticAnalyzer {
                         "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 75 <ExpMulR> de la Gramatica
+     * @return un nodo expresión binaria con el tipo y el nodo derecho definido
      * @author Lucas Moyano
      * */
-    private void expMulR() {
+    private ExpBin expMulR() {
         String[] firstOpMul = {"%" , "*" , "/"};
 
+        // AST---------------------
+        ExpBin expBinNode = null;
+        // ------------------------
+
         if (verifyEquals(firstOpMul)) {
-            opMul();
-            expUn(null);
-            expMulRF();
+            Token operator = opMul();
+            ExpressionNode expNode = expUn(null);
+            ExpBin expBinNodeR = expMulRF(expNode);
+            // AST----------------------------------------------------------------------------
+            expBinNode = new ExpBin(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), operator);
+            if (expBinNodeR == null) { // Caso base
+                expBinNode.setRight(expNode);
+            } else { // Caso recursivo
+                expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
+                expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual
+            }
+            expBinNode.setType("Int"); // Esto es porque todas las operaciones deben ser enteras
+            // para que funcionen los operadores * / %
+            // --------------------------------------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("%" , "*" , "/"),this.actualToken.getLexeme());
         }
+
+        // AST-----------------
+        return expBinNode;
     }
 
     /**
      * Función para la regla 76 <ExpMulRF> de la Gramatica
+     * @return una expresión binaria o null
      * @author Lucas Moyano
      * */
-    private void expMulRF() {
+    private ExpBin expMulRF(ExpressionNode leftNode) {
         String[] followExpMulRF = {"!=" , "&&" , ")" , "+" ,
                 "," , "-" , ";" , "<" , "<=" , "==" ,
                 ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstExpMulR = {"%" , "*" , "/"};
 
+        // AST----------------------
+        ExpBin expBinNode = null;
+        // --------------------------
+
         if (verifyEquals(followExpMulRF)) {
             //Lambda
         } else {
             if (verifyEquals(firstExpMulR)) {
-                expMulR();
+                expBinNode = expMulR();
             } else {
                 throw createException(this.actualToken, List.of("%" , "*" , "/", "!=" , "&&" , ")" , "+" ,
                         "," , "-" , ";" , "<" , "<=" , "==" ,
                         ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return expBinNode;
     }
 
     /**
@@ -1905,7 +1947,7 @@ public class    SyntacticAnalyzer {
                 match("%");
             }
         }
-
+        // AST--------------------------
         return operator;
     }
 
