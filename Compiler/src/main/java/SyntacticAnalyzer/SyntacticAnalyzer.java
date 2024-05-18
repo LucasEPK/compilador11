@@ -983,8 +983,15 @@ public class    SyntacticAnalyzer {
             else {
                 //Primeros Sentencia-Simple
                 if(verifyEquals("(")){
-                    sentenciaSimple();
+                    ExpressionNode sentence = sentenciaSimple();
                     match(";");
+
+                    // AST-------------
+                    if (block != null ){ // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                        block.addNewSentence(sentence);
+                    }
+                    return sentence;
+                    // -----------------
                 }
                 else {
                     //Primeros if
@@ -1045,6 +1052,9 @@ public class    SyntacticAnalyzer {
                                 //------------------------------------------------------------------------------------
 
                                 bloque(newBlockSentence);
+                                // AST----------------------
+                                return newBlockSentence;
+                                // -------------------------
                             }
                             else {
                                 //Primeros ret
@@ -1059,7 +1069,9 @@ public class    SyntacticAnalyzer {
                                     // ------------------------------------------------
 
                                     sentenciaF1(newReturnSentence);
+                                    // AST----------------------
                                     return newReturnSentence;
+                                    // ------------------------
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
@@ -1329,10 +1341,13 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaSimple(){
+    private ExpressionNode sentenciaSimple(){
         match("(");
-        expresion();
+        ExpressionNode expNode = expresion();
         match(")");
+
+        // AST------------------
+        return expNode;
     }
 
     /**
