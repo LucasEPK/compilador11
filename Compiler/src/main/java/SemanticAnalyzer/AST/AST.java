@@ -60,10 +60,16 @@ public class AST implements Commons {
         json += addtabs(tabs) + "\"clases\": [\n";
 
         //Recorro todos los bloques del AST
+        int size = 0;
         for(BlockNode block : blockList) {
             json += block.toJson(tabs+1);
-        }
 
+            if(size < blockList.size()-1) {
+                json += ",\n";
+            }
+            size++;
+        }
+        json += "\n";
         json += addtabs(tabs) + "]\n";
         json += "}\n";
 

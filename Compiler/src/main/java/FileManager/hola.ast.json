@@ -1,5 +1,5 @@
 {
-	"nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\literalReturn.ru",
+	"nombre": "Compiler/src/main/java/FileManager/hola.ru",
 	"clases": [
 		{
 			"nombre": "Block",
@@ -106,7 +106,7 @@
 						"nombre": "Literal",
 						"class": "LitTest",
 						"method": "retStr",
-						"value": ""hola"",
+						"value": "hola",
 						"type": "Str"
 					}
 

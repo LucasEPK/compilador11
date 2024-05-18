@@ -61,7 +61,7 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
             json += addtabs(tabs+1) + "\"Condición\": " + ifNode.toJson(tabs+1) + ",\n";
             json += addtabs(tabs+1) + "\"then\": " + thenNode.toJson(tabs+1) + ",\n";
             json += addtabs(tabs+1) + "\"else\": " + elseNode.toJson(tabs+1) + "\n";
-            json += addtabs(tabs) + "},\n";
+            json += addtabs(tabs) + "}\n";
             return json;
 
     }

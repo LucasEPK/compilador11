@@ -48,7 +48,7 @@ public class AsignationNode extends SentenceNode implements Commons {
             json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
             json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
             json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
-            json += addtabs(tabs) + "},\n";
+            json += addtabs(tabs) + "}\n";
             return json;
 
     }

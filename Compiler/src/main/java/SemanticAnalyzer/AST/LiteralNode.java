@@ -31,9 +31,9 @@ public class LiteralNode extends Operands {
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Literal" + "\",\n";
         json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
         json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
-        json += addtabs(tabs+1) + "\"value\": " + getToken().getLexeme() + ",\n";
+        json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\"\n";
-        json += addtabs(tabs) + "},\n";
+        json += addtabs(tabs) + "}\n";
         return json;
     }
 

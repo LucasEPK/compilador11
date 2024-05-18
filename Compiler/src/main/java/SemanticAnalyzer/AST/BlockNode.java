@@ -43,11 +43,18 @@ public class BlockNode extends SentenceNode implements Commons {
         json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
         json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
         json += addtabs(tabs+1) + "\"sentences\": [\n";
+        int size = 0;
         for (SentenceNode sentence : sentenceList) {
             json += sentence.toJson(tabs+2);
+
+            if(size < sentenceList.size()-1){
+                json += ",\n";
+            }
+            size++;
         }
+
         json += addtabs(tabs+1) + "]\n";
-        json += addtabs(tabs) + "},\n";
+        json += addtabs(tabs) + "}";
 
         return json;
     }

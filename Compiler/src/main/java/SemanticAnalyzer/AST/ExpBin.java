@@ -54,7 +54,7 @@ public class ExpBin extends ExpOp {
                 json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
                 json += addtabs(tabs+1) + "\"operator\": \"" + getOperator().getLexeme() + "\",\n";
                 json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
-                json += addtabs(tabs) + "},\n";
+                json += addtabs(tabs) + "}\n";
                 return json;
     }
 
