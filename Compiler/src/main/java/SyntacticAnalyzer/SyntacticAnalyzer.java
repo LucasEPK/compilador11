@@ -1036,7 +1036,15 @@ public class    SyntacticAnalyzer {
                         else {
                             //Primeros Bloque
                             if (verifyEquals("{")){
-                                bloque();
+                                // AST----------------------------------------------------------------------------------
+                                BlockNode newBlockSentence = new BlockNode(symbolTable.getCurrentStruct().getName(),
+                                        symbolTable.getCurrentMethod().getName());
+                                if (block != null) {
+                                    block.addNewSentence(newBlockSentence);
+                                }
+                                //------------------------------------------------------------------------------------
+
+                                bloque(newBlockSentence);
                             }
                             else {
                                 //Primeros ret
@@ -1129,9 +1137,9 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void bloque(){
+    private void bloque(BlockNode block){
         match("{");
-        bloqueF();
+        bloqueF(block);
 
     }
 
@@ -1140,7 +1148,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void bloqueF(){
+    private void bloqueF(BlockNode block){
         //Primeros }
         if(verifyEquals("}")){
             match("}");
@@ -1149,7 +1157,7 @@ public class    SyntacticAnalyzer {
             //Primeros Setntencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if" , "ret" ,
                     "self" , "while" , "{")){
-                sentenciaEstrella(null);
+                sentenciaEstrella(block);
                 match("}");
             }
             else {
