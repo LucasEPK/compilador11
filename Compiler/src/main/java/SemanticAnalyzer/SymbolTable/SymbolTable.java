@@ -692,11 +692,15 @@ public class SymbolTable extends Commons {
                 }
             }
             //Agrego herencia de atributos
-            LinkedHashMap<String,Attributes> heritanceAttributes = findAncestralAtributtes(actualStruct, new LinkedHashMap<String,Attributes>());
+            LinkedHashMap<String,Attributes> heritanceAttributes = findAncestralAtributtes(actualStruct,
+                    new LinkedHashMap<String,Attributes>(),
+                    actualStruct.getAttributes());
             actualStruct.setAttributes(heritanceAttributes);
 
             // Agrego herencia de métodos
-            LinkedHashMap<String,Methods> heritanceMethdos = findAncestralMethods(actualStruct, new LinkedHashMap<String,Methods>());
+            LinkedHashMap<String,Methods> heritanceMethdos = findAncestralMethods(actualStruct,
+                    new LinkedHashMap<String,Methods>(),
+                    actualStruct.getMethods());
             actualStruct.setMethods(heritanceMethdos);
 
             actualStruct.setConsolidate(true);
@@ -820,33 +824,37 @@ public class SymbolTable extends Commons {
      * Método que se encarga de agregar a una clase todos los atributos
      * de sus clases ancestro, verificando que no hayan errores en estos
      * y corrigiendo su posición
-     * @param children Struct actual
+     *
+     * @param children       Struct actual
      * @param attributesList Lista donde voy a almacenar los atributos
+     * @param attributes
      * @return Lista con todos los atriutos heredads
      * @author Yeumen silva
      */
 
-    private LinkedHashMap<String,Attributes> findAncestralAtributtes(Struct children, LinkedHashMap<String,Attributes> attributesList){
+    private LinkedHashMap<String,Attributes> findAncestralAtributtes(Struct children, LinkedHashMap<String,Attributes> attributesList, Map<String, Attributes> attributes){
         if(children.getInheritFrom() != null) {
             if (children.getInheritFrom() != this.structs.get("Object")) {
                 //Si esta clase todavia no ha heredado
                 if (!children.getIsConsolidate()) {
-                    attributesList = findAncestralAtributtes(children.getInheritFrom(), attributesList);
+                    attributesList = findAncestralAtributtes(children.getInheritFrom(), attributesList, attributes);
                 }
             }
             //Voy a almacenar todos los atributos actualizando su pos
             for (Attributes attribute : children.getAttributes().values()) {
                 //Verifico que el atributo no este declarado
                 if (attributesList.get(attribute.getName()) == null) {
-                    if (attributesList.isEmpty()) {
-                        //Seteo booleano de que es heredado
+                    //Verifico que el atributo no sea heredado
+                    if(attributes.get(attribute.getName()) == null){
+                        //Seteo que es heredad
                         attribute.setInherited(true);
+                    }
+                    if (attributesList.isEmpty()) {
                         attribute.setPos(attributesList.size());
                         attributesList.put(attribute.getName(), attribute);
                     } else {
                         //Seteo su nueva pos
                         attribute.setPos(attributesList.size());
-                        //Seteo booleano de que es heredado
                         attribute.setInherited(true);
                         attributesList.put(attribute.getName(), attribute);
                     }
@@ -863,16 +871,18 @@ public class SymbolTable extends Commons {
      * Método que se encarga de agregar a una clase todos los métodos
      * de sus clases ancestro, verificando que no hayan errores en estos
      * y corrigiendo su posición
-     * @param children Struct actual
+     *
+     * @param children    Struct actual
      * @param methodsList Lista donde voy a almacenar los métodos
+     * @param methods
      * @return Lista con todos le métodos heredados
      * @author Yeumen Silva
      */
 
-    private LinkedHashMap<String,Methods> findAncestralMethods(Struct children, LinkedHashMap<String,Methods> methodsList){
+    private LinkedHashMap<String,Methods> findAncestralMethods(Struct children, LinkedHashMap<String,Methods> methodsList, Map<String, Methods> methods){
         if(children.getInheritFrom() != null) {
             if (children.getInheritFrom() != this.structs.get("Object")) {
-                methodsList = findAncestralMethods(children.getInheritFrom(), methodsList);
+                methodsList = findAncestralMethods(children.getInheritFrom(), methodsList, methods);
             }
             //Si la clase no tiene constructor, lo hereda
             if (children.getConstructor() == null) {
@@ -881,9 +891,12 @@ public class SymbolTable extends Commons {
             //Guardo métodos y actualizo su pos
             for (Methods method : children.getMethods().values()) {
                 Methods ancestralMethodEquals = methodsList.get(method.getName());
+                //Verifico que el método sea heredado
+                if(methods.get(method.getName()) == null){
+                    method.setInherited(true);
+                }
                 //Si existe un método ya declarado en la lista con mismo nombre
                 if (ancestralMethodEquals == null) {
-                    method.setInherited(true);
                     method.setPos(methodsList.size());
                     methodsList.put(method.getName(), method);
                 } else {
@@ -906,7 +919,6 @@ public class SymbolTable extends Commons {
                         throw throwException("InvalidOverrideStatic", method.token);
                     }
                     method.setPos(ancestralMethodEquals.getPos());
-                    method.setInherited(true);
                     methodsList.replace(method.getName(), ancestralMethodEquals, method);
                 }
 
