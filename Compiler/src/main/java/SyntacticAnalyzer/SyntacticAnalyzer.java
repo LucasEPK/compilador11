@@ -968,7 +968,10 @@ public class    SyntacticAnalyzer {
         else {
             //Primeros Asignacion
             if(verifyEquals("ObjID","self")){
-                asignacion();
+                // Analisis Semantico AST -------------------------
+                AsignationNode newAsignationSentence = block.addNewAsignationSentence();
+                // -----------------------------------------------------
+                asignacion(newAsignationSentence);
                 match(";");
             }
             else {
@@ -1111,22 +1114,33 @@ public class    SyntacticAnalyzer {
 
     /**
      * Regla Asignación
+     * @param newAsignationSentence nodo Asignation del AST en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void asignacion(){
+    private void asignacion(AsignationNode newAsignationSentence){
         //Primeros AccesoVar-Simple
         if (verifyEquals("ObjID")){
-            accesoVarSimple();
+            ExpressionNode expNode1 = accesoVarSimple();
             match("=");
-            expresion();
+            ExpressionNode expNode2 = expresion();
+
+            // AST --------------------------------------
+            newAsignationSentence.setLeft(expNode1);
+            newAsignationSentence.setRight(expNode2);
+            // ---------------------------------------------
         }
         else {
             //`Primeros AccesoSelf-Simple
             if(verifyEquals("self")){
-                accesoSelfSimple();
+                ExpressionNode expNode1 = accesoSelfSimple();
                 match("=");
-                expresion();
+                ExpressionNode expNode2 = expresion();
+
+                // AST --------------------------------------
+                newAsignationSentence.setLeft(expNode1);
+                newAsignationSentence.setRight(expNode2);
+                // ---------------------------------------------
             }
             else {
                 throw createException(this.actualToken, List.of("ObjID" , "self"),this.actualToken.getLexeme());
@@ -1139,12 +1153,14 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoVarSimple(){
+    private ExpressionNode accesoVarSimple(){
         // Analisis semantico ----------------------------------
         // acá ya debería existir este objeto
         // -----------------------------------------------------
         match("ObjID");
         accesoVarSimpleF();
+        // TODO: AST
+        return null;
     }
 
     /**
@@ -1212,9 +1228,12 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void accesoSelfSimple(){
+    private ExpressionNode accesoSelfSimple(){
         match("self");
         accesoSelfSimpleF();
+
+        // TODO: AST
+        return null;
     }
 
     /**
