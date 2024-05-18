@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 /**
  * Clase representate un return en nuestro AST
  * @author Yeumen Silva
@@ -28,20 +30,18 @@ public class ReturnNode extends SentenceNode implements Commons {
 
             String json = addtabs(tabs) + "{\n";
             json += addtabs(tabs+1) + "\"nombre\": \"" + "Return" + "\",\n";
-            json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-            json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
             if (returnValueNode != null) {
-                json += addtabs(tabs+1) + "\"return\": " + returnValueNode.toJson(tabs+1) + "\n";
+                json += addtabs(tabs+1) + "\"return\": \n " + returnValueNode.toJson(tabs+1) + "\n";
             } else {
-                json += addtabs(tabs+1) + "\"return\": " + "null" + "\n";
+                json += addtabs(tabs+1) + "\"return\": " + "nil" + "\n";
             }
-            json += addtabs(tabs) + "},\n";
+            json += addtabs(tabs) + "}\n";
             return json;
 
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
 
     }
 
@@ -59,4 +59,6 @@ public class ReturnNode extends SentenceNode implements Commons {
         }
         return tabsString;
     }
+
+
 }

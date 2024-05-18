@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,21 +31,26 @@ public class IdNode extends PrimaryNode{
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Id" + "\",\n";
-        json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-        json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
         json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
         json += addtabs(tabs+1) + "\"arguments\": [\n";
+        int size = 0;
         for (ExpressionNode argument : arguments) {
             json += argument.toJson(tabs+2);
+            if(size < arguments.size()-1){
+                json += ",\n";
+            }
+            size++;
         }
+        json = json.substring(0,json.length()-1);
+        json += "\n";
         json += addtabs(tabs+1) + "]\n";
-        json += addtabs(tabs) + "},\n";
+        json += addtabs(tabs) + "}\n";
         return json;
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
     }
 
     /**

@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
  * Clase abstracta que encapsula Arrays y Ids en el AST
@@ -34,7 +35,14 @@ public abstract class PrimaryNode extends Operands {
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
+
+
+        if(right.getConsolidated() == false){
+            right.consolidate(ast);
+        }
+        this.setType(right.getType());
+        this.setConsolidated(true);
 
     }
 }

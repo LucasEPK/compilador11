@@ -1,7 +1,9 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
  * Clase representate una expresión unaria en nuestro AST
@@ -38,17 +40,44 @@ public class ExpUn extends ExpOp {
 
             String json = addtabs(tabs) + "{\n";
             json += addtabs(tabs+1) + "\"nombre\": \"" + "ExpUn" + "\",\n";
-            json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-            json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
             json += addtabs(tabs+1) + "\"operator\": \"" + getOperator().getLexeme() + "\",\n";
             json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
-            json += addtabs(tabs) + "},\n";
+            json += addtabs(tabs) + "}\n";
             return json;
     }
 
-    @Override
-    public void consolidate() {
+    /**
+     * Método que consolida un nodo ExpUn
+     * @param ast AST que contiene la información
+     * @autor Yeumen Silva
+     */
 
+    @Override
+    public void consolidate(AST ast) {
+        if(right.getConsolidated()  == false){
+            right.consolidate(ast);
+        }
+        switch (getOperator().getLexeme()) {
+            case "-", "+", "--", "++":
+                //Si el tipo del dato es int, se mantiene el tipo
+                if(right.getType().equals("Int"))
+                    setType(right.getType());
+                else
+                    //Sino tiro error ToDo
+                    //throw new TypesDontMatch(this.getToken());
+                break;
+            case "!":
+                if(right.getType().equals("Bool"))
+                    setType(right.getType());
+                else
+                    //Sino tiro error ToDo
+                    //throw new TypesDontMatch(this.getToken());
+                break;
+            default:
+                setType("nil");
+                break;
+        }
+        this.setConsolidated(true);
     }
 
     /**

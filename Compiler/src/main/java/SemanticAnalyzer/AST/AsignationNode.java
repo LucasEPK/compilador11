@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 /**
  * Clase representate la asignación en nustro AST
  * @author Yeumen Silva
@@ -44,21 +46,18 @@ public class AsignationNode extends SentenceNode implements Commons {
 
             String json = addtabs(tabs) + "{\n";
             json += addtabs(tabs+1) + "\"nombre\": \"" + "Asignation" + "\",\n";
-            json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-            json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
             json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
             json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
-            json += addtabs(tabs) + "},\n";
+            json += addtabs(tabs) + "}\n";
             return json;
 
     }
 
-
-
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast ) {
 
     }
+
 
     /**
      * Método que agrega una cantidad de tabulaciones a un string

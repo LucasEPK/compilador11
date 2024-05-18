@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 public class ArrayNode extends PrimaryNode{
     private int length;
@@ -31,18 +32,25 @@ public class ArrayNode extends PrimaryNode{
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Array" + "\",\n";
-        json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
-        json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
         json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
         json += addtabs(tabs+1) + "\"length\": \"" + getLength() + "\"\n";
-        json += addtabs(tabs) + "},\n";
+        json += addtabs(tabs) + "}\n";
         return json;
     }
 
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
+
+        //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
+        if(this.getType().equals("Int") == false && this.getType().equals("Str") == false &&
+                this.getType().equals("Char") == false && this.getType().equals("Bool") == false){
+            //ToDo
+            //throw new NoPrimitiveType(this.getToken());
+        }
+
     }
+
 
     /**
      * Método que convierte un objeto a un string en formato JSON

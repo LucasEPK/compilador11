@@ -1,6 +1,9 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.ReturnInStart;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,17 +46,48 @@ public class BlockNode extends SentenceNode implements Commons {
         json += addtabs(tabs+1) + "\"class\": \"" + getStruct() + "\",\n";
         json += addtabs(tabs+1) + "\"method\": \"" + getMethod() + "\",\n";
         json += addtabs(tabs+1) + "\"sentences\": [\n";
+        int size = 0;
         for (SentenceNode sentence : sentenceList) {
             json += sentence.toJson(tabs+2);
+
+            if(size < sentenceList.size()-1){
+                json += ",\n";
+            }
+            size++;
         }
+
         json += addtabs(tabs+1) + "]\n";
-        json += addtabs(tabs) + "},\n";
+        json += addtabs(tabs) + "}";
 
         return json;
     }
 
+    /**
+     * Método que recorre sentencia a sentencia y llama al método consolidate de cada una
+     * @param ast AST que se va a consolidar
+     * @return void
+     * @autor Yeumen Silva
+     */
+
     @Override
-    public void consolidate() {
+    public void consolidate(AST ast) {
+        //Llamo al método consolidate de cada sentencia
+        for(SentenceNode sentence : sentenceList){
+            sentence.consolidate(ast);
+        }
+
+        //Llamo al método consolidate de cada sentencia para verificar los tipos de return
+        for(SentenceNode sentence : sentenceList){
+            //Verifico que start no tenga return
+            if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
+                //ToDo
+                //throw new ReturnInStart(sentence.getToken());
+            }
+        }
+
+
+
+
 
     }
 
