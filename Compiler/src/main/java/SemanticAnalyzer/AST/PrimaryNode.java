@@ -37,5 +37,12 @@ public abstract class PrimaryNode extends Operands {
     @Override
     public void consolidate(AST ast) {
 
+
+        if(right.getConsolidated() == false){
+            right.consolidate(ast);
+        }
+        this.setType(right.getType());
+        this.setConsolidated(true);
+
     }
 }

@@ -44,6 +44,13 @@ public class ArrayNode extends PrimaryNode{
     @Override
     public void consolidate(AST ast) {
 
+        //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
+        if(this.getType().equals("Int") == false && this.getType().equals("Str") == false &&
+                this.getType().equals("Char") == false && this.getType().equals("Bool") == false){
+            //ToDo
+            //throw new NoPrimitiveType(this.getToken());
+        }
+
     }
 
 
