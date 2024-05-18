@@ -959,7 +959,7 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentencia(BlockNode block){
+    private SentenceNode sentencia(BlockNode block){
 
         //Primeros ;
         if (verifyEquals(";")){
@@ -969,10 +969,16 @@ public class    SyntacticAnalyzer {
             //Primeros Asignacion
             if(verifyEquals("ObjID","self")){
                 // Analisis Semantico AST -------------------------
-                AsignationNode newAsignationSentence = block.addNewAsignationSentence();
+                AsignationNode newAsignationSentence = new AsignationNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName());
+                if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                    block.addNewSentence(newAsignationSentence);
+                }
                 // -----------------------------------------------------
                 asignacion(newAsignationSentence);
                 match(";");
+
+                return newAsignationSentence;
             }
             else {
                 //Primeros Sentencia-Simple
@@ -983,21 +989,49 @@ public class    SyntacticAnalyzer {
                 else {
                     //Primeros if
                     if (verifyEquals("if")){
+                        // Analisis Semantico AST -------------------------
+                        IfThenElseNode newIfThenElseSentence = new IfThenElseNode(symbolTable.getCurrentStruct().getName(),
+                                symbolTable.getCurrentMethod().getName());
+                        if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                            block.addNewSentence(newIfThenElseSentence);
+                        }
+                        // -----------------------------------------------------
                         match("if");
                         match("(");
-                        expresion();
+                        ExpressionNode expNode = expresion();
                         match(")");
-                        sentencia(null);
-                        sentenciaF();
+                        SentenceNode sentence = sentencia(null);
+                        SentenceNode sentenceR = sentenciaF();
+                        // Analisis Semantico AST -------------------------
+                        newIfThenElseSentence.setIfNode(expNode);
+                        newIfThenElseSentence.setThenNode(sentence);
+                        newIfThenElseSentence.setElseNode(sentenceR);
+                        return newIfThenElseSentence;
+                        // ------------------------------------------------
                     }
                     else {
                         //Primeros while
                         if (verifyEquals("while")){
+
+                            // Analisis Semantico AST -------------------------
+                            WhileNode newWhileSentence = new WhileNode(symbolTable.getCurrentStruct().getName(),
+                                    symbolTable.getCurrentMethod().getName());
+                            if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                                block.addNewSentence(newWhileSentence);
+                            }
+                            // -----------------------------------------------------
+
                             match("while");
                             match("(");
-                            expresion();
+                            ExpressionNode expNode = expresion();
                             match(")");
-                            sentencia(null);
+                            SentenceNode sentence = sentencia(null);
+
+                            // Analisis Semantico AST -------------------------
+                            newWhileSentence.setWhileNode(expNode);
+                            newWhileSentence.setDoNode(sentence);
+                            return newWhileSentence;
+                            // -----------------------------------------------------
                         }
                         else {
                             //Primeros Bloque
@@ -1009,10 +1043,15 @@ public class    SyntacticAnalyzer {
                                 if (verifyEquals("ret")){
                                     match("ret");
                                     // Analisis Semantico AST -------------------------
-                                    ReturnNode newReturnSentence = block.addNewReturnSentence();
+                                    ReturnNode newReturnSentence = new ReturnNode(symbolTable.getCurrentStruct().getName(),
+                                            symbolTable.getCurrentMethod().getName());
+                                    if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
+                                        block.addNewSentence(newReturnSentence);
+                                    }
                                     // ------------------------------------------------
 
                                     sentenciaF1(newReturnSentence);
+                                    return newReturnSentence;
                                 }
                                 else {
                                     throw createException(this.actualToken, List.of(";" , "ObjID" , "self" , "(" , "if" ,
@@ -1026,6 +1065,7 @@ public class    SyntacticAnalyzer {
             }
 
         }
+        return null;
     }
 
     /**
@@ -1033,16 +1073,23 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void sentenciaF(){
+    private SentenceNode sentenciaF(){
+        // AST----------------
+        SentenceNode sentence = null;
+        // --------------------
+
         //Primeros else
         if (verifyEquals("else")){
             match("else");
-            sentencia(null);
+            sentence = sentencia(null);
         }
         /*Aca deberian estar los siguientes de SentenciaF
         pero como tambien tienen "else", lo mejor es patear el error
         para daspues, ya que con los siguientes solo hacemos lambda
          */
+
+        // AST----------------
+        return sentence;
     }
 
     /**

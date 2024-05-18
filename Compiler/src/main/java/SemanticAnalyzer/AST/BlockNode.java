@@ -74,6 +74,15 @@ public class BlockNode extends SentenceNode implements Commons {
     }
 
     /**
+     * Esta función se encarga de agregar la sentencia dada a la lista
+     * @param sentence sentencia que se quiere agregar a la lista
+     * @author Lucas Moyano
+     */
+    public void addNewSentence(SentenceNode sentence){
+        sentenceList.add(sentence);
+    }
+
+    /**
      * Esta función se encarga de crear un AsignationNode y
      * lo agrega a la lista de sentencias
      * @return devuelve la nueva sentencia creada
