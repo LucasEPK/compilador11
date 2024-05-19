@@ -133,4 +133,15 @@ public class AST implements Commons {
             System.err.println("Error al escribir en el archivo de salida: " + e.getMessage());
         }
     }
+
+    /**
+     * Método que verifica si un tipo es primitivo
+     * @param type String con el tipo a verificar
+     * @return boolean que indica si es primitivo o no
+     * @autor Yeumen Silva
+     */
+
+    public boolean isPrimitive(String type){
+        return type.equals("Int") || type.equals("Str") || type.equals("Char") || type.equals("Bool");
+    }
 }
