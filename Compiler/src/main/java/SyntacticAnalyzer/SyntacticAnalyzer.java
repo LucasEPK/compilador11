@@ -2918,31 +2918,44 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 105 <Encadenado> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void encadenado(){
+    private PrimaryNode encadenado(){
+
         match(".");
-        encadenadoF();
+        PrimaryNode mainChained = encadenadoF();
+
+        // AST---------------
+        return mainChained;
     }
 
     /**
      * Función para la regla 106 <Encadenado-F> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void encadenadoF(){
+    private PrimaryNode encadenadoF(){
         // Analisis semantico ----------------------------------
         // ya debería existir el objeto
         // -----------------------------------------------------
+        // AST---------------------------
+        Token savedToken = this.actualToken;
+        // ------------------------------
         match("ObjID");
-        encadenadoF1();
+        PrimaryNode mainChained = encadenadoF1(savedToken);
+
+        // AST-------------
+        return mainChained;
     }
 
     /**
      * Función para la regla 107 <Encadenado-F1> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
 
-    private void encadenadoF1(){
+    private PrimaryNode encadenadoF1(Token savedToken){
         String[] firstArgActuales = {"("};
         String[] firstAccesVarEncadF = {".", "[" };
         String[] followEncadenadoF1 = {"!=" ,
@@ -2950,13 +2963,25 @@ public class    SyntacticAnalyzer {
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
 
+        // AST-------------------------
+        PrimaryNode mainChained = null;
+        // -----------------------------
+
         if(verifyEquals(firstArgActuales)){
-            argumentosActuales();
-            llamadaMetodoEncadenadoF();
+            List<ExpressionNode> arguments = argumentosActuales();
+            PrimaryNode chained = llamadaMetodoEncadenadoF();
+
+            // AST-------------------------
+            mainChained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), savedToken);
+            ((IdNode)mainChained).setArguments(arguments);
+            ((IdNode)mainChained).setIdType(IdType.METHOD);
+            mainChained.setRight(chained);
+            // -----------------------------
         }
         else {
             if(verifyEquals(firstAccesVarEncadF)){
-                accesoVariableEncadenadoF();
+                mainChained = accesoVariableEncadenadoF(savedToken);
             }
             else {
                 if(verifyEquals(followEncadenadoF1)){
@@ -2968,6 +2993,9 @@ public class    SyntacticAnalyzer {
 
             }
         }
+
+        // AST-----------------------
+        return mainChained;
     }
 
     /**
@@ -2985,20 +3013,25 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 108 <Llamada-Método-Encadenado-F> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoEncadenadoF() {
+    private PrimaryNode llamadaMetodoEncadenadoF() {
         String[] followLlamadaMetodoEncadenadoF = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST------------------------------
+        PrimaryNode chained = null;
+        // -----------------------------------
+
         if (verifyEquals(followLlamadaMetodoEncadenadoF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" ,
                         "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
@@ -3006,6 +3039,9 @@ public class    SyntacticAnalyzer {
                         ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST-------------------
+        return chained;
     }
 
     /**
@@ -3024,43 +3060,62 @@ public class    SyntacticAnalyzer {
      * Función para la regla 110 <Acceso-Variable-Encadenado-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void accesoVariableEncadenadoF() {
+    private PrimaryNode accesoVariableEncadenadoF(Token savedToken) {
         String[] followAccesoVariableEncadenadoF = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST--------------------------
+        PrimaryNode mainChained = null;
+        //--------------------------------
+
         if (verifyEquals(followAccesoVariableEncadenadoF)) {
             // Lambda
         } else {
             if (verifyEquals(firstEncadenado)) {
-                encadenado();
+                mainChained = encadenado();
             } else {
                 match("[");
-                expresion();
+                ExpressionNode expNode = expresion();
                 match("]");
-                accesoVariableEncadenadoF1();
+                PrimaryNode chained = accesoVariableEncadenadoF1();
+
+                // AST-----------------------
+                mainChained = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), savedToken);
+                ((ArrayNode)mainChained).setLength(expNode);
+                mainChained.setRight(chained);
+                // ------------------------------------------
             }
         }
+
+        // AST-----------------
+        return mainChained;
     }
 
     /**
      * Función para la regla 111 <Acceso-Variable-Encadenado-F1> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void accesoVariableEncadenadoF1() {
+    private PrimaryNode accesoVariableEncadenadoF1() {
         String[] followAccesoVariableEncadenadoF1 = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST-----------------
+        PrimaryNode chained = null;
+        // ----------------------------
+
         if (verifyEquals(followAccesoVariableEncadenadoF1)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" ,
                         "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
@@ -3068,5 +3123,7 @@ public class    SyntacticAnalyzer {
                         ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 }
