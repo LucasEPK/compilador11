@@ -2433,6 +2433,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 87 <ExpresionParentizada> de la Gramatica
+     * @return una expresión parentizada
      * @author Lucas Moyano
      * */
     private PrimaryNode expresionParentizada() {
@@ -2454,6 +2455,7 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 88 <ExpresionParentizadaF> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
     private PrimaryNode expresionParentizadaF() {
@@ -2486,29 +2488,44 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 89 <AccesoSelf> de la Gramatica
+     * @return un id node de tipo self
      * @author Lucas Moyano
      * */
-    private void accesoSelf() {
+    private PrimaryNode accesoSelf() {
+        // AST--------------------------------------------------------------------
+        IdNode selfNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        selfNode.setIdType(IdType.SELF);
+        // -----------------------------------------------------------------------
         match("self");
-        accesoSelfF();
+        PrimaryNode chained = accesoSelfF();
+
+        // AST--------------------------------
+        selfNode.setRight(chained);
+        return selfNode;
     }
 
     /**
      * Función para la regla 90 <AccesoSelfF> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void accesoSelfF() {
+    private PrimaryNode accesoSelfF() {
         String[] followAccesoSelfF = {"!=" , "%" ,
                 "&&" , ")" , "*" , "+" , "," ,
                 "-" , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST------------------------
+        PrimaryNode chained = null;
+        // ----------------------------
+
         if (verifyEquals(followAccesoSelfF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%" ,
                         "&&" , ")" , "*" , "+" , "," ,
@@ -2516,6 +2533,8 @@ public class    SyntacticAnalyzer {
                         "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 
     /**

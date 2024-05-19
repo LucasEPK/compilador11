@@ -10,7 +10,7 @@ import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 public abstract class PrimaryNode extends Operands {
 
-    PrimaryNode right;
+    PrimaryNode right = null;
 
 
     public PrimaryNode(String struct, String method, Token token) {
