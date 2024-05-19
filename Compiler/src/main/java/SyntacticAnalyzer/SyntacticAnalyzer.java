@@ -2244,8 +2244,14 @@ public class    SyntacticAnalyzer {
             // ------------------------------------------------
         } else {
             if (verifyEquals(firstPrimario)){
-                primario();
-                operandoF();
+                PrimaryNode primaryNode = primario();
+                PrimaryNode chained = operandoF();
+
+                // AST----------------------------
+                primaryNode.setRight(chained);
+                primaryNode.setType(chained.getType());
+                return primaryNode;
+                // -------------------------------
             } else {
                 throw createException(this.actualToken, List.of("StrLiteral" ,
                         "CharLiteral" , "false" , "IntLiteral" ,
@@ -2348,35 +2354,38 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 86 <Primario> de la Gramatica
+     * @return un primario del AST
      * @author Lucas Moyano
      * */
-    private void primario() {
+    private PrimaryNode primario() {
         String[] firstExpresionParentizada = {"("};
         String[] firstAccesoSelf = {"self"};
         String[] firstAccesoVarAndMethod = {"ObjID"};
         String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
 
+        PrimaryNode primaryNode = null;
+
         if (verifyEquals(firstExpresionParentizada)) {
-            expresionParentizada();
+            primaryNode = expresionParentizada();
         } else {
             if (verifyEquals(firstAccesoSelf)){
-                accesoSelf();
+                primaryNode = accesoSelf();
             } else {
                 if (verifyEquals(firstAccesoVarAndMethod)){
                     // Analisis semantico ----------------------------------
                     // ya debería existir este objeto
                     // -----------------------------------------------------
                     match("ObjID");
-                    primarioF();
+                    primaryNode = primarioF();
                 }
                 else {
                     if (verifyEquals(firstLlamadaMetodoEstatico)){
-                        llamadaMetodoEstatico();
+                        primaryNode = llamadaMetodoEstatico();
                     }
                     else {
                         if (verifyEquals(firstLlamadaConstructor)){
-                            llamadaConstructor();
+                            primaryNode = llamadaConstructor();
                         }
                         else {
                             throw createException(this.actualToken, List.of("(", "self", "ObjID", "StructID", "new"),this.actualToken.getLexeme());
@@ -2385,6 +2394,9 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST-------------------
+        return primaryNode;
     }
 
     private void primarioF(){
