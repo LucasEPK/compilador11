@@ -2251,7 +2251,6 @@ public class    SyntacticAnalyzer {
 
                 // AST----------------------------
                 primaryNode.setLastRight(chained);
-                primaryNode.setType(chained.getType());
                 return primaryNode;
                 // -------------------------------
             } else {
