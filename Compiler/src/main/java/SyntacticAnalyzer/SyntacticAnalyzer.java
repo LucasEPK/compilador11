@@ -2250,7 +2250,7 @@ public class    SyntacticAnalyzer {
                 PrimaryNode chained = operandoF();
 
                 // AST----------------------------
-                primaryNode.setRight(chained);
+                primaryNode.setLastRight(chained);
                 primaryNode.setType(chained.getType());
                 return primaryNode;
                 // -------------------------------
@@ -2261,26 +2261,29 @@ public class    SyntacticAnalyzer {
                         "new" , "self"),this.actualToken.getLexeme());
             }
         }
-
-        return null;
     }
 
     /**
      * Función para la regla 84 <OperandoF> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void operandoF() {
+    private PrimaryNode operandoF() {
         String[] followOperandoF = {"!=" , "%" , "&&" ,
                 ")" , "*" , "+" , "," , "-" , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" ,
                 "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST---------------------
+        PrimaryNode chained = null;
+        // --------------------------
+
         if (verifyEquals(followOperandoF)) {
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%" , "&&" ,
                         ")" , "*" , "+" , "," , "-" , "/" , ";" ,
@@ -2288,6 +2291,8 @@ public class    SyntacticAnalyzer {
                         "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 
     /**
@@ -2570,7 +2575,7 @@ public class    SyntacticAnalyzer {
     private void accesoVar() {
         // TODO: wtf porque no se llega nunca a esta regla
         match("ObjID");
-        accesoVarF();
+        accesoVarF(null);
     }
 
     /**
@@ -3053,7 +3058,7 @@ public class    SyntacticAnalyzer {
         // ya debería existir la variable
         // -----------------------------------------------------
         match("ObjID");
-        accesoVariableEncadenadoF();
+        accesoVariableEncadenadoF(null);
     }
 
     /**
