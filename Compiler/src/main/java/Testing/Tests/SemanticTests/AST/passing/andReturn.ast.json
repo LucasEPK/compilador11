@@ -15,32 +15,25 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "AndTest",
-					"method": "retAnd",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "AndTest",
-						"method": "retAnd",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "AndTest",
-							"method": "retAnd",
 							"value": "true",
 							"type": "Bool"
-						},
+						}
 ,
 						"operator": "&&",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "AndTest",
-							"method": "retAnd",
 							"value": "false",
 							"type": "Bool"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -50,70 +43,55 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "AndTest",
-					"method": "retAnd2",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "AndTest",
-						"method": "retAnd2",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "AndTest",
-							"method": "retAnd2",
 							"value": "false",
 							"type": "Bool"
-						},
+						}
 ,
 						"operator": "&&",
 						"right": 						{
 							"nombre": "ExpBin",
-							"class": "AndTest",
-							"method": "retAnd2",
 							"left": 							{
 								"nombre": "Literal",
-								"class": "AndTest",
-								"method": "retAnd2",
 								"value": "true",
 								"type": "Bool"
-							},
+							}
 ,
 							"operator": "&&",
 							"right": 							{
 								"nombre": "ExpBin",
-								"class": "AndTest",
-								"method": "retAnd2",
 								"left": 								{
 									"nombre": "Literal",
-									"class": "AndTest",
-									"method": "retAnd2",
 									"value": "false",
 									"type": "Bool"
-								},
+								}
 ,
 								"operator": "&&",
 								"right": 								{
 									"nombre": "Literal",
-									"class": "AndTest",
-									"method": "retAnd2",
 									"value": "true",
 									"type": "Bool"
-								},
+								}
 
-							},
+							}
 
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "AndTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]
-		},
+		}
 	]
 }

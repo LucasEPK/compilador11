@@ -15,24 +15,19 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retInt",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpUn",
-						"class": "LitTest",
-						"method": "retInt",
 						"operator": "-",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "LitTest",
-							"method": "retInt",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -42,24 +37,19 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retInt2",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpUn",
-						"class": "LitTest",
-						"method": "retInt2",
 						"operator": "+",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "LitTest",
-							"method": "retInt2",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -69,24 +59,19 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retInt3",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpUn",
-						"class": "LitTest",
-						"method": "retInt3",
 						"operator": "++",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "LitTest",
-							"method": "retInt3",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -96,24 +81,19 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retInt4",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpUn",
-						"class": "LitTest",
-						"method": "retInt4",
 						"operator": "--",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "LitTest",
-							"method": "retInt4",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -123,32 +103,27 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retBool",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpUn",
-						"class": "LitTest",
-						"method": "retBool",
 						"operator": "!",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "LitTest",
-							"method": "retBool",
 							"value": "true",
 							"type": "Bool"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "LitTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]
-		},
+		}
 	]
 }

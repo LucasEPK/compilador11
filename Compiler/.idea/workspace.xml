@@ -10,7 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
-      <change beforePath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/adReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/adReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/adReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/adReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/andReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/andReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/andReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/andReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/compuestaReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/compuestaReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/compuestaReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/compuestaReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/igualReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/igualReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/igualReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/igualReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/literalReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/literalReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/literalReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/literalReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/mulReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/mulReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/mulReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/mulReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/orReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/orReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/orReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/orReturn.ts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/unaryReturn.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/unaryReturn.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/unaryReturn.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing/Tests/SemanticTests/AST/passing/unaryReturn.ts.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +77,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "ASTconstruction3",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
     "last_opened_file_path": "C:/Users/Lucas Estudio/Documents/code/Compiladores/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/AST/passing",
@@ -230,11 +246,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Testing/Test.java</url>
           <line>56</line>
           <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java</url>
-          <line>1527</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -15,32 +15,25 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "CompuestaTest",
-					"method": "retCo1",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "CompuestaTest",
-						"method": "retCo1",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "CompuestaTest",
-							"method": "retCo1",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "<",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "CompuestaTest",
-							"method": "retCo1",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -50,77 +43,58 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "CompuestaTest",
-					"method": "retCo2",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "CompuestaTest",
-						"method": "retCo2",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "CompuestaTest",
-							"method": "retCo2",
 							"value": "2",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "<=",
 						"right": 						{
 							"nombre": "ExpBin",
-							"class": "CompuestaTest",
-							"method": "retCo2",
 							"left": 							{
 								"nombre": "Literal",
-								"class": "CompuestaTest",
-								"method": "retCo2",
 								"value": "3",
 								"type": "Int"
-							},
+							}
 ,
 							"operator": "-",
 							"right": 							{
 								"nombre": "ExpBin",
-								"class": "CompuestaTest",
-								"method": "retCo2",
 								"left": 								{
 									"nombre": "Literal",
-									"class": "CompuestaTest",
-									"method": "retCo2",
 									"value": "4",
 									"type": "Int"
-								},
+								}
 ,
 								"operator": "-",
 								"right": 								{
 									"nombre": "ExpBin",
-									"class": "CompuestaTest",
-									"method": "retCo2",
 									"left": 									{
 										"nombre": "Literal",
-										"class": "CompuestaTest",
-										"method": "retCo2",
 										"value": "5",
 										"type": "Int"
-									},
+									}
 ,
 									"operator": "-",
 									"right": 									{
 										"nombre": "Literal",
-										"class": "CompuestaTest",
-										"method": "retCo2",
 										"value": "6",
 										"type": "Int"
-									},
+									}
 
-								},
+								}
 
-							},
+							}
 
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -130,70 +104,55 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "CompuestaTest",
-					"method": "retCo3",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "CompuestaTest",
-						"method": "retCo3",
 						"left": 						{
 							"nombre": "ExpBin",
-							"class": "CompuestaTest",
-							"method": "retCo3",
 							"left": 							{
 								"nombre": "Literal",
-								"class": "CompuestaTest",
-								"method": "retCo3",
 								"value": "3",
 								"type": "Int"
-							},
+							}
 ,
 							"operator": "+",
 							"right": 							{
 								"nombre": "ExpBin",
-								"class": "CompuestaTest",
-								"method": "retCo3",
 								"left": 								{
 									"nombre": "Literal",
-									"class": "CompuestaTest",
-									"method": "retCo3",
 									"value": "1",
 									"type": "Int"
-								},
+								}
 ,
 								"operator": "/",
 								"right": 								{
 									"nombre": "Literal",
-									"class": "CompuestaTest",
-									"method": "retCo3",
 									"value": "8",
 									"type": "Int"
-								},
+								}
 
-							},
+							}
 
-						},
+						}
 ,
 						"operator": ">=",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "CompuestaTest",
-							"method": "retCo3",
 							"value": "5",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "CompuestaTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]
-		},
+		}
 	]
 }

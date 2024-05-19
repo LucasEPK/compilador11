@@ -1,5 +1,5 @@
 {
-	"nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\literalReturn.ru",
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\literalReturn.ru",
 	"clases": [
 		{
 			"nombre": "Block",
@@ -15,13 +15,9 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retNil",
 					"return": 
  					{
 						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retNil",
 						"value": "nil",
 						"type": "nil"
 					}
@@ -36,13 +32,9 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retInt",
 					"return": 
  					{
 						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retInt",
 						"value": "3",
 						"type": "Int"
 					}
@@ -57,13 +49,9 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retBool",
 					"return": 
  					{
 						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retBool",
 						"value": "true",
 						"type": "Bool"
 					}
@@ -78,13 +66,9 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retBool2",
 					"return": 
  					{
 						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retBool2",
 						"value": "false",
 						"type": "Bool"
 					}
@@ -99,13 +83,9 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retStr",
 					"return": 
  					{
 						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retStr",
 						"value": ""hola"",
 						"type": "Str"
 					}
@@ -120,13 +100,9 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retChar",
 					"return": 
  					{
 						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retChar",
 						"value": "'h'",
 						"type": "Char"
 					}
@@ -136,7 +112,7 @@
 		},
 		{
 			"nombre": "Block",
-			"class": "LitTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]

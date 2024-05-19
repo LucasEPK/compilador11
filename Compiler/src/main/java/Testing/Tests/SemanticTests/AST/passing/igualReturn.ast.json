@@ -15,32 +15,25 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "IgualTest",
-					"method": "retIgu",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "IgualTest",
-						"method": "retIgu",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "IgualTest",
-							"method": "retIgu",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "==",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "IgualTest",
-							"method": "retIgu",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -50,32 +43,25 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "IgualTest",
-					"method": "retIgu2",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "IgualTest",
-						"method": "retIgu2",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "IgualTest",
-							"method": "retIgu2",
 							"value": "2",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "!=",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "IgualTest",
-							"method": "retIgu2",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -85,55 +71,44 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "IgualTest",
-					"method": "retIgu3",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "IgualTest",
-						"method": "retIgu3",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "IgualTest",
-							"method": "retIgu3",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "==",
 						"right": 						{
 							"nombre": "ExpBin",
-							"class": "IgualTest",
-							"method": "retIgu3",
 							"left": 							{
 								"nombre": "Literal",
-								"class": "IgualTest",
-								"method": "retIgu3",
 								"value": "3",
 								"type": "Int"
-							},
+							}
 ,
 							"operator": "==",
 							"right": 							{
 								"nombre": "Literal",
-								"class": "IgualTest",
-								"method": "retIgu3",
 								"value": "true",
 								"type": "Bool"
-							},
+							}
 
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "IgualTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]
-		},
+		}
 	]
 }

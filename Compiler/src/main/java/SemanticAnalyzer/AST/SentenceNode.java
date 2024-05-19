@@ -15,7 +15,7 @@ public abstract class SentenceNode implements Commons {
     // Variable que indica si la sentencia ya fue consolidada
     boolean consolidated = false;
 
-    String type  = "void";
+    private String type  = "void";
 
     public SentenceNode( String struct, String method ) {
 

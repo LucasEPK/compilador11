@@ -15,32 +15,25 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "MulTest",
-					"method": "retMul1",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "MulTest",
-						"method": "retMul1",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "MulTest",
-							"method": "retMul1",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "*",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "MulTest",
-							"method": "retMul1",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -50,70 +43,55 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "MulTest",
-					"method": "retMul2",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "MulTest",
-						"method": "retMul2",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "MulTest",
-							"method": "retMul2",
 							"value": "3",
 							"type": "Int"
-						},
+						}
 ,
 						"operator": "*",
 						"right": 						{
 							"nombre": "ExpBin",
-							"class": "MulTest",
-							"method": "retMul2",
 							"left": 							{
 								"nombre": "Literal",
-								"class": "MulTest",
-								"method": "retMul2",
 								"value": "1",
 								"type": "Int"
-							},
+							}
 ,
 							"operator": "/",
 							"right": 							{
 								"nombre": "ExpBin",
-								"class": "MulTest",
-								"method": "retMul2",
 								"left": 								{
 									"nombre": "Literal",
-									"class": "MulTest",
-									"method": "retMul2",
 									"value": "8",
 									"type": "Int"
-								},
+								}
 ,
 								"operator": "%",
 								"right": 								{
 									"nombre": "Literal",
-									"class": "MulTest",
-									"method": "retMul2",
 									"value": "5",
 									"type": "Int"
-								},
+								}
 
-							},
+							}
 
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "MulTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]
-		},
+		}
 	]
 }

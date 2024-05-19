@@ -15,32 +15,25 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "OrTest",
-					"method": "retOr",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "OrTest",
-						"method": "retOr",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "OrTest",
-							"method": "retOr",
 							"value": "true",
 							"type": "Bool"
-						},
+						}
 ,
 						"operator": "||",
 						"right": 						{
 							"nombre": "Literal",
-							"class": "OrTest",
-							"method": "retOr",
 							"value": "false",
 							"type": "Bool"
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -50,62 +43,47 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "OrTest",
-					"method": "retOr2",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "OrTest",
-						"method": "retOr2",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "OrTest",
-							"method": "retOr2",
 							"value": "false",
 							"type": "Bool"
-						},
+						}
 ,
 						"operator": "||",
 						"right": 						{
 							"nombre": "ExpBin",
-							"class": "OrTest",
-							"method": "retOr2",
 							"left": 							{
 								"nombre": "Literal",
-								"class": "OrTest",
-								"method": "retOr2",
 								"value": "true",
 								"type": "Bool"
-							},
+							}
 ,
 							"operator": "||",
 							"right": 							{
 								"nombre": "ExpBin",
-								"class": "OrTest",
-								"method": "retOr2",
 								"left": 								{
 									"nombre": "Literal",
-									"class": "OrTest",
-									"method": "retOr2",
 									"value": "false",
 									"type": "Bool"
-								},
+								}
 ,
 								"operator": "||",
 								"right": 								{
 									"nombre": "Literal",
-									"class": "OrTest",
-									"method": "retOr2",
 									"value": "true",
 									"type": "Bool"
-								},
+								}
 
-							},
+							}
 
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
@@ -115,70 +93,55 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"class": "OrTest",
-					"method": "retOr3",
-					"return": 					{
+					"return": 
+ 					{
 						"nombre": "ExpBin",
-						"class": "OrTest",
-						"method": "retOr3",
 						"left": 						{
 							"nombre": "Literal",
-							"class": "OrTest",
-							"method": "retOr3",
 							"value": "false",
 							"type": "Bool"
-						},
+						}
 ,
 						"operator": "||",
 						"right": 						{
 							"nombre": "ExpBin",
-							"class": "OrTest",
-							"method": "retOr3",
 							"left": 							{
 								"nombre": "ExpBin",
-								"class": "OrTest",
-								"method": "retOr3",
 								"left": 								{
 									"nombre": "Literal",
-									"class": "OrTest",
-									"method": "retOr3",
 									"value": "true",
 									"type": "Bool"
-								},
+								}
 ,
 								"operator": "&&",
 								"right": 								{
 									"nombre": "Literal",
-									"class": "OrTest",
-									"method": "retOr3",
 									"value": "false",
 									"type": "Bool"
-								},
+								}
 
-							},
+							}
 ,
 							"operator": "||",
 							"right": 							{
 								"nombre": "Literal",
-								"class": "OrTest",
-								"method": "retOr3",
 								"value": "true",
 								"type": "Bool"
-							},
+							}
 
-						},
+						}
 
-					},
+					}
 
-				},
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "OrTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]
-		},
+		}
 	]
 }
