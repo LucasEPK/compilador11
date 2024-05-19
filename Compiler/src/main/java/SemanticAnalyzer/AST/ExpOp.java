@@ -27,4 +27,9 @@ public abstract class ExpOp extends ExpressionNode{
     public Token getOperator() {
         return operator;
     }
+
+    @Override
+    public Token getToken() {
+        return getOperator();
+    }
 }

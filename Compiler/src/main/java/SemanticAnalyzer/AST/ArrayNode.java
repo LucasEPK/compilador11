@@ -4,7 +4,8 @@ import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 public class ArrayNode extends PrimaryNode{
-    private int length;
+
+    private ExpressionNode length;
 
     public ArrayNode(String struct, String method, Token token) {
         super(struct, method, token);
@@ -14,11 +15,11 @@ public class ArrayNode extends PrimaryNode{
         super(struct, method, token, type);
     }
 
-    public int getLength() {
+    public ExpressionNode getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(ExpressionNode length) {
         this.length = length;
     }
 

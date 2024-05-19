@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase representate de las sentencias en nuestro AST
  * @author Yeumen Silva
@@ -16,6 +18,9 @@ public abstract class SentenceNode implements Commons {
     boolean consolidated = false;
 
     private String type  = "void";
+
+    // Esta variable se usa para errores y saber donde empieza la sentencia
+    private Token referenceToken;
 
     public SentenceNode( String struct, String method ) {
 
@@ -41,6 +46,9 @@ public abstract class SentenceNode implements Commons {
         return struct;
     }
 
+    public Token getReferenceToken() {
+        return referenceToken;
+    }
 
     public void setMethod(String method) {
         this.method = method;
@@ -56,5 +64,9 @@ public abstract class SentenceNode implements Commons {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setReferenceToken(Token referenceToken) {
+        this.referenceToken = referenceToken;
     }
 }

@@ -1,5 +1,7 @@
 package SemanticAnalyzer.AST;
 
+import LexicalAnalyzer.Token;
+
 /**
  * Clase abstracta representate una expresión en general
  * @author Yeumen Silva
@@ -16,4 +18,5 @@ public abstract class ExpressionNode extends  SentenceNode implements Commons {
         this.setType(type);
     }
 
+    public abstract Token getToken();
 }

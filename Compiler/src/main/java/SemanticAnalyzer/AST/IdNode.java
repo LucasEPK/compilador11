@@ -13,12 +13,22 @@ import java.util.List;
 public class IdNode extends PrimaryNode{
     private List<ExpressionNode> arguments = new ArrayList<ExpressionNode>();
 
+    private IdType idType;
+
     public IdNode(String struct, String method, Token token) {
         super(struct, method, token);
     }
 
     public List<ExpressionNode> getArguments() {
         return arguments;
+    }
+
+    public IdType getIdType() {
+        return idType;
+    }
+
+    public void setIdType(IdType idType) {
+        this.idType = idType;
     }
 
     /**
