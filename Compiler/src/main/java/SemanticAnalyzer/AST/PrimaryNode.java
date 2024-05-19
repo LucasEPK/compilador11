@@ -29,6 +29,19 @@ public abstract class PrimaryNode extends Operands {
         this.right = right;
     }
 
+    /**
+     * Función que pone como ultimo right de la fila de rights
+     * el parametro dado
+     * @author Lucas Moyano
+     * */
+    public void setLastRight(PrimaryNode right) {
+        if (this.right != null) {// caso recursivo
+            this.right.setLastRight(right);
+        } else { // caso base, actua como un setRight normal
+            this.right = right;
+        }
+    }
+
     @Override
     public String toJson(int tabs) {
         return null;

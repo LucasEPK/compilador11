@@ -2659,15 +2659,28 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 94 <Llamada-Método> de la Gramatica
+     * @return un id node con un metodo
      * @author Lucas Moyano
      * */
-    private void llamadaMetodo() {
+    private IdNode llamadaMetodo() {
         // Analisis semantico ----------------------------------
         // ya debería existir el metodo
         // -----------------------------------------------------
+
+        // AST--------------------------
+        IdNode method = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        method.setIdType(IdType.METHOD);
+        // -----------------------------
+
         match("ObjID");
-        argumentosActuales();
-        llamadaMetodoF();
+        List<ExpressionNode> arguments = argumentosActuales();
+        PrimaryNode chained = llamadaMetodoF();
+
+        // AST-----------------------------
+        method.setArguments(arguments);
+        method.setRight(chained);
+        return method;
     }
 
     /**
@@ -2697,39 +2710,57 @@ public class    SyntacticAnalyzer {
             }
         }
 
+        // AST-------------
         return chained;
     }
 
     /**
      * Función para la regla 96 <Llamada-Método-Estático> de la Gramatica
+     * @return un primary node con un metodo estatico seteado
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoEstatico() {
+    private IdNode llamadaMetodoEstatico() {
         // Analisis semantico ----------------------------------
         // ya debería existir ese metodo
         // -----------------------------------------------------
+
+        // AST-------------------------------------------------
+        IdNode staticMethod = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        staticMethod.setIdType(IdType.STATIC_METHOD);
+        // ----------------------------------------------------
         match("StructID");
         match(".");
-        llamadaMetodo();
-        llamadaMetodoEstaticoF();
+        PrimaryNode chained1 = llamadaMetodo();
+        PrimaryNode chained2 = llamadaMetodoEstaticoF();
+
+        // AST------------------------------------
+        staticMethod.setRight(chained1);
+        staticMethod.setLastRight(chained2);
+        return staticMethod;
     }
 
     /**
      * Función para la regla 97 <Llamada-Método-Estático-F> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoEstaticoF() {
+    private PrimaryNode llamadaMetodoEstaticoF() {
         String[] followLlamadaMetodoEstaticoF = {"!=" , "%" ,
                 "&&" , ")" , "*" , "+" , "," , "-" ,
                 "/" , ";" , "<" , "<=" , "==" , ">" , ">=" ,
                 "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // aST-------------------------
+        PrimaryNode chained = null;
+        // -------------------------------
+
         if (verifyEquals(followLlamadaMetodoEstaticoF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "%" ,
                         "&&" , ")" , "*" , "+" , "," , "-" , "." ,
@@ -2737,6 +2768,9 @@ public class    SyntacticAnalyzer {
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST--------------
+        return chained;
     }
 
     /**
