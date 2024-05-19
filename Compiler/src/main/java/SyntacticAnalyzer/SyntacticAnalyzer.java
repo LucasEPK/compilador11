@@ -1228,28 +1228,51 @@ public class    SyntacticAnalyzer {
         // Analisis semantico ----------------------------------
         // acá ya debería existir este objeto
         // -----------------------------------------------------
+
+        // AST ----------------------------
+        Token savedToken = this.actualToken;
+        // ----------------------------------
+
         match("ObjID");
-        accesoVarSimpleF();
-        // TODO: AST
-        return null;
+        PrimaryNode primaryNode = accesoVarSimpleF(savedToken);
+
+        if (primaryNode == null) { // caso en el que solo es una variable por ende accesovarSimplef devuelve null
+            primaryNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), savedToken);
+            ((IdNode)primaryNode).setIdType(IdType.VARIABLE);
+        }
+
+        return primaryNode;
     }
 
     /**
      * Regla AccesoVar-Simple-F
+     * @return un var encadenado o un array
      * @author Yeumen Silva
      * */
 
-    private void accesoVarSimpleF(){
+    private PrimaryNode accesoVarSimpleF(Token savedToken){
+
+        // AST------------------------
+        PrimaryNode chained = null;
+        // ----------------------------
+
         //Primeros Encadenado-Simple-Estrella
         if(verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            chained = encadenadoSimpleEstrella();
         }
         else {
             //Primeros [
             if(verifyEquals("[")){
                 match("[");
-                expresion();
+                ExpressionNode expNode = expresion();
                 match("]");
+
+                // AST------------------------
+                chained = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), savedToken);
+                ((ArrayNode)chained).setLength(expNode);
+                // ------------------------------------
             }
             else {
                 //Siguientes AccesoVar-Simple-F
@@ -1261,6 +1284,24 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        return chained;
+    }
+
+    /**
+     * Regla Encadenado-Simple-Estrella
+     * @return un encadenado
+     * @author Yeumen Silva
+     * */
+
+    private PrimaryNode encadenadoSimpleEstrella(){
+        PrimaryNode mainChained = encadenadoSimple();
+        PrimaryNode chained = encadenadoSimpleEstrellaF();
+
+        // AST------------------
+        mainChained.setRight(chained);
+        return mainChained;
+        // -----------------------------------
     }
 
     /**
@@ -1268,20 +1309,15 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimpleEstrella(){
-        encadenadoSimple();
-        encadenadoSimpleEstrellaF();
-    }
+    private PrimaryNode encadenadoSimpleEstrellaF(){
 
-    /**
-     * Regla Encadenado-Simple-Estrella
-     * @author Yeumen Silva
-     * */
+        // AST----------------------
+        PrimaryNode chained = null;
+        // -------------------------
 
-    private void encadenadoSimpleEstrellaF(){
         //Primeros Encadenado-Simple-Estrella
         if (verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            chained = encadenadoSimpleEstrella();
         }
         else {
             //Siguientes Encadenado-Simple-Estrella-F
@@ -1292,6 +1328,9 @@ public class    SyntacticAnalyzer {
                 throw createException(this.actualToken, List.of("." , "="),this.actualToken.getLexeme());
             }
         }
+
+        // AST------------------
+        return chained;
     }
 
     /**
@@ -1300,22 +1339,38 @@ public class    SyntacticAnalyzer {
      * */
 
     private ExpressionNode accesoSelfSimple(){
-        match("self");
-        accesoSelfSimpleF();
 
-        // TODO: AST
-        return null;
+        // AST-----------------
+        IdNode selfAccess = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        selfAccess.setIdType(IdType.CONSTRUCTOR);
+        // ----------------------
+
+        match("self");
+        PrimaryNode chained = accesoSelfSimpleF();
+
+        // AST--------------------------
+        selfAccess.setRight(chained);
+        // -------------------------------
+
+        return selfAccess;
     }
 
     /**
      * Regla AccesoSelf-Simple
+     * @return un encadenado var o array o null
      * @author Yeumen Silva
      * */
 
-    private void accesoSelfSimpleF(){
+    private PrimaryNode accesoSelfSimpleF(){
+
+        // AST-------------------------
+        PrimaryNode chained = null;
+        // ------------------------------
+
         //Primeros Encadenado-Simple-Estrella
         if (verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            chained = encadenadoSimpleEstrella();
         }else {
             //Siguientes AccesoSelf-Simple-F
             if(verifyEquals("=","$EOF$")){
@@ -1325,19 +1380,31 @@ public class    SyntacticAnalyzer {
                 throw createException(this.actualToken, List.of("." , "="),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return chained;
     }
 
     /**
      * Regla Encadenado-Simple
+     * @return un idnode con una variable
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimple(){
+    private IdNode encadenadoSimple(){
         match(".");
         // Analisis semantico ----------------------------------
         // ya debería existir este objeto
         // -----------------------------------------------------
+        // AST------------------------
+        IdNode chained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        chained.setIdType(IdType.VARIABLE);
+        // ---------------------------
         match("ObjID");
+
+        // AST-------------
+        return chained;
     }
 
     /**
