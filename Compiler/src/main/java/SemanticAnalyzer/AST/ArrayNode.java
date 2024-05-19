@@ -35,13 +35,22 @@ public class ArrayNode extends PrimaryNode{
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Array" + "\",\n";
         json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
-        json += addtabs(tabs+1) + "\"length\": \"" + getLength() + "\"\n";
+        json += addtabs(tabs+1) + "\"length\": \"" + length.toJson(tabs+1) + "\"\n";
         json += addtabs(tabs) + "}\n";
         return json;
     }
 
     @Override
     public void consolidate(AST ast) {
+
+        if(this.length.getConsolidated() == false){
+            this.length.consolidate(ast);
+        }
+
+        if(this.length.getType().equals("Int") == false){
+            //ToDo
+            //throw new ArrayLengthException(this.length.getToken());
+        }
 
         //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
         if(this.getType().equals("Int") == false && this.getType().equals("Str") == false &&
@@ -62,7 +71,8 @@ public class ArrayNode extends PrimaryNode{
     @Override
     public String addtabs(int tabs) {
         String tabsString = "";
-        for (int i = 0; i < tabs; i++) {
+        for (int i = 0; i < tabs; i++
+        ) {
             tabsString += "\t";
         }
         return tabsString;
