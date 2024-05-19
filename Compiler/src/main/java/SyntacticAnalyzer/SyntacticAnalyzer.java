@@ -578,7 +578,7 @@ public class    SyntacticAnalyzer {
         if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
                 , "StructID")){
             declVarLocalesEstrella();
-            bloqueMetodoF1();
+            bloqueMetodoF1(block);
         }else {
             //Primeros Sentencia-Estrella
             if (verifyEquals("(" , ";" , "ObjID" , "if"
@@ -600,10 +600,11 @@ public class    SyntacticAnalyzer {
 
     /**
      * Regla Bloque-Metodo-F1
+     * @param block bloque del ast en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void bloqueMetodoF1(){
+    private void bloqueMetodoF1(BlockNode block){
         //Primeros }
         if(verifyEquals("}")){
             match("}");
@@ -612,7 +613,7 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
-                sentenciaEstrella(null);
+                sentenciaEstrella(block);
                 match("}");
             }
             else {
@@ -666,19 +667,20 @@ public class    SyntacticAnalyzer {
 
     private void sentenciaEstrella(BlockNode block){
         sentencia(block);
-        sentenciaEstrellaF();
+        sentenciaEstrellaF(block);
     }
 
     /**
      * Regla Sentencia-Estrella-F
+     * @param block bloque del ast en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void sentenciaEstrellaF(){
+    private void sentenciaEstrellaF(BlockNode block){
         //Primeros Sentencia-Estrella
         if(verifyEquals("(" , ";" , "ObjID" , "if"
                 , "ret" , "self" , "while", "{")){
-            sentenciaEstrella(null);
+            sentenciaEstrella(block);
         }
         else {
             //Siguientes Sentencia-Estrella-F

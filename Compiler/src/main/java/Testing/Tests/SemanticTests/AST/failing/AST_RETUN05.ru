@@ -5,7 +5,7 @@ impl A{
     fn m1(Int p1)->A
     {
         Int v1;
-        return nil;
+        ret nil;
     }
     
     fn m2()->void
