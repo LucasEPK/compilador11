@@ -2435,29 +2435,43 @@ public class    SyntacticAnalyzer {
      * Función para la regla 87 <ExpresionParentizada> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expresionParentizada() {
+    private PrimaryNode expresionParentizada() {
+
+
         match("(");
-        expresion();
+        ExpressionNode expNode = expresion();
         match(")");
-        expresionParentizadaF();
+        PrimaryNode chained = expresionParentizadaF();
+        // AST------------------------
+        ParenthizedExpression parenthizedExpression = new ParenthizedExpression(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), expNode.getToken());
+        parenthizedExpression.setParenthizedExpression(expNode);
+        parenthizedExpression.setRight(chained);
+
+        return parenthizedExpression;
+        // -----------------------------
     }
 
     /**
      * Función para la regla 88 <ExpresionParentizadaF> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void expresionParentizadaF() {
+    private PrimaryNode expresionParentizadaF() {
         String[] followExpresionParentizadaF = {"!=" , "%"
                 , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "=="
                 , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST-----------------------
+        PrimaryNode chained = null;
+        // --------------------------
+
         if (verifyEquals(followExpresionParentizadaF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%"
                         , "&&" , ")" , "*" , "+" , "," , "-"
@@ -2465,6 +2479,9 @@ public class    SyntacticAnalyzer {
                         , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST--------------
+        return chained;
     }
 
     /**

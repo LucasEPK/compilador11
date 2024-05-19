@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SyntacticAnalyzer/SyntacticAnalyzer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -182,7 +181,7 @@
       <workItem from="1715982269957" duration="9204000" />
       <workItem from="1716038039991" duration="7469000" />
       <workItem from="1716053144686" duration="11408000" />
-      <workItem from="1716121955524" duration="2311000" />
+      <workItem from="1716121955524" duration="2659000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />

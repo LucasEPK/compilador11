@@ -9,6 +9,14 @@ public class ParenthizedExpression extends PrimaryNode{
         super(struct, method, token);
     }
 
+    public void setParenthizedExpression(ExpressionNode parenthizedExpression) {
+        this.parenthizedExpression = parenthizedExpression;
+    }
+
+    public ExpressionNode getParenthizedExpression() {
+        return parenthizedExpression;
+    }
+
     @Override
     public String addtabs(int tabs) {
         return "";
