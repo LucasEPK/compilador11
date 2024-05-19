@@ -81,7 +81,7 @@ public class BlockNode extends SentenceNode implements Commons {
             //Verifico que start no tenga return
             if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
                 //ToDo
-                //throw new ReturnInStart(sentence.getToken());
+                throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
             }
         }
 
