@@ -6,6 +6,8 @@ import LexicalAnalyzer.Token;
 import SemanticAnalyzer.AST.*;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -576,7 +578,7 @@ public class    SyntacticAnalyzer {
         if(verifyEquals("Array" , "Bool" , "Char" , "Int" , "Str"
                 , "StructID")){
             declVarLocalesEstrella();
-            bloqueMetodoF1();
+            bloqueMetodoF1(block);
         }else {
             //Primeros Sentencia-Estrella
             if (verifyEquals("(" , ";" , "ObjID" , "if"
@@ -598,10 +600,11 @@ public class    SyntacticAnalyzer {
 
     /**
      * Regla Bloque-Metodo-F1
+     * @param block bloque del ast en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void bloqueMetodoF1(){
+    private void bloqueMetodoF1(BlockNode block){
         //Primeros }
         if(verifyEquals("}")){
             match("}");
@@ -610,7 +613,7 @@ public class    SyntacticAnalyzer {
             //Primeros Sentencia-Estrella
             if(verifyEquals("(" , ";" , "ObjID" , "if"
                     , "ret" , "self" , "while", "{")){
-                sentenciaEstrella(null);
+                sentenciaEstrella(block);
                 match("}");
             }
             else {
@@ -664,19 +667,20 @@ public class    SyntacticAnalyzer {
 
     private void sentenciaEstrella(BlockNode block){
         sentencia(block);
-        sentenciaEstrellaF();
+        sentenciaEstrellaF(block);
     }
 
     /**
      * Regla Sentencia-Estrella-F
+     * @param block bloque del ast en donde estamos
      * @author Yeumen Silva
      * */
 
-    private void sentenciaEstrellaF(){
+    private void sentenciaEstrellaF(BlockNode block){
         //Primeros Sentencia-Estrella
         if(verifyEquals("(" , ";" , "ObjID" , "if"
                 , "ret" , "self" , "while", "{")){
-            sentenciaEstrella(null);
+            sentenciaEstrella(block);
         }
         else {
             //Siguientes Sentencia-Estrella-F
@@ -1224,28 +1228,51 @@ public class    SyntacticAnalyzer {
         // Analisis semantico ----------------------------------
         // acá ya debería existir este objeto
         // -----------------------------------------------------
+
+        // AST ----------------------------
+        Token savedToken = this.actualToken;
+        // ----------------------------------
+
         match("ObjID");
-        accesoVarSimpleF();
-        // TODO: AST
-        return null;
+        PrimaryNode primaryNode = accesoVarSimpleF(savedToken);
+
+        if (primaryNode == null) { // caso en el que solo es una variable por ende accesovarSimplef devuelve null
+            primaryNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), savedToken);
+            ((IdNode)primaryNode).setIdType(IdType.VARIABLE);
+        }
+
+        return primaryNode;
     }
 
     /**
      * Regla AccesoVar-Simple-F
+     * @return un var encadenado o un array
      * @author Yeumen Silva
      * */
 
-    private void accesoVarSimpleF(){
+    private PrimaryNode accesoVarSimpleF(Token savedToken){
+
+        // AST------------------------
+        PrimaryNode chained = null;
+        // ----------------------------
+
         //Primeros Encadenado-Simple-Estrella
         if(verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            chained = encadenadoSimpleEstrella();
         }
         else {
             //Primeros [
             if(verifyEquals("[")){
                 match("[");
-                expresion();
+                ExpressionNode expNode = expresion();
                 match("]");
+
+                // AST------------------------
+                chained = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), savedToken);
+                ((ArrayNode)chained).setLength(expNode);
+                // ------------------------------------
             }
             else {
                 //Siguientes AccesoVar-Simple-F
@@ -1257,6 +1284,24 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        return chained;
+    }
+
+    /**
+     * Regla Encadenado-Simple-Estrella
+     * @return un encadenado
+     * @author Yeumen Silva
+     * */
+
+    private PrimaryNode encadenadoSimpleEstrella(){
+        PrimaryNode mainChained = encadenadoSimple();
+        PrimaryNode chained = encadenadoSimpleEstrellaF();
+
+        // AST------------------
+        mainChained.setRight(chained);
+        return mainChained;
+        // -----------------------------------
     }
 
     /**
@@ -1264,20 +1309,15 @@ public class    SyntacticAnalyzer {
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimpleEstrella(){
-        encadenadoSimple();
-        encadenadoSimpleEstrellaF();
-    }
+    private PrimaryNode encadenadoSimpleEstrellaF(){
 
-    /**
-     * Regla Encadenado-Simple-Estrella
-     * @author Yeumen Silva
-     * */
+        // AST----------------------
+        PrimaryNode chained = null;
+        // -------------------------
 
-    private void encadenadoSimpleEstrellaF(){
         //Primeros Encadenado-Simple-Estrella
         if (verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            chained = encadenadoSimpleEstrella();
         }
         else {
             //Siguientes Encadenado-Simple-Estrella-F
@@ -1288,6 +1328,9 @@ public class    SyntacticAnalyzer {
                 throw createException(this.actualToken, List.of("." , "="),this.actualToken.getLexeme());
             }
         }
+
+        // AST------------------
+        return chained;
     }
 
     /**
@@ -1296,22 +1339,38 @@ public class    SyntacticAnalyzer {
      * */
 
     private ExpressionNode accesoSelfSimple(){
-        match("self");
-        accesoSelfSimpleF();
 
-        // TODO: AST
-        return null;
+        // AST-----------------
+        IdNode selfAccess = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        selfAccess.setIdType(IdType.CONSTRUCTOR);
+        // ----------------------
+
+        match("self");
+        PrimaryNode chained = accesoSelfSimpleF();
+
+        // AST--------------------------
+        selfAccess.setRight(chained);
+        // -------------------------------
+
+        return selfAccess;
     }
 
     /**
      * Regla AccesoSelf-Simple
+     * @return un encadenado var o array o null
      * @author Yeumen Silva
      * */
 
-    private void accesoSelfSimpleF(){
+    private PrimaryNode accesoSelfSimpleF(){
+
+        // AST-------------------------
+        PrimaryNode chained = null;
+        // ------------------------------
+
         //Primeros Encadenado-Simple-Estrella
         if (verifyEquals(".")){
-            encadenadoSimpleEstrella();
+            chained = encadenadoSimpleEstrella();
         }else {
             //Siguientes AccesoSelf-Simple-F
             if(verifyEquals("=","$EOF$")){
@@ -1321,19 +1380,31 @@ public class    SyntacticAnalyzer {
                 throw createException(this.actualToken, List.of("." , "="),this.actualToken.getLexeme());
             }
         }
+
+        // AST---------------------
+        return chained;
     }
 
     /**
      * Regla Encadenado-Simple
+     * @return un idnode con una variable
      * @author Yeumen Silva
      * */
 
-    private void encadenadoSimple(){
+    private IdNode encadenadoSimple(){
         match(".");
         // Analisis semantico ----------------------------------
         // ya debería existir este objeto
         // -----------------------------------------------------
+        // AST------------------------
+        IdNode chained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        chained.setIdType(IdType.VARIABLE);
+        // ---------------------------
         match("ObjID");
+
+        // AST-------------
+        return chained;
     }
 
     /**
@@ -2244,8 +2315,13 @@ public class    SyntacticAnalyzer {
             // ------------------------------------------------
         } else {
             if (verifyEquals(firstPrimario)){
-                primario();
-                operandoF();
+                PrimaryNode primaryNode = primario();
+                PrimaryNode chained = operandoF();
+
+                // AST----------------------------
+                primaryNode.setLastRight(chained);
+                return primaryNode;
+                // -------------------------------
             } else {
                 throw createException(this.actualToken, List.of("StrLiteral" ,
                         "CharLiteral" , "false" , "IntLiteral" ,
@@ -2253,26 +2329,29 @@ public class    SyntacticAnalyzer {
                         "new" , "self"),this.actualToken.getLexeme());
             }
         }
-
-        return null;
     }
 
     /**
      * Función para la regla 84 <OperandoF> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void operandoF() {
+    private PrimaryNode operandoF() {
         String[] followOperandoF = {"!=" , "%" , "&&" ,
                 ")" , "*" , "+" , "," , "-" , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" ,
                 "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST---------------------
+        PrimaryNode chained = null;
+        // --------------------------
+
         if (verifyEquals(followOperandoF)) {
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%" , "&&" ,
                         ")" , "*" , "+" , "," , "-" , "/" , ";" ,
@@ -2280,6 +2359,8 @@ public class    SyntacticAnalyzer {
                         "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 
     /**
@@ -2348,35 +2429,48 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 86 <Primario> de la Gramatica
+     * @return un primario del AST
      * @author Lucas Moyano
      * */
-    private void primario() {
+    private PrimaryNode primario() {
         String[] firstExpresionParentizada = {"("};
         String[] firstAccesoSelf = {"self"};
         String[] firstAccesoVarAndMethod = {"ObjID"};
         String[] firstLlamadaMetodoEstatico = {"StructID"};
         String[] firstLlamadaConstructor = {"new"};
 
+        PrimaryNode primaryNode = null;
+
         if (verifyEquals(firstExpresionParentizada)) {
-            expresionParentizada();
+            primaryNode = expresionParentizada();
         } else {
             if (verifyEquals(firstAccesoSelf)){
-                accesoSelf();
+                primaryNode = accesoSelf();
             } else {
                 if (verifyEquals(firstAccesoVarAndMethod)){
                     // Analisis semantico ----------------------------------
                     // ya debería existir este objeto
                     // -----------------------------------------------------
+                    // AST-----------------------------------
+                    Token savedToken = this.actualToken; // se guarda el token porque todavia no sabemos si es un Array o un Id
+                    // --------------------------------------
+
                     match("ObjID");
-                    primarioF();
+                    primaryNode = primarioF(savedToken);
+
+                    if (primaryNode == null) { // Esto pasa cuando es solo una variable sin nada más
+                        primaryNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                                symbolTable.getCurrentMethod().getName(), savedToken);
+                        ((IdNode)primaryNode).setIdType(IdType.VARIABLE);
+                    }
                 }
                 else {
                     if (verifyEquals(firstLlamadaMetodoEstatico)){
-                        llamadaMetodoEstatico();
+                        primaryNode = llamadaMetodoEstatico();
                     }
                     else {
                         if (verifyEquals(firstLlamadaConstructor)){
-                            llamadaConstructor();
+                            primaryNode = llamadaConstructor();
                         }
                         else {
                             throw createException(this.actualToken, List.of("(", "self", "ObjID", "StructID", "new"),this.actualToken.getLexeme());
@@ -2385,9 +2479,17 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST-------------------
+        return primaryNode;
     }
 
-    private void primarioF(){
+    /**
+     * @param savedToken el token del ObjId
+     * @return un primario
+     * @author Lucas Moyano
+     * */
+    private PrimaryNode primarioF(Token savedToken){
         String[] firstAccesoVarF = {".","["};
         String[] firstArgumentosActuales = {"("};
         String[] followPrimarioF = {"!=" ,
@@ -2395,13 +2497,26 @@ public class    SyntacticAnalyzer {
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
 
+        // AST----------------------
+        PrimaryNode primaryNode = null;
+        // -----------------------------------
+
         if(verifyEquals(firstAccesoVarF)){
-            accesoVarF();
+            primaryNode = accesoVarF(savedToken);
         }
         else{
            if(verifyEquals(firstArgumentosActuales)){
-             argumentosActuales();
-             llamadaMetodoF();
+             List<ExpressionNode> arguments = argumentosActuales();
+             PrimaryNode chained = llamadaMetodoF();
+
+
+             // AST-----------------------------------------
+             primaryNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                       symbolTable.getCurrentMethod().getName(), savedToken);
+             ((IdNode)primaryNode).setIdType(IdType.METHOD);
+             ((IdNode)primaryNode).setArguments(arguments);
+             primaryNode.setRight(chained);
+             // -------------------------------
            }
            else {
                if(verifyEquals(followPrimarioF)){
@@ -2416,36 +2531,54 @@ public class    SyntacticAnalyzer {
            }
         }
 
+        // AST-----------------------
+        return primaryNode;
     }
 
 
     /**
      * Función para la regla 87 <ExpresionParentizada> de la Gramatica
+     * @return una expresión parentizada
      * @author Lucas Moyano
      * */
-    private void expresionParentizada() {
+    private PrimaryNode expresionParentizada() {
+
+
         match("(");
-        expresion();
+        ExpressionNode expNode = expresion();
         match(")");
-        expresionParentizadaF();
+        PrimaryNode chained = expresionParentizadaF();
+        // AST------------------------
+        ParenthizedExpression parenthizedExpression = new ParenthizedExpression(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), expNode.getToken());
+        parenthizedExpression.setParenthizedExpression(expNode);
+        parenthizedExpression.setRight(chained);
+
+        return parenthizedExpression;
+        // -----------------------------
     }
 
     /**
      * Función para la regla 88 <ExpresionParentizadaF> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void expresionParentizadaF() {
+    private PrimaryNode expresionParentizadaF() {
         String[] followExpresionParentizadaF = {"!=" , "%"
                 , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "=="
                 , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST-----------------------
+        PrimaryNode chained = null;
+        // --------------------------
+
         if (verifyEquals(followExpresionParentizadaF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%"
                         , "&&" , ")" , "*" , "+" , "," , "-"
@@ -2453,33 +2586,51 @@ public class    SyntacticAnalyzer {
                         , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST--------------
+        return chained;
     }
 
     /**
      * Función para la regla 89 <AccesoSelf> de la Gramatica
+     * @return un id node de tipo self
      * @author Lucas Moyano
      * */
-    private void accesoSelf() {
+    private PrimaryNode accesoSelf() {
+        // AST--------------------------------------------------------------------
+        IdNode selfNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        selfNode.setIdType(IdType.SELF);
+        // -----------------------------------------------------------------------
         match("self");
-        accesoSelfF();
+        PrimaryNode chained = accesoSelfF();
+
+        // AST--------------------------------
+        selfNode.setRight(chained);
+        return selfNode;
     }
 
     /**
      * Función para la regla 90 <AccesoSelfF> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void accesoSelfF() {
+    private PrimaryNode accesoSelfF() {
         String[] followAccesoSelfF = {"!=" , "%" ,
                 "&&" , ")" , "*" , "+" , "," ,
                 "-" , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST------------------------
+        PrimaryNode chained = null;
+        // ----------------------------
+
         if (verifyEquals(followAccesoSelfF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of(".", "!=" , "%" ,
                         "&&" , ")" , "*" , "+" , "," ,
@@ -2487,6 +2638,8 @@ public class    SyntacticAnalyzer {
                         "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 
     /**
@@ -2496,31 +2649,49 @@ public class    SyntacticAnalyzer {
     private void accesoVar() {
         // TODO: wtf porque no se llega nunca a esta regla
         match("ObjID");
-        accesoVarF();
+        accesoVarF(null);
     }
 
     /**
      * Función para la regla 92 <AccesoVarF> de la Gramatica
+     * @return un IdNode variable o un array
      * @author Lucas Moyano
      * */
-    private void accesoVarF() {
+    private PrimaryNode accesoVarF(Token savedToken) {
         String[] followAccesoVarF = {"!=" , "%" , "&&" , ")" ,
                 "*" , "+" , "," , "-" , "/" , ";" , "<" ,
                 "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
         String[] firstBracket = {"["};
 
+        // AST-----------------------------
+        PrimaryNode primaryNode = null;
+        // -------------------------------
+
         if (verifyEquals(followAccesoVarF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                PrimaryNode chained = encadenado();
+
+                // AST-------------------------
+                primaryNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), savedToken);
+                primaryNode.setRight(chained);
+                ((IdNode)primaryNode).setIdType(IdType.VARIABLE);
+                // ------------------------------
             } else {
                 if (verifyEquals(firstBracket)){
                     match("[");
-                    expresion();
+                    ExpressionNode expNode = expresion();
                     match("]");
-                    accesoVarF1();
+                    PrimaryNode chained = accesoVarF1();
+                    // AST-----------------------------
+                    primaryNode = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                            symbolTable.getCurrentMethod().getName(), savedToken);
+                    ((ArrayNode) primaryNode).setLength(expNode);
+                    primaryNode.setRight(chained);
+                    // ---------------------------------
                 } else {
                     throw createException(this.actualToken, List.of("[", "!=" , "%" , "&&" , ")" ,
                             "*" , "+" , "," , "-" , "." , "/" , ";" , "<" ,
@@ -2528,24 +2699,32 @@ public class    SyntacticAnalyzer {
                 }
             }
         }
+
+        // AST-------------------
+        return primaryNode;
     }
 
     /**
      * Función para la regla 93 <AccesoVarF1> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void accesoVarF1() {
+    private PrimaryNode accesoVarF1() {
         String[] followAccesoVarF1 = {"!=" , "%" , "&&" ,
                 ")" , "*" , "+" , "," , "-" , "/" ,
                 ";" , "<" , "<=" , "==" , ">" , ">=" , "]" ,
                 "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST--------------
+        PrimaryNode chained = null;
+        // -------------------
+
         if (verifyEquals(followAccesoVarF1)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "%" , "&&" ,
                         ")" , "*" , "+" , "," , "-" , "." , "/" ,
@@ -2553,74 +2732,114 @@ public class    SyntacticAnalyzer {
                         "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 
     /**
      * Función para la regla 94 <Llamada-Método> de la Gramatica
+     * @return un id node con un metodo
      * @author Lucas Moyano
      * */
-    private void llamadaMetodo() {
+    private IdNode llamadaMetodo() {
         // Analisis semantico ----------------------------------
         // ya debería existir el metodo
         // -----------------------------------------------------
+
+        // AST--------------------------
+        IdNode method = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        method.setIdType(IdType.METHOD);
+        // -----------------------------
+
         match("ObjID");
-        argumentosActuales();
-        llamadaMetodoF();
+        List<ExpressionNode> arguments = argumentosActuales();
+        PrimaryNode chained = llamadaMetodoF();
+
+        // AST-----------------------------
+        method.setArguments(arguments);
+        method.setRight(chained);
+        return method;
     }
 
     /**
      * Función para la regla 95 <Llamada-Método-F> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoF() {
+    private PrimaryNode llamadaMetodoF() {
         String[] followLlamadaMetodoF = {"!=" , "%" , "&&" , ")" , "*" ,
                         "+" , "," , "-" , "/" , ";" ,
                 "<" , "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST----------------------
+        PrimaryNode chained = null;
+        // --------------------------
+
         if (verifyEquals(followLlamadaMetodoF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "%" , "&&" , ")" , "*" ,
                         "+" , "," , "-" , "." , "/" , ";" ,
                         "<" , "<=" , "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST-------------
+        return chained;
     }
 
     /**
      * Función para la regla 96 <Llamada-Método-Estático> de la Gramatica
+     * @return un primary node con un metodo estatico seteado
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoEstatico() {
+    private IdNode llamadaMetodoEstatico() {
         // Analisis semantico ----------------------------------
         // ya debería existir ese metodo
         // -----------------------------------------------------
+
+        // AST-------------------------------------------------
+        IdNode staticMethod = new IdNode(symbolTable.getCurrentStruct().getName(),
+                symbolTable.getCurrentMethod().getName(), this.actualToken);
+        staticMethod.setIdType(IdType.STATIC_METHOD);
+        // ----------------------------------------------------
         match("StructID");
         match(".");
-        llamadaMetodo();
-        llamadaMetodoEstaticoF();
+        PrimaryNode chained1 = llamadaMetodo();
+        PrimaryNode chained2 = llamadaMetodoEstaticoF();
+
+        // AST------------------------------------
+        staticMethod.setRight(chained1);
+        staticMethod.setLastRight(chained2);
+        return staticMethod;
     }
 
     /**
      * Función para la regla 97 <Llamada-Método-Estático-F> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoEstaticoF() {
+    private PrimaryNode llamadaMetodoEstaticoF() {
         String[] followLlamadaMetodoEstaticoF = {"!=" , "%" ,
                 "&&" , ")" , "*" , "+" , "," , "-" ,
                 "/" , ";" , "<" , "<=" , "==" , ">" , ">=" ,
                 "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // aST-------------------------
+        PrimaryNode chained = null;
+        // -------------------------------
+
         if (verifyEquals(followLlamadaMetodoEstaticoF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" , "%" ,
                         "&&" , ")" , "*" , "+" , "," , "-" , "." ,
@@ -2628,55 +2847,93 @@ public class    SyntacticAnalyzer {
                         "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST--------------
+        return chained;
     }
 
     /**
      * Función para la regla 98 <Llamada-Constructor> de la Gramatica
+     * @return un nodo primario con el constructor
      * @author Lucas Moyano
      * */
-    private void llamadaConstructor() {
+    private PrimaryNode llamadaConstructor() {
         match("new");
-        llamadaConstructorF();
+        PrimaryNode constructor = llamadaConstructorF();
+
+        // AST------------------
+        return constructor;
     }
 
     /**
      * Función para la regla 99 <Llamada-Constructor-F> de la Gramatica
+     * @return un nodo primario con el constructor
      * @author Lucas Moyano
      * */
-    private void llamadaConstructorF() {
+    private PrimaryNode llamadaConstructorF() {
         String[] firstTipoPrimitivo = {"Bool" , "Char" , "Int" , "Str"};
 
+        // aST---------------------------
+        PrimaryNode constructor = null;
+        // --------------------------------
+
         if (verifyEquals(firstTipoPrimitivo)){
+            // AST-----------------
+            constructor = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), this.actualToken);
+            // ----------------------------------
+
             tipoPrimitivo();
             match("[");
-            expresion();
+            ExpressionNode expNode = expresion();
             match("]");
+
+            // AST----------------------
+            ((ArrayNode)constructor).setLength(expNode);
+
         } else {
             // Analisis semantico ----------------------------------
             // como es un constructor debería ya estar inicializada la variable/el atributo en la TS
             // -----------------------------------------------------
+            // AST-------------------------------------------------------------------
+            constructor = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), this.actualToken);
+            // ----------------------------------------------------------------------
+
             match("StructID");
-            argumentosActuales();
+            List<ExpressionNode> arguments = argumentosActuales();
             llamadaConstructorF1();
+
+            // AST----------------------------
+            ((IdNode)constructor).setIdType(IdType.CONSTRUCTOR);
+            ((IdNode)constructor).setArguments(arguments);
+            // --------------------------------
         }
+
+        // AST------------------
+        return constructor;
     }
 
     /**
      * Función para la regla 100 <Llamada-Constructor-F1> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void llamadaConstructorF1() {
+    private PrimaryNode llamadaConstructorF1() {
         String[] followLlamadaConstructorF1 = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," ,
                 "-" , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST--------------------
+        PrimaryNode chained = null;
+
         if (verifyEquals(followLlamadaConstructorF1)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" ,
                         "%" , "&&" , ")" , "*" , "+" , "," ,
@@ -2684,98 +2941,138 @@ public class    SyntacticAnalyzer {
                         "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return chained;
     }
 
     /**
      * Función para la regla 101 <Argumentos-Actuales> de la Gramatica
+     * @return los argumentos del metodo
      * @author Lucas Moyano
      * */
-    private void argumentosActuales() {
+    private List<ExpressionNode> argumentosActuales() {
         match("(");
-        argumentosActualesF();
+        List<ExpressionNode> arguments = argumentosActualesF();
+
+        // AST-------------------
+        return arguments;
     }
 
     /**
      * Función para la regla 102 <Argumentos-Actuales-F> de la Gramatica
+     * @return los argumentos del metodo
      * @author Lucas Moyano
      * */
-    private void argumentosActualesF() {
+    private List<ExpressionNode> argumentosActualesF() {
         String[] firstListaExpresiones = {"!" , "(" ,
                 "+" , "++" , "-" , "--" , "StrLiteral" ,
                 "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
+        List<ExpressionNode> arguments = null;
+
         if (verifyEquals(firstListaExpresiones)){
-            listaExpresiones();
+            arguments = listaExpresiones(null);
             match(")");
         } else {
             match(")");
         }
+
+        return arguments;
     }
 
     /**
      * Función para la regla 103 <Lista-Expresiones> de la Gramatica
+     * @return la lista de argumentos
      * @author Lucas Moyano
      * */
-    private void listaExpresiones() {
+    private List<ExpressionNode> listaExpresiones(List<ExpressionNode> argumentList) {
         String[] firstExpresion = {"!" , "(" , "+" ,
                 "++" , "-" , "--" , "StrLiteral" ,
                 "CharLiteral" , "false" , "ObjID" , "StructID" ,
                 "IntLiteral" , "new" , "nil" , "self" , "true"};
 
         if (verifyEquals(firstExpresion)){
-            expresion();
-            listaExpresionesF();
+            // AST-------------------------
+            if (argumentList == null) {// caso base, inicializa la lista de argumentos
+                argumentList = new ArrayList<ExpressionNode>();
+            }
+            // ------------------------------
+            ExpressionNode expNode = expresion();
+            // AST----------------------------
+            argumentList.add(expNode); // esto va añadir recursivamente
+            // -------------------------------
+            listaExpresionesF(argumentList);
+
         } else {
             throw createException(this.actualToken, List.of("!" , "(" , "+" ,
                     "++" , "-" , "--" , "StrLiteral" ,
                     "CharLiteral" , "false" , "ObjID" , "StructID" ,
                     "IntLiteral" , "new" , "nil" , "self" , "true"),this.actualToken.getLexeme());
         }
+
+        // AST-------------------
+        // este return se va a utilizar solo al final de la recursión para recibir la lista entera
+        return argumentList;
     }
 
     /**
      * Función para la regla 104 <Lista-Expresiones-F> de la Gramatica
+     * @param argumentList lista de argumentos a la cual se quiere añadir recursivamente elementos
      * @author Lucas Moyano
      * */
-    private void listaExpresionesF() {
+    private void listaExpresionesF(List<ExpressionNode> argumentList) {
         String[] followListaExpresionesF = {")" , "$EOF$"};
 
         if (verifyEquals(followListaExpresionesF)){
             //Lambda
         } else {
             match(",");
-            listaExpresiones();
+            listaExpresiones(argumentList);
         }
     }
 
     /**
      * Función para la regla 105 <Encadenado> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void encadenado(){
+    private PrimaryNode encadenado(){
+
         match(".");
-        encadenadoF();
+        PrimaryNode mainChained = encadenadoF();
+
+        // AST---------------
+        return mainChained;
     }
 
     /**
      * Función para la regla 106 <Encadenado-F> de la Gramatica
+     * @return un encadenado
      * @author Lucas Moyano
      * */
-    private void encadenadoF(){
+    private PrimaryNode encadenadoF(){
         // Analisis semantico ----------------------------------
         // ya debería existir el objeto
         // -----------------------------------------------------
+        // AST---------------------------
+        Token savedToken = this.actualToken;
+        // ------------------------------
         match("ObjID");
-        encadenadoF1();
+        PrimaryNode mainChained = encadenadoF1(savedToken);
+
+        // AST-------------
+        return mainChained;
     }
 
     /**
      * Función para la regla 107 <Encadenado-F1> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
 
-    private void encadenadoF1(){
+    private PrimaryNode encadenadoF1(Token savedToken){
         String[] firstArgActuales = {"("};
         String[] firstAccesVarEncadF = {".", "[" };
         String[] followEncadenadoF1 = {"!=" ,
@@ -2783,13 +3080,25 @@ public class    SyntacticAnalyzer {
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
 
+        // AST-------------------------
+        PrimaryNode mainChained = null;
+        // -----------------------------
+
         if(verifyEquals(firstArgActuales)){
-            argumentosActuales();
-            llamadaMetodoEncadenadoF();
+            List<ExpressionNode> arguments = argumentosActuales();
+            PrimaryNode chained = llamadaMetodoEncadenadoF();
+
+            // AST-------------------------
+            mainChained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), savedToken);
+            ((IdNode)mainChained).setArguments(arguments);
+            ((IdNode)mainChained).setIdType(IdType.METHOD);
+            mainChained.setRight(chained);
+            // -----------------------------
         }
         else {
             if(verifyEquals(firstAccesVarEncadF)){
-                accesoVariableEncadenadoF();
+                mainChained = accesoVariableEncadenadoF(savedToken);
             }
             else {
                 if(verifyEquals(followEncadenadoF1)){
@@ -2801,6 +3110,9 @@ public class    SyntacticAnalyzer {
 
             }
         }
+
+        // AST-----------------------
+        return mainChained;
     }
 
     /**
@@ -2818,20 +3130,25 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 108 <Llamada-Método-Encadenado-F> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void llamadaMetodoEncadenadoF() {
+    private PrimaryNode llamadaMetodoEncadenadoF() {
         String[] followLlamadaMetodoEncadenadoF = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST------------------------------
+        PrimaryNode chained = null;
+        // -----------------------------------
+
         if (verifyEquals(followLlamadaMetodoEncadenadoF)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" ,
                         "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
@@ -2839,6 +3156,9 @@ public class    SyntacticAnalyzer {
                         ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST-------------------
+        return chained;
     }
 
     /**
@@ -2850,50 +3170,69 @@ public class    SyntacticAnalyzer {
         // ya debería existir la variable
         // -----------------------------------------------------
         match("ObjID");
-        accesoVariableEncadenadoF();
+        accesoVariableEncadenadoF(null);
     }
 
     /**
      * Función para la regla 110 <Acceso-Variable-Encadenado-F> de la Gramatica
      * @author Lucas Moyano
      * */
-    private void accesoVariableEncadenadoF() {
+    private PrimaryNode accesoVariableEncadenadoF(Token savedToken) {
         String[] followAccesoVariableEncadenadoF = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST--------------------------
+        PrimaryNode mainChained = null;
+        //--------------------------------
+
         if (verifyEquals(followAccesoVariableEncadenadoF)) {
             // Lambda
         } else {
             if (verifyEquals(firstEncadenado)) {
-                encadenado();
+                mainChained = encadenado();
             } else {
                 match("[");
-                expresion();
+                ExpressionNode expNode = expresion();
                 match("]");
-                accesoVariableEncadenadoF1();
+                PrimaryNode chained = accesoVariableEncadenadoF1();
+
+                // AST-----------------------
+                mainChained = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                        symbolTable.getCurrentMethod().getName(), savedToken);
+                ((ArrayNode)mainChained).setLength(expNode);
+                mainChained.setRight(chained);
+                // ------------------------------------------
             }
         }
+
+        // AST-----------------
+        return mainChained;
     }
 
     /**
      * Función para la regla 111 <Acceso-Variable-Encadenado-F1> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void accesoVariableEncadenadoF1() {
+    private PrimaryNode accesoVariableEncadenadoF1() {
         String[] followAccesoVariableEncadenadoF1 = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," , "-"
                 , "/" , ";" , "<" , "<=" , "==" , ">" ,
                 ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST-----------------
+        PrimaryNode chained = null;
+        // ----------------------------
+
         if (verifyEquals(followAccesoVariableEncadenadoF1)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" ,
                         "%" , "&&" , ")" , "*" , "+" , "," , "-" ,
@@ -2901,5 +3240,7 @@ public class    SyntacticAnalyzer {
                         ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        return chained;
     }
 }
