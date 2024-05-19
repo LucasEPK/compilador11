@@ -2780,51 +2780,86 @@ public class    SyntacticAnalyzer {
 
     /**
      * Función para la regla 98 <Llamada-Constructor> de la Gramatica
+     * @return un nodo primario con el constructor
      * @author Lucas Moyano
      * */
-    private void llamadaConstructor() {
+    private PrimaryNode llamadaConstructor() {
         match("new");
-        llamadaConstructorF();
+        PrimaryNode constructor = llamadaConstructorF();
+
+        // AST------------------
+        return constructor;
     }
 
     /**
      * Función para la regla 99 <Llamada-Constructor-F> de la Gramatica
+     * @return un nodo primario con el constructor
      * @author Lucas Moyano
      * */
-    private void llamadaConstructorF() {
+    private PrimaryNode llamadaConstructorF() {
         String[] firstTipoPrimitivo = {"Bool" , "Char" , "Int" , "Str"};
 
+        // aST---------------------------
+        PrimaryNode constructor = null;
+        // --------------------------------
+
         if (verifyEquals(firstTipoPrimitivo)){
+            // AST-----------------
+            constructor = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), this.actualToken);
+            // ----------------------------------
+
             tipoPrimitivo();
             match("[");
-            expresion();
+            ExpressionNode expNode = expresion();
             match("]");
+
+            // AST----------------------
+            ((ArrayNode)constructor).setLength(expNode);
+
         } else {
             // Analisis semantico ----------------------------------
             // como es un constructor debería ya estar inicializada la variable/el atributo en la TS
             // -----------------------------------------------------
+            // AST-------------------------------------------------------------------
+            constructor = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), this.actualToken);
+            // ----------------------------------------------------------------------
+
             match("StructID");
-            argumentosActuales();
+            List<ExpressionNode> arguments = argumentosActuales();
             llamadaConstructorF1();
+
+            // AST----------------------------
+            ((IdNode)constructor).setIdType(IdType.CONSTRUCTOR);
+            ((IdNode)constructor).setArguments(arguments);
+            // --------------------------------
         }
+
+        // AST------------------
+        return constructor;
     }
 
     /**
      * Función para la regla 100 <Llamada-Constructor-F1> de la Gramatica
+     * @return un encadenado o null
      * @author Lucas Moyano
      * */
-    private void llamadaConstructorF1() {
+    private PrimaryNode llamadaConstructorF1() {
         String[] followLlamadaConstructorF1 = {"!=" ,
                 "%" , "&&" , ")" , "*" , "+" , "," ,
                 "-" , "/" , ";" , "<" , "<=" ,
                 "==" , ">" , ">=" , "]" , "||" , "$EOF$"};
         String[] firstEncadenado = {"."};
 
+        // AST--------------------
+        PrimaryNode chained = null;
+
         if (verifyEquals(followLlamadaConstructorF1)){
             //Lambda
         } else {
             if (verifyEquals(firstEncadenado)){
-                encadenado();
+                chained = encadenado();
             } else {
                 throw createException(this.actualToken, List.of("!=" ,
                         "%" , "&&" , ")" , "*" , "+" , "," ,
@@ -2832,6 +2867,9 @@ public class    SyntacticAnalyzer {
                         "==" , ">" , ">=" , "]" , "||" , "$EOF$"),this.actualToken.getLexeme());
             }
         }
+
+        // AST----------------
+        return chained;
     }
 
     /**
