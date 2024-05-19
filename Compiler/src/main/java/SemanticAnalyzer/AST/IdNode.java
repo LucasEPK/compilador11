@@ -49,12 +49,14 @@ public class IdNode extends PrimaryNode{
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
         json += addtabs(tabs+1) + "\"arguments\": [\n";
         int size = 0;
-        for (ExpressionNode argument : arguments) {
-            json += argument.toJson(tabs+2);
-            if(size < arguments.size()-1){
-                json += ",\n";
+        if (arguments != null) {
+            for (ExpressionNode argument : arguments) {
+                json += argument.toJson(tabs+2);
+                if(size < arguments.size()-1){
+                    json += ",\n";
+                }
+                size++;
             }
-            size++;
         }
         json = json.substring(0,json.length()-1);
         json += "\n";
