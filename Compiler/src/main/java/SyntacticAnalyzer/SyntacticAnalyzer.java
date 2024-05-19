@@ -2389,6 +2389,12 @@ public class    SyntacticAnalyzer {
 
                     match("ObjID");
                     primaryNode = primarioF(savedToken);
+
+                    if (primaryNode == null) { // Esto pasa cuando es solo una variable sin nada más
+                        primaryNode = new IdNode(symbolTable.getCurrentStruct().getName(),
+                                symbolTable.getCurrentMethod().getName(), savedToken);
+                        ((IdNode)primaryNode).setIdType(IdType.VARIABLE);
+                    }
                 }
                 else {
                     if (verifyEquals(firstLlamadaMetodoEstatico)){
