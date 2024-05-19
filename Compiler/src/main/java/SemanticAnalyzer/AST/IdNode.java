@@ -31,6 +31,10 @@ public class IdNode extends PrimaryNode{
         this.idType = idType;
     }
 
+    public void setArguments(List<ExpressionNode> arguments) {
+        this.arguments = arguments;
+    }
+
     /**
      * Método que convierte un objeto a un string en formato JSON
      * @param tabs Cantidad de tabulaciones a agregar al archivo JSON
