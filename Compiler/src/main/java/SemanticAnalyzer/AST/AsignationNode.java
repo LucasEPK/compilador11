@@ -55,6 +55,16 @@ public class AsignationNode extends SentenceNode implements Commons {
 
     @Override
     public void consolidate(AST ast ) {
+        if(this.left.getConsolidated() == false){
+            this.left.consolidate(ast);
+        }
+        if(this.right.getConsolidated() == false){
+            this.right.consolidate(ast);
+        }
+        if(this.left.getType().equals(this.right.getType()) == false){
+            //ToDo
+            //throw new TypeMismatch(this.left.getToken(),this.right.getToken());
+        }
 
     }
 

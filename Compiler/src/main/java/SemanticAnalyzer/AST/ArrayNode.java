@@ -35,7 +35,7 @@ public class ArrayNode extends PrimaryNode{
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Array" + "\",\n";
         json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
-        json += addtabs(tabs+1) + "\"length\": \"" + length.toJson(tabs+1) + "\"\n";
+        json += addtabs(tabs+1) + "\"length\":" + length.toJson(tabs+1) + "\n";
         json += addtabs(tabs) + "}\n";
         return json;
     }

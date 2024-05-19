@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
+import Exceptions.SemanticExceptions.AST.SelfInStart;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
@@ -65,8 +67,20 @@ public class IdNode extends PrimaryNode{
         return json;
     }
 
+    /**
+     * Método que consolida un nodo Id
+     * @param ast AST que contiene la información
+     */
+
     @Override
     public void consolidate(AST ast) {
+
+        if(this.idType == IdType.SELF){
+            consolidateSelf(ast);
+        }
+        else if(this.idType == IdType.CONSTRUCTOR){
+            consolidateConstructor(ast);
+        }
     }
 
     /**
@@ -81,6 +95,46 @@ public class IdNode extends PrimaryNode{
             tabsString += "\t";
         }
         return tabsString;
+    }
+
+    private void consolidateSelf(AST ast){
+        SymbolTable symbolTable = ast.getSymbolTable();
+        //Si llamo a self desde start, entonces es un error
+        if(this.getStruct().equals("start")){
+            //ToDo
+            //throw  new SelfInStart(this.getToken());
+        }
+        //Si no, debo buscar el struct en que se esta llamando
+
+    }
+
+    private void consolidateConstructor(AST ast){
+
+        //Verifico si recibe o no parametros
+        if(this.arguments != null){
+            //Consolido los argumentos
+            for(ExpressionNode argument : this.arguments){
+                if(argument.getConsolidated() == false){
+                    argument.consolidate(ast);
+                }
+            }
+        }
+        //Verifico que la clase del constructor exista
+        Struct actualStruct = ast.searchStruct(this.getToken().getLexeme());
+        if(actualStruct == null){
+            //ToDo
+            //throw new StructNotFound(this.getToken());
+        }
+
+        //Chequeo que se pasen los parámetros correctos
+        //Paso argumentos del constructor definido
+        // Paso nombre del struct
+        // Paso nombre del Método (en este caso el consructor)
+        ast.checkParameters(this.arguments,
+                actualStruct.getName(),
+                actualStruct.getConstructor().getName(),
+                this.getToken()
+        );
     }
 
 }

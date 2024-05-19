@@ -1,11 +1,17 @@
 package SemanticAnalyzer.AST;
 
+import SemanticAnalyzer.SymbolTable.Methods;
+import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Clase que representa el AST, va a tener como atributo una lista de bloques
@@ -143,5 +149,68 @@ public class AST implements Commons {
 
     public boolean isPrimitive(String type){
         return type.equals("Int") || type.equals("Str") || type.equals("Char") || type.equals("Bool");
+    }
+
+    /**
+     * Método que busca un struct en la tabla de simbolos
+     * @param structName String con el nombre del struct a buscar
+     * @return Struct que se busca
+     * @autor Yeumen Silva
+     */
+    public Struct searchStruct(String structName){
+        return symbolTable.getStructs().get(structName);
+    }
+
+    /**
+     * Método que busca un metodo en un struct
+     * @param structName String con el nombre del struct a buscar
+     * @param methodName String con el nombre del metodo a buscar
+     * @return Metodo que se busca
+     * @autor Yeumen Silva
+     */
+
+    public Methods searchMethod(String structName, String methodName){
+        return symbolTable.getStructs().get(structName).getMethods().get(methodName);
+    }
+
+    /**
+     * Método que verifica que dada una llamada a un método, los parametros sean correctos
+     * @param paramsCall Lista de parametros de la llamada
+     * @param struct Struct en la que se llama el metodo
+     * @param method Metodo que se llama
+     * @param token Token que se esta analizando
+     * @autor Yeumen Silva
+     */
+
+    public void checkParameters(List<ExpressionNode> paramsCall, String struct, String method, Token token){
+        //Busco struct en la tabla de simbolos
+        Struct actualStruct = searchStruct(struct);
+        //Busco metodo en el struct
+        Methods methods = searchMethod(struct, method);
+        //Obtengo los parametros del metodo
+        Map<String, Variable> paramsDef = methods.getParamsOfMethod();
+
+        //Si las listas tienen distinta cantidad de parametros, entonces error
+        if(paramsCall.size() != paramsDef.size()){
+            //ToDo
+            //throw new WrongNumberOfParameters(token);
+        }
+
+        //Comparo los tipos de los parametros
+        Iterator<Variable> it = paramsDef.values().iterator();
+        Variable argumentDef;
+        String argumentTypeDef, argumentCallType;
+        for(ExpressionNode currentParamCall : paramsCall){
+            argumentDef = it.next();
+            argumentTypeDef = argumentDef.getType().getName();
+            argumentCallType = currentParamCall.getType();
+
+            //Si los tipos no son iguales, entonces error
+            if(argumentTypeDef.equals(argumentCallType) == false){
+                //ToDo
+                //throw new TypesDontMatch(currentParamCall.getToken(),argumentDef.getToken());
+            }
+        }
+
     }
 }
