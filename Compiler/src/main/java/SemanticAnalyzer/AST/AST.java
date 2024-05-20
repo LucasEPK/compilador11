@@ -1,10 +1,7 @@
 package SemanticAnalyzer.AST;
 
-import SemanticAnalyzer.SymbolTable.Methods;
-import SemanticAnalyzer.SymbolTable.Struct;
-import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.*;
 import LexicalAnalyzer.Token;
-import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -316,6 +313,13 @@ public class AST implements Commons {
             if(foundVar == null){
                 if(structFound != null){
                     foundVar = structFound.getAttributes().get(token.getLexeme());
+                    //Si es un atributo, debo verificar que si es heredado, que sea publico
+                    if(foundVar != null){
+                        if(((Attributes) foundVar).GetIInherited() && !((Attributes) foundVar).GetIsPublic()){
+                            //ToDo
+                            //throw new VariableNotPublic(token);
+                        }
+                    }
                     //Si tampoco esta, debe ser un error
                     if(foundVar == null){
                         //ToDo
