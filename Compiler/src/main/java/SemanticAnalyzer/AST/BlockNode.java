@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 
 import Exceptions.SemanticExceptions.AST.ReturnInStart;
+import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
@@ -82,6 +83,54 @@ public class BlockNode extends SentenceNode implements Commons {
             if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
                 throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
             }
+            if(!sentence.getType().equals("void")){
+                if(!(sentence instanceof PrimaryNode)){
+                    setType(sentence.getType());
+                }else {
+                    if(!getType().equals(sentence.getType())){
+                        //ToDo
+                        //throw new TypeMismatch(sentence.getToken(),sentence.getToken());
+                    }
+                }
+            }
+        }
+
+        //Si no es el constructor
+        if(!getMethod().equals(".")){
+            //Comparo retorno del bloque y del método
+            if(!getStruct().equals("start")){
+                Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
+                if(method == null){
+                    String returnType = "void";
+                    if(!returnType.equals(getType())){
+                        //ToDo
+                        //throw new TypeMismatch(this.getToken(),this.getToken());
+                    }
+                }else {
+                    String methodType = method.getGiveBack().getName();
+                    boolean hasReturn = false;
+                    for(SentenceNode sentence : sentenceList){
+                        if(sentence instanceof ReturnNode){
+                            hasReturn = true;
+                        }
+                    }
+                    System.out.println(method.getName());
+                    if(!hasReturn){
+                        //Todo
+                        System.out.println("No hay return");
+                        //throw new NoReturn(this.getToken());
+                    }
+                    if(!methodType.equals(getType())){
+                        if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
+                            //ToDo
+                            System.out.println("No es subclase");
+                            //throw new TypeMismatch(this.getToken(),this.getToken());
+
+                        }
+                    }
+                }
+            }
+            this.setConsolidated(true);
         }
 
 
