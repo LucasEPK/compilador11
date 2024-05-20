@@ -62,6 +62,12 @@ public class ArrayNode extends PrimaryNode{
         this.setType("Array");
         this.setConsolidated(true);
 
+        //Seteo lastCalledType
+        if(right != null){
+            right.setLastCalledType(this.getType());
+        }
+
+
     }
 
 

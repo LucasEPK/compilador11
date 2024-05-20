@@ -917,8 +917,10 @@ public class SymbolTable extends Commons {
                     || method.getIsGiveBackArray() != ancestralMethodEquals.getIsGiveBackArray()) {
                         throw throwException("InvalidOverrideReturn", method.token);
                     }
-                    if (ancestralMethodEquals.getIsStatic() || method.getIsStatic()) {
-                        throw throwException("InvalidOverrideStatic", method.token);
+                    if(!ancestralMethodEquals.equals(method)){
+                        if (ancestralMethodEquals.getIsStatic() || method.getIsStatic()) {
+                            throw throwException("InvalidOverrideStatic", method.token);
+                        }
                     }
                     method.setPos(ancestralMethodEquals.getPos());
                     methodsList.replace(method.getName(), ancestralMethodEquals, method);

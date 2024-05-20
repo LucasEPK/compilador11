@@ -169,24 +169,33 @@ public class AST implements Commons {
      * @autor Yeumen Silva
      */
 
-    public Methods searchMethod(String structName, String methodName){
-        return symbolTable.getStructs().get(structName).getMethods().get(methodName);
+    public Methods searchMethod(String structName, String methodName, Token token){
+        Struct actualStruct = symbolTable.getStructs().get(structName);
+        if(actualStruct == null){
+            //ToDo
+            //throw new StructNotFound(token);
+        }
+        Methods methods = actualStruct.getMethods().get(methodName);
+       if(methods == null){
+           //ToDo
+           //throw new MethodNotFound(token);
+       }
+         return methods;
     }
 
     /**
      * Método que verifica que dada una llamada a un método, los parametros sean correctos
      * @param paramsCall Lista de parametros de la llamada
      * @param struct Struct en la que se llama el metodo
-     * @param method Metodo que se llama
      * @param token Token que se esta analizando
      * @autor Yeumen Silva
      */
 
-    public void checkParameters(List<ExpressionNode> paramsCall, String struct, String method, Token token){
+    public void checkParametersConstructor(List<ExpressionNode> paramsCall, String struct, Token token){
         //Busco struct en la tabla de simbolos
         Struct actualStruct = searchStruct(struct);
         //Busco metodo en el struct
-        Methods methods = searchMethod(struct, method);
+        Methods methods = actualStruct.getConstructor();
         //Obtengo los parametros del metodo
         Map<String, Variable> paramsDef = methods.getParamsOfMethod();
 
@@ -212,5 +221,110 @@ public class AST implements Commons {
             }
         }
 
+    }
+
+    /**
+     * Método que verifica que dada una llamada a un método, los parametros sean correctos
+     * @param paramsCall Lista de parametros de la llamada
+     * @param struct Struct en la que se llama el metodo
+     * @param method Metodo que se llama
+     * @param token Token que se esta analizando
+     * @autor Yeumen Silva
+     */
+
+    public void checkParametersMethod(List<ExpressionNode> paramsCall, String struct, String method, Token token) {
+        //Busco struct en la tabla de simbolos
+        Struct actualStruct = searchStruct(struct);
+        //Busco metodo en el struct
+        Methods methods = actualStruct.getMethods().get(method);
+        //Obtengo los parametros del metodo
+        Map<String, Variable> paramsDef = methods.getParamsOfMethod();
+        //Si las listas tienen distinta cantidad de parametros, entonces error
+        if (paramsCall.size() != paramsDef.size()) {
+            //ToDo
+            //throw new WrongNumberOfParameters(token);
+        }
+
+        //Comparo los tipos de los parametros
+        Iterator<Variable> it = paramsDef.values().iterator();
+        Variable argumentDef;
+        String argumentTypeDef, argumentCallType;
+        for (ExpressionNode currentParamCall : paramsCall) {
+            argumentDef = it.next();
+            argumentTypeDef = argumentDef.getType().getName();
+            argumentCallType = currentParamCall.getType();
+
+            //Si los tipos no son iguales, entonces error
+            if (argumentTypeDef.equals(argumentCallType) == false) {
+                //ToDo
+                //throw new TypesDontMatch(currentParamCall.getToken(),argumentDef.getToken());
+            }
+        }
+    }
+
+    /**
+     * Método que busca una variable en la tabla de simbolos
+     * @param struct Struct en la que se busca la variable
+     * @param method Metodo en el que se busca la variable
+     * @param token Token que se esta analizando
+     * @return Variable que se busca
+     * @autor Yeumen Silva
+     */
+
+    public Variable findVariable(String struct, String method, Token token){
+        Struct structFound;
+        Methods methodFound;
+        /*Se deben buscar tanto declaradas en el método
+        Como en los parámetros del método
+        como en los atributos del struct
+         */
+        //Si no esta en el start
+        if(!struct.equals("start")){
+            structFound = symbolTable.getStructs().get(struct);
+            if(structFound == null){
+                //ToDo
+                //throw new StructNotFound(token);
+            }
+            //Verifico si es el constructor
+            if(method.equals(".")){
+                //Si es el constructor busco el constructor
+                methodFound = structFound.getConstructor();
+            }else{
+                //Si no busco el método
+                methodFound = structFound.getMethods().get(method);
+            }
+            if(methodFound == null){
+                //ToDo
+                //throw new MethodNotFound(token);
+            }
+
+
+        }else {
+            //Si esta en el start busco el método en el start
+            structFound = null;
+            methodFound = symbolTable.getStart();
+
+        }
+
+        // Busco si la variable esta definida en el método
+        Variable foundVar;
+        foundVar = methodFound.getDefinedVar().get(token.getLexeme());
+        //Si no esta en las variables definidas, busco en los parametros
+        if(foundVar == null){
+            foundVar = methodFound.getParamsOfMethod().get(token.getLexeme());
+            //Si no esta en los parametros, busco en los atributos del struct
+            if(foundVar == null){
+                if(structFound != null){
+                    foundVar = structFound.getAttributes().get(token.getLexeme());
+                    //Si tampoco esta, debe ser un error
+                    if(foundVar == null){
+                        //ToDo
+                        //throw new VariableNotFound(token);
+                    }
+                }
+            }
+        }
+
+        return foundVar;
     }
 }

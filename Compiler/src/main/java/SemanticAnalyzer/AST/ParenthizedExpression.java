@@ -49,4 +49,13 @@ public class ParenthizedExpression extends PrimaryNode{
         }
         return s;
     }
+
+    @Override
+    public void consolidate(AST ast) {
+        if(this.parenthizedExpression.getConsolidated() == false){
+            this.parenthizedExpression.consolidate(ast);
+        }
+        setType(this.parenthizedExpression.getType());
+        setConsolidated(true);
+    }
 }

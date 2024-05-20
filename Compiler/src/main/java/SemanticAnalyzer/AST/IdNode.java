@@ -2,8 +2,10 @@ package SemanticAnalyzer.AST;
 
 import Exceptions.SemanticExceptions.AST.SelfInStart;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.List;
  * Clase que representa los id y structsIds en el AST
  * @author Lucas Moyano
  * */
-public class IdNode extends PrimaryNode{
+public class
+IdNode extends PrimaryNode{
     private List<ExpressionNode> arguments = new ArrayList<ExpressionNode>();
 
     private IdType idType;
+
 
     public IdNode(String struct, String method, Token token) {
         super(struct, method, token);
@@ -36,6 +40,7 @@ public class IdNode extends PrimaryNode{
     public void setArguments(List<ExpressionNode> arguments) {
         this.arguments = arguments;
     }
+
 
     /**
      * Método que convierte un objeto a un string en formato JSON
@@ -75,12 +80,26 @@ public class IdNode extends PrimaryNode{
     @Override
     public void consolidate(AST ast) {
 
+
+
         if(this.idType == IdType.SELF){
             consolidateSelf(ast);
         }
         else if(this.idType == IdType.CONSTRUCTOR){
             consolidateConstructor(ast);
+        } else if (this.idType == IdType.METHOD) {
+            consolidateMethod(ast);
+        } else if (this.idType == IdType.VARIABLE) {
+            consolidateVar(ast);
+        } else if (this.idType == IdType.STATIC_METHOD) {
+            consolidateEstaticMethod(ast);
         }
+
+        if(right != null){
+            right.consolidate(ast);
+            this.setType(right.getType());
+        }
+
     }
 
     /**
@@ -97,6 +116,12 @@ public class IdNode extends PrimaryNode{
         return tabsString;
     }
 
+    /**
+     * Método que consolida un nodo Id de tipo self
+     * @param ast AST que contiene la información
+     *
+     */
+
     private void consolidateSelf(AST ast){
         SymbolTable symbolTable = ast.getSymbolTable();
         //Si llamo a self desde start, entonces es un error
@@ -104,9 +129,23 @@ public class IdNode extends PrimaryNode{
             //ToDo
             //throw  new SelfInStart(this.getToken());
         }
-        //Si no, debo buscar el struct en que se esta llamando
+        if(right != null){
+            //Seteo el ultimo tipo llamado en right
+            right.setLastCalledType(this.getStruct());
+        }
+
+        //Seteo que el tipo de Self es el struct actual
+        this.setType(this.getStruct());
+        //Seteo que esta consolidado
+        this.setConsolidated(true);
 
     }
+
+    /**
+     * Método que consolida un nodo Id de tipo constructor
+     * @param ast AST que contiene la información
+     *
+     */
 
     private void consolidateConstructor(AST ast){
 
@@ -126,15 +165,164 @@ public class IdNode extends PrimaryNode{
             //throw new StructNotFound(this.getToken());
         }
 
-        //Chequeo que se pasen los parámetros correctos
-        //Paso argumentos del constructor definido
-        // Paso nombre del struct
-        // Paso nombre del Método (en este caso el consructor)
-        ast.checkParameters(this.arguments,
-                actualStruct.getName(),
-                actualStruct.getConstructor().getName(),
-                this.getToken()
-        );
+
+
+        if(this.arguments != null){
+            //Chequeo que se pasen los parámetros correctos
+            //Paso argumentos del constructor definido
+            // Paso nombre del struct
+            // Paso nombre del Método (en este caso el consructor)
+            ast.checkParametersConstructor(this.arguments,
+                    actualStruct.getName(),
+                    this.getToken()
+            );
+        }
+
+        if(right != null){
+            //Seteo el ultimo tipo llamado en right
+            right.setLastCalledType(actualStruct.getName());
+        }
+        //El tipo del constructor siempre es la clase a la que pertenece
+        this.setType(actualStruct.getName());
+        //Seteo que esta consolidado
+        this.setConsolidated(true);
+
+    }
+
+    /**
+     * Método que consolida un nodo Id de tipo método
+     * @param ast AST que contiene la información
+     */
+
+    private void consolidateMethod(AST ast){
+        //Verifico si recibe o no parametros
+        if(this.arguments != null){
+            //Consolido los argumentos
+            for(ExpressionNode argument : this.arguments){
+                if(argument.getConsolidated() == false){
+                    argument.consolidate(ast);
+                }
+            }
+        }
+
+
+
+
+        if(this.getLastCalledType() == null){
+            //Verifico que el método exista en la misma clase
+            //Como existe en la misma clase, busco el método en la clase actual
+            //Si estoy en la clase start, es un error
+            if(this.getStruct().equals("start")){
+                //ToDo
+                //throw new methodInStart(this.getToken());
+            }
+            Methods actualMethod = ast.searchMethod(this.getStruct(),this.getToken().getLexeme(),this.getToken());
+            if(actualMethod == null){
+                //ToDo
+                //throw new MethodNotFound(this.getToken());
+            }
+            //Chequeo que se pasen los parámetros correctos
+            if(this.arguments != null){
+                //Paso argumentos del método definido
+                // Paso nombre del struct
+                // Paso nombre del Método
+                ast.checkParametersMethod(this.arguments,
+                        this.getStruct(),
+                        this.getToken().getLexeme(),
+                        this.getToken()
+                );
+                //Seteo el tipo del método
+                this.setType(actualMethod.getGiveBack().getName());
+                if(right != null){
+                    //Seteo el ultimo tipo llamado en right
+                    right.setLastCalledType(actualMethod.getGiveBack().getName());
+                }
+                //Seteo que esta consolidado
+                this.setConsolidated(true);
+            }
+        }else {
+            //Busco el método en la clase que la llamo
+            Methods actualMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
+            if(actualMethod == null){
+                //ToDo
+                //throw new MethodNotFound(this.getToken());
+            }
+            //Chequeo que se pasen los parámetros correctos
+            if(this.arguments != null){
+                //Paso argumentos del método definido
+                // Paso nombre del struct
+                // Paso nombre del Método
+                ast.checkParametersMethod(this.arguments,
+                        this.lastCalledType,
+                        this.getToken().getLexeme(),
+                        this.getToken()
+                );
+            }
+            //Seteo el tipo del método
+            this.setType(actualMethod.getGiveBack().getName());
+            if(right != null){
+                //Seteo el ultimo tipo llamado en right
+                right.setLastCalledType(actualMethod.getGiveBack().getName());
+            }
+            //Seteo que esta consolidado
+            this.setConsolidated(true);
+        }
+
+    }
+
+    /**
+     * Método que consolida un nodo Id de tipo Variable
+     * @param ast
+     */
+
+    private void consolidateVar(AST ast){
+
+        Variable varFound = null;
+
+
+        //Llamada a variable en la misma clase
+        varFound = ast.findVariable(this.getStruct(),this.getMethod(),this.getToken());
+
+        if(varFound == null){
+            //error
+            //ToDo
+            throw new RuntimeException();
+            //throw new VariableNotFound(this.getToken());
+        }
+        //Seteo el tipo de la variable
+        this.setType(varFound.getType().getName());
+        this.setConsolidated(true);
+        if(right != null){
+            //Seteo el ultimo tipo llamado en right
+            right.setLastCalledType(varFound.getType().getName());
+        }
+
+    }
+
+    private void consolidateEstaticMethod(AST ast){
+
+        Methods foundMethod;
+
+        System.out.println(this.lastCalledType);
+        if(this.lastCalledType == null){
+            foundMethod = ast.searchMethod(this.getStruct(),this.getToken().getLexeme(), this.getToken());
+        }else {
+            foundMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
+
+        }
+
+        if(foundMethod.getIsStatic() == false){
+            //ToDo
+            //error metodo no estatico
+            //throw new MethodNotStatic(this.getToken());
+        }
+        this.setType(foundMethod.getGiveBack().getName());
+        this.setConsolidated(true);
+        if(right != null){
+            //Seteo el ultimo tipo llamado en right
+            right.setLastCalledType(foundMethod.getGiveBack().getName());
+        }
+
     }
 
 }
