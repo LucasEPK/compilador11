@@ -1,7 +1,7 @@
 /? Descripción: caso de prueba que verifica si el encadenado funciona bien
 /? además testea diferentes tipos de asignaciones
 /? Salida esperada:
-/? CORRECTO: SEMANTICO - DECLARACIONES
+/? CORRECTO: SEMANTICO - SENTENCIAS
 
 struct Arreglo {
     Array Int arreglo;

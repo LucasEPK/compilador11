@@ -1,6 +1,6 @@
 /? Descripción: caso de prueba que verifica si andan los return con ad mezclado con mul
 /? Salida esperada:
-/? CORRECTO: SEMANTICO - DECLARACIONES
+/? CORRECTO: SEMANTICO - SENTENCIAS
 
 struct AdTest {
 }

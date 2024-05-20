@@ -1,6 +1,6 @@
 /? Descripción: caso de prueba que verifica si andan los return con or
 /? Salida esperada:
-/? CORRECTO: SEMANTICO - DECLARACIONES
+/? CORRECTO: SEMANTICO - SENTENCIAS
 
 struct OrTest {
 }
