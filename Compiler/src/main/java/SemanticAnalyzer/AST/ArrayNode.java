@@ -59,6 +59,9 @@ public class ArrayNode extends PrimaryNode{
             //throw new NoPrimitiveType(this.getToken());
         }
 
+        this.setType("Array");
+        this.setConsolidated(true);
+
     }
 
 
