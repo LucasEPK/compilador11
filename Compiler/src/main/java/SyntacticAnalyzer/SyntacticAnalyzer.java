@@ -1344,7 +1344,7 @@ public class    SyntacticAnalyzer {
         // AST-----------------
         IdNode selfAccess = new IdNode(symbolTable.getCurrentStruct().getName(),
                 symbolTable.getCurrentMethod().getName(), this.actualToken);
-        selfAccess.setIdType(IdType.CONSTRUCTOR);
+        selfAccess.setIdType(IdType.SELF);
         // ----------------------
 
         match("self");
