@@ -1,7 +1,6 @@
 package SyntacticAnalyzer;
 
 import Exceptions.LexicalExceptions.LexicalException;
-import Exceptions.SemanticExceptions.AST.ArrayOutOfRange;
 import Exceptions.SemanticExceptions.SemanticException;
 import Exceptions.SemanticExceptions.SymbolTable.SymbolTableException;
 import Exceptions.SyntacticExceptions.SyntacticException;
@@ -50,7 +49,7 @@ public class SyntacticExecutor {
             symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
             this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
             this.syntacticAnalyzer.generateASTJson(inputPath);
-            printCorrectSemnaticSentence();
+            printCorrectSemanticSentence();
         }
         catch (LexicalException exception){
             this.printExceptionLexical(exception);
@@ -119,7 +118,7 @@ public class SyntacticExecutor {
         Token tokenException = exception.getToken();
 
         if(exception instanceof SymbolTableException){
-            System.out.println("ERROR: SEMÁNTICO - DECLARACIONES");
+            System.out.println("ERROR: SEMANTICO - DECLARACIONES");
             System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
 
             System.out.println("| Linea " + tokenException.getRow() +
@@ -127,7 +126,7 @@ public class SyntacticExecutor {
                     " | " + exception.getExceptionType() );
         }
         else {
-            System.out.println("ERROR: SEMÁNTICO - SENTENCIAS");
+            System.out.println("ERROR: SEMANTICO - SENTENCIAS");
             System.out.println("| NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |");
 
             System.out.println("| Linea " + tokenException.getRow() +
@@ -154,8 +153,8 @@ public class SyntacticExecutor {
     }
 
 
-    public void printCorrectSemnaticSentence(){
-        System.out.println("CORRECTO: SEMANTICO - DECLARACIONES");
+    public void printCorrectSemanticSentence(){
+        System.out.println("CORRECTO: SEMANTICO - SENTENCIAS");
     }
 
 
