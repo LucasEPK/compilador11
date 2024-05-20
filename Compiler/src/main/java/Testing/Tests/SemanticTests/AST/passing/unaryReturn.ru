@@ -1,4 +1,7 @@
-/? Testea si andan los return con unarios
+/? Descripción: caso de prueba que verifica si andan los return con unarios
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct LitTest {
 }
 impl LitTest {

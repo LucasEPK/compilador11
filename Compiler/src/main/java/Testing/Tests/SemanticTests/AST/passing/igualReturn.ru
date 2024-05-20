@@ -1,4 +1,7 @@
-/? Testea si andan los return con igual
+/? Descripción: caso de prueba que verifica si andan los return con igual
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct IgualTest {
 }
 impl IgualTest {

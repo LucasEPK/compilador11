@@ -49,7 +49,7 @@ IdNode extends PrimaryNode{
      */
     @Override
     public String toJson(int tabs) {
-
+        // TODO: fijarse a la derecha si hay algo, si lo hay imprimirlo
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Id" + "\",\n";
 

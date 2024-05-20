@@ -1,0 +1,227 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\encadenadoTest.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "Arreglo",
+			"method": ".",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Array",
+						"value": "Int",
+						"type": "void",
+						"length": "SemanticAnalyzer.AST.ExpBin@2e5d6d97"
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado1o",
+			"method": ".",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Encadenado2o",
+						"type": "void",
+						"arguments": [
+						]
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado2o",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado2o",
+			"method": "test",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "encadenado3",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Encadenado3o",
+						"type": "void",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Return",
+					"return": 
+ 					{
+						"nombre": "Id",
+						"value": "encadenado3",
+						"type": "void",
+						"arguments": [
+						]
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado3o",
+			"method": ".",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "5",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Array",
+						"value": "Int",
+						"type": "void",
+						"length": "SemanticAnalyzer.AST.ExpBin@238e0d81"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Array",
+						"value": "ola",
+						"type": "void",
+						"length": "SemanticAnalyzer.AST.LiteralNode@31221be2"
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "11",
+						"type": "Int"
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "start",
+			"method": "start",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "hola",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Arreglo",
+						"type": "void",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "arregloXd",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "hola",
+						"type": "void",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Array",
+						"value": "arregloXd",
+						"type": "void",
+						"length": "SemanticAnalyzer.AST.LiteralNode@377dca04"
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "void",
+						"arguments": [
+						]
+					}
+
+				}
+			]
+		}
+	]
+}

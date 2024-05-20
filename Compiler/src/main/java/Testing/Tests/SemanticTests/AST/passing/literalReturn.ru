@@ -1,4 +1,7 @@
-/? Testea si andan los return con literales
+/? Descripción: caso de prueba que verifica si andan los return con literales
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct LitTest {
 }
 impl LitTest {
