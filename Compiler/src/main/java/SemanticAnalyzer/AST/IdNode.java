@@ -54,6 +54,9 @@ IdNode extends PrimaryNode{
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Id" + "\",\n";
         json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
+        if(right != null){
+            json += addtabs(tabs+1) + "\"chained\": " + right.toJson(tabs+1) + ",\n";
+        }
         json += addtabs(tabs+1) + "\"arguments\": [\n";
         int size = 0;
         if (arguments != null) {
