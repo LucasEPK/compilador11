@@ -1,0 +1,97 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\andReturn.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": "retAnd",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"return": 
+ 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "true",
+							"type": "Bool"
+						}
+,
+						"operator": "&&",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "false",
+							"type": "Bool"
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "AndTest",
+			"method": "retAnd2",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"return": 
+ 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "false",
+							"type": "Bool"
+						}
+,
+						"operator": "&&",
+						"right": 						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Literal",
+								"value": "true",
+								"type": "Bool"
+							}
+,
+							"operator": "&&",
+							"right": 							{
+								"nombre": "ExpBin",
+								"left": 								{
+									"nombre": "Literal",
+									"value": "false",
+									"type": "Bool"
+								}
+,
+								"operator": "&&",
+								"right": 								{
+									"nombre": "Literal",
+									"value": "true",
+									"type": "Bool"
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "start",
+			"method": "start",
+			"sentences": [
+			]
+		}
+	]
+}

@@ -1,0 +1,114 @@
+{
+	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\igualReturn.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "retIgu",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"return": 
+ 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+,
+						"operator": "==",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "retIgu2",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"return": 
+ 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "2",
+							"type": "Int"
+						}
+,
+						"operator": "!=",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IgualTest",
+			"method": "retIgu3",
+			"sentences": [
+				{
+					"nombre": "Return",
+					"return": 
+ 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+,
+						"operator": "==",
+						"right": 						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Literal",
+								"value": "3",
+								"type": "Int"
+							}
+,
+							"operator": "==",
+							"right": 							{
+								"nombre": "Literal",
+								"value": "true",
+								"type": "Bool"
+							}
+
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "start",
+			"method": "start",
+			"sentences": [
+			]
+		}
+	]
+}
