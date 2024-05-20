@@ -86,7 +86,7 @@
 					"return": 
  					{
 						"nombre": "Literal",
-						"value": ""hola"",
+						"value": "hola",
 						"type": "Str"
 					}
 
