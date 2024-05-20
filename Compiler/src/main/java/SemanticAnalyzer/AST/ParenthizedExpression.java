@@ -27,7 +27,15 @@ public class ParenthizedExpression extends PrimaryNode{
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "ParenthizedExpression" + "\",\n";
-        json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+
+        //Si el tipo es string y tiene comillas no le agrego comillas
+        if(isStringType(getType())) {
+            json += addtabs(tabs + 1) + "\"value\": " + getToken().getLexeme() + ",\n";
+        }
+        else {
+            json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+        }
+
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
         json += addtabs(tabs+1) + "\"parenthizedExpression\": " + parenthizedExpression.toJson(tabs+1) + "\n";
         json += addtabs(tabs) + "}";
@@ -57,5 +65,18 @@ public class ParenthizedExpression extends PrimaryNode{
         }
         setType(this.parenthizedExpression.getType());
         setConsolidated(true);
+    }
+
+    /**
+     * Método que verifica si el tipo es de tipo String y si empieza y termina con comillas
+     * @param type Tipo a verificar
+     * @return true si es de tipo String y empieza y termina con comillas, false en caso contrario
+     */
+    public boolean isStringType(String type){
+        //Verifico si es de tipo String y si empieza y termina con comillas
+        if(type.equals("Str") && getToken().getLexeme().charAt(0) == '"' && getToken().getLexeme().charAt(getToken().getLexeme().length()-1) == '"'){
+            return true;
+        }
+        return false;
     }
 }

@@ -52,8 +52,17 @@ IdNode extends PrimaryNode{
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Id" + "\",\n";
-        json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+
+        //Si el tipo es string y tiene comillas no le agrego comillas
+        if(isStringType(getType())) {
+            json += addtabs(tabs + 1) + "\"value\": " + getToken().getLexeme() + ",\n";
+        }
+        else{
+            json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+        }
+
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
+        //json += addtabs(tabs+1) + "\"idType\": \"" + idType + "\",\n";
         if(right != null){
             json += addtabs(tabs+1) + "\"chained\": " + right.toJson(tabs+1) + ",\n";
         }
@@ -306,14 +315,8 @@ IdNode extends PrimaryNode{
 
         Methods foundMethod;
 
-        System.out.println(this.lastCalledType);
-        if(this.lastCalledType == null){
-            foundMethod = ast.searchMethod(this.getStruct(),this.getToken().getLexeme(), this.getToken());
-        }else {
-            foundMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
-
-        }
-
+        foundMethod = ast.searchMethod(this.getToken().getLexeme(),this.right.getToken().getLexeme(), this.getToken());
+        /*
         if(foundMethod.getIsStatic() == false){
             //ToDo
             //error metodo no estatico
@@ -325,7 +328,36 @@ IdNode extends PrimaryNode{
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(foundMethod.getGiveBack().getName());
         }
+        */
 
+        Struct actualStruct = ast.searchStruct(this.getToken().getLexeme());
+        if(actualStruct == null){
+            //ToDo
+            //throw new StructNotFound(this.getToken());
+        }
+
+        if(right != null){
+            //Seteo el ultimo tipo llamado en right
+            right.setLastCalledType(actualStruct.getName());
+        }
+
+        this.setType(actualStruct.getName());
+        this.setConsolidated(true);
+
+
+    }
+
+    /**
+     * Método que verifica si el tipo es de tipo String y si empieza y termina con comillas
+     * @param type Tipo a verificar
+     * @return true si es de tipo String y empieza y termina con comillas, false en caso contrario
+     */
+    public boolean isStringType(String type){
+        //Verifico si es de tipo String y si empieza y termina con comillas
+        if(type.equals("Str") && getToken().getLexeme().charAt(0) == '"' && getToken().getLexeme().charAt(getToken().getLexeme().length()-1) == '"'){
+            return true;
+        }
+        return false;
     }
 
 }
