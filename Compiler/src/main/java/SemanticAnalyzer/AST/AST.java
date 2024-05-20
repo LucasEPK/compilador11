@@ -344,16 +344,10 @@ public class AST implements Commons {
         }
         else {
             if (subStruct != null){
-                while (!inherithed && currentStruct.getName().equals("Object") && currentStruct.getInheritFrom() != null){
-                    if(currentStruct.getInheritFrom() == superStruct){
-                        inherithed = true;
-                    }else {
-                        currentStruct = currentStruct.getInheritFrom();
-                    }
-                }
+
                 currentStruct = superStruct;
-                while (!inherithed && currentStruct.getName().equals("Object") && currentStruct.getInheritFrom() != null){
-                    if(currentStruct.getInheritFrom() == subStruct){
+                while (!inherithed  && currentStruct.getInheritFrom() != null){
+                    if(currentStruct.getInheritFrom().equals(subStruct) ){
                         inherithed = true;
                     }else {
                         currentStruct = currentStruct.getInheritFrom();
