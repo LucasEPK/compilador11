@@ -1,4 +1,7 @@
-/? Testea si andan los return con and
+/? Descripción: caso de prueba que verifica si andan los return con and
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct AndTest {
 }
 impl AndTest {

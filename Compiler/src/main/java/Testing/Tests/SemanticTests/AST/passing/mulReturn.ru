@@ -1,4 +1,7 @@
-/? Testea si andan los return con muls
+/? Descripción: caso de prueba que verifica si andan los return con muls
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct MulTest {
 }
 impl MulTest {

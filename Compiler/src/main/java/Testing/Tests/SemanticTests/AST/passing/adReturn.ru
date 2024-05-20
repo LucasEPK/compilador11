@@ -1,4 +1,7 @@
-/? Testea si andan los return con ad y mezclado con mul
+/? Descripción: caso de prueba que verifica si andan los return con ad mezclado con mul
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct AdTest {
 }
 impl AdTest {

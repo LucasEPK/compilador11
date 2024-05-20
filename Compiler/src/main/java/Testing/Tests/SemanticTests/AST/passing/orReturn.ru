@@ -1,4 +1,7 @@
-/? Testea si andan los return con or
+/? Descripción: caso de prueba que verifica si andan los return con or
+/? Salida esperada:
+/? CORRECTO: SEMANTICO - DECLARACIONES
+
 struct OrTest {
 }
 impl OrTest {
