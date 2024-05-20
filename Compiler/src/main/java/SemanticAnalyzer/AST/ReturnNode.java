@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
@@ -42,6 +43,26 @@ public class ReturnNode extends SentenceNode implements Commons {
 
     @Override
     public void consolidate(AST ast) {
+
+        //Si no tiene return, ya esta consolidado
+        if(returnValueNode == null){
+            this.setConsolidated(true);
+        }else {
+            //Si no esta consolidado, lo consolido
+            if(returnValueNode.getConsolidated() == false){
+                returnValueNode.consolidate(ast);
+            }
+
+
+            this.setType(returnValueNode.getType());
+            Struct actualStruct = ast.getSymbolTable().getStructs().get(this.getType());
+            if(actualStruct == null){
+                //Todo: Error
+                // thorw new Exception("Error en la consolidación de un return");
+            }
+
+            this.setConsolidated(true);
+        }
 
     }
 

@@ -331,4 +331,36 @@ public class AST implements Commons {
 
         return foundVar;
     }
+
+    public boolean isSubStruct(String subType, String SsuperType){
+        boolean inherithed = false;
+        Struct subStruct = searchStruct(subType);
+        Struct superStruct = searchStruct(SsuperType);
+        Struct currentStruct = subStruct;
+        if(superStruct == null){
+            if(subStruct == null){
+                inherithed = true;
+            }
+        }
+        else {
+            if (subStruct != null){
+                while (!inherithed && currentStruct.getName().equals("Object") && currentStruct.getInheritFrom() != null){
+                    if(currentStruct.getInheritFrom() == superStruct){
+                        inherithed = true;
+                    }else {
+                        currentStruct = currentStruct.getInheritFrom();
+                    }
+                }
+                currentStruct = superStruct;
+                while (!inherithed && currentStruct.getName().equals("Object") && currentStruct.getInheritFrom() != null){
+                    if(currentStruct.getInheritFrom() == subStruct){
+                        inherithed = true;
+                    }else {
+                        currentStruct = currentStruct.getInheritFrom();
+                    }
+                }
+            }
+        }
+        return inherithed;
+    }
 }
