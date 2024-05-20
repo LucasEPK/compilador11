@@ -33,9 +33,15 @@ public class ArrayNode extends PrimaryNode{
 
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Array" + "\",\n";
-        json += addtabs(tabs+1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+        //Si el tipo es string y tiene comillas no le agrego comillas
+        if(isStringType(getType())) {
+            json += addtabs(tabs + 1) + "\"value\": " + getToken().getLexeme() + ",\n";
+        }else {
+            json += addtabs(tabs + 1) + "\"value\": \"" + getToken().getLexeme() + "\",\n";
+        }
+
         json += addtabs(tabs+1) + "\"type\": \"" + getType() + "\",\n";
-        json += addtabs(tabs+1) + "\"length\": \"" + getLength() + "\"\n";
+        json += addtabs(tabs+1) + "\"length\":" + length.toJson(tabs+1) + "\n";
         json += addtabs(tabs) + "}\n";
         return json;
     }
@@ -43,12 +49,30 @@ public class ArrayNode extends PrimaryNode{
     @Override
     public void consolidate(AST ast) {
 
+        if(this.length.getConsolidated() == false){
+            this.length.consolidate(ast);
+        }
+
+        if(this.length.getType().equals("Int") == false){
+            //ToDo
+            //throw new ArrayLengthException(this.length.getToken());
+        }
+
         //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
         if(this.getType().equals("Int") == false && this.getType().equals("Str") == false &&
                 this.getType().equals("Char") == false && this.getType().equals("Bool") == false){
             //ToDo
             //throw new NoPrimitiveType(this.getToken());
         }
+
+        this.setType("Array");
+        this.setConsolidated(true);
+
+        //Seteo lastCalledType
+        if(right != null){
+            right.setLastCalledType(this.getType());
+        }
+
 
     }
 
@@ -62,9 +86,23 @@ public class ArrayNode extends PrimaryNode{
     @Override
     public String addtabs(int tabs) {
         String tabsString = "";
-        for (int i = 0; i < tabs; i++) {
+        for (int i = 0; i < tabs; i++
+        ) {
             tabsString += "\t";
         }
         return tabsString;
+    }
+
+    /**
+     * Método que verifica si el tipo es de tipo String y si empieza y termina con comillas
+     * @param type Tipo a verificar
+     * @return true si es de tipo String y empieza y termina con comillas, false en caso contrario
+     */
+    public boolean isStringType(String type){
+        //Verifico si es de tipo String y si empieza y termina con comillas
+        if(type.equals("Str") && getToken().getLexeme().charAt(0) == '"' && getToken().getLexeme().charAt(getToken().getLexeme().length()-1) == '"'){
+            return true;
+        }
+        return false;
     }
 }

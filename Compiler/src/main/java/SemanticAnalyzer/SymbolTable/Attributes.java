@@ -45,6 +45,14 @@ public class Attributes extends Variable {
         isInherited = inherited;
     }
 
+    public boolean GetIInherited() {
+        return isInherited;
+    }
+
+    public boolean GetIsPublic() {
+        return isPublic;
+    }
+
     /**
      * Constructor de formato Json para atributos
      * @param tabs cantidad de tabs de identación

@@ -90,7 +90,7 @@ public class ExpBin extends ExpOp {
                 //Verifico si los tipos son distintos
                 if(!this.left.getType().equals(this.right.getType())){
                     //Si alguno de los dos es primitivo, es un error
-                    if(isPrimitive(this.left.getType()) || isPrimitive(this.right.getType())){
+                    if(ast.isPrimitive(this.left.getType()) || ast.isPrimitive(this.right.getType())){
                         //ToDo
                         //throw new TypesDontMatch(this.getToken());
                     }
@@ -122,9 +122,7 @@ public class ExpBin extends ExpOp {
 
     }
 
-    public boolean isPrimitive(String type){
-        return type.equals("Int") || type.equals("Str") || type.equals("Char") || type.equals("Bool");
-    }
+
 
     /**
      * Método que agrega una cantidad de tabulaciones a un string

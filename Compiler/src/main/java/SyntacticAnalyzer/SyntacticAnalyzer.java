@@ -49,6 +49,7 @@ public class    SyntacticAnalyzer {
      * @autor Yeumen Silva
      */
     public void generateASTJson(String inputPath){
+        this.ast.consolidate(this.ast);
         this.ast.toJson(1,inputPath);
     }
     

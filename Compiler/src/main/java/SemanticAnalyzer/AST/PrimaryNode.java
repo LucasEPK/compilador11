@@ -12,6 +12,8 @@ public abstract class PrimaryNode extends Operands {
 
     PrimaryNode right = null;
 
+    String lastCalledType;
+
 
     public PrimaryNode(String struct, String method, Token token) {
         super(struct, method, token);
@@ -27,6 +29,14 @@ public abstract class PrimaryNode extends Operands {
 
     public void setRight(PrimaryNode right) {
         this.right = right;
+    }
+
+    public void setLastCalledType(String lastCalledType) {
+        this.lastCalledType = lastCalledType;
+    }
+
+    public String getLastCalledType() {
+        return lastCalledType;
     }
 
     /**
@@ -50,12 +60,15 @@ public abstract class PrimaryNode extends Operands {
     @Override
     public void consolidate(AST ast) {
 
+        if(right != null){
+            if(right.getConsolidated() == false){
+                right.consolidate(ast);
+            }
+            this.setType(right.getType());
+            this.setConsolidated(true);
 
-        if(right.getConsolidated() == false){
-            right.consolidate(ast);
         }
-        this.setType(right.getType());
-        this.setConsolidated(true);
+
 
     }
 }

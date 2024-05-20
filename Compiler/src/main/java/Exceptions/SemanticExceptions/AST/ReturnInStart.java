@@ -25,6 +25,6 @@ public class ReturnInStart extends ASTExcpetion{
 
     @Override
     public String getExceptionType() {
-        return "SRART NO PUEDE TENER RETURN";
+        return "START NO PUEDE TENER RETURN";
     }
 }
