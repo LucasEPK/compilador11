@@ -1,32 +1,51 @@
-/? Testea si andan los return con literales
-struct LitTest {
+struct A {
+    pri B a1;
 }
-impl LitTest {
-	.(){}
-	fn retNil() -> void{
-		ret nil;
-	}
-
-    fn retInt() -> Int{
-        ret 3;
+impl A{
+    st fn m1(B p1)->Array Int
+    {
+        A v1;
+        Array Int a;
+        Object v2;
+        v1 = p1;
+        a1 = (p1);
+        v1 = new C();
+        p1 = nil;
+        v2 = new Object();
+        v2 = p1;
+        a = (v1.m2());
+        v1 = self;
+        ret a;
     }
 
-    fn retBool() -> Bool{
-        ret true;
-    }
 
-    fn retBool2() -> Bool{
-        ret false;
-    }
 
-    fn retStr() -> Str {
-        ret "hola";
+    st fn m2()->void
+    {
+    Int a;
+    ret a;}
+    .(){
+    Int a;
+    a = 0;
     }
-
-    fn retChar() -> Char {
-        ret 'h';
-    }
-
 }
+
+struct B : A{}
+impl B {
+    .(){}
+}
+
+struct C : B{}
+impl C{.(){ }
+fn m7() -> void{}}
+
+
 start{
+Array Int a;
+Int b;
+Str c;
+c = "hola";
+b = 2;
+a = new Int[c];
+(A.m2());
 }

@@ -114,16 +114,13 @@ public class BlockNode extends SentenceNode implements Commons {
                             hasReturn = true;
                         }
                     }
-                    System.out.println(method.getName());
                     if(!hasReturn){
                         //Todo
-                        System.out.println("No hay return");
                         //throw new NoReturn(this.getToken());
                     }
                     if(!methodType.equals(getType())){
                         if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
                             //ToDo
-                            System.out.println("No es subclase");
                             //throw new TypeMismatch(this.getToken(),this.getToken());
 
                         }
