@@ -1058,6 +1058,7 @@ public class    SyntacticAnalyzer {
                                     block.addNewSentence(newBlockSentence);
                                 }
                                 newBlockSentence.setReferenceToken(this.actualToken);
+                                newBlockSentence.setIsSentenceBlock(true);
                                 //------------------------------------------------------------------------------------
 
                                 bloque(newBlockSentence);
