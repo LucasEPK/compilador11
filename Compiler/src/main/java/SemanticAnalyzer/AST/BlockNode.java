@@ -129,6 +129,7 @@ public class BlockNode extends SentenceNode implements Commons {
             String methodType = method.getGiveBack().getName();
             if(hasReturn){
                 if(!methodType.equals(getType())){
+                    System.out.println(getType() + " " + methodType );
                     if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
                         System.out.println("j");
                         throw new ReturnTypeDontMatch(method.getToken());

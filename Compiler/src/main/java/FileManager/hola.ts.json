@@ -253,23 +253,25 @@
 		}
 	},
  	 {
-		"nombre": "A",
+		"nombre": "Auto",
 		"heredaDe": "Object",
-		"atributos": [],
+		"atributos": [
+			{
+			"nombre": "rueda",
+			"tipo": "Bool",
+			"public": true,
+			"inherited": false,
+			"posicion": 0
+			}
+		],
 		"metodos": [
 			{
-				"nombre": "m1",
-				"static": true,
+				"nombre": "metodo1",
+				"static": false,
 				"retorno": "void",
 				"posicion": 0,
 				"paramF": [],
-				"variables": [
-					{
-					"nombre": "c",
-					"tipo": "Char",
-					"posicion": 0
-					}
-				]
+				"variables": []
 			}
 		],
 		"constructor": {

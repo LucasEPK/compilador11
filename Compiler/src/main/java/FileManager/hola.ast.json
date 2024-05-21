@@ -3,16 +3,46 @@
 	"clases": [
 		{
 			"nombre": "Block",
-			"class": "A",
+			"class": "Auto",
 			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "A",
-			"method": "m1",
+			"class": "Auto",
+			"method": "metodo1",
 			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "Bool",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "rueda",
+							"type": "Bool",
+							"arguments": [
+							]
+						}
+,
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "ExpUn",
+						"operator": "!",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "true",
+							"type": "Bool"
+						}
+
+					}
+
+				}
 			]
 		},
 		{
@@ -20,21 +50,6 @@
 			"class": "start",
 			"method": "start",
 			"sentences": [
-				{
-					"nombre": "Id",
-					"value": "A",
-					"type": "void",
-					"chained": 					{
-						"nombre": "Id",
-						"value": "m1",
-						"type": "void",
-						"arguments": [
-						]
-					}
-,
-					"arguments": [
-					]
-				}
 			]
 		}
 	]

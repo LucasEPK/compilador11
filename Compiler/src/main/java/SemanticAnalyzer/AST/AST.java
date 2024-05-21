@@ -211,7 +211,9 @@ public class AST implements Commons {
 
             //Si los tipos no son iguales, entonces error
             if(argumentTypeDef.equals(argumentCallType) == false){
-                throw new DiferentParamType(currentParamCall.getToken());
+                if(this.isSubStruct(argumentTypeDef,argumentCallType) == false) {
+                    throw new DiferentParamType(currentParamCall.getToken());
+                }
             }
         }
 
@@ -325,6 +327,23 @@ public class AST implements Commons {
             }
         }
 
+        return foundVar;
+    }
+
+    public Attributes findAttribute(String struct, Token token){
+        Struct structFound;
+        Attributes foundVar;
+        structFound = symbolTable.getStructs().get(struct);
+        if(structFound == null){
+            throw new StructNotFound(token);
+        }
+        foundVar = structFound.getAttributes().get(token.getLexeme());
+        if(foundVar == null){
+            throw new VariableNotFound(token);
+        }
+        if(foundVar.GetIInherited() && !foundVar.GetIsPublic()){
+            throw new PrivateVar(token);
+        }
         return foundVar;
     }
 

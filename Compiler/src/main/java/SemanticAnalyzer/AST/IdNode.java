@@ -191,7 +191,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(actualStruct.getName());
-            setLastCalledIdType(IdType.CONSTRUCTOR);
+            right.setLastCalledIdType(IdType.CONSTRUCTOR);
         }
         //El tipo del constructor siempre es la clase a la que pertenece
         this.setType(actualStruct.getName());
@@ -304,7 +304,7 @@ IdNode extends PrimaryNode{
                     varFound = ast.findVariableSelf(lastCalledType,this.getToken());
                     break;
                 case VARIABLE:
-                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findAttribute(this.lastCalledType,this.getToken());
                     break;
                 case METHOD:
                     varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
@@ -346,7 +346,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(varFound.getType().getName());
-            setLastCalledIdType(IdType.VARIABLE);
+            right.setLastCalledIdType(IdType.VARIABLE);
         }
 
 
@@ -367,7 +367,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(actualStruct.getName());
-            setLastCalledIdType(IdType.STATIC_METHOD);
+            right.setLastCalledIdType(IdType.STATIC_METHOD);
         }
 
         this.setType(actualStruct.getName());

@@ -1,16 +1,12 @@
-/? Descripción: caso de prueba que si el método devuelve un tipo, debe tener un return
-/? Salida esperada:
-/? ERROR: SEMANTICO - SENTENCIAS
-/? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 10 | COLUMNA 4 | EL METODO NO TIENE RET
-struct A{}
-impl A{
-.(){}
-st fn m1() -> void{
-Char c;
-}
-}
+struct Auto{
 
-start{
-(A.m1());
+    Bool rueda;
 }
+impl Auto {
+    .(){}
+    fn metodo1 () -> void {
+        self.rueda = !true;
+    }
+
+}
+start {}
