@@ -976,6 +976,7 @@ public class    SyntacticAnalyzer {
                 // Analisis Semantico AST -------------------------
                 AsignationNode newAsignationSentence = new AsignationNode(symbolTable.getCurrentStruct().getName(),
                         symbolTable.getCurrentMethod().getName());
+                newAsignationSentence.setReferenceToken(this.actualToken);
                 if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
                     block.addNewSentence(newAsignationSentence);
                 }
@@ -1007,6 +1008,7 @@ public class    SyntacticAnalyzer {
                         if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
                             block.addNewSentence(newIfThenElseSentence);
                         }
+                        newIfThenElseSentence.setReferenceToken(this.actualToken);
                         // -----------------------------------------------------
                         match("if");
                         match("(");
@@ -1031,6 +1033,7 @@ public class    SyntacticAnalyzer {
                             if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
                                 block.addNewSentence(newWhileSentence);
                             }
+                            newWhileSentence.setReferenceToken(this.actualToken);
                             // -----------------------------------------------------
 
                             match("while");
@@ -1054,6 +1057,7 @@ public class    SyntacticAnalyzer {
                                 if (block != null) {
                                     block.addNewSentence(newBlockSentence);
                                 }
+                                newBlockSentence.setReferenceToken(this.actualToken);
                                 //------------------------------------------------------------------------------------
 
                                 bloque(newBlockSentence);
@@ -1064,6 +1068,9 @@ public class    SyntacticAnalyzer {
                             else {
                                 //Primeros ret
                                 if (verifyEquals("ret")){
+                                    // AST---------------------
+                                    Token savedToken = this.actualToken;
+                                    // -------------------------
                                     match("ret");
                                     // Analisis Semantico AST -------------------------
                                     ReturnNode newReturnSentence = new ReturnNode(symbolTable.getCurrentStruct().getName(),
@@ -1071,6 +1078,7 @@ public class    SyntacticAnalyzer {
                                     if (block != null) { // Esto se usa para cuando el nodo necesite ser linkeado al bloque
                                         block.addNewSentence(newReturnSentence);
                                     }
+                                    newReturnSentence.setReferenceToken(savedToken);
                                     // ------------------------------------------------
 
                                     sentenciaF1(newReturnSentence);
@@ -1942,7 +1950,6 @@ public class    SyntacticAnalyzer {
                 expBinNodeR.setLeft(expNode); // seteamos la izq de la recursión
                 expBinNode.setRight(expBinNodeR); // y la derecha del expbin actual
             }
-            // TODO: definir tipo expbin, si es necesario
             // --------------------------------------------------------------------------------
         } else {
             throw createException(this.actualToken, List.of("+" , "-"),this.actualToken.getLexeme());
