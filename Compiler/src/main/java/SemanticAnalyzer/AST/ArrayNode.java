@@ -55,23 +55,25 @@ public class ArrayNode extends PrimaryNode{
             this.length.consolidate(ast);
         }
 
+
         if(this.length.getType().equals("Int") == false){
             throw new ArrayLengthException(this.length.getToken());
         }
 
         //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
-        if(this.getType().equals("Int") == false && this.getType().equals("Str") == false &&
-                this.getType().equals("Char") == false && this.getType().equals("Bool") == false){
+        if(this.getToken().getLexeme().equals("Int") == false && this.getToken().getLexeme().equals("Str") == false &&
+                this.getToken().getLexeme().equals("Char") == false && this.getToken().getLexeme().equals("Bool") == false){
 
             throw new NoPrimitiveType(this.getToken());
         }
 
-        this.setType("Array");
         this.setConsolidated(true);
+        this.setType(this.getToken().getLexeme());
 
         //Seteo lastCalledType
         if(right != null){
             right.setLastCalledType(this.getType());
+            right.setLastCalledIdType(IdType.ARRAY);
         }
 
 

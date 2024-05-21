@@ -4,177 +4,14 @@
 		{
 			"nombre": "Block",
 			"class": "A",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "A",
 			"method": "m1",
-			"sentences": [
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v1",
-						"type": "A",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "p1",
-						"type": "B",
-						"arguments": [
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "a1",
-						"type": "B",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "ParenthizedExpression",
-						"value": "p1",
-						"type": "B",
-						"parenthizedExpression": 						{
-							"nombre": "Id",
-							"value": "p1",
-							"type": "B",
-							"arguments": [
-							]
-						}
-
-					}
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v1",
-						"type": "A",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "C",
-						"type": "C",
-						"arguments": [
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "p1",
-						"type": "B",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "nil",
-						"type": "nil"
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v2",
-						"type": "Object",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "Object",
-						"type": "Object",
-						"arguments": [
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v2",
-						"type": "Object",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "p1",
-						"type": "B",
-						"arguments": [
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v1",
-						"type": "A",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "self",
-						"type": "A",
-						"arguments": [
-						]
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "A",
-			"method": "m2",
-			"sentences": [
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "A",
-			"method": ".",
-			"sentences": [
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "B",
-			"method": ".",
-			"sentences": [
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "C",
-			"method": ".",
 			"sentences": [
 			]
 		},
@@ -183,6 +20,21 @@
 			"class": "start",
 			"method": "start",
 			"sentences": [
+				{
+					"nombre": "Id",
+					"value": "A",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "m1",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"arguments": [
+					]
+				}
 			]
 		}
 	]

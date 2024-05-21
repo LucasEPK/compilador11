@@ -13,7 +13,7 @@ public class Attributes extends Variable {
     private boolean isPublic = true;
 
     //Es heredado o no
-    private boolean isInherited;
+    private boolean isInherited = false;
 
 
     /**
@@ -27,6 +27,7 @@ public class Attributes extends Variable {
         super(name, type, pos, isArray);
         this.isPublic = isPublic;
     }
+
 
     /**
      * Método que setea si el atributo es privado o público
@@ -76,6 +77,7 @@ public class Attributes extends Variable {
         }
 
         jsonString += "\n" + addtabs(tabs) + "\"" + "public" + "\"" +   ": " + this.isPublic +",";
+        jsonString += "\n" + addtabs(tabs) + "\"" + "inherited" + "\"" +  ": " + this.isInherited + ",";
         jsonString += "\n" + addtabs(tabs) + "\"" + "posicion" + "\"" +  ": " + this.getPos();
         jsonString += "\n" + addtabs(tabs) + "}" + ",";
 

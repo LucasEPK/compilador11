@@ -5,5 +5,6 @@ public enum IdType {
     VARIABLE,
     CONSTRUCTOR,
     METHOD,
-    STATIC_METHOD
+    STATIC_METHOD,
+    ARRAY
 }

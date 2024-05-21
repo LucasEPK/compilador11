@@ -8,7 +8,10 @@ impl A{
 .(){}
 fn m1() -> Int{
 Char c;
-}
+if(true){
+ret 2;}else{
+ret 3;}
+    }
 }
 
 start{}

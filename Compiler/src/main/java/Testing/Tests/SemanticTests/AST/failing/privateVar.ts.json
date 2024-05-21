@@ -260,6 +260,7 @@
 			"nombre": "a",
 			"tipo": "Int",
 			"public": false,
+			"inherited": true,
 			"posicion": 0
 			}
 		],
@@ -277,6 +278,7 @@
 			"nombre": "a",
 			"tipo": "Int",
 			"public": false,
+			"inherited": true,
 			"posicion": 0
 			}
 		],

@@ -66,12 +66,157 @@ public class BlockNode extends SentenceNode implements Commons {
         return json;
     }
 
-    /**
+    @Override
+    public void consolidate(AST ast) {
+        //Llamo al método consolidate de cada sentencia
+        for(SentenceNode sentence : sentenceList){
+            if(sentence.consolidated == false){
+                sentence.consolidate(ast);
+            }
+        }
+
+        //Llamo al método consolidate de cada sentencia para verificar los tipos de return
+        for(SentenceNode sentence : sentenceList) {
+            //Verifico que start no tenga return
+            if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")) {
+                throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+            }
+        }
+        this.setConsolidated(true);
+        //Verifico que el constructor no tenga return
+        if(getMethod().equals(".")){
+            boolean hasReturn = false;
+            Methods method = ast.searchConstructor(this.struct);
+            for(SentenceNode sentence: sentenceList){
+                if(sentence instanceof ReturnNode){
+                    hasReturn = true;
+                }
+            }
+            if(hasReturn){
+                throw new ReturnInConstructor(method.getToken());
+            }
+            this.setConsolidated(true);
+        }else if(isSentenceBlock){
+            //Caso en el que el bloque sea un IfNode o BlockNode
+            boolean hasReturn = false;
+            for(SentenceNode sentence : sentenceList){
+                if(sentence instanceof ReturnNode){
+                    hasReturn = true;
+                }
+            }
+
+            for(SentenceNode sentence : sentenceList){
+                //Verifico que start no tenga return
+                if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
+                    throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                }
+                if(!sentence.getType().equals("void")){
+                    if(!(sentence instanceof PrimaryNode)){
+                        if(getType().equals("void")){
+                            setType(sentence.getType());
+                        }else {
+                            if(!getType().equals(sentence.getType())){
+                                throw new MultipleReturn(sentence.getReferenceToken());
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            //Chequeo que si hay return, sea del tipo correcto
+            Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
+            String methodType = method.getGiveBack().getName();
+            if(hasReturn){
+                if(!methodType.equals(getType())){
+                    if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
+                        System.out.println("j");
+                        throw new ReturnTypeDontMatch(method.getToken());
+
+                    }
+                }
+            }
+
+            this.setConsolidated(true);
+
+        }else if (isSentenceBlock == false){
+            for(SentenceNode sentence : sentenceList){
+                //Verifico que start no tenga return
+                if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
+                    throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                }
+                if(!sentence.getType().equals("void")){
+                    if(!(sentence instanceof PrimaryNode)){
+                        if(getType().equals("void")){
+                            setType(sentence.getType());
+                        }else {
+                            if(!getType().equals(sentence.getType())){
+                                throw new MultipleReturn(sentence.getReferenceToken());
+                            }
+                        }
+                    }
+                }
+            }
+            //Si no es el constructor
+            if(!getMethod().equals(".")) {
+                //Comparo retorno del bloque y del método
+                if (!getStruct().equals("start")) {
+                    Methods method = ast.searchMethod(this.struct, this.method, this.getReferenceToken());
+                    if (method.getGiveBack() == null) {
+                        String returnType = "void";
+                        if (!returnType.equals(getType())) {
+                            System.out.println("a");
+                            throw new ReturnTypeDontMatch(this.getReferenceToken());
+                        }
+                    } else {
+                        //Recorro las sentencias
+                        String methodType = method.getGiveBack().getName();
+                        String typeIfThenElse = null;
+                        boolean hasReturn = false;
+                        for (SentenceNode sentece : sentenceList) {
+                            if (sentece instanceof ReturnNode) {
+                                hasReturn = true;
+                            }
+                        }
+
+                        if (typeIfThenElse != null) {
+                            if (!typeIfThenElse.equals(methodType)) {
+                                if (!ast.isSubStruct(typeIfThenElse, methodType)) {
+                                    throw new ReturnTypeDontMatch(method.getToken());
+                                }
+                            }
+                        }
+                        if (!methodType.equals(getType())) {
+                            if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        }
+
+
+                        if(!hasReturn && !methodType.equals("void")){
+                            throw new NoReturnInMethod(method.getToken());
+                        }
+
+
+                    }
+                }
+            }
+
+
+
+            this.setConsolidated(true);
+        }
+
+    }
+
+
+
+    /*
      * Método que recorre sentencia a sentencia y llama al método consolidate de cada una
      * @param ast AST que se va a consolidar
      * @return void
      * @autor Yeumen Silva
-     */
+
 
     @Override
     public void consolidate(AST ast) {
@@ -147,10 +292,7 @@ public class BlockNode extends SentenceNode implements Commons {
 
         this.setConsolidated(true);
 
-    }
-
-
-
+    }*/
     /**
      * Método que agrega una cantidad de tabulaciones a un string
      * @param tabs cantidad de tabulaciones a agregar

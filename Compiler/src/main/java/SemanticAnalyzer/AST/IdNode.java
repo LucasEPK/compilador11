@@ -91,8 +91,6 @@ IdNode extends PrimaryNode{
     @Override
     public void consolidate(AST ast) {
 
-
-
         if(this.idType == IdType.SELF){
             consolidateSelf(ast);
         }
@@ -142,6 +140,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(this.getStruct());
+            right.setLastCalledIdType(IdType.SELF);
         }
 
         //Seteo que el tipo de Self es el struct actual
@@ -158,7 +157,6 @@ IdNode extends PrimaryNode{
      */
 
     private void consolidateConstructor(AST ast){
-
         //Verifico si recibe o no parametros
         if(this.arguments != null){
             //Consolido los argumentos
@@ -193,6 +191,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(actualStruct.getName());
+            setLastCalledIdType(IdType.CONSTRUCTOR);
         }
         //El tipo del constructor siempre es la clase a la que pertenece
         this.setType(actualStruct.getName());
@@ -251,6 +250,7 @@ IdNode extends PrimaryNode{
             if(right != null){
                 //Seteo el ultimo tipo llamado en right
                 right.setLastCalledType(actualMethod.getGiveBack().getName());
+                right.setLastCalledIdType(IdType.METHOD);
             }
             //Seteo que esta consolidado
             this.setConsolidated(true);
@@ -281,6 +281,8 @@ IdNode extends PrimaryNode{
             if(right != null){
                 //Seteo el ultimo tipo llamado en right
                 right.setLastCalledType(actualMethod.getGiveBack().getName());
+                //Seteo el idType de right
+                right.setLastCalledIdType(IdType.METHOD);
             }
             //Seteo que esta consolidado
             this.setConsolidated(true);
@@ -296,22 +298,57 @@ IdNode extends PrimaryNode{
     private void consolidateVar(AST ast){
 
         Variable varFound = null;
+        if(lastCalledType != null){
+            switch (this.getLastCalledIdType()){
+                case SELF:
+                    varFound = ast.findVariableSelf(lastCalledType,this.getToken());
+                    break;
+                case VARIABLE:
+                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    break;
+                case METHOD:
+                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    break;
+                case STATIC_METHOD:
+                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    break;
+                case CONSTRUCTOR:
+                    varFound = ast.findVariable(lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    if(varFound == null){
+                        throw new VariableNotFound(this.getToken());
+                    }
+                    break;
+                case ARRAY:
+                    throw new TypesDontMatch(this.getToken());
+            }
+            //si es estático, debo verificar que el método sea estático
+            if(this.getLastCalledIdType() == IdType.STATIC_METHOD){
+                Methods method = ast.searchMethod(this.lastCalledType,this.getMethod(),this.getToken());
+                if(method.getIsStatic()){
+                    throw new NotEstaticMethod(this.getToken());
+                }
+            }
+        }else {
+            //Llamada a variable en la misma clase
+            varFound = ast.findVariable(this.getStruct(),this.getMethod(),this.getToken());
+            if(varFound == null){
+                throw new VariableNotFound(this.getToken());
+            }
+            if(varFound.getIsArray()){
 
+            }
 
-        //Llamada a variable en la misma clase
-        varFound = ast.findVariable(this.getStruct(),this.getMethod(),this.getToken());
-
-        if(varFound == null){
-
-            throw new VariableNotFound(this.getToken());
         }
+
         //Seteo el tipo de la variable
         this.setType(varFound.getType().getName());
         this.setConsolidated(true);
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(varFound.getType().getName());
+            setLastCalledIdType(IdType.VARIABLE);
         }
+
 
     }
 
@@ -320,19 +357,7 @@ IdNode extends PrimaryNode{
         Methods foundMethod;
 
         foundMethod = ast.searchMethod(this.getToken().getLexeme(),this.right.getToken().getLexeme(), this.getToken());
-        /*
-        if(foundMethod.getIsStatic() == false){
-            //ToDo
-            //error metodo no estatico
-            //throw new MethodNotStatic(this.getToken());
-        }
-        this.setType(foundMethod.getGiveBack().getName());
-        this.setConsolidated(true);
-        if(right != null){
-            //Seteo el ultimo tipo llamado en right
-            right.setLastCalledType(foundMethod.getGiveBack().getName());
-        }
-        */
+
 
         Struct actualStruct = ast.searchStruct(this.getToken().getLexeme());
         if(actualStruct == null){
@@ -342,6 +367,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(actualStruct.getName());
+            setLastCalledIdType(IdType.STATIC_METHOD);
         }
 
         this.setType(actualStruct.getName());

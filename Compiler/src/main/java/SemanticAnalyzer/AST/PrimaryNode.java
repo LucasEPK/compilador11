@@ -14,6 +14,7 @@ public abstract class PrimaryNode extends Operands {
 
     String lastCalledType;
 
+    private IdType lastCalledIdType;
 
     public PrimaryNode(String struct, String method, Token token) {
         super(struct, method, token);
@@ -25,6 +26,14 @@ public abstract class PrimaryNode extends Operands {
 
     public PrimaryNode getRight() {
         return right;
+    }
+
+    public void setLastCalledIdType(IdType lastCalledIdType) {
+        this.lastCalledIdType = lastCalledIdType;
+    }
+
+    public IdType getLastCalledIdType() {
+        return lastCalledIdType;
     }
 
     public void setRight(PrimaryNode right) {

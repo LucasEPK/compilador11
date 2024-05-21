@@ -1,34 +1,16 @@
-struct A {
-    B a1;
-}
+/? Descripción: caso de prueba que si el método devuelve un tipo, debe tener un return
+/? Salida esperada:
+/? ERROR: SEMANTICO - SENTENCIAS
+/? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
+/? | Linea 10 | COLUMNA 4 | EL METODO NO TIENE RET
+struct A{}
 impl A{
-    fn m1(B p1)->void
-    {
-        A v1;
-        Object v2;
-        v1 = p1;
-        a1 = (p1);
-        v1 = new C();
-        p1 = nil;
-        v2 = new Object();
-        v2 = p1;
-        v1 = self;
-
-    }
-
-    fn m2()->void
-    {}
-    .(){}
+.(){}
+st fn m1() -> void{
+Char c;
+}
 }
 
-
-struct B : A{}
-impl B {
-    .(){}
+start{
+(A.m1());
 }
-
-struct C : B{}
-impl C{.(){ }}
-
-
-start{}

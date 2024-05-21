@@ -693,23 +693,32 @@ public class SymbolTable extends Commons {
                     throw  throwException("HeritanceCycle", actualStruct.getToken());
                 }
             }
-            //Agrego herencia de atributos
-            LinkedHashMap<String,Attributes> heritanceAttributes = findAncestralAtributtes(actualStruct,
-                    new LinkedHashMap<String,Attributes>(),
-                    actualStruct.getAttributes());
-            actualStruct.setAttributes(heritanceAttributes);
+                //Agrego herencia de atributos
+                Map<String,Attributes> oldAttributes = actualStruct.getAttributes();
+                LinkedHashMap<String,Attributes> heritanceAttributes = findAncestralAtributtes(actualStruct,
+                        new LinkedHashMap<String,Attributes>(),
+                        actualStruct.getAttributes()
+                );
+                for(Attributes actualAttribute : oldAttributes.values()){
+                    if(heritanceAttributes.containsKey(actualAttribute.getName())){
+                        heritanceAttributes.get(actualAttribute.getName()).setInherited(false);
+                    }
+                }
+                actualStruct.setAttributes(heritanceAttributes);
 
-            // Agrego herencia de métodos
-            LinkedHashMap<String,Methods> heritanceMethdos = findAncestralMethods(actualStruct,
-                    new LinkedHashMap<String,Methods>(),
-                    actualStruct.getMethods());
-            actualStruct.setMethods(heritanceMethdos);
+                // Agrego herencia de métodos
+                LinkedHashMap<String,Methods> heritanceMethdos = findAncestralMethods(actualStruct,
+                        new LinkedHashMap<String,Methods>(),
+                        actualStruct.getMethods());
+                actualStruct.setMethods(heritanceMethdos);
+
 
             actualStruct.setConsolidate(true);
 
         }
 
     }
+
 
     /**
      * Método encargado de verificar que ningun tipo delcarado en el código
@@ -845,19 +854,15 @@ public class SymbolTable extends Commons {
             //Voy a almacenar todos los atributos actualizando su pos
             for (Attributes attribute : children.getAttributes().values()) {
                 //Verifico que el atributo no este declarado
+                attribute.setInherited(true);
+
                 if (attributesList.get(attribute.getName()) == null) {
-                    //Verifico que el atributo no sea heredado
-                    if(attributes.get(attribute.getName()) == null){
-                        //Seteo que es heredad
-                        attribute.setInherited(true);
-                    }
                     if (attributesList.isEmpty()) {
                         attribute.setPos(attributesList.size());
                         attributesList.put(attribute.getName(), attribute);
                     } else {
                         //Seteo su nueva pos
                         attribute.setPos(attributesList.size());
-                        attribute.setInherited(true);
                         attributesList.put(attribute.getName(), attribute);
                     }
                 } else {
@@ -893,10 +898,6 @@ public class SymbolTable extends Commons {
             //Guardo métodos y actualizo su pos
             for (Methods method : children.getMethods().values()) {
                 Methods ancestralMethodEquals = methodsList.get(method.getName());
-                //Verifico que el método sea heredado
-                if(methods.get(method.getName()) == null){
-                    method.setInherited(true);
-                }
                 //Si existe un método ya declarado en la lista con mismo nombre
                 if (ancestralMethodEquals == null) {
                     method.setPos(methodsList.size());
