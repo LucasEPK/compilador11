@@ -65,10 +65,13 @@ public class AsignationNode extends SentenceNode implements Commons {
             this.right.consolidate(ast);
         }
 
+
         //Retornar void no permite asignaciones
         if(this.right.getType().equals("void")){
             throw new VoidAsignation(this.right.getToken());
         }
+
+
 
         if(this.left.getType().equals(this.right.getType()) == false){
             //Verifico si es una subclase

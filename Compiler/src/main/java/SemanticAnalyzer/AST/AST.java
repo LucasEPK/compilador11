@@ -249,7 +249,10 @@ public class AST implements Commons {
 
             //Si los tipos no son iguales, entonces error
             if (argumentTypeDef.equals(argumentCallType) == false) {
-                throw new DiferentParamType(currentParamCall.getToken());
+                //Verifico que no sea plimorfismo
+                if(this.isSubStruct(argumentTypeDef,argumentCallType) == false){
+                    throw new DiferentParamType(currentParamCall.getToken());
+                }
             }
         }
     }
@@ -351,6 +354,23 @@ public class AST implements Commons {
         return inherithed;
     }
 
+    public Variable findVariableSelf(String struct, Token token){
+        Struct structFound;
+        Variable foundVar;
+        structFound = symbolTable.getStructs().get(struct);
+        if(structFound == null){
+            throw new StructNotFound(token);
+        }
+        foundVar = structFound.getAttributes().get(token.getLexeme());
+        if(foundVar == null){
+            throw new VariableNotFound(token);
+        }
+        if(((Attributes) foundVar).GetIInherited() && !((Attributes) foundVar).GetIsPublic()){
+            throw new PrivateVar(token);
+        }
+        return foundVar;
+
+    }
     public Methods searchConstructor(String struct){
         return this.symbolTable.getStructs().get(struct).getConstructor();
     }

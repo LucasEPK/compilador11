@@ -261,6 +261,7 @@
 			"tipo": "Array",
 			"tipoArray": "Int",
 			"public": true,
+			"inherited": false,
 			"posicion": 0
 			}
 		],
@@ -278,6 +279,7 @@
 			"nombre": "bruh",
 			"tipo": "Encadenado2o",
 			"public": true,
+			"inherited": false,
 			"posicion": 0
 			}
 		],
@@ -337,6 +339,7 @@
 			"tipo": "Array",
 			"tipoArray": "Int",
 			"public": true,
+			"inherited": false,
 			"posicion": 0
 			}
 		],
