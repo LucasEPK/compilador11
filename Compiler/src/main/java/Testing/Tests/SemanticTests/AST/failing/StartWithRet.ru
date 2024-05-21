@@ -6,6 +6,5 @@
 
 start{
 Int a;
-
 ret a;
 }

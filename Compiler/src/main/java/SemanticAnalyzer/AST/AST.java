@@ -316,8 +316,7 @@ public class AST implements Commons {
                     }
                     //Si tampoco esta, debe ser un error
                     if(foundVar == null){
-                        //ToDo
-                        //throw new VariableNotFound(token);
+                        throw new VariableNotFound(token);
                     }
                 }
             }

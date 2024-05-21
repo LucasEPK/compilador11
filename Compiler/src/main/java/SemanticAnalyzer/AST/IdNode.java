@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 import Exceptions.SemanticExceptions.AST.InvalidParamSize;
 import Exceptions.SemanticExceptions.AST.SelfInStart;
+import Exceptions.SemanticExceptions.AST.VariableNotFound;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.Struct;
@@ -309,10 +310,8 @@ IdNode extends PrimaryNode{
         varFound = ast.findVariable(this.getStruct(),this.getMethod(),this.getToken());
 
         if(varFound == null){
-            //error
-            //ToDo
-            throw new RuntimeException();
-            //throw new VariableNotFound(this.getToken());
+
+            throw new VariableNotFound(this.getToken());
         }
         //Seteo el tipo de la variable
         this.setType(varFound.getType().getName());

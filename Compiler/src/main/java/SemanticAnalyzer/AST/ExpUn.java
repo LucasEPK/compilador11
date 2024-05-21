@@ -72,11 +72,13 @@ public class ExpUn extends ExpOp {
                     //throw new TypesDontMatch(this.getToken());
                 break;
             case "!":
-                if(right.getType().equals("Bool"))
+                if(right.getType().equals("Bool")) {
                     setType(right.getType());
-                else
+                }
+                else{
                     //Sino tiro error ToDo
                     //throw new TypesDontMatch(this.getToken());
+                }
                 break;
             default:
                 setType("nil");

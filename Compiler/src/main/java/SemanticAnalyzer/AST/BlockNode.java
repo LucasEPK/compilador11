@@ -1,7 +1,9 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.MultipleReturn;
 import Exceptions.SemanticExceptions.AST.ReturnInStart;
+import Exceptions.SemanticExceptions.AST.ReturnTypeDontMatch;
 import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -85,11 +87,13 @@ public class BlockNode extends SentenceNode implements Commons {
             }
             if(!sentence.getType().equals("void")){
                 if(!(sentence instanceof PrimaryNode)){
-                    setType(sentence.getType());
-                }else {
-                    if(!getType().equals(sentence.getType())){
-                        //ToDo
-                        //throw new TypeMismatch(sentence.getToken(),sentence.getToken());
+                    if(getType().equals("void")){
+                        setType(sentence.getType());
+                    }else {
+                        if(!getType().equals(sentence.getType())){
+                            //ToDo
+                            throw new MultipleReturn(sentence.getReferenceToken());
+                        }
                     }
                 }
             }
@@ -103,8 +107,7 @@ public class BlockNode extends SentenceNode implements Commons {
                 if(method == null){
                     String returnType = "void";
                     if(!returnType.equals(getType())){
-                        //ToDo
-                        //throw new TypeMismatch(this.getToken(),this.getToken());
+                        throw new ReturnTypeDontMatch(this.getReferenceToken());
                     }
                 }else {
                     String methodType = method.getGiveBack().getName();
@@ -114,14 +117,16 @@ public class BlockNode extends SentenceNode implements Commons {
                             hasReturn = true;
                         }
                     }
-                    if(!hasReturn){
+                    if(!hasReturn && !methodType.equals("void")){
+                        System.out.println("chau");
                         //Todo
                         //throw new NoReturn(this.getToken());
                     }
                     if(!methodType.equals(getType())){
                         if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
                             //ToDo
-                            //throw new TypeMismatch(this.getToken(),this.getToken());
+                            System.out.println("a");
+                            //throw new ReturnTypeDontMatch(this.getReferenceToken());
 
                         }
                     }

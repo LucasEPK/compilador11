@@ -15,6 +15,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "nil",
 					"return": 
  					{
 						"nombre": "Literal",
@@ -32,6 +33,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Int",
 					"return": 
  					{
 						"nombre": "Literal",
@@ -49,6 +51,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Bool",
 					"return": 
  					{
 						"nombre": "Literal",
@@ -66,6 +69,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Bool",
 					"return": 
  					{
 						"nombre": "Literal",
@@ -83,6 +87,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Str",
 					"return": 
  					{
 						"nombre": "Literal",
@@ -100,6 +105,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Char",
 					"return": 
  					{
 						"nombre": "Literal",

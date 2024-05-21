@@ -15,6 +15,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Int",
 					"return": 
  					{
 						"nombre": "ExpUn",
@@ -37,6 +38,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Int",
 					"return": 
  					{
 						"nombre": "ExpUn",
@@ -59,6 +61,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Int",
 					"return": 
  					{
 						"nombre": "ExpUn",
@@ -81,6 +84,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Int",
 					"return": 
  					{
 						"nombre": "ExpUn",
@@ -103,6 +107,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Bool",
 					"return": 
  					{
 						"nombre": "ExpUn",
