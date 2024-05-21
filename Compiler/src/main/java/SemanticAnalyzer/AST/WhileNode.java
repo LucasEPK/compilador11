@@ -63,14 +63,15 @@ public class WhileNode extends SentenceNode {
             doNode.consolidate(ast);
         }
         if(this.whileNode.getType().equals("Bool") == false){
-            //ToDo
-            //throw new NoBooleanCondition(this.whileNode.getToken());
+            throw new NoBooleanCondition(this.whileNode.getToken());
         }
 
         this.setType(this.whileNode.getType());
         this.setConsolidated(true);
 
     }
+
+
 
     /**
      * Método que agrega una cantidad de tabulaciones a un string

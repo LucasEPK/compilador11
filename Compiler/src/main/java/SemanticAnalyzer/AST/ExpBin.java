@@ -1,6 +1,10 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.DiferentPrimitiveTypesComparation;
+import Exceptions.SemanticExceptions.AST.InvalidLogicalComparation;
+import Exceptions.SemanticExceptions.AST.NeedToBeInt;
+import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -64,12 +68,14 @@ public class ExpBin extends ExpOp {
     @Override
     public void consolidate(AST ast) {
 
-        if(this.right.getConsolidated() == false){
-            this.right.consolidate(ast);
-        }
         if(this.left.getConsolidated() == false){
             this.left.consolidate(ast);
         }
+
+        if(this.right.getConsolidated() == false){
+            this.right.consolidate(ast);
+        }
+
 
 
         switch (this.getOperator().getLexeme()){
@@ -77,9 +83,8 @@ public class ExpBin extends ExpOp {
             case "||", "&&":
 
                 //Si cualquiera de los dos no es un booleano, es un error
-                if(!this.left.equals("Bool") || !this.right.equals("Bool")){
-                    //ToDo
-                    //throw new TypesDontMatch(this.getToken());
+                if(!this.left.getType().equals("Bool") || !this.right.getType().equals("Bool")){
+                    throw new InvalidLogicalComparation(this.getToken());
                 }
                 this.setType("Bool");
                 break;
@@ -91,8 +96,7 @@ public class ExpBin extends ExpOp {
                 if(!this.left.getType().equals(this.right.getType())){
                     //Si alguno de los dos es primitivo, es un error
                     if(ast.isPrimitive(this.left.getType()) || ast.isPrimitive(this.right.getType())){
-                        //ToDo
-                        //throw new TypesDontMatch(this.getToken());
+                        throw new DiferentPrimitiveTypesComparation(this.getToken());
                     }
                 }
                 this.setType("Bool");
@@ -102,8 +106,7 @@ public class ExpBin extends ExpOp {
 
                 //Si cualquiera de los dos no es un entero, es un error
                 if(!this.left.getType().equals("Int") || !this.right.getType().equals("Int")){
-                    //ToDo
-                    //throw new TypesDontMatch(this.getToken());
+                    throw new NeedToBeInt(this.getToken());
                 }
                 this.setType("Bool");
                 break;
@@ -112,8 +115,7 @@ public class ExpBin extends ExpOp {
 
                 //Si cualquiera de los dos no es un entero, es un error
                 if(!this.left.getType().equals("Int") || !this.right.getType().equals("Int")){
-                    //ToDo
-                    //throw new TypesDontMatch(this.getToken());
+                    throw new NeedToBeInt(this.getToken());
                 }
                 this.setType("Int");
                 break;

@@ -350,4 +350,8 @@ public class AST implements Commons {
         }
         return inherithed;
     }
+
+    public Methods searchConstructor(String struct){
+        return this.symbolTable.getStructs().get(struct).getConstructor();
+    }
 }

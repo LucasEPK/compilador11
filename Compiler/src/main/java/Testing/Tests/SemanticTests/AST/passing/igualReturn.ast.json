@@ -78,27 +78,32 @@
  					{
 						"nombre": "ExpBin",
 						"left": 						{
-							"nombre": "Literal",
-							"value": "3",
-							"type": "Int"
-						}
+							"nombre": "ParenthizedExpression",
+							"value": "==",
+							"type": "Bool",
+							"parenthizedExpression": 							{
+								"nombre": "ExpBin",
+								"left": 								{
+									"nombre": "Literal",
+									"value": "3",
+									"type": "Int"
+								}
 ,
-						"operator": "==",
-						"right": 						{
-							"nombre": "ExpBin",
-							"left": 							{
-								"nombre": "Literal",
-								"value": "3",
-								"type": "Int"
-							}
-,
-							"operator": "==",
-							"right": 							{
-								"nombre": "Literal",
-								"value": "true",
-								"type": "Bool"
+								"operator": "==",
+								"right": 								{
+									"nombre": "Literal",
+									"value": "3",
+									"type": "Int"
+								}
+
 							}
 
+						},
+						"operator": "==",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "true",
+							"type": "Bool"
 						}
 
 					}

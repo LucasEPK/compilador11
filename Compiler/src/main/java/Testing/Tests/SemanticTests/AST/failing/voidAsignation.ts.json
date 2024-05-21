@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\encadenadoTest.ru",
+ "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\failing\voidAsignation.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,94 +253,19 @@
 		}
 	},
  	 {
-		"nombre": "Arreglo",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "arreglo",
-			"tipo": "Array",
-			"tipoArray": "Int",
-			"public": true,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado1o",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "bruh",
-			"tipo": "Encadenado2o",
-			"public": true,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado2o",
+		"nombre": "A",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "test",
+				"nombre": "m1",
 				"static": false,
-				"retorno": "Encadenado3o",
+				"retorno": "void",
 				"posicion": 0,
-				"paramF": [
-						{
-						"nombre": "p1",
-						"tipo": "Bool",
-						"posicion": 0
-						},
-						{
-						"nombre": "p2",
-						"tipo": "Char",
-						"posicion": 1
-						},
-						{
-						"nombre": "p3",
-						"tipo": "Str",
-						"posicion": 2
-						}
-				],
-				"variables": [
-					{
-					"nombre": "encadenado3",
-					"tipo": "Encadenado3o",
-					"posicion": 0
-					}
-				]
+				"paramF": [],
+				"variables": []
 			}
 		],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado3o",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "ola",
-			"tipo": "Array",
-			"tipoArray": "Int",
-			"public": true,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
 		"constructor": {
 			"paramF": [],
 			"variables": []
@@ -353,14 +278,9 @@
 			"posicion": 0,
 			"variables": [
 					{
-					"nombre": "hola",
-					"tipo": "Arreglo",
+					"nombre": "a",
+					"tipo": "A",
 					"posicion": 0
-					},
-					{
-					"nombre": "xd",
-					"tipo": "Encadenado1o",
-					"posicion": 1
 					}
 			]
 	}

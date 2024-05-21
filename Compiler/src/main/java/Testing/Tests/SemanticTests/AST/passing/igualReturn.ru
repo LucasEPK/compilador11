@@ -16,7 +16,7 @@ impl IgualTest {
     }
 
     fn retIgu3() -> Bool{
-        ret 3 == 3 == true;
+        ret (3 == 3) == true;
     }
 
 }

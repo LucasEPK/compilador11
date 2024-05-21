@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.InvalidLogicalComparation;
+import Exceptions.SemanticExceptions.AST.NeedToBeInt;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
@@ -68,16 +70,14 @@ public class ExpUn extends ExpOp {
                 if(right.getType().equals("Int"))
                     setType(right.getType());
                 else
-                    //Sino tiro error ToDo
-                    //throw new TypesDontMatch(this.getToken());
+                    throw new NeedToBeInt(this.getToken());
                 break;
             case "!":
                 if(right.getType().equals("Bool")) {
                     setType(right.getType());
                 }
                 else{
-                    //Sino tiro error ToDo
-                    //throw new TypesDontMatch(this.getToken());
+                    throw new InvalidLogicalComparation(this.getToken());
                 }
                 break;
             default:

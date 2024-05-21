@@ -3,6 +3,7 @@ package SemanticAnalyzer.AST;
 
 import Exceptions.SemanticExceptions.AST.InvalidNilPrimitive;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
+import Exceptions.SemanticExceptions.AST.VoidAsignation;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
@@ -63,6 +64,12 @@ public class AsignationNode extends SentenceNode implements Commons {
         if(this.right.getConsolidated() == false){
             this.right.consolidate(ast);
         }
+
+        //Retornar void no permite asignaciones
+        if(this.right.getType().equals("void")){
+            throw new VoidAsignation(this.right.getToken());
+        }
+
         if(this.left.getType().equals(this.right.getType()) == false){
             //Verifico si es una subclase
             if(ast.isSubStruct(this.left.getType(),this.right.getType()) == false){
