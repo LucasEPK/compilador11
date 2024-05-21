@@ -3071,6 +3071,12 @@ public class    SyntacticAnalyzer {
         match("ObjID");
         PrimaryNode mainChained = encadenadoF1(savedToken);
 
+        // TODO: acá es el error del yeu
+        if (mainChained == null) {
+            mainChained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), savedToken);
+            ((IdNode)mainChained).setIdType(IdType.VARIABLE);
+        }
         // AST-------------
         return mainChained;
     }
