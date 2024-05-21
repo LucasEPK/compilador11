@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\mulReturn.ru",
+ "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\failing\MultipleReturn.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,23 +253,15 @@
 		}
 	},
  	 {
-		"nombre": "MulTest",
+		"nombre": "A",
 		"heredaDe": "Object",
 		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "retMul1",
+				"nombre": "m1",
 				"static": false,
 				"retorno": "Int",
 				"posicion": 0,
-				"paramF": [],
-				"variables": []
-			},
-			{
-				"nombre": "retMul2",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 1,
 				"paramF": [],
 				"variables": []
 			}

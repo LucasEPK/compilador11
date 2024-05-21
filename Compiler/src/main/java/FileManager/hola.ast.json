@@ -3,140 +3,184 @@
 	"clases": [
 		{
 			"nombre": "Block",
-			"class": "LitTest",
+			"class": "A",
+			"method": "m1",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v1",
+						"type": "A",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "p1",
+						"type": "B",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "a1",
+						"type": "B",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "ParenthizedExpression",
+						"value": "p1",
+						"type": "B",
+						"parenthizedExpression": 						{
+							"nombre": "Id",
+							"value": "p1",
+							"type": "B",
+							"arguments": [
+							]
+						}
+
+					}
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v1",
+						"type": "A",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "C",
+						"type": "C",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "p1",
+						"type": "B",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "nil",
+						"type": "nil"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v2",
+						"type": "Object",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Object",
+						"type": "Object",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v2",
+						"type": "Object",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "p1",
+						"type": "B",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v1",
+						"type": "A",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "A",
+						"arguments": [
+						]
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "A",
+			"method": "m2",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "A",
 			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "LitTest",
-			"method": "retNil",
+			"class": "B",
+			"method": ".",
 			"sentences": [
-				{
-					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retNil",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retNil",
-						"value": "nil",
-						"type": "nil"
-					}
-
-				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "LitTest",
-			"method": "retInt",
+			"class": "C",
+			"method": ".",
 			"sentences": [
-				{
-					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retInt",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retInt",
-						"value": "3",
-						"type": "Int"
-					}
-
-				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "LitTest",
-			"method": "retBool",
-			"sentences": [
-				{
-					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retBool",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retBool",
-						"value": "true",
-						"type": "Bool"
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "LitTest",
-			"method": "retBool2",
-			"sentences": [
-				{
-					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retBool2",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retBool2",
-						"value": "false",
-						"type": "Bool"
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "LitTest",
-			"method": "retStr",
-			"sentences": [
-				{
-					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retStr",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retStr",
-						"value": "hola",
-						"type": "Str"
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "LitTest",
-			"method": "retChar",
-			"sentences": [
-				{
-					"nombre": "Return",
-					"class": "LitTest",
-					"method": "retChar",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"class": "LitTest",
-						"method": "retChar",
-						"value": "'h'",
-						"type": "Char"
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "LitTest",
+			"class": "start",
 			"method": "start",
 			"sentences": [
 			]

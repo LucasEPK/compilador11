@@ -1,5 +1,5 @@
 {
-	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\andReturn.ru",
+	"nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\andReturn.ru",
 	"clases": [
 		{
 			"nombre": "Block",
@@ -15,6 +15,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Bool",
 					"return": 
  					{
 						"nombre": "ExpBin",
@@ -43,6 +44,7 @@
 			"sentences": [
 				{
 					"nombre": "Return",
+					"type": "Bool",
 					"return": 
  					{
 						"nombre": "ExpBin",

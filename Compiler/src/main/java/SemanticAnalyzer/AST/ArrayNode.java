@@ -1,5 +1,7 @@
 package SemanticAnalyzer.AST;
 
+import Exceptions.SemanticExceptions.AST.ArrayLengthException;
+import Exceptions.SemanticExceptions.AST.NoPrimitiveType;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -54,15 +56,14 @@ public class ArrayNode extends PrimaryNode{
         }
 
         if(this.length.getType().equals("Int") == false){
-            //ToDo
-            //throw new ArrayLengthException(this.length.getToken());
+            throw new ArrayLengthException(this.length.getToken());
         }
 
         //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
         if(this.getType().equals("Int") == false && this.getType().equals("Str") == false &&
                 this.getType().equals("Char") == false && this.getType().equals("Bool") == false){
-            //ToDo
-            //throw new NoPrimitiveType(this.getToken());
+
+            throw new NoPrimitiveType(this.getToken());
         }
 
         this.setType("Array");

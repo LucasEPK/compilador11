@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
+import Exceptions.SemanticExceptions.AST.InvalidParamSize;
 import Exceptions.SemanticExceptions.AST.SelfInStart;
+import Exceptions.SemanticExceptions.AST.VariableNotFound;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.Struct;
@@ -16,7 +18,7 @@ import java.util.List;
  * */
 public class
 IdNode extends PrimaryNode{
-    private List<ExpressionNode> arguments = new ArrayList<ExpressionNode>();
+    private List<ExpressionNode> arguments = new ArrayList<>();
 
     private IdType idType;
 
@@ -188,7 +190,10 @@ IdNode extends PrimaryNode{
                     actualStruct.getName(),
                     this.getToken()
             );
+        }else if (actualStruct.getConstructor().getParamsOfMethod().size() > 0){
+            throw new InvalidParamSize(this.getToken());
         }
+
 
         if(right != null){
             //Seteo el ultimo tipo llamado en right
@@ -243,18 +248,23 @@ IdNode extends PrimaryNode{
                         this.getToken().getLexeme(),
                         this.getToken()
                 );
-                //Seteo el tipo del método
-                this.setType(actualMethod.getGiveBack().getName());
-                if(right != null){
-                    //Seteo el ultimo tipo llamado en right
-                    right.setLastCalledType(actualMethod.getGiveBack().getName());
-                }
-                //Seteo que esta consolidado
-                this.setConsolidated(true);
+
+            } else if (actualMethod.getParamsOfMethod().size() > 0) {
+                throw new InvalidParamSize(this.getToken());
+
             }
+            //Seteo el tipo del método
+            this.setType(actualMethod.getGiveBack().getName());
+            if(right != null){
+                //Seteo el ultimo tipo llamado en right
+                right.setLastCalledType(actualMethod.getGiveBack().getName());
+            }
+            //Seteo que esta consolidado
+            this.setConsolidated(true);
         }else {
             //Busco el método en la clase que la llamo
             Methods actualMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
+
             if(actualMethod == null){
                 //ToDo
                 //throw new MethodNotFound(this.getToken());
@@ -269,7 +279,11 @@ IdNode extends PrimaryNode{
                         this.getToken().getLexeme(),
                         this.getToken()
                 );
+            } else if (actualMethod.getParamsOfMethod().size() > 0) {
+                throw new InvalidParamSize(this.getToken());
             }
+
+
             //Seteo el tipo del método
             this.setType(actualMethod.getGiveBack().getName());
             if(right != null){
@@ -296,10 +310,8 @@ IdNode extends PrimaryNode{
         varFound = ast.findVariable(this.getStruct(),this.getMethod(),this.getToken());
 
         if(varFound == null){
-            //error
-            //ToDo
-            throw new RuntimeException();
-            //throw new VariableNotFound(this.getToken());
+
+            throw new VariableNotFound(this.getToken());
         }
         //Seteo el tipo de la variable
         this.setType(varFound.getType().getName());

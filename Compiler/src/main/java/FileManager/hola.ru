@@ -1,32 +1,34 @@
-/? Testea si andan los return con literales
-struct LitTest {
+struct A {
+    B a1;
 }
-impl LitTest {
-	.(){}
-	fn retNil() -> void{
-		ret nil;
-	}
+impl A{
+    fn m1(B p1)->void
+    {
+        A v1;
+        Object v2;
+        v1 = p1;
+        a1 = (p1);
+        v1 = new C();
+        p1 = nil;
+        v2 = new Object();
+        v2 = p1;
+        v1 = self;
 
-    fn retInt() -> Int{
-        ret 3;
     }
 
-    fn retBool() -> Bool{
-        ret true;
-    }
-
-    fn retBool2() -> Bool{
-        ret false;
-    }
-
-    fn retStr() -> Str {
-        ret "hola";
-    }
-
-    fn retChar() -> Char {
-        ret 'h';
-    }
-
+    fn m2()->void
+    {}
+    .(){}
 }
-start{
+
+
+struct B : A{}
+impl B {
+    .(){}
 }
+
+struct C : B{}
+impl C{.(){ }}
+
+
+start{}

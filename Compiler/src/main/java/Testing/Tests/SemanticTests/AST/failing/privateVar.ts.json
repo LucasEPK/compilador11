@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\mulReturn.ru",
+ "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\failing\privateVar.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,23 +253,39 @@
 		}
 	},
  	 {
-		"nombre": "MulTest",
+		"nombre": "C",
 		"heredaDe": "Object",
-		"atributos": [],
+		"atributos": [
+			{
+			"nombre": "a",
+			"tipo": "Int",
+			"public": false,
+			"posicion": 0
+			}
+		],
+		"metodos": [],
+		"constructor": {
+			"paramF": [],
+			"variables": []
+		}
+	},
+ 	 {
+		"nombre": "A",
+		"heredaDe": "C",
+		"atributos": [
+			{
+			"nombre": "a",
+			"tipo": "Int",
+			"public": false,
+			"posicion": 0
+			}
+		],
 		"metodos": [
 			{
-				"nombre": "retMul1",
+				"nombre": "m1",
 				"static": false,
-				"retorno": "Int",
+				"retorno": "void",
 				"posicion": 0,
-				"paramF": [],
-				"variables": []
-			},
-			{
-				"nombre": "retMul2",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 1,
 				"paramF": [],
 				"variables": []
 			}

@@ -1,5 +1,5 @@
 { 
- "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\mulReturn.ru",
+ "nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\failing\ArrayAccesNotInt.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -251,39 +251,24 @@
 			"paramF": [],
 			"variables": []
 		}
-	},
- 	 {
-		"nombre": "MulTest",
-		"heredaDe": "Object",
-		"atributos": [],
-		"metodos": [
-			{
-				"nombre": "retMul1",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 0,
-				"paramF": [],
-				"variables": []
-			},
-			{
-				"nombre": "retMul2",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 1,
-				"paramF": [],
-				"variables": []
-			}
-		],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
 	}
 ],
 	"start": {
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"variables": []
+			"variables": [
+					{
+					"nombre": "a",
+					"tipo": "Str",
+					"posicion": 0
+					},
+					{
+					"nombre": "arraybool",
+					"tipo": "Array",
+					"tipoArray": "Bool",
+					"posicion": 1
+					}
+			]
 	}
 }

@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import Exceptions.SemanticExceptions.AST.*;
 import SemanticAnalyzer.SymbolTable.*;
 import LexicalAnalyzer.Token;
 
@@ -169,13 +170,11 @@ public class AST implements Commons {
     public Methods searchMethod(String structName, String methodName, Token token){
         Struct actualStruct = symbolTable.getStructs().get(structName);
         if(actualStruct == null){
-            //ToDo
-            //throw new StructNotFound(token);
+            throw new StructNotFound(token);
         }
         Methods methods = actualStruct.getMethods().get(methodName);
        if(methods == null){
-           //ToDo
-           //throw new MethodNotFound(token);
+           throw new MethodNotFound(token);
        }
          return methods;
     }
@@ -198,8 +197,7 @@ public class AST implements Commons {
 
         //Si las listas tienen distinta cantidad de parametros, entonces error
         if(paramsCall.size() != paramsDef.size()){
-            //ToDo
-            //throw new WrongNumberOfParameters(token);
+            throw new InvalidParamSize(token);
         }
 
         //Comparo los tipos de los parametros
@@ -213,8 +211,7 @@ public class AST implements Commons {
 
             //Si los tipos no son iguales, entonces error
             if(argumentTypeDef.equals(argumentCallType) == false){
-                //ToDo
-                //throw new TypesDontMatch(currentParamCall.getToken(),argumentDef.getToken());
+                throw new DiferentParamType(currentParamCall.getToken());
             }
         }
 
@@ -238,8 +235,7 @@ public class AST implements Commons {
         Map<String, Variable> paramsDef = methods.getParamsOfMethod();
         //Si las listas tienen distinta cantidad de parametros, entonces error
         if (paramsCall.size() != paramsDef.size()) {
-            //ToDo
-            //throw new WrongNumberOfParameters(token);
+            throw new InvalidParamSize(token);
         }
 
         //Comparo los tipos de los parametros
@@ -253,8 +249,7 @@ public class AST implements Commons {
 
             //Si los tipos no son iguales, entonces error
             if (argumentTypeDef.equals(argumentCallType) == false) {
-                //ToDo
-                //throw new TypesDontMatch(currentParamCall.getToken(),argumentDef.getToken());
+                throw new DiferentParamType(currentParamCall.getToken());
             }
         }
     }
@@ -279,8 +274,8 @@ public class AST implements Commons {
         if(!struct.equals("start")){
             structFound = symbolTable.getStructs().get(struct);
             if(structFound == null){
-                //ToDo
-                //throw new StructNotFound(token);
+
+                throw new StructNotFound(token);
             }
             //Verifico si es el constructor
             if(method.equals(".")){
@@ -291,8 +286,8 @@ public class AST implements Commons {
                 methodFound = structFound.getMethods().get(method);
             }
             if(methodFound == null){
-                //ToDo
-                //throw new MethodNotFound(token);
+
+                throw new MethodNotFound(token);
             }
 
 
@@ -316,19 +311,43 @@ public class AST implements Commons {
                     //Si es un atributo, debo verificar que si es heredado, que sea publico
                     if(foundVar != null){
                         if(((Attributes) foundVar).GetIInherited() && !((Attributes) foundVar).GetIsPublic()){
-                            //ToDo
-                            //throw new VariableNotPublic(token);
+                            throw new PrivateVar(token);
                         }
                     }
                     //Si tampoco esta, debe ser un error
                     if(foundVar == null){
-                        //ToDo
-                        //throw new VariableNotFound(token);
+                        throw new VariableNotFound(token);
                     }
                 }
             }
         }
 
         return foundVar;
+    }
+
+    public boolean isSubStruct(String subType, String SsuperType){
+        boolean inherithed = false;
+        Struct subStruct = searchStruct(subType);
+        Struct superStruct = searchStruct(SsuperType);
+        Struct currentStruct = subStruct;
+        if(superStruct == null){
+            if(subStruct == null){
+                inherithed = true;
+            }
+        }
+        else {
+            if (subStruct != null){
+
+                currentStruct = superStruct;
+                while (!inherithed  && currentStruct.getInheritFrom() != null){
+                    if(currentStruct.getInheritFrom().equals(subStruct) ){
+                        inherithed = true;
+                    }else {
+                        currentStruct = currentStruct.getInheritFrom();
+                    }
+                }
+            }
+        }
+        return inherithed;
     }
 }

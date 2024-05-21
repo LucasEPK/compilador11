@@ -1,6 +1,8 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.InvalidNilPrimitive;
+import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
@@ -62,9 +64,21 @@ public class AsignationNode extends SentenceNode implements Commons {
             this.right.consolidate(ast);
         }
         if(this.left.getType().equals(this.right.getType()) == false){
-            //ToDo
-            //throw new TypeMismatch(this.left.getToken(),this.right.getToken());
+            //Verifico si es una subclase
+            if(ast.isSubStruct(this.left.getType(),this.right.getType()) == false){
+                //Si es una referencia a un objeto puede ser nil
+                if(this.right.getType().equals("nil") ){
+                    if(!ast.isPrimitive(this.left.getType()) == false){
+                        throw new InvalidNilPrimitive(this.left.getToken());
+                    }
+                }else {
+                    throw new TypesDontMatch(this.left.getToken());
+                }
+            }
         }
+
+
+        setConsolidated(true);
 
     }
 
