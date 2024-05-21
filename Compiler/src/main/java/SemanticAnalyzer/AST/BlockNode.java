@@ -1,9 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
-import Exceptions.SemanticExceptions.AST.MultipleReturn;
-import Exceptions.SemanticExceptions.AST.ReturnInStart;
-import Exceptions.SemanticExceptions.AST.ReturnTypeDontMatch;
+import Exceptions.SemanticExceptions.AST.*;
 import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -79,7 +77,9 @@ public class BlockNode extends SentenceNode implements Commons {
     public void consolidate(AST ast) {
         //Llamo al método consolidate de cada sentencia
         for(SentenceNode sentence : sentenceList){
-            sentence.consolidate(ast);
+            if(sentence.consolidated == false){
+                sentence.consolidate(ast);
+            }
         }
 
         //Llamo al método consolidate de cada sentencia para verificar los tipos de return
@@ -94,7 +94,6 @@ public class BlockNode extends SentenceNode implements Commons {
                         setType(sentence.getType());
                     }else {
                         if(!getType().equals(sentence.getType())){
-                            //ToDo
                             throw new MultipleReturn(sentence.getReferenceToken());
                         }
                     }
@@ -107,7 +106,7 @@ public class BlockNode extends SentenceNode implements Commons {
             //Comparo retorno del bloque y del método
             if(!getStruct().equals("start")){
                 Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
-                if(method == null){
+                if(method.getGiveBack() == null){
                     String returnType = "void";
                     if(!returnType.equals(getType())){
                         throw new ReturnTypeDontMatch(this.getReferenceToken());
@@ -116,33 +115,41 @@ public class BlockNode extends SentenceNode implements Commons {
                     String methodType = method.getGiveBack().getName();
                     boolean hasReturn = false;
                     for(SentenceNode sentence : sentenceList){
+                        //Verifico si el método tiene return
                         if(sentence instanceof ReturnNode){
                             hasReturn = true;
                         }
                     }
                     if(!hasReturn && !methodType.equals("void")){
-                        System.out.println("chau");
-                        //Todo
-                        //throw new NoReturn(this.getToken());
+                        throw new NoReturnInMethod(method.getToken());
                     }
                     if(!methodType.equals(getType())){
                         if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
-                            //ToDo
-                            System.out.println("a");
-                            //throw new ReturnTypeDontMatch(this.getReferenceToken());
+                            throw new ReturnTypeDontMatch(method.getToken());
 
                         }
                     }
                 }
             }
-            this.setConsolidated(true);
+
+        }else {
+            boolean hasReturn = false;
+            Methods method = ast.searchConstructor(this.struct);
+            for(SentenceNode sentence: sentenceList){
+                if(sentence instanceof ReturnNode){
+                    hasReturn = true;
+                }
+            }
+            if(hasReturn){
+                throw new ReturnInConstructor(method.getToken());
+            }
         }
 
-
-
-
+        this.setConsolidated(true);
 
     }
+
+
 
     /**
      * Método que agrega una cantidad de tabulaciones a un string

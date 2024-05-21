@@ -1,8 +1,6 @@
 package SemanticAnalyzer.AST;
 
-import Exceptions.SemanticExceptions.AST.InvalidParamSize;
-import Exceptions.SemanticExceptions.AST.SelfInStart;
-import Exceptions.SemanticExceptions.AST.VariableNotFound;
+import Exceptions.SemanticExceptions.AST.*;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.Struct;
@@ -51,7 +49,6 @@ IdNode extends PrimaryNode{
      */
     @Override
     public String toJson(int tabs) {
-        // TODO: fijarse a la derecha si hay algo, si lo hay imprimirlo
         String json = addtabs(tabs) + "{\n";
         json += addtabs(tabs+1) + "\"nombre\": \"" + "Id" + "\",\n";
 
@@ -140,8 +137,7 @@ IdNode extends PrimaryNode{
         SymbolTable symbolTable = ast.getSymbolTable();
         //Si llamo a self desde start, entonces es un error
         if(this.getStruct().equals("start")){
-            //ToDo
-            //throw  new SelfInStart(this.getToken());
+            throw  new SelfInStart(this.getToken());
         }
         if(right != null){
             //Seteo el ultimo tipo llamado en right
@@ -175,8 +171,7 @@ IdNode extends PrimaryNode{
         //Verifico que la clase del constructor exista
         Struct actualStruct = ast.searchStruct(this.getToken().getLexeme());
         if(actualStruct == null){
-            //ToDo
-            //throw new StructNotFound(this.getToken());
+            throw new StructNotFound(this.getToken());
         }
 
 
@@ -230,13 +225,11 @@ IdNode extends PrimaryNode{
             //Como existe en la misma clase, busco el método en la clase actual
             //Si estoy en la clase start, es un error
             if(this.getStruct().equals("start")){
-                //ToDo
-                //throw new methodInStart(this.getToken());
+                throw new MethodInStart(this.getToken());
             }
             Methods actualMethod = ast.searchMethod(this.getStruct(),this.getToken().getLexeme(),this.getToken());
             if(actualMethod == null){
-                //ToDo
-                //throw new MethodNotFound(this.getToken());
+                throw new MethodNotFound(this.getToken());
             }
             //Chequeo que se pasen los parámetros correctos
             if(this.arguments != null){
@@ -266,8 +259,7 @@ IdNode extends PrimaryNode{
             Methods actualMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
 
             if(actualMethod == null){
-                //ToDo
-                //throw new MethodNotFound(this.getToken());
+                throw new MethodNotFound(this.getToken());
             }
             //Chequeo que se pasen los parámetros correctos
             if(this.arguments != null){
@@ -344,8 +336,7 @@ IdNode extends PrimaryNode{
 
         Struct actualStruct = ast.searchStruct(this.getToken().getLexeme());
         if(actualStruct == null){
-            //ToDo
-            //throw new StructNotFound(this.getToken());
+            throw new StructNotFound(this.getToken());
         }
 
         if(right != null){

@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import Exceptions.SemanticExceptions.AST.ConditionNoIsBool;
 import Exceptions.SemanticExceptions.AST.MultipleReturnType;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -86,8 +87,7 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
             this.thenNode.consolidate(ast);
         }
         if(this.ifNode.getType().equals("Bool") == false){
-            //ToDo
-            //throw new NoBooleanCondition(this.whileNode.getToken());
+            throw new ConditionNoIsBool(this.ifNode.getToken());
         }
         this.setType(thenNode.getType());
         this.setConsolidated(true);
@@ -98,8 +98,7 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
             }
             //Si los tipos de else y de then son diferentes
             if(!this.elseNode.getType().equals(this.thenNode.getType())){
-                //ToDo
-                //throw new MultipleReturnType(this.getToken());
+                throw new MultipleReturnType(this.getReferenceToken());
             }
 
             //Si los tipos de else y de then no son void
@@ -109,8 +108,7 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
                     //Seteo que el tipo del nodo if es el mismo que el tipo del nodo then
                     this.setType(thenNode.getType());
                 }else {
-                    //ToDo
-                    //throw new MultipleReturnType(this.thenNode.getToken());
+                    throw new MultipleReturnType(this.thenNode.getReferenceToken());
                 }
 
             }else if(!this.thenNode.getType().equals("void")){
