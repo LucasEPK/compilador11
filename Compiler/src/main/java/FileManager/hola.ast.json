@@ -10,25 +10,30 @@
 		},
 		{
 			"nombre": "Block",
+			"class": "A",
+			"method": "m1",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
 			"class": "start",
 			"method": "start",
 			"sentences": [
 				{
-					"nombre": "Asignation",
-					"left": 					{
+					"nombre": "Id",
+					"value": "A",
+					"type": "void",
+					"chained": 					{
 						"nombre": "Id",
-						"value": "a",
-						"type": "A",
+						"value": "m1",
+						"type": "void",
 						"arguments": [
 						]
 					}
 ,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "nil",
-						"type": "nil"
-					}
-
+					"arguments": [
+					]
 				}
 			]
 		}

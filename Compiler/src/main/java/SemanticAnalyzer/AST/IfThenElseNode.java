@@ -96,10 +96,10 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
             if(this.elseNode.getConsolidated() == false){
                 this.elseNode.consolidate(ast);
             }
-            //Si los tipos de else y de then son diferentes
+            /*Si los tipos de else y de then son diferentes
             if(!this.elseNode.getType().equals(this.thenNode.getType())){
                 throw new MultipleReturnType(this.getReferenceToken());
-            }
+            }*/
 
             //Si los tipos de else y de then no son void
             if(!this.elseNode.getType().equals("void") && !this.thenNode.getType().equals("void")){
@@ -136,4 +136,5 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
         }
         return tabsString;
     }
+
 }

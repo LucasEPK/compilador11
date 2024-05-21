@@ -19,6 +19,8 @@ public abstract class SentenceNode implements Commons {
 
     private String type  = "void";
 
+    private boolean  typesIsArray = false;
+
     // Esta variable se usa para errores y saber donde empieza la sentencia
     private Token referenceToken;
 
@@ -34,6 +36,9 @@ public abstract class SentenceNode implements Commons {
         return consolidated;
     }
 
+    public boolean getTypesIsArray() {
+        return typesIsArray;
+    }
     public String getType() {
         return type;
     }
@@ -56,6 +61,10 @@ public abstract class SentenceNode implements Commons {
 
     public void setStruct(String struct) {
         this.struct = struct;
+    }
+
+    public void setTypesIsArray(boolean typesIsArray) {
+        this.typesIsArray = typesIsArray;
     }
 
     public void setConsolidated(boolean consolidated) {

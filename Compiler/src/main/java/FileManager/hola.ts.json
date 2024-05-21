@@ -251,19 +251,37 @@
 			"paramF": [],
 			"variables": []
 		}
+	},
+ 	 {
+		"nombre": "A",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "m1",
+				"static": true,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [],
+				"variables": [
+					{
+					"nombre": "c",
+					"tipo": "Char",
+					"posicion": 0
+					}
+				]
+			}
+		],
+		"constructor": {
+			"paramF": [],
+			"variables": []
+		}
 	}
 ],
 	"start": {
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"variables": [
-					{
-					"nombre": "a",
-					"tipo": "Array",
-					"tipoArray": "Int",
-					"posicion": 0
-					}
-			]
+			"variables": []
 	}
 }

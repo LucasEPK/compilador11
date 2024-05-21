@@ -357,19 +357,7 @@ IdNode extends PrimaryNode{
         Methods foundMethod;
 
         foundMethod = ast.searchMethod(this.getToken().getLexeme(),this.right.getToken().getLexeme(), this.getToken());
-        /*
-        if(foundMethod.getIsStatic() == false){
-            //ToDo
-            //error metodo no estatico
-            //throw new MethodNotStatic(this.getToken());
-        }
-        this.setType(foundMethod.getGiveBack().getName());
-        this.setConsolidated(true);
-        if(right != null){
-            //Seteo el ultimo tipo llamado en right
-            right.setLastCalledType(foundMethod.getGiveBack().getName());
-        }
-        */
+
 
         Struct actualStruct = ast.searchStruct(this.getToken().getLexeme());
         if(actualStruct == null){
