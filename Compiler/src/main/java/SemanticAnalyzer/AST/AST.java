@@ -355,7 +355,7 @@ public class AST implements Commons {
         return inherithed;
     }
 
-    public Variable findVariableSelf(String struct, Token token){
+    public Variable findVariableSelf(String struct, String method, Token token){
         Struct structFound;
         Variable foundVar;
         structFound = symbolTable.getStructs().get(struct);
@@ -366,9 +366,28 @@ public class AST implements Commons {
         if(foundVar == null){
             throw new VariableNotFound(token);
         }
+
+        Methods searchMethod;
+
+        if(method.equals(".")){
+            //Tenemos cosntructor separado
+            searchMethod = structFound.getConstructor();
+        }else {
+
+            searchMethod = structFound.getMethods().get(method);
+        }
+        //Si no accedo a la varaible desde la misma clase
+        //Si no es publica, error
+        if(searchMethod == null){
+            if(!method.equals(searchMethod) && !((Attributes) foundVar).GetIsPublic() ){
+                throw new PrivateVar(token);
+            }
+        }
+
         if(((Attributes) foundVar).GetIInherited() && !((Attributes) foundVar).GetIsPublic()){
             throw new PrivateVar(token);
         }
+
         return foundVar;
 
     }

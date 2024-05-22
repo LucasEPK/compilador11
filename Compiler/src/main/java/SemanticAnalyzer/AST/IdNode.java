@@ -315,17 +315,15 @@ IdNode extends PrimaryNode{
         if(lastCalledType != null){
             switch (this.getLastCalledIdType()){
                 case SELF:
-                    varFound = ast.findVariableSelf(lastCalledType,this.getToken());
+                    varFound = ast.findVariableSelf(lastCalledType,method,this.getToken());
                     break;
                 case VARIABLE:
-                    varFound = ast.findVariableSelf(this.lastCalledType,this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,method,this.getToken());
                     break;
                 case METHOD:
-                    //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariableSelf(this.lastCalledType,this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,method,this.getToken());
                     break;
                 case STATIC_METHOD:
-                    //TODO chequear si es getMethod() o this.getToken().getLexeme()
                     varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
                     break;
                 case CONSTRUCTOR:
@@ -357,6 +355,7 @@ IdNode extends PrimaryNode{
             }
 
         }
+
 
         //Seteo el tipo de la variable
         this.setType(varFound.getType().getName());

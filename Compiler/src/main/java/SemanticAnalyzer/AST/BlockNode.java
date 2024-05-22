@@ -209,21 +209,29 @@ public class BlockNode extends SentenceNode implements Commons {
 
                             }
                         }
-                        /*Chequeo que si hay return, sea del tipo correcto
-                        Tengo que tener en cuenta caso en donde si retoran nil
-                        no es un error si el tipo no es primitivo
-                         */
+                        if(!methodType.equals(getType())){
+                            if(ast.isPrimitive(getType())){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }else if(!getType().equals("nil")){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        }
+
+
+                        /*
                         //Si los tipos no coinciden
                         //Si el tipo de retorno de retorno es primitivo y el tipo de la sentencia es nil
-                        if (!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")) {
+
+                        if (!methodType.equals(getType()) && (ast.isPrimitive(getType()) && getType().equals("nil"))) {
                             if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
                                 throw new ReturnTypeDontMatch(method.getToken());
                             }
                         }else {
+
                             if(methodReturnArray != getIsArray()){
                                 throw new ReturnTypeDontMatch(method.getToken());
                             }
-                        }
+                        }*/
 
 
                         if(!hasReturn && !methodType.equals("void")){

@@ -88,7 +88,7 @@ public class ArrayNode extends PrimaryNode{
             if(lastCalledType == null){
                 var = ast.findVariable(this.struct,this.method,this.token);
             }else {
-                var = ast.findVariableSelf(lastCalledType,this.token);
+                var = ast.findVariableSelf(lastCalledType,method,this.token);
             }
 
             // Si no encuentro la varaible, es error
