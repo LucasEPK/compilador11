@@ -3211,7 +3211,18 @@ public class    SyntacticAnalyzer {
             // Lambda
         } else {
             if (verifyEquals(firstEncadenado)) {
-                mainChained = encadenado();
+                // AST-------------------------------------------------------------------
+                if (savedToken != null) {
+                    mainChained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                            symbolTable.getCurrentMethod().getName(), savedToken);
+                    ((IdNode)mainChained).setIdType(IdType.VARIABLE);
+                }
+                // ---------------------------------------------------------------------
+                PrimaryNode chained = encadenado();
+
+                // AST-------------------------------------------------------------
+                mainChained.setRight(chained);
+                // ---------------
             } else {
                 match("[");
                 ExpressionNode expNode = expresion();
