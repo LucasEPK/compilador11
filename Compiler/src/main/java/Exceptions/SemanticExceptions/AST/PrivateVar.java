@@ -17,6 +17,6 @@ public class PrivateVar extends ASTExcpetion{
 
     @Override
     public String getExceptionType() {
-        return "SE ESTA INTENTANDO ACCEDER A UNA VARIABLE HERADADA PRIVADA";
+        return "SE ESTA INTENTANDO ACCEDER A UNA VARIABLE PRIVADA";
     }
 }

@@ -315,19 +315,19 @@ IdNode extends PrimaryNode{
         if(lastCalledType != null){
             switch (this.getLastCalledIdType()){
                 case SELF:
-                    varFound = ast.findVariableSelf(lastCalledType,method,this.getToken());
+                    varFound = ast.findVariableSelf(lastCalledType,struct,this.getToken());
                     break;
                 case VARIABLE:
-                    varFound = ast.findVariableSelf(this.lastCalledType,method,this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,struct,this.getToken());
                     break;
                 case METHOD:
-                    varFound = ast.findVariableSelf(this.lastCalledType,method,this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,struct,this.getToken());
                     break;
                 case STATIC_METHOD:
-                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,struct,this.getToken());
                     break;
                 case CONSTRUCTOR:
-                    varFound = ast.findVariable(lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    varFound = ast.findVariableSelf(lastCalledType,struct,this.getToken());
                     if(varFound == null){
                         throw new VariableNotFound(this.getToken());
                     }
