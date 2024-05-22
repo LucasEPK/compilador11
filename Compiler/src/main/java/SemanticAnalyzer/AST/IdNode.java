@@ -140,15 +140,8 @@ IdNode extends PrimaryNode{
         if(this.getStruct().equals("start")){
             throw  new SelfInStart(this.getToken());
         }
-        if(lastCalledType != null){
-            if(!getMethod().equals("start")){
-                Methods method = ast.searchMethod(this.getStruct(),this.getMethod(),this.getToken());
-                if(method.getIsStatic()){
-                    throw new SelfInStaticMethod(this.getToken());
 
-                }
-            }
-        }
+
 
         if(right != null){
             //Seteo el ultimo tipo llamado en right
