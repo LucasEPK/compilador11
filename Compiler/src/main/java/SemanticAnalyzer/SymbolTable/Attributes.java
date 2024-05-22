@@ -6,7 +6,7 @@ package SemanticAnalyzer.SymbolTable;
  * @author Yeumen Silva
  */
 
-public class Attributes extends Variable {
+public class Attributes extends Variable implements Cloneable {
 
 
     //Si es o no pública
@@ -52,6 +52,15 @@ public class Attributes extends Variable {
 
     public boolean GetIsPublic() {
         return isPublic;
+    }
+
+    @Override
+    protected Attributes clone() {
+        try {
+            return (Attributes) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // No debería suceder
+        }
     }
 
     /**

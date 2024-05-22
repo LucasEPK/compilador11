@@ -704,6 +704,7 @@ public class SymbolTable extends Commons {
                         heritanceAttributes.get(actualAttribute.getName()).setInherited(false);
                     }
                 }
+
                 actualStruct.setAttributes(heritanceAttributes);
 
                 // Agrego herencia de métodos
@@ -718,6 +719,8 @@ public class SymbolTable extends Commons {
         }
 
     }
+
+
 
 
     /**
@@ -853,20 +856,21 @@ public class SymbolTable extends Commons {
             }
             //Voy a almacenar todos los atributos actualizando su pos
             for (Attributes attribute : children.getAttributes().values()) {
+                Attributes attributes1 = attribute.clone();
                 //Verifico que el atributo no este declarado
-                attribute.setInherited(true);
+                attributes1.setInherited(true);
 
-                if (attributesList.get(attribute.getName()) == null) {
+                if (attributesList.get(attributes1.getName()) == null) {
                     if (attributesList.isEmpty()) {
-                        attribute.setPos(attributesList.size());
-                        attributesList.put(attribute.getName(), attribute);
+                        attributes1.setPos(attributesList.size());
+                        attributesList.put(attributes1.getName(), attributes1);
                     } else {
                         //Seteo su nueva pos
-                        attribute.setPos(attributesList.size());
-                        attributesList.put(attribute.getName(), attribute);
+                        attributes1.setPos(attributesList.size());
+                        attributesList.put(attributes1.getName(), attributes1);
                     }
                 } else {
-                    throw throwException("DuplicateAttributeHeritance", attribute.getToken());
+                    throw throwException("DuplicateAttributeHeritance", attributes1.getToken());
                 }
 
             }
