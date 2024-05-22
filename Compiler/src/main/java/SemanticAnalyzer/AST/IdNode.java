@@ -107,6 +107,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             right.consolidate(ast);
             this.setType(right.getType());
+            this.setIsArray(right.getIsArray());
         }
 
     }
@@ -179,6 +180,7 @@ IdNode extends PrimaryNode{
             //Paso argumentos del constructor definido
             // Paso nombre del struct
             // Paso nombre del Método (en este caso el consructor)
+            //TODO chequear si es array
             ast.checkParametersConstructor(this.arguments,
                     actualStruct.getName(),
                     this.getToken()
@@ -191,7 +193,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(actualStruct.getName());
-            setLastCalledIdType(IdType.CONSTRUCTOR);
+            right.setLastCalledIdType(IdType.CONSTRUCTOR);
         }
         //El tipo del constructor siempre es la clase a la que pertenece
         this.setType(actualStruct.getName());
@@ -206,6 +208,7 @@ IdNode extends PrimaryNode{
      */
 
     private void consolidateMethod(AST ast){
+        //TODO chequear si es array
         //Verifico si recibe o no parametros
         if(this.arguments != null){
             //Consolido los argumentos
@@ -334,8 +337,10 @@ IdNode extends PrimaryNode{
             if(varFound == null){
                 throw new VariableNotFound(this.getToken());
             }
-            if(varFound.getIsArray()){
 
+            //Si la variable es un array, entonces seteo que el tipo es un array
+            if(varFound.getIsArray()){
+                this.setIsArray(true);
             }
 
         }
@@ -346,7 +351,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(varFound.getType().getName());
-            setLastCalledIdType(IdType.VARIABLE);
+            right.setLastCalledIdType(IdType.VARIABLE);
         }
 
 
@@ -367,7 +372,7 @@ IdNode extends PrimaryNode{
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(actualStruct.getName());
-            setLastCalledIdType(IdType.STATIC_METHOD);
+            right.setLastCalledIdType(IdType.STATIC_METHOD);
         }
 
         this.setType(actualStruct.getName());

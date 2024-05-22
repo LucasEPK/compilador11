@@ -7,7 +7,7 @@ struct LitTest {
 impl LitTest {
 	.(){}
 	fn retNil() -> void{
-		ret nil;
+		ret;
 	}
 
     fn retInt() -> Int{

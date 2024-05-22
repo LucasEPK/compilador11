@@ -15,14 +15,8 @@
 			"sentences": [
 				{
 					"nombre": "Return",
-					"type": "nil",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"value": "nil",
-						"type": "nil"
-					}
-
+					"type": "void",
+					"return": nil
 				}
 			]
 		},

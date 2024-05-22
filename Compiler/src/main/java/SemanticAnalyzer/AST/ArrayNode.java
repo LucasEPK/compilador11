@@ -2,8 +2,10 @@ package SemanticAnalyzer.AST;
 
 import Exceptions.SemanticExceptions.AST.ArrayLengthException;
 import Exceptions.SemanticExceptions.AST.NoPrimitiveType;
+import Exceptions.SemanticExceptions.AST.VariableNotFound;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.Variable;
 
 public class ArrayNode extends PrimaryNode{
 
@@ -65,26 +67,47 @@ public class ArrayNode extends PrimaryNode{
             this.length.consolidate(ast);
         }
 
-
         if(this.length.getType().equals("Int") == false){
             throw new ArrayLengthException(this.length.getToken());
         }
 
-        //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
-        if(this.getToken().getLexeme().equals("Int") == false && this.getToken().getLexeme().equals("Str") == false &&
-                this.getToken().getLexeme().equals("Char") == false && this.getToken().getLexeme().equals("Bool") == false){
+        if(this.getIsConstructor()){
 
-            throw new NoPrimitiveType(this.getToken());
+            //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
+            if(this.getToken().getLexeme().equals("Int") == false && this.getToken().getLexeme().equals("Str") == false &&
+                    this.getToken().getLexeme().equals("Char") == false && this.getToken().getLexeme().equals("Bool") == false){
+
+                throw new NoPrimitiveType(this.getToken());
+            }
+
+            this.setType(this.getToken().getLexeme());
+
+
+        }else {
+            //Busco la variable
+            Variable var = ast.findVariable(this.struct,this.method,this.token);
+            // Si no encuentro la varaible, es error
+            if(var == null){
+                throw  new VariableNotFound(this.token);
+            }
+            //Seteo el tipo del Array
+            this.setType(var.getType().getName());
+
+
+
         }
 
+        //Seteo el booleano de isArray
+        this.setIsArray(true);
+
         this.setConsolidated(true);
-        this.setType(this.getToken().getLexeme());
 
         //Seteo lastCalledType
         if(right != null){
             right.setLastCalledType(this.getType());
             right.setLastCalledIdType(IdType.ARRAY);
         }
+
 
 
     }

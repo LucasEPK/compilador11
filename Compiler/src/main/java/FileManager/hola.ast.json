@@ -13,6 +13,19 @@
 			"class": "A",
 			"method": "m1",
 			"sentences": [
+				{
+					"nombre": "Return",
+					"type": "Int",
+					"return": 
+ 					{
+						"nombre": "Id",
+						"value": "a",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+
+				}
 			]
 		},
 		{
@@ -21,19 +34,49 @@
 			"method": "start",
 			"sentences": [
 				{
-					"nombre": "Id",
-					"value": "A",
-					"type": "void",
-					"chained": 					{
+					"nombre": "Asignation",
+					"left": 					{
 						"nombre": "Id",
-						"value": "m1",
-						"type": "void",
+						"value": "hola",
+						"type": "Int",
 						"arguments": [
 						]
 					}
 ,
-					"arguments": [
-					]
+					"right": 					{
+						"nombre": "Array",
+						"value": "Int",
+						"type": "Int",
+						"length":						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Array",
+						"value": "hola",
+						"type": "Int",
+						"length":						{
+							"nombre": "Literal",
+							"value": "2",
+							"type": "Int"
+						}
+
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "2",
+						"type": "Int"
+					}
+
 				}
 			]
 		}

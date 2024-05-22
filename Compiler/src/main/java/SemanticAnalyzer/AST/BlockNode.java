@@ -82,7 +82,6 @@ public class BlockNode extends SentenceNode implements Commons {
                 throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
             }
         }
-        this.setConsolidated(true);
         //Verifico que el constructor no tenga return
         if(getMethod().equals(".")){
             boolean hasReturn = false;
@@ -95,7 +94,7 @@ public class BlockNode extends SentenceNode implements Commons {
             if(hasReturn){
                 throw new ReturnInConstructor(method.getToken());
             }
-            this.setConsolidated(true);
+
         }else if(isSentenceBlock){
             //Caso en el que el bloque sea un IfNode o BlockNode
             boolean hasReturn = false;
@@ -127,17 +126,19 @@ public class BlockNode extends SentenceNode implements Commons {
             //Chequeo que si hay return, sea del tipo correcto
             Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
             String methodType = method.getGiveBack().getName();
+            boolean methodReturnArray = method.getIsGiveBackArray();
             if(hasReturn){
                 if(!methodType.equals(getType())){
                     if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
-                        System.out.println("j");
                         throw new ReturnTypeDontMatch(method.getToken());
-
+                    }
+                } else {
+                    if(methodReturnArray != getIsArray()){
+                        throw new ReturnTypeDontMatch(method.getToken());
                     }
                 }
             }
 
-            this.setConsolidated(true);
 
         }else if (isSentenceBlock == false){
             for(SentenceNode sentence : sentenceList){
@@ -162,10 +163,10 @@ public class BlockNode extends SentenceNode implements Commons {
                 //Comparo retorno del bloque y del método
                 if (!getStruct().equals("start")) {
                     Methods method = ast.searchMethod(this.struct, this.method, this.getReferenceToken());
+                    boolean methodReturnArray = method.getIsGiveBackArray();
                     if (method.getGiveBack() == null) {
                         String returnType = "void";
                         if (!returnType.equals(getType())) {
-                            System.out.println("a");
                             throw new ReturnTypeDontMatch(this.getReferenceToken());
                         }
                     } else {
@@ -176,6 +177,11 @@ public class BlockNode extends SentenceNode implements Commons {
                         for (SentenceNode sentece : sentenceList) {
                             if (sentece instanceof ReturnNode) {
                                 hasReturn = true;
+
+                                //Si es de tipo array, lo seteo
+                                if(sentece.getIsArray()){
+                                    this.setIsArray(true);
+                                }
                             }
                         }
 
@@ -190,6 +196,10 @@ public class BlockNode extends SentenceNode implements Commons {
                             if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
                                 throw new ReturnTypeDontMatch(method.getToken());
                             }
+                        }else {
+                            if(methodReturnArray != getIsArray()){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
                         }
 
 
@@ -202,10 +212,9 @@ public class BlockNode extends SentenceNode implements Commons {
                 }
             }
 
-
-
-            this.setConsolidated(true);
         }
+
+        this.setConsolidated(true);
 
     }
 

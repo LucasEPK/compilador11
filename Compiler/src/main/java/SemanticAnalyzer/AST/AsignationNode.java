@@ -72,13 +72,19 @@ public class AsignationNode extends SentenceNode implements Commons {
         }
 
 
+        //Si el lado izquierdo es un array, la asignación también lo es
+        if(this.left.getIsArray()){
+            this.setIsArray(true);
+        }
+
+
 
         if(this.left.getType().equals(this.right.getType()) == false){
             //Verifico si es una subclase
             if(ast.isSubStruct(this.left.getType(),this.right.getType()) == false){
                 //Si es una referencia a un objeto puede ser nil
                 if(this.right.getType().equals("nil") ){
-                    if(!ast.isPrimitive(this.left.getType()) == false){
+                    if(ast.isPrimitive(this.left.getType()) && !this.left.getIsArray()){
                         throw new InvalidNilPrimitive(this.left.getToken());
                     }
                 }else {

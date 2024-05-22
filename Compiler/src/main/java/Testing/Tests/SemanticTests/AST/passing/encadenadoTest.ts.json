@@ -361,9 +361,15 @@
 					"posicion": 0
 					},
 					{
+					"nombre": "arregloXd",
+					"tipo": "Array",
+					"tipoArray": "Int",
+					"posicion": 1
+					},
+					{
 					"nombre": "xd",
 					"tipo": "Encadenado1o",
-					"posicion": 1
+					"posicion": 2
 					}
 			]
 	}

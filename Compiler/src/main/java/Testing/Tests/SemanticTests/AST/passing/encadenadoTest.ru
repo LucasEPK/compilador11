@@ -44,6 +44,7 @@ impl Encadenado3o {
 }
 start{
     Arreglo hola;
+    Array Int arregloXd;
     Encadenado1o xd;
     hola = new Arreglo();
     arregloXd = hola.arreglo;
