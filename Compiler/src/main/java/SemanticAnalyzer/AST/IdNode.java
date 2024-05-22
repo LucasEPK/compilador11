@@ -322,7 +322,7 @@ IdNode extends PrimaryNode{
                     break;
                 case METHOD:
                     //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,this.getToken());
                     break;
                 case STATIC_METHOD:
                     //TODO chequear si es getMethod() o this.getToken().getLexeme()
