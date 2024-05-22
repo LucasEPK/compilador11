@@ -317,10 +317,10 @@ IdNode extends PrimaryNode{
                     break;
                 case STATIC_METHOD:
                     //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
                     break;
                 case CONSTRUCTOR:
-                    varFound = ast.findVariable(lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    varFound = ast.findVariable(lastCalledType,this.getMethod(),this.getToken());
                     if(varFound == null){
                         throw new VariableNotFound(this.getToken());
                     }

@@ -66,7 +66,7 @@ public class WhileNode extends SentenceNode {
             throw new NoBooleanCondition(this.whileNode.getToken());
         }
 
-        this.setType(this.whileNode.getType());
+        this.setType(this.doNode.getType());
         this.setConsolidated(true);
 
     }
