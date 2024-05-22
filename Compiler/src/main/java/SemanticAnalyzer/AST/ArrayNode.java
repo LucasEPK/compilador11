@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 import Exceptions.SemanticExceptions.AST.ArrayLengthException;
 import Exceptions.SemanticExceptions.AST.NoPrimitiveType;
+import Exceptions.SemanticExceptions.AST.VariableNoIsArray;
 import Exceptions.SemanticExceptions.AST.VariableNotFound;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
@@ -72,7 +73,6 @@ public class ArrayNode extends PrimaryNode{
         }
 
         if(this.getIsConstructor()){
-
             //Si el tipo no es un tipo primitivo, es un error (Int,Str,Char,Bool)
             if(this.getToken().getLexeme().equals("Int") == false && this.getToken().getLexeme().equals("Str") == false &&
                     this.getToken().getLexeme().equals("Char") == false && this.getToken().getLexeme().equals("Bool") == false){
@@ -89,7 +89,10 @@ public class ArrayNode extends PrimaryNode{
             if(lastCalledType == null){
                 var = ast.findVariable(this.struct,this.method,this.token);
             }else {
-                var = ast.findVariableSelf(lastCalledType,this.token);
+                var = ast.findVariableSelf(lastCalledType,struct,this.token);
+            }
+            if(var.getIsArray() == false){
+                throw new VariableNoIsArray(this.token);
             }
 
             // Si no encuentro la varaible, es error

@@ -170,6 +170,7 @@ public class AST implements Commons {
     public Methods searchMethod(String structName, String methodName, Token token){
         Struct actualStruct = symbolTable.getStructs().get(structName);
         if(actualStruct == null){
+            System.out.println("No se encontro el struct");
             throw new StructNotFound(token);
         }
         Methods methods = actualStruct.getMethods().get(methodName);
@@ -354,7 +355,7 @@ public class AST implements Commons {
         return inherithed;
     }
 
-    public Variable findVariableSelf(String struct, Token token){
+    public Variable findVariableSelf(String struct, String currentStruct, Token token){
         Struct structFound;
         Variable foundVar;
         structFound = symbolTable.getStructs().get(struct);
@@ -365,9 +366,33 @@ public class AST implements Commons {
         if(foundVar == null){
             throw new VariableNotFound(token);
         }
+
+        Struct calledStruct  = null;
+        Methods calledMethod = null;
+        if(currentStruct.equals("start")){
+            //Tenemos start definido como método
+            calledMethod = symbolTable.getStart();
+        }else {
+            calledStruct = symbolTable.getStructs().get(currentStruct);
+        }
+        //Si no accedo a la varaible desde la misma clase
+        //Si no es publica, error
+
+        if(calledMethod == null){
+            if(!struct.equals(calledStruct.getName()) && !((Attributes) foundVar).GetIsPublic() ){
+                throw new PrivateVar(token);
+            }
+        } else if (calledStruct == null){
+            if(!struct.equals("start") && !((Attributes) foundVar).GetIsPublic() ){
+                throw new PrivateVar(token);
+            }
+        }
+
+
         if(((Attributes) foundVar).GetIInherited() && !((Attributes) foundVar).GetIsPublic()){
             throw new PrivateVar(token);
         }
+
         return foundVar;
 
     }

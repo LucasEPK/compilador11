@@ -79,7 +79,9 @@ public class BlockNode extends SentenceNode implements Commons {
         for(SentenceNode sentence : sentenceList) {
             //Verifico que start no tenga return
             if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")) {
-                throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                if(((ReturnNode) sentence).getReturnValueNode() != null){
+                    throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                }
             }
         }
         //Verifico que el constructor no tenga return
@@ -107,7 +109,10 @@ public class BlockNode extends SentenceNode implements Commons {
             for(SentenceNode sentence : sentenceList){
                 //Verifico que start no tenga return
                 if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
-                    throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                    if(((ReturnNode) sentence).getReturnValueNode() != null){
+                        throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                    }
+
                 }
                 if(!sentence.getType().equals("void")){
                     if(!(sentence instanceof PrimaryNode)){
@@ -122,22 +127,26 @@ public class BlockNode extends SentenceNode implements Commons {
                 }
             }
 
-
-            //Chequeo que si hay return, sea del tipo correcto
-            Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
-            String methodType = method.getGiveBack().getName();
-            boolean methodReturnArray = method.getIsGiveBackArray();
-            if(hasReturn){
-                if(!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")){
-                    if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
-                        throw new ReturnTypeDontMatch(method.getToken());
-                    }
-                } else {
-                    if(methodReturnArray != getIsArray()){
-                        throw new ReturnTypeDontMatch(method.getToken());
+            if(!getMethod().equals(".")){
+                if(!getStruct().equals("start")){
+                    //Chequeo que si hay return, sea del tipo correcto
+                    Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
+                    String methodType = method.getGiveBack().getName();
+                    boolean methodReturnArray = method.getIsGiveBackArray();
+                    if(hasReturn){
+                        if(!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")){
+                            if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        } else {
+                            if(methodReturnArray != getIsArray()){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        }
                     }
                 }
             }
+
 
 
         }else if (isSentenceBlock == false){
@@ -175,6 +184,9 @@ public class BlockNode extends SentenceNode implements Commons {
                         String typeIfThenElse = null;
                         boolean hasReturn = false;
                         for (SentenceNode sentece : sentenceList) {
+                            if(sentece instanceof IfThenElseNode){
+                                typeIfThenElse = checkIfType((IfThenElseNode) sentece,ast);
+                            }
                             if (sentece instanceof ReturnNode) {
                                 hasReturn = true;
 
@@ -197,25 +209,43 @@ public class BlockNode extends SentenceNode implements Commons {
 
                             }
                         }
-                        /*Chequeo que si hay return, sea del tipo correcto
-                        Tengo que tener en cuenta caso en donde si retoran nil
-                        no es un error si el tipo no es primitivo
-                         */
-                        //Si los tipos no coinciden
-                        //Si el tipo de retorno de retorno es primitivo y el tipo de la sentencia es nil
-                        if (!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")) {
-                            if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
+                        if(!methodType.equals(getType())){
+                            if(ast.isPrimitive(getType())){
                                 throw new ReturnTypeDontMatch(method.getToken());
-                            }
-                        }else {
-                            if(methodReturnArray != getIsArray()){
+                            }else if(!getType().equals("nil")){
                                 throw new ReturnTypeDontMatch(method.getToken());
                             }
                         }
 
 
+                        /*
+                        //Si los tipos no coinciden
+                        //Si el tipo de retorno de retorno es primitivo y el tipo de la sentencia es nil
+
+                        if (!methodType.equals(getType()) && (ast.isPrimitive(getType()) && getType().equals("nil"))) {
+                            if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        }else {
+
+                            if(methodReturnArray != getIsArray()){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        }*/
+
+
                         if(!hasReturn && !methodType.equals("void")){
-                            throw new NoReturnInMethod(method.getToken());
+                            if(typeIfThenElse == null){
+                                throw new NoReturnInMethod(method.getToken());
+                            }
+
+                        }
+                        //Si el método tiene return, y su retorno es distinto de void
+                        if(hasReturn && !getType().equals("void")){
+                            //Si el método deberia retornar void
+                            if(methodType.equals("void")){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
                         }
 
 
@@ -227,6 +257,23 @@ public class BlockNode extends SentenceNode implements Commons {
 
         this.setConsolidated(true);
 
+    }
+
+    private String checkIfType(IfThenElseNode sentence, AST ast){
+        String elseType = null;
+        String thenType = sentence.getThenNode().getType();
+        if(sentence.getElseNode() != null){
+            elseType = sentence.getElseNode().getType();
+        }else {
+            return null;
+        }
+        //Comparo los tipos que tienen then y else
+        if(!thenType.equals(elseType)){
+            if(!ast.isSubStruct(thenType,elseType)){
+                    return null;
+            }
+        }
+        return thenType;
     }
 
 

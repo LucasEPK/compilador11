@@ -136,9 +136,13 @@ IdNode extends PrimaryNode{
     private void consolidateSelf(AST ast){
         SymbolTable symbolTable = ast.getSymbolTable();
         //Si llamo a self desde start, entonces es un error
+
         if(this.getStruct().equals("start")){
             throw  new SelfInStart(this.getToken());
         }
+
+
+
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(this.getStruct());
@@ -261,10 +265,15 @@ IdNode extends PrimaryNode{
             this.setConsolidated(true);
         }else {
             //Busco el método en la clase que la llamo
+
             Methods actualMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
+
 
             if(actualMethod == null){
                 throw new MethodNotFound(this.getToken());
+            }
+            if(!actualMethod.getIsStatic() && this.getLastCalledIdType()==IdType.STATIC_METHOD){
+                throw new NotEstaticMethod(this.getToken());
             }
             //Chequeo que se pasen los parámetros correctos
             if(this.arguments != null){
@@ -306,21 +315,19 @@ IdNode extends PrimaryNode{
         if(lastCalledType != null){
             switch (this.getLastCalledIdType()){
                 case SELF:
-                    varFound = ast.findVariableSelf(lastCalledType,this.getToken());
+                    varFound = ast.findVariableSelf(lastCalledType,struct,this.getToken());
                     break;
                 case VARIABLE:
-                    varFound = ast.findVariableSelf(this.lastCalledType,this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,struct,this.getToken());
                     break;
                 case METHOD:
-                    //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,struct,this.getToken());
                     break;
                 case STATIC_METHOD:
-                    //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findVariableSelf(this.lastCalledType,struct,this.getToken());
                     break;
                 case CONSTRUCTOR:
-                    varFound = ast.findVariable(lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findVariableSelf(lastCalledType,struct,this.getToken());
                     if(varFound == null){
                         throw new VariableNotFound(this.getToken());
                     }
@@ -348,6 +355,7 @@ IdNode extends PrimaryNode{
             }
 
         }
+
 
         //Seteo el tipo de la variable
         this.setType(varFound.getType().getName());
