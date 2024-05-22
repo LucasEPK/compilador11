@@ -7,6 +7,8 @@ import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 public class ArrayNode extends PrimaryNode{
 
+    private boolean isConstructor = false;
+
     private ExpressionNode length;
 
     public ArrayNode(String struct, String method, Token token) {
@@ -23,6 +25,14 @@ public class ArrayNode extends PrimaryNode{
 
     public void setLength(ExpressionNode length) {
         this.length = length;
+    }
+
+    public void setIsConstructor(boolean isConstructor){
+        this.isConstructor = isConstructor;
+    }
+
+    public boolean getIsConstructor(){
+        return this.isConstructor;
     }
 
     /**

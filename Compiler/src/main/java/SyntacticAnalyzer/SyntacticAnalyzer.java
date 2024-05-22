@@ -2893,6 +2893,7 @@ public class    SyntacticAnalyzer {
             // AST-----------------
             constructor = new ArrayNode(symbolTable.getCurrentStruct().getName(),
                     symbolTable.getCurrentMethod().getName(), this.actualToken);
+            ((ArrayNode)constructor).setIsConstructor(true);
             // ----------------------------------
 
             tipoPrimitivo();

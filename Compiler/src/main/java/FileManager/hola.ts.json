@@ -1,5 +1,5 @@
 { 
- "nombre": "Compiler/src/main/java/FileManager/hola.ru",
+ "nombre": "src/main/java/FileManager/hola.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -256,22 +256,7 @@
 		"nombre": "A",
 		"heredaDe": "Object",
 		"atributos": [],
-		"metodos": [
-			{
-				"nombre": "m1",
-				"static": true,
-				"retorno": "void",
-				"posicion": 0,
-				"paramF": [],
-				"variables": [
-					{
-					"nombre": "c",
-					"tipo": "Char",
-					"posicion": 0
-					}
-				]
-			}
-		],
+		"metodos": [],
 		"constructor": {
 			"paramF": [],
 			"variables": []
@@ -282,6 +267,13 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"variables": []
+			"variables": [
+					{
+					"nombre": "hola",
+					"tipo": "Array",
+					"tipoArray": "Int",
+					"posicion": 0
+					}
+			]
 	}
 }
