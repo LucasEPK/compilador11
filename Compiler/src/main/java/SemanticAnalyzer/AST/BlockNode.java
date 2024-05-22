@@ -188,11 +188,14 @@ public class BlockNode extends SentenceNode implements Commons {
                         if (typeIfThenElse != null) {
                             if (!typeIfThenElse.equals(methodType)) {
                                 if (!ast.isSubStruct(typeIfThenElse, methodType)) {
+
                                     throw new ReturnTypeDontMatch(method.getToken());
                                 }
                             }
                         }
                         if (!methodType.equals(getType())) {
+                            System.out.println(methodType);
+                            System.out.println(getType());
                             if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
                                 throw new ReturnTypeDontMatch(method.getToken());
                             }
