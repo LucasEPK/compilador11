@@ -261,7 +261,9 @@ IdNode extends PrimaryNode{
             this.setConsolidated(true);
         }else {
             //Busco el método en la clase que la llamo
+
             Methods actualMethod = ast.searchMethod(this.lastCalledType,this.getToken().getLexeme(), this.getToken());
+
 
             if(actualMethod == null){
                 throw new MethodNotFound(this.getToken());

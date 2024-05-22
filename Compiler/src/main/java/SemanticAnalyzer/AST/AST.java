@@ -170,6 +170,7 @@ public class AST implements Commons {
     public Methods searchMethod(String structName, String methodName, Token token){
         Struct actualStruct = symbolTable.getStructs().get(structName);
         if(actualStruct == null){
+            System.out.println("No se encontro el struct");
             throw new StructNotFound(token);
         }
         Methods methods = actualStruct.getMethods().get(methodName);

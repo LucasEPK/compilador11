@@ -122,22 +122,26 @@ public class BlockNode extends SentenceNode implements Commons {
                 }
             }
 
-
-            //Chequeo que si hay return, sea del tipo correcto
-            Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
-            String methodType = method.getGiveBack().getName();
-            boolean methodReturnArray = method.getIsGiveBackArray();
-            if(hasReturn){
-                if(!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")){
-                    if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
-                        throw new ReturnTypeDontMatch(method.getToken());
-                    }
-                } else {
-                    if(methodReturnArray != getIsArray()){
-                        throw new ReturnTypeDontMatch(method.getToken());
+            if(!getMethod().equals(".")){
+                if(!getStruct().equals("start")){
+                    //Chequeo que si hay return, sea del tipo correcto
+                    Methods method = ast.searchMethod(this.struct,this.method,this.getReferenceToken());
+                    String methodType = method.getGiveBack().getName();
+                    boolean methodReturnArray = method.getIsGiveBackArray();
+                    if(hasReturn){
+                        if(!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")){
+                            if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        } else {
+                            if(methodReturnArray != getIsArray()){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
+                        }
                     }
                 }
             }
+
 
 
         }else if (isSentenceBlock == false){
