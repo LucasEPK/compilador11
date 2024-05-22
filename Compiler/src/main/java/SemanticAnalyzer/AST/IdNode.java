@@ -136,9 +136,20 @@ IdNode extends PrimaryNode{
     private void consolidateSelf(AST ast){
         SymbolTable symbolTable = ast.getSymbolTable();
         //Si llamo a self desde start, entonces es un error
+
         if(this.getStruct().equals("start")){
             throw  new SelfInStart(this.getToken());
         }
+        if(lastCalledType != null){
+            if(!getMethod().equals("start")){
+                Methods method = ast.searchMethod(this.getStruct(),this.getMethod(),this.getToken());
+                if(method.getIsStatic()){
+                    throw new SelfInStaticMethod(this.getToken());
+
+                }
+            }
+        }
+
         if(right != null){
             //Seteo el ultimo tipo llamado en right
             right.setLastCalledType(this.getStruct());
