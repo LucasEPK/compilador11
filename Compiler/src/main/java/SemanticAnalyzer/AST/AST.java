@@ -59,6 +59,9 @@ public class AST implements Commons {
      * @autor Yeumen Silva
      * */
     public String toJson(int tabs,String inputPath) {
+        // Añade clases predefinidas al AST sin consolidarlas
+        addPredefinedStructsToAST();
+
         String json = "{\n";
         json += addtabs(tabs) + "\"nombre\": \"" + inputPath + "\",\n";
         json += addtabs(tabs) + "\"clases\": [\n";
@@ -81,6 +84,99 @@ public class AST implements Commons {
         saveJson(json,inputPath);
 
         return json;
+    }
+
+    private void addPredefinedStructsToAST(){
+        BlockNode predefinedBlock;
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Object");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Int");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Str");
+        predefinedBlock.setMethod("concat");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Str");
+        predefinedBlock.setMethod("length");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Str");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Char");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Bool");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Array");
+        predefinedBlock.setMethod("length");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("Array");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_str");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_int");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_bool");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_char");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_array_int");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_array_str");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_array_bool");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("out_array_char");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("in_str");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("in_int");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("in_bool");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("in_char");
+        blockList.addFirst(predefinedBlock);
+        predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
+        predefinedBlock.setStruct("IO");
+        predefinedBlock.setMethod("");
+        blockList.addFirst(predefinedBlock);
+
     }
 
     /**
