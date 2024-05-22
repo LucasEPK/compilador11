@@ -1267,12 +1267,19 @@ public class    SyntacticAnalyzer {
     private PrimaryNode accesoVarSimpleF(Token savedToken){
 
         // AST------------------------
-        PrimaryNode chained = null;
+        PrimaryNode mainChained = null;
         // ----------------------------
 
         //Primeros Encadenado-Simple-Estrella
         if(verifyEquals(".")){
-            chained = encadenadoSimpleEstrella();
+            PrimaryNode chained = encadenadoSimpleEstrella();
+
+            // AST------------------------------------------------
+            mainChained = new IdNode(symbolTable.getCurrentStruct().getName(),
+                    symbolTable.getCurrentMethod().getName(), savedToken);
+            ((IdNode)mainChained).setIdType(IdType.VARIABLE);
+            mainChained.setRight(chained);
+            // ----------------------------------------------------
         }
         else {
             //Primeros [
@@ -1282,9 +1289,9 @@ public class    SyntacticAnalyzer {
                 match("]");
 
                 // AST------------------------
-                chained = new ArrayNode(symbolTable.getCurrentStruct().getName(),
+                mainChained = new ArrayNode(symbolTable.getCurrentStruct().getName(),
                         symbolTable.getCurrentMethod().getName(), savedToken);
-                ((ArrayNode)chained).setLength(expNode);
+                ((ArrayNode)mainChained).setLength(expNode);
                 // ------------------------------------
             }
             else {
@@ -1298,7 +1305,7 @@ public class    SyntacticAnalyzer {
             }
         }
 
-        return chained;
+        return mainChained;
     }
 
     /**
