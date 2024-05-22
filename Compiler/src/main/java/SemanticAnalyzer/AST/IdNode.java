@@ -266,6 +266,9 @@ IdNode extends PrimaryNode{
             if(actualMethod == null){
                 throw new MethodNotFound(this.getToken());
             }
+            if(!actualMethod.getIsStatic() && this.getLastCalledIdType()==IdType.STATIC_METHOD){
+                throw new NotEstaticMethod(this.getToken());
+            }
             //Chequeo que se pasen los parámetros correctos
             if(this.arguments != null){
                 //Paso argumentos del método definido
@@ -317,10 +320,10 @@ IdNode extends PrimaryNode{
                     break;
                 case STATIC_METHOD:
                     //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
                     break;
                 case CONSTRUCTOR:
-                    varFound = ast.findVariable(lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findVariable(lastCalledType,this.getToken().getLexeme(),this.getToken());
                     if(varFound == null){
                         throw new VariableNotFound(this.getToken());
                     }

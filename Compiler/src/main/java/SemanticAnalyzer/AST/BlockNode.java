@@ -175,6 +175,9 @@ public class BlockNode extends SentenceNode implements Commons {
                         String typeIfThenElse = null;
                         boolean hasReturn = false;
                         for (SentenceNode sentece : sentenceList) {
+                            if(sentece instanceof IfThenElseNode){
+                                typeIfThenElse = checkIfType((IfThenElseNode) sentece,ast);
+                            }
                             if (sentece instanceof ReturnNode) {
                                 hasReturn = true;
 
@@ -215,7 +218,17 @@ public class BlockNode extends SentenceNode implements Commons {
 
 
                         if(!hasReturn && !methodType.equals("void")){
-                            throw new NoReturnInMethod(method.getToken());
+                            if(typeIfThenElse == null){
+                                throw new NoReturnInMethod(method.getToken());
+                            }
+
+                        }
+                        //Si el método tiene return, y su retorno es distinto de void
+                        if(hasReturn && !getType().equals("void")){
+                            //Si el método deberia retornar void
+                            if(methodType.equals("void")){
+                                throw new ReturnTypeDontMatch(method.getToken());
+                            }
                         }
 
 
@@ -227,6 +240,23 @@ public class BlockNode extends SentenceNode implements Commons {
 
         this.setConsolidated(true);
 
+    }
+
+    private String checkIfType(IfThenElseNode sentence, AST ast){
+        String elseType = null;
+        String thenType = sentence.getThenNode().getType();
+        if(sentence.getElseNode() != null){
+            elseType = sentence.getElseNode().getType();
+        }else {
+            return null;
+        }
+        //Comparo los tipos que tienen then y else
+        if(!thenType.equals(elseType)){
+            if(!ast.isSubStruct(thenType,elseType)){
+                    return null;
+            }
+        }
+        return thenType;
     }
 
 
