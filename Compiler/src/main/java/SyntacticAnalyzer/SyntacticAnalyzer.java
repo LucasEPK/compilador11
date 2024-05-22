@@ -2922,11 +2922,12 @@ public class    SyntacticAnalyzer {
 
             match("StructID");
             List<ExpressionNode> arguments = argumentosActuales();
-            llamadaConstructorF1();
+            PrimaryNode chained = llamadaConstructorF1();
 
             // AST----------------------------
             ((IdNode)constructor).setIdType(IdType.CONSTRUCTOR);
             ((IdNode)constructor).setArguments(arguments);
+            constructor.setRight(chained);
             // --------------------------------
         }
 
