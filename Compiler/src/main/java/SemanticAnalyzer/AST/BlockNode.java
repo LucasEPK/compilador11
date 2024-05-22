@@ -114,7 +114,7 @@ public class BlockNode extends SentenceNode implements Commons {
                         if(getType().equals("void")){
                             setType(sentence.getType());
                         }else {
-                            if(!getType().equals(sentence.getType())){
+                            if(!getType().equals(sentence.getType()) ){
                                 throw new MultipleReturn(sentence.getReferenceToken());
                             }
                         }
@@ -128,7 +128,7 @@ public class BlockNode extends SentenceNode implements Commons {
             String methodType = method.getGiveBack().getName();
             boolean methodReturnArray = method.getIsGiveBackArray();
             if(hasReturn){
-                if(!methodType.equals(getType())){
+                if(!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")){
                     if(!ast.isSubStruct(getType(),method.getGiveBack().getName())){
                         throw new ReturnTypeDontMatch(method.getToken());
                     }
@@ -186,16 +186,24 @@ public class BlockNode extends SentenceNode implements Commons {
                         }
 
                         if (typeIfThenElse != null) {
-                            if (!typeIfThenElse.equals(methodType)) {
+                            if (!typeIfThenElse.equals(methodType) && ast.isPrimitive(getType()) && getType().equals("nil")) {
                                 if (!ast.isSubStruct(typeIfThenElse, methodType)) {
-
                                     throw new ReturnTypeDontMatch(method.getToken());
                                 }
+                            }else {
+                                if(methodReturnArray != getIsArray()){
+                                    throw new ReturnTypeDontMatch(method.getToken());
+                                }
+
                             }
                         }
-                        if (!methodType.equals(getType())) {
-                            System.out.println(methodType);
-                            System.out.println(getType());
+                        /*Chequeo que si hay return, sea del tipo correcto
+                        Tengo que tener en cuenta caso en donde si retoran nil
+                        no es un error si el tipo no es primitivo
+                         */
+                        //Si los tipos no coinciden
+                        //Si el tipo de retorno de retorno es primitivo y el tipo de la sentencia es nil
+                        if (!methodType.equals(getType()) && ast.isPrimitive(getType()) && getType().equals("nil")) {
                             if (!ast.isSubStruct(getType(), method.getGiveBack().getName())) {
                                 throw new ReturnTypeDontMatch(method.getToken());
                             }

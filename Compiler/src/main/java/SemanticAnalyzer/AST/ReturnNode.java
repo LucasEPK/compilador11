@@ -61,10 +61,13 @@ public class ReturnNode extends SentenceNode implements Commons {
             //Seteo que es un array si lo es
             this.setIsArray(returnValueNode.getIsArray());
 
-            Struct actualStruct = ast.getSymbolTable().getStructs().get(this.getType());
-            if(actualStruct == null){
-                throw  new StructNotFound(this.getReferenceToken());
+            if(this.getType().equals("nil") == false){
+                Struct actualStruct = ast.getSymbolTable().getStructs().get(this.getType());
+                if(actualStruct == null){
+                    throw  new StructNotFound(this.getReferenceToken());
+                }
             }
+
 
             this.setConsolidated(true);
         }
