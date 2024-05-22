@@ -22,8 +22,8 @@ public class Test {
      */
 
     public void executorTest(){
-        folderExecutor("Compiler/src/main/java/Testing/Tests/SemanticTests/AST/passing", "Pass");
-        folderExecutor("Compiler/src/main/java/Testing/Tests/SemanticTests/AST/failing", "Fail");
+        folderExecutor("src/main/java/Testing/Tests/SemanticTests/AST/passing", "Pass");
+        folderExecutor("src/main/java/Testing/Tests/SemanticTests/AST/failing", "Fail");
     }
 
 

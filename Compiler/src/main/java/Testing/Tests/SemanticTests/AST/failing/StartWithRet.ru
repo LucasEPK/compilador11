@@ -1,9 +1,8 @@
-/? Descripción: caso de prueba que verifica que el start no tenga return
+/? Descripción: caso donde se define metodo en start
 /? Salida esperada:
-/? ERROR: SEMÁNTICO - SENTENCIAS
+/? ERROR: SEMANTICO - SENTENCIAS
 /? | NUMERO DE LINEA: | NUMERO DE COLUMNA: | DESCRIPCION: |
-/? | Linea 10 | COLUMNA 5 | START NO PUEDE TENER RETURN
-
+/? | Linea 10 | COLUMNA 2 | LLAMADA A MÉTODO DESDE START (START NO PUEDE TENER MÉTODOS)
 start{
 Int a;
 ret a;
