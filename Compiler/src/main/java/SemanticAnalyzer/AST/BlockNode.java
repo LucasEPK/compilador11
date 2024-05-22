@@ -79,7 +79,9 @@ public class BlockNode extends SentenceNode implements Commons {
         for(SentenceNode sentence : sentenceList) {
             //Verifico que start no tenga return
             if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")) {
-                throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                if(((ReturnNode) sentence).getReturnValueNode() != null){
+                    throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                }
             }
         }
         //Verifico que el constructor no tenga return
@@ -107,7 +109,10 @@ public class BlockNode extends SentenceNode implements Commons {
             for(SentenceNode sentence : sentenceList){
                 //Verifico que start no tenga return
                 if (sentence instanceof ReturnNode && sentence.getMethod().equals("start") && sentence.getStruct().equals("start")){
-                    throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                    if(((ReturnNode) sentence).getReturnValueNode() != null){
+                        throw new ReturnInStart(((ReturnNode) sentence).getReturnValueNode().getToken());
+                    }
+
                 }
                 if(!sentence.getType().equals("void")){
                     if(!(sentence instanceof PrimaryNode)){
