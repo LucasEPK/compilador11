@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 import Exceptions.SemanticExceptions.AST.ArrayLengthException;
 import Exceptions.SemanticExceptions.AST.NoPrimitiveType;
+import Exceptions.SemanticExceptions.AST.VariableNoIsArray;
 import Exceptions.SemanticExceptions.AST.VariableNotFound;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
@@ -89,6 +90,9 @@ public class ArrayNode extends PrimaryNode{
                 var = ast.findVariable(this.struct,this.method,this.token);
             }else {
                 var = ast.findVariableSelf(lastCalledType,struct,this.token);
+            }
+            if(var.getIsArray() == false){
+                throw new VariableNoIsArray(this.token);
             }
 
             // Si no encuentro la varaible, es error
