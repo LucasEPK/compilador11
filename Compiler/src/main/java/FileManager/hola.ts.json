@@ -1,5 +1,5 @@
 { 
- "nombre": "src/main/java/FileManager/hola.ru",
+ "nombre": "Compiler/src/main/java/FileManager/hola.ru",
 "structs": [
  	 {
 		"nombre": "Object",
@@ -253,73 +253,50 @@
 		}
 	},
  	 {
-		"nombre": "Arreglo",
+		"nombre": "Auto",
 		"heredaDe": "Object",
 		"atributos": [
 			{
-			"nombre": "arreglo",
+			"nombre": "rueda",
+			"tipo": "Rueda",
+			"public": true,
+			"inherited": false,
+			"posicion": 0
+			},
+			{
+			"nombre": "numAuto",
+			"tipo": "Int",
+			"public": true,
+			"inherited": false,
+			"posicion": 1
+			},
+			{
+			"nombre": "instancia",
+			"tipo": "Auto",
+			"public": true,
+			"inherited": false,
+			"posicion": 2
+			},
+			{
+			"nombre": "nombrePasajeros",
 			"tipo": "Array",
-			"tipoArray": "Int",
+			"tipoArray": "Str",
 			"public": true,
 			"inherited": false,
-			"posicion": 0
+			"posicion": 3
 			}
 		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado1o",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "bruh",
-			"tipo": "Encadenado2o",
-			"public": true,
-			"inherited": false,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado2o",
-		"heredaDe": "Object",
-		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "test",
+				"nombre": "metodo1",
 				"static": false,
-				"retorno": "Encadenado3o",
+				"retorno": "void",
 				"posicion": 0,
-				"paramF": [
-						{
-						"nombre": "p1",
-						"tipo": "Bool",
-						"posicion": 0
-						},
-						{
-						"nombre": "p2",
-						"tipo": "Char",
-						"posicion": 1
-						},
-						{
-						"nombre": "p3",
-						"tipo": "Str",
-						"posicion": 2
-						}
-				],
+				"paramF": [],
 				"variables": [
 					{
-					"nombre": "encadenado3",
-					"tipo": "Encadenado3o",
+					"nombre": "claudio",
+					"tipo": "Str",
 					"posicion": 0
 					}
 				]
@@ -331,19 +308,111 @@
 		}
 	},
  	 {
-		"nombre": "Encadenado3o",
+		"nombre": "Rueda",
 		"heredaDe": "Object",
 		"atributos": [
 			{
-			"nombre": "ola",
-			"tipo": "Array",
-			"tipoArray": "Int",
+			"nombre": "numRueda",
+			"tipo": "Int",
 			"public": true,
 			"inherited": false,
 			"posicion": 0
 			}
 		],
-		"metodos": [],
+		"metodos": [
+			{
+				"nombre": "cambiar",
+				"static": false,
+				"retorno": "Int",
+				"posicion": 0,
+				"paramF": [
+						{
+						"nombre": "num1",
+						"tipo": "Int",
+						"posicion": 0
+						},
+						{
+						"nombre": "num2",
+						"tipo": "Int",
+						"posicion": 1
+						}
+				],
+				"variables": [
+					{
+					"nombre": "num",
+					"tipo": "Int",
+					"posicion": 0
+					}
+				]
+			},
+			{
+				"nombre": "dos",
+				"static": true,
+				"retorno": "Int",
+				"posicion": 1,
+				"paramF": [],
+				"variables": []
+			}
+		],
+		"constructor": {
+			"paramF": [
+				{
+				"nombre": "numRueda",
+				"tipo": "Int",
+				"posicion": 0
+				}
+			],
+			"variables": 
+			]
+		}
+	},
+ 	 {
+		"nombre": "A",
+		"heredaDe": "Object",
+		"atributos": [],
+		"metodos": [
+			{
+				"nombre": "voidd",
+				"static": false,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [],
+				"variables": []
+			}
+		],
+		"constructor": {
+			"paramF": [],
+			"variables": []
+		}
+	},
+ 	 {
+		"nombre": "Unrelated",
+		"heredaDe": "Object",
+		"atributos": [
+			{
+			"nombre": "a",
+			"tipo": "Unrelated",
+			"public": false,
+			"inherited": false,
+			"posicion": 0
+			}
+		],
+		"metodos": [
+			{
+				"nombre": "voidd",
+				"static": false,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [],
+				"variables": [
+					{
+					"nombre": "b",
+					"tipo": "Unrelated",
+					"posicion": 0
+					}
+				]
+			}
+		],
 		"constructor": {
 			"paramF": [],
 			"variables": []
@@ -354,23 +423,6 @@
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"variables": [
-					{
-					"nombre": "hola",
-					"tipo": "Arreglo",
-					"posicion": 0
-					},
-					{
-					"nombre": "arregloXd",
-					"tipo": "Array",
-					"tipoArray": "Int",
-					"posicion": 1
-					},
-					{
-					"nombre": "xd",
-					"tipo": "Encadenado1o",
-					"posicion": 2
-					}
-			]
+			"variables": []
 	}
 }

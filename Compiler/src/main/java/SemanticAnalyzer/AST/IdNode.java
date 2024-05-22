@@ -91,6 +91,7 @@ IdNode extends PrimaryNode{
     @Override
     public void consolidate(AST ast) {
 
+
         if(this.idType == IdType.SELF){
             consolidateSelf(ast);
         }
@@ -208,6 +209,7 @@ IdNode extends PrimaryNode{
      */
 
     private void consolidateMethod(AST ast){
+
         //TODO chequear si es array
         //Verifico si recibe o no parametros
         if(this.arguments != null){
@@ -311,11 +313,11 @@ IdNode extends PrimaryNode{
                     break;
                 case METHOD:
                     //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
                     break;
                 case STATIC_METHOD:
                     //TODO chequear si es getMethod() o this.getToken().getLexeme()
-                    varFound = ast.findVariable(this.lastCalledType,this.getMethod(),this.getToken());
+                    varFound = ast.findVariable(this.lastCalledType,this.getToken().getLexeme(),this.getToken());
                     break;
                 case CONSTRUCTOR:
                     varFound = ast.findVariable(lastCalledType,this.getToken().getLexeme(),this.getToken());

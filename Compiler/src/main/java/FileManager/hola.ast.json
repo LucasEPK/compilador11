@@ -3,24 +3,124 @@
 	"clases": [
 		{
 			"nombre": "Block",
-			"class": "A",
+			"class": "Auto",
 			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "A",
-			"method": "m1",
+			"class": "Auto",
+			"method": "metodo1",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "Str",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "nombrePasajeros",
+							"type": "Str",
+							"arguments": [
+							]
+						}
+,
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Array",
+						"value": "Str",
+						"type": "Str",
+						"length":						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Literal",
+								"value": "3",
+								"type": "Int"
+							}
+,
+							"operator": "+",
+							"right": 							{
+								"nombre": "Literal",
+								"value": "1",
+								"type": "Int"
+							}
+
+						}
+
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "nombrePasajeros",
+						"type": "Str",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "metodo2",
+						"type": "Str",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "self",
+								"type": "Auto",
+								"arguments": [
+								]
+							}
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "a",
+						"type": "Str",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Array",
+						"value": "nombrePasajeros",
+						"type": "Str",
+						"length":						{
+							"nombre": "Literal",
+							"value": "2",
+							"type": "Int"
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Auto",
+			"method": "metodo2",
 			"sentences": [
 				{
 					"nombre": "Return",
-					"type": "Int",
+					"type": "Str",
 					"return": 
  					{
 						"nombre": "Id",
-						"value": "a",
-						"type": "Int",
+						"value": "nombrePasajeros",
+						"type": "Str",
 						"arguments": [
 						]
 					}
@@ -33,51 +133,6 @@
 			"class": "start",
 			"method": "start",
 			"sentences": [
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "hola",
-						"type": "Int",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Array",
-						"value": "Int",
-						"type": "Int",
-						"length":						{
-							"nombre": "Literal",
-							"value": "3",
-							"type": "Int"
-						}
-
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Array",
-						"value": "hola",
-						"type": "Int",
-						"length":						{
-							"nombre": "Literal",
-							"value": "2",
-							"type": "Int"
-						}
-
-					}
-,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "2",
-						"type": "Int"
-					}
-
-				}
 			]
 		}
 	]

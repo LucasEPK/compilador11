@@ -1,5 +1,5 @@
 {
-	"nombre": "C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\encadenadoTest.ru",
+	"nombre": "C:\Users\yeume\Documents\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing\encadenadoTest.ru",
 	"clases": [
 		{
 			"nombre": "Block",
@@ -11,7 +11,15 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "self",
-						"type": "void",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "arreglo",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
 						"arguments": [
 						]
 					}
@@ -19,8 +27,57 @@
 					"right": 					{
 						"nombre": "Array",
 						"value": "Int",
-						"type": "void",
-						"length": "SemanticAnalyzer.AST.ExpBin@2e5d6d97"
+						"type": "Int",
+						"length":						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Literal",
+								"value": "2",
+								"type": "Int"
+							}
+,
+							"operator": "+",
+							"right": 							{
+								"nombre": "ExpBin",
+								"left": 								{
+									"nombre": "Literal",
+									"value": "1",
+									"type": "Int"
+								}
+,
+								"operator": "+",
+								"right": 								{
+									"nombre": "ExpBin",
+									"left": 									{
+										"nombre": "Literal",
+										"value": "1",
+										"type": "Int"
+									}
+,
+									"operator": "+",
+									"right": 									{
+										"nombre": "ExpBin",
+										"left": 										{
+											"nombre": "Literal",
+											"value": "1",
+											"type": "Int"
+										}
+,
+										"operator": "-",
+										"right": 										{
+											"nombre": "Literal",
+											"value": "2",
+											"type": "Int"
+										}
+
+									}
+
+								}
+
+							}
+
+						}
+
 					}
 
 				}
@@ -36,7 +93,15 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "self",
-						"type": "void",
+						"type": "Encadenado2o",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "bruh",
+							"type": "Encadenado2o",
+							"arguments": [
+							]
+						}
+,
 						"arguments": [
 						]
 					}
@@ -44,7 +109,7 @@
 					"right": 					{
 						"nombre": "Id",
 						"value": "Encadenado2o",
-						"type": "void",
+						"type": "Encadenado2o",
 						"arguments": [
 						]
 					}
@@ -69,7 +134,7 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "encadenado3",
-						"type": "void",
+						"type": "Encadenado3o",
 						"arguments": [
 						]
 					}
@@ -77,7 +142,7 @@
 					"right": 					{
 						"nombre": "Id",
 						"value": "Encadenado3o",
-						"type": "void",
+						"type": "Encadenado3o",
 						"arguments": [
 						]
 					}
@@ -86,11 +151,12 @@
 ,
 				{
 					"nombre": "Return",
+					"type": "Encadenado3o",
 					"return": 
  					{
 						"nombre": "Id",
 						"value": "encadenado3",
-						"type": "void",
+						"type": "Encadenado3o",
 						"arguments": [
 						]
 					}
@@ -108,7 +174,7 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "xd",
-						"type": "void",
+						"type": "Int",
 						"arguments": [
 						]
 					}
@@ -126,7 +192,15 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "self",
-						"type": "void",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "ola",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
 						"arguments": [
 						]
 					}
@@ -134,8 +208,26 @@
 					"right": 					{
 						"nombre": "Array",
 						"value": "Int",
-						"type": "void",
-						"length": "SemanticAnalyzer.AST.ExpBin@238e0d81"
+						"type": "Int",
+						"length":						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Id",
+								"value": "xd",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+,
+							"operator": "-",
+							"right": 							{
+								"nombre": "Literal",
+								"value": "1",
+								"type": "Int"
+							}
+
+						}
+
 					}
 
 				}
@@ -145,8 +237,13 @@
 					"left": 					{
 						"nombre": "Array",
 						"value": "ola",
-						"type": "void",
-						"length": "SemanticAnalyzer.AST.LiteralNode@31221be2"
+						"type": "Int",
+						"length":						{
+							"nombre": "Literal",
+							"value": "1",
+							"type": "Int"
+						}
+
 					}
 ,
 					"right": 					{
@@ -168,7 +265,7 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "hola",
-						"type": "void",
+						"type": "Arreglo",
 						"arguments": [
 						]
 					}
@@ -176,7 +273,7 @@
 					"right": 					{
 						"nombre": "Id",
 						"value": "Arreglo",
-						"type": "void",
+						"type": "Arreglo",
 						"arguments": [
 						]
 					}
@@ -188,7 +285,7 @@
 					"left": 					{
 						"nombre": "Id",
 						"value": "arregloXd",
-						"type": "void",
+						"type": "Int",
 						"arguments": [
 						]
 					}
@@ -196,7 +293,15 @@
 					"right": 					{
 						"nombre": "Id",
 						"value": "hola",
-						"type": "void",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "arreglo",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
 						"arguments": [
 						]
 					}
@@ -208,14 +313,64 @@
 					"left": 					{
 						"nombre": "Array",
 						"value": "arregloXd",
-						"type": "void",
-						"length": "SemanticAnalyzer.AST.LiteralNode@377dca04"
+						"type": "Int",
+						"length":						{
+							"nombre": "Literal",
+							"value": "0",
+							"type": "Int"
+						}
+
 					}
 ,
 					"right": 					{
 						"nombre": "Id",
 						"value": "xd",
-						"type": "void",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "bruh",
+							"type": "Int",
+							"chained": 							{
+								"nombre": "Id",
+								"value": "test",
+								"type": "Int",
+								"chained": 								{
+									"nombre": "Array",
+									"value": "ola",
+									"type": "Int",
+									"length":									{
+										"nombre": "Literal",
+										"value": "1",
+										"type": "Int"
+									}
+
+								}
+,
+								"arguments": [
+									{
+										"nombre": "Literal",
+										"value": "true",
+										"type": "Bool"
+									}
+,
+									{
+										"nombre": "Literal",
+										"value": "'h'",
+										"type": "Char"
+									}
+,
+									{
+										"nombre": "Literal",
+										"value": "xd",
+										"type": "Str"
+									}
+								]
+							}
+,
+							"arguments": [
+							]
+						}
+,
 						"arguments": [
 						]
 					}
