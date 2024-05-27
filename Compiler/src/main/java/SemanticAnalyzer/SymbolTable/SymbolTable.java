@@ -228,7 +228,8 @@ public class SymbolTable extends Commons {
                 Objects.equals(heritanceName,"Char" ) ||
                 Objects.equals(heritanceName,"Int" ) ||
                 Objects.equals(heritanceName,"Str" ) ||
-                Objects.equals(heritanceName,"IO")){
+                Objects.equals(heritanceName,"IO") ||
+                Objects.equals(heritanceName,"Object")){
             throw throwException("InvalidHeritance",token);
         }
 
