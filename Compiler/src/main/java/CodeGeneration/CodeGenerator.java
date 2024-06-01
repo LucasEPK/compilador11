@@ -39,7 +39,7 @@ public class CodeGenerator {
      */
 
     public void generateASMCode() {
-
+        saveASMCode();
     }
 
     /**
@@ -63,7 +63,5 @@ public class CodeGenerator {
             System.err.println("Error al escribir en el archivo de salida: " + e.getMessage());
         }
     }
-
-
 
 }

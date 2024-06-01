@@ -1,5 +1,6 @@
 package SyntacticAnalyzer;
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SyntacticExceptions.SyntacticException;
 import LexicalAnalyzer.LexicalAnalyzer;
 import LexicalAnalyzer.Token;
@@ -54,6 +55,11 @@ public class    SyntacticAnalyzer {
     public void generateASTJson(String inputPath){
         this.ast.consolidate(this.ast);
         this.ast.toJson(1,inputPath);
+    }
+
+    public void generateASMCode(String inputPath){
+        CodeGenerator codeGenerator = new CodeGenerator(this.ast, inputPath);
+        codeGenerator.generateASMCode();
     }
     
     /**

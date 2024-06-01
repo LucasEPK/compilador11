@@ -49,7 +49,8 @@ public class SyntacticExecutor {
             symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
             this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
             this.syntacticAnalyzer.generateASTJson(inputPath);
-            printCorrectSemanticSentence();
+            this.syntacticAnalyzer.generateASMCode(inputPath);
+            printCorrectCodeGeneration();
         }
         catch (LexicalException exception){
             this.printExceptionLexical(exception);
@@ -157,7 +158,9 @@ public class SyntacticExecutor {
         System.out.println("CORRECTO: SEMANTICO - SENTENCIAS");
     }
 
-
+    public void printCorrectCodeGeneration(){
+        System.out.println("CORRECTO: CODIGO ASM GENERADO");
+    }
 
 
 
