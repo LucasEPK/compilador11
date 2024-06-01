@@ -24,7 +24,7 @@ public class CodeGenerator {
      * Constructor de la clase CodeGenerator
      * @param ast Árbol de sintaxis abstracta
      * @param path Path del archivo donde se guardará el código intermedio
-     * @autor Yeumen Silva
+     * @autor Yeumen Silva, Lucas Moyano
      */
 
     public CodeGenerator(AST ast, String path) {

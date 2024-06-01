@@ -47,8 +47,11 @@ public class SyntacticExecutor {
         try {
             lexicalAnalyzer = new LexicalAnalyzer(file);
             symbolTable = this.syntacticAnalyzer.startSyntactic(lexicalAnalyzer);
+            //Llamo al método que se encarga de generar el json de la tabla de símbolos
             this.jsonMannager.buildJson(symbolTable,outputPath, inputPath);
+            //Llamo al método que se encarga de consolidar y generar el json del AST
             this.syntacticAnalyzer.generateASTJson(inputPath);
+            //Llamo al método que se encarga de generar el código ASM
             this.syntacticAnalyzer.generateASMCode(inputPath);
             printCorrectCodeGeneration();
         }
@@ -64,14 +67,6 @@ public class SyntacticExecutor {
             this.printExceptionSemantic(exception);
         }
 
-        /*
-        if(outputPath == null){
-            this.printCorrect();
-        }
-        else {
-            fileManager.saveResults(List.of("CORRECTO: ANALISIS SINTACTICO"));
-        }
-         */
 
 
     }

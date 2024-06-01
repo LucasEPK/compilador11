@@ -57,6 +57,12 @@ public class    SyntacticAnalyzer {
         this.ast.toJson(1,inputPath);
     }
 
+    /**
+     * Método que llama al generador del código ASM
+     * @param inputPath path del archivo de entrada
+     * @autor Yeumen Silva
+     */
+
     public void generateASMCode(String inputPath){
         CodeGenerator codeGenerator = new CodeGenerator(this.ast, inputPath);
         codeGenerator.generateASMCode();
