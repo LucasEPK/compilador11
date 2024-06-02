@@ -6,3 +6,9 @@
 	lw $t9, 4($sp)
 	addiu $sp, $sp, 4
 .end_macro
+
+.data
+
+.text
+.globl main
+main:
