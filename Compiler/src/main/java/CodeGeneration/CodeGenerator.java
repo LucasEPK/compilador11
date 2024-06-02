@@ -39,6 +39,7 @@ public class CodeGenerator {
      */
 
     public void generateASMCode() {
+        writeMacros();
         saveASMCode();
     }
 
@@ -64,4 +65,22 @@ public class CodeGenerator {
         }
     }
 
+    /**
+     * Agrega las macros push y pop al codigo generado
+     * @author Lucas Moyano
+     * */
+    private void writeMacros() {
+        code += ".macro push\t\t\t# hace push en el stack y guarda t9 en el stack\n" +
+                "\tsw $t9, 0($sp)\n" +
+                "\taddiu $sp, $sp, -4\n" +
+                ".end_macro \n" +
+                ".macro pop\t\t\t# hace pop en el stack y guarda el elemento popeado en t9\n" +
+                "\tlw $t9, 4($sp)\n" +
+                "\taddiu $sp, $sp, 4\n" +
+                ".end_macro";
+    }
+
+    public String getCode() {
+        return code;
+    }
 }
