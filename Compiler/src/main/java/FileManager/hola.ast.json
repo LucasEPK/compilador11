@@ -1,28 +1,175 @@
 {
-	"nombre": "Compiler/src/main/java/FileManager/hola.ru",
+	"nombre": "src/main/java/FileManager/hola.ru",
 	"clases": [
 		{
 			"nombre": "Block",
-			"class": "Auto",
-			"method": ".",
+			"class": "IO",
+			"method": "",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "Auto",
-			"method": "metodo1",
+			"class": "IO",
+			"method": "in_char",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_bool",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_int",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_str",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_char",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_bool",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_str",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_int",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_char",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_bool",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_int",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_str",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Array",
+			"method": "",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Array",
+			"method": "length",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Bool",
+			"method": "",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Char",
+			"method": "",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Str",
+			"method": "",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Str",
+			"method": "length",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Str",
+			"method": "concat",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Int",
+			"method": "",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Object",
+			"method": "",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Arreglo",
+			"method": ".",
 			"sentences": [
 				{
 					"nombre": "Asignation",
 					"left": 					{
 						"nombre": "Id",
 						"value": "self",
-						"type": "Str",
+						"type": "Int",
 						"chained": 						{
 							"nombre": "Id",
-							"value": "nombrePasajeros",
-							"type": "Str",
+							"value": "arreglo",
+							"type": "Int",
 							"arguments": [
 							]
 						}
@@ -33,17 +180,200 @@
 ,
 					"right": 					{
 						"nombre": "Array",
-						"value": "Str",
-						"type": "Str",
+						"value": "Int",
+						"type": "Int",
 						"length":						{
 							"nombre": "ExpBin",
 							"left": 							{
 								"nombre": "Literal",
-								"value": "3",
+								"value": "2",
 								"type": "Int"
 							}
 ,
 							"operator": "+",
+							"right": 							{
+								"nombre": "ExpBin",
+								"left": 								{
+									"nombre": "Literal",
+									"value": "1",
+									"type": "Int"
+								}
+,
+								"operator": "+",
+								"right": 								{
+									"nombre": "ExpBin",
+									"left": 									{
+										"nombre": "Literal",
+										"value": "1",
+										"type": "Int"
+									}
+,
+									"operator": "+",
+									"right": 									{
+										"nombre": "ExpBin",
+										"left": 										{
+											"nombre": "Literal",
+											"value": "1",
+											"type": "Int"
+										}
+,
+										"operator": "-",
+										"right": 										{
+											"nombre": "Literal",
+											"value": "2",
+											"type": "Int"
+										}
+
+									}
+
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado1o",
+			"method": ".",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "Encadenado2o",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "bruh",
+							"type": "Encadenado2o",
+							"arguments": [
+							]
+						}
+,
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Encadenado2o",
+						"type": "Encadenado2o",
+						"arguments": [
+						]
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado2o",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado2o",
+			"method": "test",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "encadenado3",
+						"type": "Encadenado3o",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Encadenado3o",
+						"type": "Encadenado3o",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Return",
+					"type": "Encadenado3o",
+					"return": 
+ 					{
+						"nombre": "Id",
+						"value": "encadenado3",
+						"type": "Encadenado3o",
+						"arguments": [
+						]
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Encadenado3o",
+			"method": ".",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "5",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "self",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "ola",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Array",
+						"value": "Int",
+						"type": "Int",
+						"length":						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Id",
+								"value": "xd",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+,
+							"operator": "-",
 							"right": 							{
 								"nombre": "Literal",
 								"value": "1",
@@ -59,70 +389,21 @@
 				{
 					"nombre": "Asignation",
 					"left": 					{
-						"nombre": "Id",
-						"value": "nombrePasajeros",
-						"type": "Str",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "metodo2",
-						"type": "Str",
-						"arguments": [
-							{
-								"nombre": "Id",
-								"value": "self",
-								"type": "Auto",
-								"arguments": [
-								]
-							}
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "a",
-						"type": "Str",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
 						"nombre": "Array",
-						"value": "nombrePasajeros",
-						"type": "Str",
+						"value": "ola",
+						"type": "Int",
 						"length":						{
 							"nombre": "Literal",
-							"value": "2",
+							"value": "1",
 							"type": "Int"
 						}
 
 					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "Auto",
-			"method": "metodo2",
-			"sentences": [
-				{
-					"nombre": "Return",
-					"type": "Str",
-					"return": 
- 					{
-						"nombre": "Id",
-						"value": "nombrePasajeros",
-						"type": "Str",
-						"arguments": [
-						]
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "11",
+						"type": "Int"
 					}
 
 				}
@@ -133,6 +414,122 @@
 			"class": "start",
 			"method": "start",
 			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "hola",
+						"type": "Arreglo",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "Arreglo",
+						"type": "Arreglo",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "arregloXd",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "hola",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "arreglo",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Array",
+						"value": "arregloXd",
+						"type": "Int",
+						"length":						{
+							"nombre": "Literal",
+							"value": "0",
+							"type": "Int"
+						}
+
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "bruh",
+							"type": "Int",
+							"chained": 							{
+								"nombre": "Id",
+								"value": "test",
+								"type": "Int",
+								"chained": 								{
+									"nombre": "Array",
+									"value": "ola",
+									"type": "Int",
+									"length":									{
+										"nombre": "Literal",
+										"value": "1",
+										"type": "Int"
+									}
+
+								}
+,
+								"arguments": [
+									{
+										"nombre": "Literal",
+										"value": "true",
+										"type": "Bool"
+									}
+,
+									{
+										"nombre": "Literal",
+										"value": "'h'",
+										"type": "Char"
+									}
+,
+									{
+										"nombre": "Literal",
+										"value": "xd",
+										"type": "Str"
+									}
+								]
+							}
+,
+							"arguments": [
+							]
+						}
+,
+						"arguments": [
+						]
+					}
+
+				}
 			]
 		}
 	]

@@ -20,6 +20,9 @@ public class CodeGenerator {
     //Path del archivo donde se guardará el código intermedio
     private final String path;
 
+    // Booleano para determinar si se van a escribir los comentarios con nop al principio o no
+    private boolean generateComments = false;
+
     /**
      * Constructor de la clase CodeGenerator
      * @param ast Árbol de sintaxis abstracta
@@ -39,6 +42,9 @@ public class CodeGenerator {
      */
 
     public void generateASMCode() {
+        writeMacros();
+        writeStaticData();
+        writeText();
         saveASMCode();
     }
 
@@ -64,4 +70,53 @@ public class CodeGenerator {
         }
     }
 
+    /**
+     * Agrega las macros push y pop al codigo generado
+     * @author Lucas Moyano
+     * */
+    private void writeMacros() {
+        code += ".macro push\t\t\t# hace push en el stack y guarda t9 en el stack\n" +
+                "\tsw $t9, 0($sp)\n" +
+                "\taddiu $sp, $sp, -4\n" +
+                ".end_macro \n" +
+                ".macro pop\t\t\t# hace pop en el stack y guarda el elemento popeado en t9\n" +
+                "\tlw $t9, 4($sp)\n" +
+                "\taddiu $sp, $sp, 4\n" +
+                ".end_macro\n\n";
+    }
+
+
+    /**
+     * Escribe los datos del .data en el .asm
+     * @author Lucas Moyano
+     * */
+    private void writeStaticData() {
+        code += ".data\n";
+        code += "\n";
+    }
+
+    /**
+     * Escribe la parte del .text en el .asm
+     * @author Lucas Moyano
+     * */
+    private void writeText() {
+        code += ".text\n" +
+                ".globl main\n" +
+                "main:\n";
+    }
+
+    /**
+     * agrega al ultimo un comentario con una instrucción nop para debugear
+     * @param comment string que representa un comentario en el codigo
+     * @author Lucas Moyano
+     * */
+    private void addNopComment(String comment) {
+        if (generateComments) {
+            code += "nop #" + comment + "\n";
+        }
+    }
+
+    public String getCode() {
+        return code;
+    }
 }
