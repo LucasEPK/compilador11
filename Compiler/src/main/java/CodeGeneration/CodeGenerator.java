@@ -104,6 +104,10 @@ public class CodeGenerator {
         code += ".text\n" +
                 ".globl main\n" +
                 "main:\n";
+
+        code += "# Termino ejecución\n" +
+                "\tli $v0, 10\n" +
+                "\tsyscall";
     }
 
     /**
