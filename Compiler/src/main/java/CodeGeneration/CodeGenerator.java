@@ -75,7 +75,8 @@ public class CodeGenerator {
      * @author Lucas Moyano
      * */
     private void writeMacros() {
-        code += ".macro push\t\t\t# hace push en el stack y guarda t9 en el stack\n" +
+        code += "# Macros\n" +
+                ".macro push\t\t\t# hace push en el stack y guarda t9 en el stack\n" +
                 "\tsw $t9, 0($sp)\n" +
                 "\taddiu $sp, $sp, -4\n" +
                 ".end_macro \n" +
