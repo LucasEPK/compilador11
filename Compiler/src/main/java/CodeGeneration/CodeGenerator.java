@@ -126,6 +126,12 @@ public class CodeGenerator {
         writeModuleFunction();
         writeDefaultAnd();
         writeDefaultOr();
+        writeDefaultMinor();
+        writeDefaultMajor();
+        writeDefaultMinorEqual();
+        writeDefaultMajorEqual();
+        writeDefaultEqual();
+        writeDefaultNotEqual();
     }
 
 
@@ -228,6 +234,70 @@ public class CodeGenerator {
 
         code += "\tpop\n" +
                 "\tor $v0,$v0,$t9\n" +
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultMinor(){
+        code += "default_minor:\t# menor entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("menor entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+                "\tjr $ra \n\n";
+    }
+
+    private void writeDefaultMajor(){
+        code += "default_major:\t# mayor entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("mayor entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+                "\tjr $ra \n\n";
+    }
+
+    private void writeDefaultMinorEqual(){
+        code += "default_minor_equal:\t# menor o igual entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("menor o igual entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+                "\txori $v0,$v0,1 # Invertir el resultado para obtener menor o igual\n" +
+                "\tjr $ra \n\n";
+    }
+
+    private void writeDefaultMajorEqual(){
+        code += "default_major_equal:\t# mayor o igual entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("mayor o igual entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+                "\txori $v0,$v0,1 # Invertir el resultado para obtener mayor o igual\n" +
+                "\tjr $ra \n\n";
+    }
+
+    private void writeDefaultEqual(){
+        code += "default_equal:\t# igualdad entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("igualdad entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\txor $v0,$v0,$t9 # Si $t0 == $t1, entonces $a0 será 0 (realiza una operación XOR bit a bit entre los registros)\n" +
+                "\tsltiu $v0,$v0,1 #Si $v0 < 1, entonces $a0 se establecerá en 1 , de lo contrario en 0 \n" +
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultNotEqual(){
+        code += "default_unequal:\t# desigualdad entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("desigualdad entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\txor $v0,$v0,$t9 # Si $v0 == $t9, entonces $v0 será 0\n" +
+                "\tsltu $v0,$zero,$a0 # Si $v0 != 0, entonces $v0 se establecerá en 1, de lo contrario en 0\n" +
                 "\tjr $ra\n\n";
     }
 

@@ -17,7 +17,7 @@ main:
 	li $v0, 1
 	li $t9, 1
 	push
-	jal default_and
+	jal default_unequal
 	# Termino ejecución
 	li $v0, 10
 	syscall
@@ -66,5 +66,39 @@ default_and:	# and entre lo que está en el acumulador y lo que podemos popear d
 default_or:	# or entre lo que está en el acumulador y lo que podemos popear del stack
 	pop
 	or $v0,$v0,$t9
+	jr $ra
+
+default_minor:	# menor entre lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	slt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0
+	jr $ra 
+
+default_major:	# mayor entre lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	slt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)
+	jr $ra 
+
+default_minor_equal:	# menor o igual entre lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	slt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0
+	xori $v0,$v0,1 # Invertir el resultado para obtener menor o igual
+	jr $ra 
+
+default_major_equal:	# mayor o igual entre lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	slt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)
+	xori $v0,$v0,1 # Invertir el resultado para obtener mayor o igual
+	jr $ra 
+
+default_equal:	# igualdad entre lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	xor $v0,$v0,$t9 # Si $t0 == $t1, entonces $a0 será 0 (realiza una operación XOR bit a bit entre los registros)
+	sltiu $v0,$v0,1 #Si $v0 < 1, entonces $a0 se establecerá en 1 , de lo contrario en 0 
+	jr $ra
+
+default_unequal:	# desigualdad entre lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	xor $v0,$v0,$t9 # Si $v0 == $t9, entonces $v0 será 0
+	sltu $v0,$zero,$a0 # Si $v0 != 0, entonces $v0 se establecerá en 1, de lo contrario en 0
 	jr $ra
 

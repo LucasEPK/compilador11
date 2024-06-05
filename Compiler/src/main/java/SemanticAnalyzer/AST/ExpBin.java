@@ -191,8 +191,24 @@ public class ExpBin extends ExpOp {
             case "||":
                 textCode += "\tjal default_or\n";
                 break;
-            default:
-
+            case "<":
+                textCode += "\tjal default_minor\n";
+                break;
+            case ">":
+                textCode += "\tjal default_major\n";
+                break;
+            case "<=":
+                textCode += "\tjal default_minor_equal\n";
+                break;
+            case ">=":
+                textCode += "\tjal default_major_equal\n";
+                break;
+            case "==":
+                textCode += "\tjal default_equal\n";
+                break;
+            case "!=":
+                textCode += "\tjal default_unequal\n";
+                break;
 
         }
 
