@@ -89,4 +89,10 @@ public class WhileNode extends SentenceNode {
         return tabsString;
 
     }
+
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
 }

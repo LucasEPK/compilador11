@@ -102,4 +102,10 @@ public class ExpUn extends ExpOp {
         }
         return tabsString;
     }
+
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
 }

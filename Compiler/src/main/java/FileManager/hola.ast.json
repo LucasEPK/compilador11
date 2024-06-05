@@ -157,252 +157,23 @@
 		},
 		{
 			"nombre": "Block",
-			"class": "Arreglo",
-			"method": ".",
-			"sentences": [
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "self",
-						"type": "Int",
-						"chained": 						{
-							"nombre": "Id",
-							"value": "arreglo",
-							"type": "Int",
-							"arguments": [
-							]
-						}
-,
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Array",
-						"value": "Int",
-						"type": "Int",
-						"length":						{
-							"nombre": "ExpBin",
-							"left": 							{
-								"nombre": "Literal",
-								"value": "2",
-								"type": "Int"
-							}
-,
-							"operator": "+",
-							"right": 							{
-								"nombre": "ExpBin",
-								"left": 								{
-									"nombre": "Literal",
-									"value": "1",
-									"type": "Int"
-								}
-,
-								"operator": "+",
-								"right": 								{
-									"nombre": "ExpBin",
-									"left": 									{
-										"nombre": "Literal",
-										"value": "1",
-										"type": "Int"
-									}
-,
-									"operator": "+",
-									"right": 									{
-										"nombre": "ExpBin",
-										"left": 										{
-											"nombre": "Literal",
-											"value": "1",
-											"type": "Int"
-										}
-,
-										"operator": "-",
-										"right": 										{
-											"nombre": "Literal",
-											"value": "2",
-											"type": "Int"
-										}
-
-									}
-
-								}
-
-							}
-
-						}
-
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "Encadenado1o",
-			"method": ".",
-			"sentences": [
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "self",
-						"type": "Encadenado2o",
-						"chained": 						{
-							"nombre": "Id",
-							"value": "bruh",
-							"type": "Encadenado2o",
-							"arguments": [
-							]
-						}
-,
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "Encadenado2o",
-						"type": "Encadenado2o",
-						"arguments": [
-						]
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "Encadenado2o",
+			"class": "Hola",
 			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "Encadenado2o",
-			"method": "test",
+			"class": "Hola",
+			"method": "m1",
 			"sentences": [
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "encadenado3",
-						"type": "Encadenado3o",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "Encadenado3o",
-						"type": "Encadenado3o",
-						"arguments": [
-						]
-					}
-
-				}
-,
 				{
 					"nombre": "Return",
-					"type": "Encadenado3o",
+					"type": "Int",
 					"return": 
  					{
-						"nombre": "Id",
-						"value": "encadenado3",
-						"type": "Encadenado3o",
-						"arguments": [
-						]
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "Encadenado3o",
-			"method": ".",
-			"sentences": [
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "xd",
-						"type": "Int",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
 						"nombre": "Literal",
-						"value": "5",
-						"type": "Int"
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "self",
-						"type": "Int",
-						"chained": 						{
-							"nombre": "Id",
-							"value": "ola",
-							"type": "Int",
-							"arguments": [
-							]
-						}
-,
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Array",
-						"value": "Int",
-						"type": "Int",
-						"length":						{
-							"nombre": "ExpBin",
-							"left": 							{
-								"nombre": "Id",
-								"value": "xd",
-								"type": "Int",
-								"arguments": [
-								]
-							}
-,
-							"operator": "-",
-							"right": 							{
-								"nombre": "Literal",
-								"value": "1",
-								"type": "Int"
-							}
-
-						}
-
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Array",
-						"value": "ola",
-						"type": "Int",
-						"length":						{
-							"nombre": "Literal",
-							"value": "1",
-							"type": "Int"
-						}
-
-					}
-,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "11",
+						"value": "3",
 						"type": "Int"
 					}
 
@@ -418,16 +189,16 @@
 					"nombre": "Asignation",
 					"left": 					{
 						"nombre": "Id",
-						"value": "hola",
-						"type": "Arreglo",
+						"value": "olaVar",
+						"type": "Hola",
 						"arguments": [
 						]
 					}
 ,
 					"right": 					{
 						"nombre": "Id",
-						"value": "Arreglo",
-						"type": "Arreglo",
+						"value": "Hola",
+						"type": "Hola",
 						"arguments": [
 						]
 					}
@@ -438,95 +209,56 @@
 					"nombre": "Asignation",
 					"left": 					{
 						"nombre": "Id",
-						"value": "arregloXd",
+						"value": "v1",
 						"type": "Int",
 						"arguments": [
 						]
 					}
 ,
 					"right": 					{
-						"nombre": "Id",
-						"value": "hola",
-						"type": "Int",
-						"chained": 						{
+						"nombre": "ExpBin",
+						"left": 						{
 							"nombre": "Id",
-							"value": "arreglo",
+							"value": "v1",
 							"type": "Int",
 							"arguments": [
 							]
 						}
 ,
-						"arguments": [
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Array",
-						"value": "arregloXd",
-						"type": "Int",
-						"length":						{
-							"nombre": "Literal",
-							"value": "0",
-							"type": "Int"
-						}
-
-					}
-,
-					"right": 					{
-						"nombre": "Id",
-						"value": "xd",
-						"type": "Int",
-						"chained": 						{
+						"operator": "+",
+						"right": 						{
 							"nombre": "Id",
-							"value": "bruh",
+							"value": "olaVar",
 							"type": "Int",
 							"chained": 							{
 								"nombre": "Id",
-								"value": "test",
+								"value": "m1",
 								"type": "Int",
-								"chained": 								{
-									"nombre": "Array",
-									"value": "ola",
-									"type": "Int",
-									"length":									{
-										"nombre": "Literal",
-										"value": "1",
-										"type": "Int"
-									}
-
-								}
-,
 								"arguments": [
-									{
-										"nombre": "Literal",
-										"value": "true",
-										"type": "Bool"
-									}
-,
-									{
-										"nombre": "Literal",
-										"value": "'h'",
-										"type": "Char"
-									}
-,
-									{
-										"nombre": "Literal",
-										"value": "xd",
-										"type": "Str"
-									}
 								]
 							}
 ,
 							"arguments": [
 							]
 						}
+
+					}
+
+				}
 ,
-						"arguments": [
-						]
+				{
+					"nombre": "ExpBin",
+					"left": 					{
+						"nombre": "Literal",
+						"value": "3",
+						"type": "Int"
+					}
+,
+					"operator": "-",
+					"right": 					{
+						"nombre": "Literal",
+						"value": "4",
+						"type": "Int"
 					}
 
 				}

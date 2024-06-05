@@ -212,6 +212,20 @@ public class AST implements Commons {
     }
 
     /**
+     * Función que recorre todos los bloques del AST y genera codigo
+     * @author Lucas Moyano
+     * */
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        for(BlockNode block : blockList) {
+            textCode += block.generateCode();
+        }
+
+        return textCode;
+    }
+
+    /**
      * Método que se encarga de guardar el json en un archivo
      * @param jsonString String con el json
      * @param inputPath String con el path del archivo de entrada

@@ -67,6 +67,12 @@ public class ParenthizedExpression extends PrimaryNode{
         setConsolidated(true);
     }
 
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
+
     /**
      * Método que verifica si el tipo es de tipo String y si empieza y termina con comillas
      * @param type Tipo a verificar

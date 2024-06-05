@@ -89,5 +89,9 @@ public class ReturnNode extends SentenceNode implements Commons {
         return tabsString;
     }
 
-
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
 }

@@ -376,6 +376,16 @@ public class BlockNode extends SentenceNode implements Commons {
         return tabsString;
     }
 
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        for(SentenceNode sentence : sentenceList){
+            textCode += sentence.generateCode();
+        }
+
+        return textCode;
+    }
+
     /**
      * Esta función se encarga de agregar la sentencia dada a la lista
      * @param sentence sentencia que se quiere agregar a la lista

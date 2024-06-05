@@ -141,4 +141,32 @@ public class ExpBin extends ExpOp {
         }
         return tabsString;
     }
+
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        textCode += this.left.generateCode();
+        textCode += this.right.generateCode();
+
+        String operator = this.getToken().getLexeme();
+
+        if (operator.equals("*") ||  operator.equals("/") || operator.equals("%") || operator.equals("+") || operator.equals("-")) {
+            textCode += "\tli $v0, "+this.left.getToken().getLexeme()+"\n" +
+                    "\tli $t9, "+this.right.getToken().getLexeme()+"\n" +
+                    "\tpush\n";
+        }
+
+        switch (operator) {
+            case "+":
+                textCode += "\tjal default_sum\n";
+                break;
+            case "-":
+                textCode += "\tjal default_sub\n";
+                break;
+            default:
+        }
+
+        return textCode;
+    }
+
 }
