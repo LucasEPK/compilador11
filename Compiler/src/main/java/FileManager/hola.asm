@@ -13,9 +13,14 @@
 .text
 .globl main
 main:
+	li $v0, 3
+	li $t9, 4
+	push
+	jal default_sum
 	# Termino ejecución
 	li $v0, 10
 	syscall
+
 default_sum:	# sumamos lo que está en el acumulador y lo que podemos popear del stack
 	pop
 	add $v0, $v0, $t9

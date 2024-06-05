@@ -127,6 +127,12 @@ IdNode extends PrimaryNode{
         return tabsString;
     }
 
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
+
     /**
      * Método que consolida un nodo Id de tipo self
      * @param ast AST que contiene la información

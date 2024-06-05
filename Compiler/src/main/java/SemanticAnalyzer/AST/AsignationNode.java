@@ -113,4 +113,10 @@ public class AsignationNode extends SentenceNode implements Commons {
         }
         return tabsString;
     }
+
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
 }

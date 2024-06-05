@@ -32,4 +32,6 @@ public interface Commons {
 
 
     String addtabs(int tabs);
+
+    public String generateCode();
 }

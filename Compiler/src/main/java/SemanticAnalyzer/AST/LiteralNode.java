@@ -81,4 +81,10 @@ public class LiteralNode extends Operands {
         }
         return false;
     }
+
+    @Override
+    public String generateCode() {
+        String textCode = "";
+        return textCode;
+    }
 }

@@ -251,126 +251,12 @@
 			"paramF": [],
 			"variables": []
 		}
-	},
- 	 {
-		"nombre": "Arreglo",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "arreglo",
-			"tipo": "Array",
-			"tipoArray": "Int",
-			"public": true,
-			"inherited": false,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado1o",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "bruh",
-			"tipo": "Encadenado2o",
-			"public": true,
-			"inherited": false,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado2o",
-		"heredaDe": "Object",
-		"atributos": [],
-		"metodos": [
-			{
-				"nombre": "test",
-				"static": false,
-				"retorno": "Encadenado3o",
-				"posicion": 0,
-				"paramF": [
-						{
-						"nombre": "p1",
-						"tipo": "Bool",
-						"posicion": 0
-						},
-						{
-						"nombre": "p2",
-						"tipo": "Char",
-						"posicion": 1
-						},
-						{
-						"nombre": "p3",
-						"tipo": "Str",
-						"posicion": 2
-						}
-				],
-				"variables": [
-					{
-					"nombre": "encadenado3",
-					"tipo": "Encadenado3o",
-					"posicion": 0
-					}
-				]
-			}
-		],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
-	},
- 	 {
-		"nombre": "Encadenado3o",
-		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "ola",
-			"tipo": "Array",
-			"tipoArray": "Int",
-			"public": true,
-			"inherited": false,
-			"posicion": 0
-			}
-		],
-		"metodos": [],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
 	}
 ],
 	"start": {
 			"nombre": "start",
 			"retorno": "void",
 			"posicion": 0,
-			"variables": [
-					{
-					"nombre": "hola",
-					"tipo": "Arreglo",
-					"posicion": 0
-					},
-					{
-					"nombre": "arregloXd",
-					"tipo": "Array",
-					"tipoArray": "Int",
-					"posicion": 1
-					},
-					{
-					"nombre": "xd",
-					"tipo": "Encadenado1o",
-					"posicion": 2
-					}
-			]
+			"variables": []
 	}
 }
