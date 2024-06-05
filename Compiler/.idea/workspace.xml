@@ -12,23 +12,10 @@
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/CodeGeneration/CodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CodeGeneration/CodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.asm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.asm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ast.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ts.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ArrayNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ArrayNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AsignationNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/AsignationNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/Commons.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpBin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpBin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpUn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpUn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IdNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IdNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IfThenElseNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IfThenElseNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/LiteralNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/LiteralNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ParenthizedExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ParenthizedExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ReturnNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ReturnNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/WhileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/WhileNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +197,7 @@
       <workItem from="1716297993173" duration="4144000" />
       <workItem from="1716336686334" duration="5344000" />
       <workItem from="1717351530074" duration="2306000" />
-      <workItem from="1717591433643" duration="5069000" />
+      <workItem from="1717591433643" duration="7037000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />

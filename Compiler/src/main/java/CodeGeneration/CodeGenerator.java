@@ -112,6 +112,7 @@ public class CodeGenerator {
                 "\tsyscall\n\n";
 
         writeSumFunction();
+        writeSubFunction();
     }
 
 
@@ -126,7 +127,21 @@ public class CodeGenerator {
 
         code += "\tpop\n" +
                 "\tadd $v0, $v0, $t9\n" +
-                "\tjr $ra";
+                "\tjr $ra\n\n";
+    }
+
+    /**
+     * Escribe en el codigo la función de resta
+     * @author Lucas Moyano
+     * */
+    private void writeSubFunction() {
+        code += "default_sub:\t# restamos lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("restamos lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tsub $v0, $v0, $t9\n" +
+                "\tjr $ra\n\n";
     }
 
     /**

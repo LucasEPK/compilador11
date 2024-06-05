@@ -1,3 +1,17 @@
+
+struct Hola {
+
+}
+impl Hola {
+    .(){}
+    fn m1() -> Int {
+        ret 3;
+    }
+}
 start {
-    (3+4);
+    Hola olaVar;
+    Int v1;
+    olaVar = new Hola();
+    v1 = v1 + olaVar.m1();
+    (3-4);
 }

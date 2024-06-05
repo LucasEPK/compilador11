@@ -16,7 +16,7 @@ main:
 	li $v0, 3
 	li $t9, 4
 	push
-	jal default_sum
+	jal default_sub
 	# Termino ejecución
 	li $v0, 10
 	syscall
@@ -25,3 +25,9 @@ default_sum:	# sumamos lo que está en el acumulador y lo que podemos popear del
 	pop
 	add $v0, $v0, $t9
 	jr $ra
+
+default_sub:	# restamos lo que está en el acumulador y lo que podemos popear del stack
+	pop
+	sub $v0, $v0, $t9
+	jr $ra
+

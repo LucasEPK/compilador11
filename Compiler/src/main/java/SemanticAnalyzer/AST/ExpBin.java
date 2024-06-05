@@ -150,9 +150,18 @@ public class ExpBin extends ExpOp {
 
         String operator = this.getToken().getLexeme();
 
+        if (operator.equals("*") ||  operator.equals("/") || operator.equals("%") || operator.equals("+") || operator.equals("-")) {
+            textCode += "\tli $v0, "+this.left.getToken().getLexeme()+"\n" +
+                    "\tli $t9, "+this.right.getToken().getLexeme()+"\n" +
+                    "\tpush\n";
+        }
+
         switch (operator) {
             case "+":
-                textCode += generateSum();
+                textCode += "\tjal default_sum\n";
+                break;
+            case "-":
+                textCode += "\tjal default_sub\n";
                 break;
             default:
         }
@@ -160,19 +169,4 @@ public class ExpBin extends ExpOp {
         return textCode;
     }
 
-    private String generateSum() {
-        String textCode = "";
-
-        if (this.left instanceof LiteralNode) {
-            if (this.right instanceof LiteralNode) {
-                // Esto pasa si la izquierda y derecha son dos literales
-                textCode += "\tli $v0, "+this.left.getToken().getLexeme()+"\n" +
-                        "\tli $t9, "+this.right.getToken().getLexeme()+"\n" +
-                        "\tpush\n" +
-                        "\tjal default_sum\n";
-            }
-        }
-
-        return textCode;
-    }
 }
