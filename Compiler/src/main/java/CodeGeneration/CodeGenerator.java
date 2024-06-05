@@ -25,7 +25,8 @@ public class CodeGenerator {
 
     /**
      * Constructor de la clase CodeGenerator
-     * @param ast Árbol de sintaxis abstracta
+     *
+     * @param ast  Árbol de sintaxis abstracta
      * @param path Path del archivo donde se guardará el código intermedio
      * @autor Yeumen Silva, Lucas Moyano
      */
@@ -38,6 +39,7 @@ public class CodeGenerator {
     /**
      * Método que se encarga de generar el código intermedio
      * a partir del árbol de sintaxis abstracta
+     *
      * @autor Yeumen Silva
      */
 
@@ -51,11 +53,12 @@ public class CodeGenerator {
     /**
      * Método que se encarga de convertir el string con el código intermedio
      * en un archivo .asm
+     *
      * @author Yeumen Silva
      */
 
     private void saveASMCode() {
-        String output = this.path.replace(".ru",".asm");
+        String output = this.path.replace(".ru", ".asm");
         try {
             // Crear un FileWriter para escribir en el archivo de salida
             FileWriter escritor = new FileWriter(output);
@@ -65,15 +68,16 @@ public class CodeGenerator {
 
             // Cerrar el FileWriter
             escritor.close();
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Error al escribir en el archivo de salida: " + e.getMessage());
         }
     }
 
     /**
      * Agrega las macros push y pop al codigo generado
+     *
      * @author Lucas Moyano
-     * */
+     */
     private void writeMacros() {
         code += "# Macros\n" +
                 ".macro push\t\t\t# hace push en el stack y guarda t9 en el stack\n" +
@@ -89,8 +93,9 @@ public class CodeGenerator {
 
     /**
      * Escribe los datos del .data en el .asm
+     *
      * @author Lucas Moyano
-     * */
+     */
     private void writeStaticData() {
         code += ".data\n";
         code += "\t divisionErrorMessage: .asciiz \"ERROR: DIVISION POR CERO\"\n";
@@ -99,8 +104,9 @@ public class CodeGenerator {
 
     /**
      * Escribe la parte del .text en el .asm
+     *
      * @author Lucas Moyano
-     * */
+     */
     private void writeText() {
         code += ".text\n" +
                 ".globl main\n" +
@@ -118,13 +124,16 @@ public class CodeGenerator {
         writeDivisionZero();
         writeDivFunction();
         writeModuleFunction();
+        writeDefaultAnd();
+        writeDefaultOr();
     }
 
 
     /**
      * Escribe en el codigo la función de suma
+     *
      * @author Lucas Moyano
-     * */
+     */
     private void writeSumFunction() {
         code += "default_sum:\t# sumamos lo que está en el acumulador y lo que podemos popear del stack\n";
 
@@ -137,8 +146,9 @@ public class CodeGenerator {
 
     /**
      * Escribe en el codigo la función de resta
+     *
      * @author Lucas Moyano
-     * */
+     */
     private void writeSubFunction() {
         code += "default_sub:\t# restamos lo que está en el acumulador y lo que podemos popear del stack\n";
 
@@ -151,6 +161,7 @@ public class CodeGenerator {
 
     /**
      * Escribe en el codigo la función de multiplicación
+     *
      * @autor Lucas Moyano
      */
 
@@ -188,23 +199,44 @@ public class CodeGenerator {
                 "\tsyscall\n\n";
     }
 
-    private void writeModuleFunction(){
+    private void writeModuleFunction() {
         code += "default_module:\t# modulo lo que está en el acumulador y lo que podemos popear del stack\n";
 
         addNopComment("modulo lo que está en el acumulador y lo que podemos popear del stack");
 
         code += "\tpop\n" +
                 "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
-                "\tdiv $v0, $t9 #El resultado se guarda en registro lo\n" +
-                "\tmfhi $v0 #Se accede a lo con mflo\n" +
+                "\tdiv $v0, $t9 #El resultado se guarda en registro hi\n" +
+                "\tmfhi $v0 #Se accede a lo con mfhi\n" +
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultAnd() {
+        code += "default_and:\t# and entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("and entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tand $v0,$v0,$t9\n" +
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultOr() {
+        code += "default_or:\t# or entre lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("or entre lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tor $v0,$v0,$t9\n" +
                 "\tjr $ra\n\n";
     }
 
     /**
      * agrega al ultimo un comentario con una instrucción nop para debugear
+     *
      * @param comment string que representa un comentario en el codigo
      * @author Lucas Moyano
-     * */
+     */
     private void addNopComment(String comment) {
         if (generateComments) {
             code += "nop #" + comment + "\n";

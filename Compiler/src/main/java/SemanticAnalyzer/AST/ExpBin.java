@@ -150,11 +150,24 @@ public class ExpBin extends ExpOp {
 
         String operator = this.getToken().getLexeme();
 
-        if (operator.equals("*") ||  operator.equals("/") || operator.equals("%") || operator.equals("+") || operator.equals("-")) {
-            textCode += "\tli $v0, "+this.left.getToken().getLexeme()+"\n" +
-                    "\tli $t9, "+this.right.getToken().getLexeme()+"\n" +
-                    "\tpush\n";
+        //Variable que almacena el valor del lado izquierdo
+        String leftValue = this.left.getToken().getLexeme();
+        //Variable que almacena el valor del lado derecho
+        String rightValue = this.right.getToken().getLexeme();
+
+        //Si es un booleano, se debe convertir a 1 o 0
+        if(this.left.getType().equals("Bool")){
+            leftValue = leftValue.equals("true") ? "1" : "0";
         }
+        if(this.right.getType().equals("Bool")){
+            rightValue = rightValue.equals("true") ? "1" : "0";
+        }
+
+
+        textCode += "\tli $v0, "+leftValue+"\n" +
+                "\tli $t9, "+rightValue+"\n" +
+                "\tpush\n";
+
 
         switch (operator) {
             case "+":
@@ -171,6 +184,12 @@ public class ExpBin extends ExpOp {
                 break;
             case "%":
                 textCode += "\tjal default_module\n";
+                break;
+            case "&&":
+                textCode += "\tjal default_and\n";
+                break;
+            case "||":
+                textCode += "\tjal default_or\n";
                 break;
             default:
 
