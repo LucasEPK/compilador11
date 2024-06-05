@@ -107,7 +107,24 @@ public class CodeGenerator {
 
         code += "\t# Termino ejecución\n" +
                 "\tli $v0, 10\n" +
-                "\tsyscall";
+                "\tsyscall\n\n";
+
+        writeSumFunction();
+    }
+
+
+    /**
+     * Escribe en el codigo la función de suma
+     * @author Lucas Moyano
+     * */
+    private void writeSumFunction() {
+        code += "default_sum:\t# sumamos lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("sumamos lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tadd $v0, $v0, $t9\n" +
+                "\tjr $ra";
     }
 
     /**
