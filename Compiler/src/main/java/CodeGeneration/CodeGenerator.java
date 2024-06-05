@@ -93,6 +93,7 @@ public class CodeGenerator {
      * */
     private void writeStaticData() {
         code += ".data\n";
+        code += "\t divisionErrorMessage: .asciiz \"ERROR: DIVISION POR CERO\"\n";
         code += "\n";
     }
 
@@ -113,6 +114,10 @@ public class CodeGenerator {
 
         writeSumFunction();
         writeSubFunction();
+        writeMulFunction();
+        writeDivisionZero();
+        writeDivFunction();
+        writeModuleFunction();
     }
 
 
@@ -141,6 +146,57 @@ public class CodeGenerator {
 
         code += "\tpop\n" +
                 "\tsub $v0, $v0, $t9\n" +
+                "\tjr $ra\n\n";
+    }
+
+    /**
+     * Escribe en el codigo la función de multiplicación
+     * @autor Lucas Moyano
+     */
+
+    private void writeMulFunction() {
+        code += "default_mul:\t# multiplicamos lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("multiplicamos lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tmul $v0,$v0,$t9\n" +
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDivFunction() {
+        code += "default_div:\t# dividimos lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("dividimos lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
+                "\tdiv $v0, $t9 #El resultado se guarda en registro lo\n" +
+                "\tmflo $v0 #Se accede a lo con mflo\n" +
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDivisionZero() {
+        code += "division_zero:\t #Manejo de error de división por cero\n";
+
+        addNopComment("Manejo de error de división por cero");
+
+        code += "\tla $a0, divisionErrorMessage\n" +
+                "\tli $v0,4\n" +
+                "\tsyscall \n" +
+                "\tli $v0,10\n" +
+                "\tsyscall\n\n";
+    }
+
+    private void writeModuleFunction(){
+        code += "default_module:\t# modulo lo que está en el acumulador y lo que podemos popear del stack\n";
+
+        addNopComment("modulo lo que está en el acumulador y lo que podemos popear del stack");
+
+        code += "\tpop\n" +
+                "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
+                "\tdiv $v0, $t9 #El resultado se guarda en registro lo\n" +
+                "\tmfhi $v0 #Se accede a lo con mflo\n" +
                 "\tjr $ra\n\n";
     }
 

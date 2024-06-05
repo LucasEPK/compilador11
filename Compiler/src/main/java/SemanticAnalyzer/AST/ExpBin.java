@@ -52,13 +52,13 @@ public class ExpBin extends ExpOp {
     @Override
     public String toJson(int tabs) {
 
-                String json = addtabs(tabs) + "{\n";
-                json += addtabs(tabs+1) + "\"nombre\": \"" + "ExpBin" + "\",\n";
-                json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
-                json += addtabs(tabs+1) + "\"operator\": \"" + getOperator().getLexeme() + "\",\n";
-                json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
-                json += addtabs(tabs) + "}\n";
-                return json;
+        String json = addtabs(tabs) + "{\n";
+        json += addtabs(tabs+1) + "\"nombre\": \"" + "ExpBin" + "\",\n";
+        json += addtabs(tabs+1) + "\"left\": " + left.toJson(tabs+1) + ",\n";
+        json += addtabs(tabs+1) + "\"operator\": \"" + getOperator().getLexeme() + "\",\n";
+        json += addtabs(tabs+1) + "\"right\": " + right.toJson(tabs+1) + "\n";
+        json += addtabs(tabs) + "}\n";
+        return json;
     }
 
     /**
@@ -163,7 +163,18 @@ public class ExpBin extends ExpOp {
             case "-":
                 textCode += "\tjal default_sub\n";
                 break;
+            case "*":
+                textCode += "\tjal default_mul\n";
+                break;
+            case "/":
+                textCode += "\tjal default_div\n";
+                break;
+            case "%":
+                textCode += "\tjal default_module\n";
+                break;
             default:
+
+
         }
 
         return textCode;
