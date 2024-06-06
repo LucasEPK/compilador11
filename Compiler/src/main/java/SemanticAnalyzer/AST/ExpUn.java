@@ -106,17 +106,21 @@ public class ExpUn extends ExpOp {
     @Override
     public String generateCode() {
         String textCode = "";
+        textCode += "\n\t#Generando código de ExpUn\n";
+        textCode += "\n\t#Generando código de right\n";
         textCode += this.right.generateCode();
+        textCode += "\n\t#Generando código de operación\n";
         String operator = this.getOperator().getLexeme();
 
         switch (operator){
             case "--":
-                textCode += "addiu $v0,$v0, -1 #--\n";
+                textCode += "\tjal default_minus_minus\n";
             case "++":
-                textCode += "addiu $v0,$v0, 1 #++\n";
+                textCode += "\tjal default_plus_plus\n";
                 break;
             case "!":
-                textCode += "xori $v0,$v0,1 #!\n";
+                textCode += "\tjal defualt_not\n";
+                break;
         }
 
 

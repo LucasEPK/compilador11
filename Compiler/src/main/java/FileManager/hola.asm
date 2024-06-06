@@ -15,18 +15,13 @@
 .globl main
 main:
 
-	#Generando código de ExpBin
-
-	#Generando código de left
-	li $v0, 4
-	move $t9, $v0
-	push #Pusheo valor de left en el stack 
+	#Generando código de ExpUn
 
 	#Generando código de right
-	li $v0, 0
+	li $v0, 2
 
 	#Generando código de operación
-	jal default_equal
+	jal default_plus_plus
 	# Termino ejecución
 	li $v0, 10
 	syscall
@@ -110,3 +105,16 @@ default_unequal:	# desigualdad entre lo que está en el tope del stack y el acum
 	xor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0 sino otro numero random
 	slt $v0, $zero, $v0 	# Si v0 > 0 entonces v0 = 1 sino v0 = 0
 	jr $ra
+
+default_plus_plus:	# incremento de lo que está en el acumulador
+	addiu $v0,$v0, 1 #++
+	jr $ra
+
+default_minus_minus:	# decremento de lo que está en el acumulador
+	addiu $v0,$v0, -1 #--
+	jr $ra
+
+default_not:	# negación de lo que está en el acumulador
+	xori $v0,$v0,1 #!
+	jr $ra
+

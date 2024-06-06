@@ -247,17 +247,11 @@
 				}
 ,
 				{
-					"nombre": "ExpBin",
-					"left": 					{
-						"nombre": "Literal",
-						"value": "4",
-						"type": "Int"
-					}
-,
-					"operator": "==",
+					"nombre": "ExpUn",
+					"operator": "++",
 					"right": 					{
 						"nombre": "Literal",
-						"value": "0",
+						"value": "2",
 						"type": "Int"
 					}
 

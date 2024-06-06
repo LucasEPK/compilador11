@@ -132,6 +132,9 @@ public class CodeGenerator {
         writeDefaultMajorEqual();
         writeDefaultEqual();
         writeDefaultNotEqual();
+        writeDefaultPlusPlus();
+        writeDefaultMinusMinus();
+        writeDefaultNot();
     }
 
 
@@ -298,7 +301,34 @@ public class CodeGenerator {
         code += "\tpop\n" +
                 "\txor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0 sino otro numero random\n" +
                 "\tslt $v0, $zero, $v0 \t# Si v0 > 0 entonces v0 = 1 sino v0 = 0\n" +
-                "\tjr $ra";
+                "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultPlusPlus() {
+        code += "default_plus_plus:\t# incremento de lo que está en el acumulador\n";
+
+        addNopComment("incremento de lo que está en el acumulador");
+
+        code += "\taddiu $v0,$v0, 1 #++\n";
+        code += "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultMinusMinus() {
+        code += "default_minus_minus:\t# decremento de lo que está en el acumulador\n";
+
+        addNopComment("decremento de lo que está en el acumulador");
+
+        code += "\taddiu $v0,$v0, -1 #--\n";
+        code += "\tjr $ra\n\n";
+    }
+
+    private void writeDefaultNot() {
+        code += "default_not:\t# negación de lo que está en el acumulador\n";
+
+        addNopComment("negación de lo que está en el acumulador");
+
+        code += "\txori $v0,$v0,1 #!\n";
+        code += "\tjr $ra\n\n";
     }
 
     /**
