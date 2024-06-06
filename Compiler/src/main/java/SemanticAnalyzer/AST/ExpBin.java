@@ -145,28 +145,19 @@ public class ExpBin extends ExpOp {
     @Override
     public String generateCode() {
         String textCode = "";
+        textCode += "\n\t#Generando código de ExpBin\n";
+        textCode += "\n\t#Generando código de left\n";
         textCode += this.left.generateCode();
+        textCode += "\tmove $t9, $v0\n";
+        textCode += "\tpush #Pusheo valor de left en el stack \n";
+        textCode += "\n\t#Generando código de right\n";
         textCode += this.right.generateCode();
-
+        textCode += "\tmove $t8, $v0\n";
+        textCode += "\tpop #Pop de valor de left en el stack \n";
+        textCode += "\tmove $v0, $t9 #Muevo valor left a $v0\n";
+        textCode += "\tmove $t9, $t8 #Muevo valor right a $t9\n";
+        textCode += "\n\t#Generando código de operación\n";
         String operator = this.getToken().getLexeme();
-
-        //Variable que almacena el valor del lado izquierdo
-        String leftValue = this.left.getToken().getLexeme();
-        //Variable que almacena el valor del lado derecho
-        String rightValue = this.right.getToken().getLexeme();
-
-        //Si es un booleano, se debe convertir a 1 o 0
-        if(this.left.getType().equals("Bool")){
-            leftValue = leftValue.equals("true") ? "1" : "0";
-        }
-        if(this.right.getType().equals("Bool")){
-            rightValue = rightValue.equals("true") ? "1" : "0";
-        }
-
-
-        textCode += "\tli $v0, "+leftValue+"\n" +
-                "\tli $t9, "+rightValue+"\n" +
-                "\tpush\n";
 
 
         switch (operator) {
