@@ -85,6 +85,19 @@ public class LiteralNode extends Operands {
     @Override
     public String generateCode() {
         String textCode = "";
+
+        switch (getType()){
+            case "Int":
+                textCode += "\tli $v0, " + getToken().getLexeme() + "\n";
+                break;
+            case "Bool":
+                if(getToken().getLexeme().equals("true")){
+                    textCode += "\tli $v0, 1\n";
+                }else{
+                    textCode += "\tli $v0, 0\n";
+                }
+                break;
+        }
         return textCode;
     }
 }

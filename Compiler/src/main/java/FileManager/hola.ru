@@ -13,5 +13,5 @@ start {
     Int v1;
     olaVar = new Hola();
     v1 = v1 + olaVar.m1();
-    (3-4);
+    (4==0);
 }

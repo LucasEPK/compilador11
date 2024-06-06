@@ -250,14 +250,14 @@
 					"nombre": "ExpBin",
 					"left": 					{
 						"nombre": "Literal",
-						"value": "3",
+						"value": "4",
 						"type": "Int"
 					}
 ,
-					"operator": "-",
+					"operator": "==",
 					"right": 					{
 						"nombre": "Literal",
-						"value": "4",
+						"value": "0",
 						"type": "Int"
 					}
 
