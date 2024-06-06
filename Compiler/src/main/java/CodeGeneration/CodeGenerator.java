@@ -145,7 +145,8 @@ public class CodeGenerator {
 
         addNopComment("sumamos lo que está en el acumulador y $t9");
 
-        code += "\tadd $v0, $v0, $t9\n" +
+        code += "\tpop\n"+
+                "\tadd $v0, $v0, $t9\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -159,7 +160,8 @@ public class CodeGenerator {
 
         addNopComment("restamos lo que está en el acumulador y $t9");
 
-        code += "\tsub $v0, $v0, $t9\n" +
+        code += "\tpop\n"+
+                "\tsub $v0, $v0, $t9\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -174,7 +176,8 @@ public class CodeGenerator {
 
         addNopComment("multiplicamos lo que está en el acumulador y $t9");
 
-        code += "\tmul $v0,$v0,$t9\n" +
+        code += "\tpop\n"+
+                "\tmul $v0,$v0,$t9\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -183,7 +186,8 @@ public class CodeGenerator {
 
         addNopComment("dividimos lo que está en el acumulador y $t9");
 
-        code += "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
+        code += "\tpop\n"+
+                "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
                 "\tdiv $v0, $t9 #El resultado se guarda en registro lo\n" +
                 "\tmflo $v0 #Se accede a lo con mflo\n" +
                 "\tjr $ra\n\n";
@@ -206,7 +210,8 @@ public class CodeGenerator {
 
         addNopComment("modulo lo que está en el acumulador y $t9");
 
-        code += "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
+        code += "\tpop\n"+
+                "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
                 "\tdiv $v0, $t9 #El resultado se guarda en registro hi\n" +
                 "\tmfhi $v0 #Se accede a lo con mfhi\n" +
                 "\tjr $ra\n\n";
@@ -217,7 +222,8 @@ public class CodeGenerator {
 
         addNopComment("and entre lo que está en el acumulador y $t9");
 
-        code += "\tand $v0,$v0,$t9\n" +
+        code += "\tpop\n"+
+                "\tand $v0,$v0,$t9\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -226,7 +232,8 @@ public class CodeGenerator {
 
         addNopComment("or entre lo que está en el acumulador y $t9");
 
-        code += "\tor $v0,$v0,$t9\n" +
+        code += "\tpop\n"+
+                "\tor $v0,$v0,$t9\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -235,7 +242,8 @@ public class CodeGenerator {
 
         addNopComment("menor entre lo que está en el acumulador y $t9");
 
-        code += "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+        code += "\tpop\n"+
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
                 "\tjr $ra \n\n";
     }
 
@@ -244,7 +252,8 @@ public class CodeGenerator {
 
         addNopComment("mayor entre lo que está en el acumulador y $t9");
 
-        code += "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+        code += "\tpop\n"+
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
                 "\tjr $ra \n\n";
     }
 
@@ -253,7 +262,8 @@ public class CodeGenerator {
 
         addNopComment("menor o igual entre lo que está en el acumulador y $t9");
 
-        code += "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+        code += "\tpop\n"+
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
                 "\txori $v0,$v0,1 # Invertir el resultado para obtener menor o igual\n" +
                 "\tjr $ra \n\n";
     }
@@ -263,7 +273,8 @@ public class CodeGenerator {
 
         addNopComment("mayor o igual entre lo que está en el acumulador y $t9");
 
-        code += "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+        code += "\tpop\n"+
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
                 "\txori $v0,$v0,1 # Invertir el resultado para obtener mayor o igual\n" +
                 "\tjr $ra \n\n";
     }
@@ -273,7 +284,8 @@ public class CodeGenerator {
 
         addNopComment("igualdad entre lo que está en el acumulador y $t9");
 
-        code += "\txor $v0,$v0,$t9 # Si $t0 == $t1, entonces $a0 será 0 (realiza una operación XOR bit a bit entre los registros)\n" +
+        code += "\tpop\n"+
+                "\txor $v0,$v0,$t9 # Si $t0 == $t1, entonces $a0 será 0 (realiza una operación XOR bit a bit entre los registros)\n" +
                 "\tsltiu $v0,$v0,1 #Si $v0 < 1, entonces $a0 se establecerá en 1 , de lo contrario en 0 \n" +
                 "\tjr $ra\n\n";
     }
@@ -283,7 +295,8 @@ public class CodeGenerator {
 
         addNopComment("desigualdad entre lo que está en el acumulador y $t9");
 
-        code += "\txor $v0,$v0,$t9 # Si $v0 == $t9, entonces $v0 será 0\n" +
+        code += "\tpop\n"+
+                "\txor $v0,$v0,$t9 # Si $v0 == $t9, entonces $v0 será 0\n" +
                 "\tsltu $v0,$zero,$a0 # Si $v0 != 0, entonces $v0 se establecerá en 1, de lo contrario en 0\n" +
                 "\tjr $ra\n\n";
     }
