@@ -263,7 +263,7 @@ public class CodeGenerator {
         addNopComment("menor o igual entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tslt $v0,$t9,$v0 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
                 "\txori $v0,$v0,1 # Invertir el resultado para obtener menor o igual\n" +
                 "\tjr $ra \n\n";
     }
@@ -274,7 +274,7 @@ public class CodeGenerator {
         addNopComment("mayor o igual entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tslt $v0,$v0,$t9 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
                 "\txori $v0,$v0,1 # Invertir el resultado para obtener mayor o igual\n" +
                 "\tjr $ra \n\n";
     }
