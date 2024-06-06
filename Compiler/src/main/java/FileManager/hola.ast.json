@@ -254,7 +254,7 @@
 						"type": "Int"
 					}
 ,
-					"operator": ">=",
+					"operator": "==",
 					"right": 					{
 						"nombre": "Literal",
 						"value": "0",

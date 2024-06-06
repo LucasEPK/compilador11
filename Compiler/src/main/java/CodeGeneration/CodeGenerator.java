@@ -295,10 +295,10 @@ public class CodeGenerator {
 
         addNopComment("desigualdad entre lo que está en el tope del stack y el acumulador");
 
-        code += "\tpop\n"+
-                "\txor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0\n" +
-                "\tsltu $v0,$zero,$a0 # Si $v0 != 0, entonces $v0 se establecerá en 1, de lo contrario en 0\n" +
-                "\tjr $ra\n\n";
+        code += "\tpop\n" +
+                "\txor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0 sino otro numero random\n" +
+                "\tslt $v0, $zero, $v0 \t# Si v0 > 0 entonces v0 = 1 sino v0 = 0\n" +
+                "\tjr $ra";
     }
 
     /**

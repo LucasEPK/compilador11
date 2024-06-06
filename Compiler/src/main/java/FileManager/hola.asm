@@ -26,7 +26,7 @@ main:
 	li $v0, 0
 
 	#Generando código de operación
-	jal default_major_equal
+	jal default_equal
 	# Termino ejecución
 	li $v0, 10
 	syscall
@@ -107,7 +107,6 @@ default_equal:	# igualdad entre lo que está en el tope del stack y el acumulado
 
 default_unequal:	# desigualdad entre lo que está en el tope del stack y el acumulador
 	pop
-	xor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0
-	sltu $v0,$zero,$a0 # Si $v0 != 0, entonces $v0 se establecerá en 1, de lo contrario en 0
+	xor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0 sino otro numero random
+	slt $v0, $zero, $v0 	# Si v0 > 0 entonces v0 = 1 sino v0 = 0
 	jr $ra
-
