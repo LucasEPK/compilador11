@@ -15,13 +15,18 @@
 .globl main
 main:
 
-	#Generando código de ExpUn
+	#Generando código de ExpBin
+
+	#Generando código de left
+	li $v0, 2
+	move $t9, $v0
+	push #Pusheo valor de left en el stack 
 
 	#Generando código de right
 	li $v0, 2
 
 	#Generando código de operación
-	jal default_plus_plus
+	jal default_sub
 	# Termino ejecución
 	li $v0, 10
 	syscall
