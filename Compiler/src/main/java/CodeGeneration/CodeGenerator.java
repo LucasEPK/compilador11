@@ -141,12 +141,12 @@ public class CodeGenerator {
      * @author Lucas Moyano
      */
     private void writeSumFunction() {
-        code += "default_sum:\t# sumamos lo que está en el acumulador y $t9 \n";
+        code += "default_sum:\t# sumamos lo que está en el tope del stack y el acumulador \n";
 
-        addNopComment("sumamos lo que está en el acumulador y $t9");
+        addNopComment("sumamos lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tadd $v0, $v0, $t9\n" +
+                "\tadd $v0, $t9, $v0\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -156,12 +156,12 @@ public class CodeGenerator {
      * @author Lucas Moyano
      */
     private void writeSubFunction() {
-        code += "default_sub:\t# restamos lo que está en el acumulador y $t9\n";
+        code += "default_sub:\t# restamos lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("restamos lo que está en el acumulador y $t9");
+        addNopComment("restamos lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tsub $v0, $v0, $t9\n" +
+                "\tsub $v0, $t9, $v0\n" +
                 "\tjr $ra\n\n";
     }
 
@@ -172,23 +172,23 @@ public class CodeGenerator {
      */
 
     private void writeMulFunction() {
-        code += "default_mul:\t# multiplicamos lo que está en el acumulador y $t9\n";
+        code += "default_mul:\t# multiplicamos lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("multiplicamos lo que está en el acumulador y $t9");
+        addNopComment("multiplicamos lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tmul $v0,$v0,$t9\n" +
+                "\tmul $v0,$t9,$v0\n" +
                 "\tjr $ra\n\n";
     }
 
     private void writeDivFunction() {
-        code += "default_div:\t# dividimos lo que está en el acumulador y $t9\n";
+        code += "default_div:\t# dividimos lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("dividimos lo que está en el acumulador y $t9");
+        addNopComment("dividimos lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
-                "\tdiv $v0, $t9 #El resultado se guarda en registro lo\n" +
+                "\tbeq $v0,$zero,division_zero #Si el divisor es cero, salto a error\n" +
+                "\tdiv $t9, $v0 #El resultado se guarda en registro lo\n" +
                 "\tmflo $v0 #Se accede a lo con mflo\n" +
                 "\tjr $ra\n\n";
     }
@@ -206,97 +206,97 @@ public class CodeGenerator {
     }
 
     private void writeModuleFunction() {
-        code += "default_module:\t# modulo lo que está en el acumulador y $t9\n";
+        code += "default_module:\t# modulo lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("modulo lo que está en el acumulador y $t9");
+        addNopComment("modulo lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tbeq $t9,$zero,division_zero #Si el divisor es cero, salto a error\n" +
-                "\tdiv $v0, $t9 #El resultado se guarda en registro hi\n" +
+                "\tbeq $v0,$zero,division_zero #Si el divisor es cero, salto a error\n" +
+                "\tdiv $t9, $v0 #El resultado se guarda en registro hi\n" +
                 "\tmfhi $v0 #Se accede a lo con mfhi\n" +
                 "\tjr $ra\n\n";
     }
 
     private void writeDefaultAnd() {
-        code += "default_and:\t# and entre lo que está en el acumulador y $t9\n";
+        code += "default_and:\t# and entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("and entre lo que está en el acumulador y $t9");
+        addNopComment("and entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tand $v0,$v0,$t9\n" +
+                "\tand $v0,$t9,$v0\n" +
                 "\tjr $ra\n\n";
     }
 
     private void writeDefaultOr() {
-        code += "default_or:\t# or entre lo que está en el acumulador y $t9\n";
+        code += "default_or:\t# or entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("or entre lo que está en el acumulador y $t9");
+        addNopComment("or entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tor $v0,$v0,$t9\n" +
+                "\tor $v0,$t9,$v0\n" +
                 "\tjr $ra\n\n";
     }
 
     private void writeDefaultMinor(){
-        code += "default_minor:\t# menor entre lo que está en el acumulador y $t9\n";
+        code += "default_minor:\t# menor entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("menor entre lo que está en el acumulador y $t9");
+        addNopComment("menor entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
                 "\tjr $ra \n\n";
     }
 
     private void writeDefaultMajor(){
-        code += "default_major:\t# mayor entre lo que está en el acumulador y $t9\n";
+        code += "default_major:\t# mayor entre lo que está en el tope del stack y el acumulador\n";
 
         addNopComment("mayor entre lo que está en el acumulador y $t9");
 
         code += "\tpop\n"+
-                "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
                 "\tjr $ra \n\n";
     }
 
     private void writeDefaultMinorEqual(){
-        code += "default_minor_equal:\t# menor o igual entre lo que está en el acumulador y $t9\n";
+        code += "default_minor_equal:\t# menor o igual entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("menor o igual entre lo que está en el acumulador y $t9");
+        addNopComment("menor o igual entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tslt $v0,$v0,$t9 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
+                "\tslt $v0,$t9,$v0 # $v0 = 1 si izquierdo < derecho, de lo contrario $v0 = 0\n" +
                 "\txori $v0,$v0,1 # Invertir el resultado para obtener menor o igual\n" +
                 "\tjr $ra \n\n";
     }
 
     private void writeDefaultMajorEqual(){
-        code += "default_major_equal:\t# mayor o igual entre lo que está en el acumulador y $t9\n";
+        code += "default_major_equal:\t# mayor o igual entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("mayor o igual entre lo que está en el acumulador y $t9");
+        addNopComment("mayor o igual entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\tslt $v0,$t9,$v0 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
+                "\tslt $v0,$v0,$t9 # $v0 = 1 si derecho < izquierdo, de lo contrario $v0 = 0 (intercambiamos lugares)\n" +
                 "\txori $v0,$v0,1 # Invertir el resultado para obtener mayor o igual\n" +
                 "\tjr $ra \n\n";
     }
 
     private void writeDefaultEqual(){
-        code += "default_equal:\t# igualdad entre lo que está en el acumulador y $t9\n";
+        code += "default_equal:\t# igualdad entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("igualdad entre lo que está en el acumulador y $t9");
+        addNopComment("igualdad entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\txor $v0,$v0,$t9 # Si $t0 == $t1, entonces $a0 será 0 (realiza una operación XOR bit a bit entre los registros)\n" +
+                "\txor $v0,$t9,$v0 # Si $t0 == $t1, entonces $a0 será 0 (realiza una operación XOR bit a bit entre los registros)\n" +
                 "\tsltiu $v0,$v0,1 #Si $v0 < 1, entonces $a0 se establecerá en 1 , de lo contrario en 0 \n" +
                 "\tjr $ra\n\n";
     }
 
     private void writeDefaultNotEqual(){
-        code += "default_unequal:\t# desigualdad entre lo que está en el acumulador y $t9\n";
+        code += "default_unequal:\t# desigualdad entre lo que está en el tope del stack y el acumulador\n";
 
-        addNopComment("desigualdad entre lo que está en el acumulador y $t9");
+        addNopComment("desigualdad entre lo que está en el tope del stack y el acumulador");
 
         code += "\tpop\n"+
-                "\txor $v0,$v0,$t9 # Si $v0 == $t9, entonces $v0 será 0\n" +
+                "\txor $v0,$t9,$v0 # Si $t9 == $v0, entonces $v0 será 0\n" +
                 "\tsltu $v0,$zero,$a0 # Si $v0 != 0, entonces $v0 se establecerá en 1, de lo contrario en 0\n" +
                 "\tjr $ra\n\n";
     }
