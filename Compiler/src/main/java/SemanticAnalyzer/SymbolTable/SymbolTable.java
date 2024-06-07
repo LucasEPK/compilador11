@@ -1067,6 +1067,23 @@ public class SymbolTable extends Commons {
 
     }
 
+    /**
+     * Recorre todos los structs y entra recursivamente para generar las vtables
+     * @author Lucas Moyano
+     * */
+    @Override
+    public String genVtables() {
+        String generatedText = "# Vtables\n";
+        // Recorro la lista de todos structs
+        Map<String,Struct> structs = this.structs;
+        Struct currentStruct = null;
+        for (String structName : structs.keySet()){
+            currentStruct = structs.get(structName);
+            generatedText += currentStruct.genVtables();
+        }
+
+        return generatedText;
+    }
 
     public Struct getCurrentStruct() {
         return currentStruct;

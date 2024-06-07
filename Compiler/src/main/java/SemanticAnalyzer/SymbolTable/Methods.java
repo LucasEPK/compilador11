@@ -319,5 +319,14 @@ public class Methods extends Commons {
         return jsonString;
     }
 
-
+    /**
+     * @return el nombre del metodo sin espacios
+     * @author Lucas Moyano
+     * */
+    @Override
+    public String genVtables() {
+        String nameWithNoSpaces = this.getName().replace(" ", "_");
+        String generatedText = nameWithNoSpaces + "\n";
+        return generatedText;
+    }
 }

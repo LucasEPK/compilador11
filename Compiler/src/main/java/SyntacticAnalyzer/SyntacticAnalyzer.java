@@ -64,7 +64,7 @@ public class    SyntacticAnalyzer {
      */
 
     public void generateASMCode(String inputPath){
-        CodeGenerator codeGenerator = new CodeGenerator(this.ast, inputPath);
+        CodeGenerator codeGenerator = new CodeGenerator(this.ast, this.symbolTable,inputPath);
         codeGenerator.generateASMCode();
     }
     

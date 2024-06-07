@@ -121,4 +121,9 @@ public class Variable extends Commons {
 
 
     }
+
+    @Override
+    public String genVtables() {
+        return "";
+    }
 }

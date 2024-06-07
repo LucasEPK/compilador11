@@ -1,6 +1,7 @@
 package CodeGeneration;
 
 import SemanticAnalyzer.AST.AST;
+import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,6 +18,9 @@ public class CodeGenerator {
     //Árbol de sintaxis abstracta
     private final AST ast;
 
+    // Tabla de simbolos
+    private final SymbolTable symbolTable;
+
     //Path del archivo donde se guardará el código intermedio
     private final String path;
 
@@ -31,9 +35,10 @@ public class CodeGenerator {
      * @autor Yeumen Silva, Lucas Moyano
      */
 
-    public CodeGenerator(AST ast, String path) {
+    public CodeGenerator(AST ast, SymbolTable symbolTable, String path) {
         this.ast = ast;
         this.path = path;
+        this.symbolTable = symbolTable;
     }
 
     /**
@@ -98,6 +103,7 @@ public class CodeGenerator {
      */
     private void writeStaticData() {
         code += ".data\n";
+        code += symbolTable.genVtables();
         code += "\t divisionErrorMessage: .asciiz \"ERROR: DIVISION POR CERO\"\n";
         code += "\n";
     }

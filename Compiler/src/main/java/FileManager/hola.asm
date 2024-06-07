@@ -9,6 +9,31 @@
 .end_macro
 
 .data
+# Vtables
+Str_vtable:
+	.word Str_length
+	.word Str_concat
+
+Array_vtable:
+	.word Array_length
+
+IO_vtable:
+	.word IO_out_str
+	.word IO_out_int
+	.word IO_out_bool
+	.word IO_out_char
+	.word IO_out_array_int
+	.word IO_out_array_bool
+	.word IO_out_array_str
+	.word IO_out_array_char
+	.word IO_in_str
+	.word IO_in_int
+	.word IO_in_bool
+	.word IO_in_char
+
+Hola_vtable:
+	.word Hola_m1
+
 	 divisionErrorMessage: .asciiz "ERROR: DIVISION POR CERO"
 
 .text
