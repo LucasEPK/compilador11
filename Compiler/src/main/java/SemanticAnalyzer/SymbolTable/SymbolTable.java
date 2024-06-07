@@ -1067,6 +1067,10 @@ public class SymbolTable extends Commons {
 
     }
 
+    @Override
+    protected String genVtables() {
+        return "";
+    }
 
     public Struct getCurrentStruct() {
         return currentStruct;

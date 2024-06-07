@@ -319,5 +319,8 @@ public class Methods extends Commons {
         return jsonString;
     }
 
-
+    @Override
+    protected String genVtables() {
+        return "";
+    }
 }

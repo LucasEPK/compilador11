@@ -296,6 +296,11 @@ public class Struct extends Commons {
         return jsonSting;
     }
 
+    @Override
+    protected String genVtables() {
+        return "";
+    }
+
     /**
      * Método que agrega el constructor de la clase en formato json
      * @param tabs cantida de tabs de identación
