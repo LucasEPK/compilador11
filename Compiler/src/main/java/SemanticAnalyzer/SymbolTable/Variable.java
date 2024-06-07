@@ -123,7 +123,7 @@ public class Variable extends Commons {
     }
 
     @Override
-    protected String genVtables() {
+    public String genVtables() {
         return "";
     }
 }

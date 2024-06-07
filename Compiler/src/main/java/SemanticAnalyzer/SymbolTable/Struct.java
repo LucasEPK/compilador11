@@ -296,9 +296,35 @@ public class Struct extends Commons {
         return jsonSting;
     }
 
+    /**
+     * Recorre la lista de metodos del struct y entra en ellos para obtener su nombre
+     * @return la vtable con todos los metodos escritos
+     * @author Lucas Moyano
+     * */
     @Override
-    protected String genVtables() {
-        return "";
+    public String genVtables() {
+        String generatedText = "";
+        String nameWithNoSpaces = this.getName().replace(" ", "_");
+        generatedText += nameWithNoSpaces+"_vtable:\n";
+        // Recorro la lista de todos structs
+        String methodsText = "";
+        Map<String,Methods> methods = this.methods;
+        Methods currentMethod = null;
+        for (String methodName : methods.keySet()){
+            currentMethod = methods.get(methodName);
+            // Escribo los metodos de la vtable
+            methodsText += "\t.word "+nameWithNoSpaces+"_";
+            methodsText += currentMethod.genVtables();
+        }
+
+        if (methodsText.equals("")) { // Si la clase no tiene metodos
+            generatedText = ""; // Borramos la vtable
+        } else {
+            generatedText += methodsText; // Añadimos los metodos a la vtable de la clase
+            generatedText += "\n"; // Esto sirve para separar diferentes vtables
+        }
+
+        return generatedText;
     }
 
     /**

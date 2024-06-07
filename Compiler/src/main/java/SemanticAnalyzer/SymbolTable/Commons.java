@@ -60,5 +60,5 @@ public abstract class Commons {
         return stringWithTabs;
     }
 
-    protected abstract String genVtables();
+    public abstract String genVtables();
 }
