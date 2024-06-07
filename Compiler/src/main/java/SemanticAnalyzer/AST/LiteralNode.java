@@ -97,6 +97,19 @@ public class LiteralNode extends Operands {
                     textCode += "\tli $v0, 0\n";
                 }
                 break;
+            case "Str":
+                textCode += ".data\n";
+                textCode += "\tStr_l" + getToken().getRow() + "c" + getToken().getColumn() + ": .ascizz " + getToken().getLexeme() + "\n";
+                textCode += ".text\n";
+                textCode += "\tla $v0, Str_l" + getToken().getRow() + "c" + getToken().getColumn() + "\n";
+                break;
+            case "Char":
+                textCode += ".data\n";
+                textCode += "\tChar_l" + getToken().getRow() + "c" + getToken().getColumn() + ": .ascizz " + getToken().getLexeme() + "\n";
+                textCode += ".text\n";
+                textCode += "\tla $v0, Str_l" + getToken().getRow() + "c" + getToken().getColumn() + "\n";
+                break;
+
         }
         return textCode;
     }
