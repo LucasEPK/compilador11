@@ -140,6 +140,8 @@ IdNode extends PrimaryNode{
         Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
 
         if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) {
+            // TODO: agregar parametros al stack
+            // TODO: agregar puntero a self
             // TODO: Acá debería estar el codigo de la función
             // Acá desapilamos todo el RA formado por esta función
             int totalParams = currentMethod.getParamsOfMethod().size();
