@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.InvalidLogicalComparation;
 import Exceptions.SemanticExceptions.AST.NeedToBeInt;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
@@ -104,9 +105,9 @@ public class ExpUn extends ExpOp {
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
-        textCode += this.right.generateCode();
+        textCode += this.right.generateCode(codeGenerator);
         String operator = this.getOperator().getLexeme();
 
         switch (operator){

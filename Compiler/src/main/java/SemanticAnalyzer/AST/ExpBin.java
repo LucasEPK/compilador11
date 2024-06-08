@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.DiferentPrimitiveTypesComparation;
 import Exceptions.SemanticExceptions.AST.InvalidLogicalComparation;
 import Exceptions.SemanticExceptions.AST.NeedToBeInt;
@@ -143,15 +144,15 @@ public class ExpBin extends ExpOp {
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         textCode += "\n\t#Generando código de ExpBin\n";
         textCode += "\n\t#Generando código de left\n";
-        textCode += this.left.generateCode();
+        textCode += this.left.generateCode(codeGenerator);
         textCode += "\tmove $t9, $v0\n";
         textCode += "\tpush #Pusheo valor de left en el stack \n";
         textCode += "\n\t#Generando código de right\n";
-        textCode += this.right.generateCode();
+        textCode += this.right.generateCode(codeGenerator);
         textCode += "\n\t#Generando código de operación\n";
         String operator = this.getToken().getLexeme();
 

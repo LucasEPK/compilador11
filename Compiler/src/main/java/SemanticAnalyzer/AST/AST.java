@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import SemanticAnalyzer.SymbolTable.*;
 import LexicalAnalyzer.Token;
@@ -217,10 +218,10 @@ public class AST implements Commons {
      * @author Lucas Moyano
      * */
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         for(BlockNode block : blockList) {
-            textCode += block.generateCode();
+            textCode += block.generateCode(codeGenerator);
         }
 
         return textCode;

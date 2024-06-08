@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import CodeGeneration.CodeGenerator;
 import LexicalAnalyzer.Token;
 
 public class ParenthizedExpression extends PrimaryNode{
@@ -68,7 +69,7 @@ public class ParenthizedExpression extends PrimaryNode{
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         return textCode;
     }

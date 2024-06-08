@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.InvalidNilPrimitive;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import Exceptions.SemanticExceptions.AST.VoidAsignation;
@@ -115,7 +116,7 @@ public class AsignationNode extends SentenceNode implements Commons {
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         return textCode;
     }

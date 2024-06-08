@@ -118,7 +118,7 @@ public class CodeGenerator {
                 ".globl main\n" +
                 "j main\n";
 
-        code += ast.generateCode();
+        code += ast.generateCode(this);
 
         code += "\t# Termino ejecución\n" +
                 "\tli $v0, 10\n" +

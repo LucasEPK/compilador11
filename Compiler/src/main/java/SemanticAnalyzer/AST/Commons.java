@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import CodeGeneration.CodeGenerator;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 public interface Commons {
@@ -33,5 +34,5 @@ public interface Commons {
 
     String addtabs(int tabs);
 
-    public String generateCode();
+    public String generateCode(CodeGenerator codeGenerator);
 }

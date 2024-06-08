@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import SemanticAnalyzer.SymbolTable.Methods;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
@@ -384,7 +385,7 @@ public class BlockNode extends SentenceNode implements Commons {
      * @author Lucas Moyano
      * */
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
 
         if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label
@@ -401,7 +402,7 @@ public class BlockNode extends SentenceNode implements Commons {
         }
 
         for (SentenceNode sentence : sentenceList) {
-            textCode += sentence.generateCode();
+            textCode += sentence.generateCode(codeGenerator);
         }
 
 
