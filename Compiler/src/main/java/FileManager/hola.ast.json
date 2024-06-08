@@ -247,7 +247,7 @@
 				}
 ,
 				{
-					"nombre": "IfThenElse",
+					"nombre": "While",
 					"Condición": 					{
 						"nombre": "ExpBin",
 						"left": 						{
@@ -267,7 +267,7 @@
 
 					}
 ,
-					"then": 					{
+					"do": 					{
 						"nombre": "Block",
 						"class": "start",
 						"method": "start",
@@ -284,29 +284,6 @@
 								"right": 								{
 									"nombre": "Literal",
 									"value": "2",
-									"type": "Int"
-								}
-
-							}
-						]
-					},
-					"else": 					{
-						"nombre": "Block",
-						"class": "start",
-						"method": "start",
-						"sentences": [
-							{
-								"nombre": "ExpBin",
-								"left": 								{
-									"nombre": "Literal",
-									"value": "3",
-									"type": "Int"
-								}
-,
-								"operator": "+",
-								"right": 								{
-									"nombre": "Literal",
-									"value": "3",
 									"type": "Int"
 								}
 

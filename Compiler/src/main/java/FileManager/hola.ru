@@ -14,9 +14,7 @@ start {
     olaVar = new Hola();
     v1 = v1 + olaVar.m1();
 
-    if (v1 == 2) {
+    while (v1 == 2) {
         (2+2);
-    } else {
-        (3+3);
     }
 }

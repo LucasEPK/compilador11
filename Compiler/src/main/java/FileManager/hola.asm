@@ -39,7 +39,8 @@ Hola_vtable:
 .text
 .globl main
 main:
-	# Condicional if
+	default_while:
+	# Condición while
 
 	#Generando código de ExpBin
 
@@ -52,9 +53,9 @@ main:
 
 	#Generando código de operación
 	jal default_equal
-	# If con un else
-	bne $v0, 1, default_if_else_skip	# Si la condición es falsa (acumulador!=1) se skipea el then y se va al else
-	# Acá va el cuerpo (then)
+	# Fin condición while
+	bne $v0, 1, default_while_fin	#si la condición del while no es verdadera salta todo el while
+	# Cuerpo while
 
 	#Generando código de ExpBin
 
@@ -68,23 +69,9 @@ main:
 
 	#Generando código de operación
 	jal default_sum
-	j default_if_else_fin		# Acá se salta al fin del ifelse porque sino ejecutariamos codigo del else
-	default_if_else_skip:
-	# Acá va el cuerpo (else)
-
-	#Generando código de ExpBin
-
-	#Generando código de left
-	li $v0, 3
-	move $t9, $v0
-	push #Pusheo valor de left en el stack 
-
-	#Generando código de right
-	li $v0, 3
-
-	#Generando código de operación
-	jal default_sum
-	default_if_else_fin:
+	# Fin cuerpo while
+	j default_while	# vuelve al pricipio del while a chequear la condición
+	default_while_fin:
 	# Termino ejecución
 	li $v0, 10
 	syscall
