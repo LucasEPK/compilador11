@@ -88,13 +88,14 @@ public class AST implements Commons {
 
     private void addPredefinedStructsToAST(){
         BlockNode predefinedBlock;
+
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Object");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Int");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Str");
@@ -106,15 +107,15 @@ public class AST implements Commons {
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Str");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Char");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Bool");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Array");
@@ -122,7 +123,7 @@ public class AST implements Commons {
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("Array");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("IO");
@@ -174,7 +175,7 @@ public class AST implements Commons {
         blockList.addFirst(predefinedBlock);
         predefinedBlock = new BlockNode(symbolTable.getCurrentStruct().getName(), symbolTable.getCurrentMethod().getName());
         predefinedBlock.setStruct("IO");
-        predefinedBlock.setMethod("");
+        predefinedBlock.setMethod(".");
         blockList.addFirst(predefinedBlock);
 
     }

@@ -377,16 +377,26 @@ public class BlockNode extends SentenceNode implements Commons {
         return tabsString;
     }
 
+    /**
+     * Acá se genera codigo MIPS para todas las funciones, agregandole labels
+     * y después se recorren todas las sentencias del bloque para generar el codigo adentro de ellos
+     * @return codigo de las funciones
+     * @author Lucas Moyano
+     * */
     @Override
     public String generateCode() {
         String textCode = "";
 
         if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label
-            // Este codigo diferencia el start entre todos los otros metodos
-            if (this.getStruct().equals("start")) {
+            // Este codigo diferencia el start y el constructor entre todos los otros metodos
+            if (this.getStruct().equals("start")) { // Es el metodo start
                 textCode = "main:\t# METODO START ----------------------------------------------------------\n";
             } else {
-                textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
+                if (this.getMethod().equals(".")) { // Es un constructor
+                    textCode = this.getStruct() + "_constructor:\n";
+                } else { // Es un metodo común
+                    textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
+                }
             }
         }
 

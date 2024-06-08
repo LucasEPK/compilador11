@@ -4,7 +4,7 @@
 		{
 			"nombre": "Block",
 			"class": "IO",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},
@@ -95,7 +95,7 @@
 		{
 			"nombre": "Block",
 			"class": "Array",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},
@@ -109,21 +109,21 @@
 		{
 			"nombre": "Block",
 			"class": "Bool",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
 			"class": "Char",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
 			"class": "Str",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},
@@ -144,14 +144,14 @@
 		{
 			"nombre": "Block",
 			"class": "Int",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},
 		{
 			"nombre": "Block",
 			"class": "Object",
-			"method": "",
+			"method": ".",
 			"sentences": [
 			]
 		},

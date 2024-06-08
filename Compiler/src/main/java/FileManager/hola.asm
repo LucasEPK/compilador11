@@ -55,7 +55,7 @@ Hola_vtable:
 .text
 .globl main
 j main
-IO_:
+IO_constructor:
 IO_in_char:
 IO_in_bool:
 IO_in_int:
@@ -68,16 +68,16 @@ IO_out_char:
 IO_out_bool:
 IO_out_int:
 IO_out_str:
-Array_:
+Array_constructor:
 Array_length:
-Bool_:
-Char_:
-Str_:
+Bool_constructor:
+Char_constructor:
+Str_constructor:
 Str_length:
 Str_concat:
-Int_:
-Object_:
-Hola_.:
+Int_constructor:
+Object_constructor:
+Hola_constructor:
 Hola_m1:
 main:	# METODO START ----------------------------------------------------------
 	default_while:
