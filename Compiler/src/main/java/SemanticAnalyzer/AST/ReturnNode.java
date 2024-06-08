@@ -103,7 +103,7 @@ public class ReturnNode extends SentenceNode implements Commons {
         //Generamos el codigo del return
         //Lo guardamos en nuestro registro de activacion
         //En el tope de la pila
-        textCode += "\tla $t9,$v0 #cargo en $t9 el valor de retorno\n";
+        textCode += "\tla $t9,($v0) #cargo en $t9 el valor de retorno\n";
         textCode += "\tpush #Lo pusheo al stack\n";
 
         //Debo hacer un jump a la direccion de retorno
