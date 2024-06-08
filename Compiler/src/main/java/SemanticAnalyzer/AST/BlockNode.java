@@ -4,11 +4,14 @@ package SemanticAnalyzer.AST;
 import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import SemanticAnalyzer.SymbolTable.Methods;
+import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Clase representate un bloque de codigo de un metodo
@@ -399,7 +402,22 @@ public class BlockNode extends SentenceNode implements Commons {
                     textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
                 }
             }
+
+            // Si es un bloque sentencia no debería tener variables declaradas adentro
+            // Obtengo las variables declaradas desde la tabla de simbolos
+            SymbolTable symbolTable = codeGenerator.getSymbolTable();
+            Map<String, Variable> declaredVariables = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+
+            textCode += "\t# Declaracion de variables\n";
+            // Recorro la lista de todas las variables
+            Variable currentVariable = null;
+            for (String varName : declaredVariables.keySet()){
+                currentVariable = declaredVariables.get(varName);
+                textCode += currentVariable.generateCode();
+            }
+            textCode += "\t# FIN declaracion de variables\n";
         }
+
 
         for (SentenceNode sentence : sentenceList) {
             textCode += sentence.generateCode(codeGenerator);

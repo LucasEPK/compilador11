@@ -322,4 +322,8 @@ public class CodeGenerator {
     public String getCode() {
         return code;
     }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
 }

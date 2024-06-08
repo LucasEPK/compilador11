@@ -332,6 +332,20 @@ public class Struct extends Commons {
     }
 
     /**
+     * Buscamos el metodo según el nombre
+     * @param methodName nombre del metodo que buscamos
+     * @return metodo buscado
+     * @author Lucas Moyano
+     * */
+    public Methods findMethod(String methodName){
+        if (methodName.equals(".")) { // Esto se hace porque el constructor está separado de la lista de metodos del struct
+            return constructor;
+        } else {
+            return methods.get(methodName);
+        }
+    }
+
+    /**
      * Método que agrega el constructor de la clase en formato json
      * @param tabs cantida de tabs de identación
      * @return string del constructor en formato json
