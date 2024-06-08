@@ -56,78 +56,278 @@ Hola_vtable:
 .globl main
 j main
 IO_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_char:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_bool:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_int:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_str:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_array_char:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_array_bool:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_array_str:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_array_int:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_char:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_bool:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_int:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_str:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Array_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Array_length:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Bool_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Char_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Str_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Str_length:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Str_concat:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Int_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Object_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Hola_constructor:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 Hola_m1:
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	# FIN declaracion de variables
 main:	# METODO START ----------------------------------------------------------
+	# Actualización de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualización de framepointer
+
 	# Declaracion de variables
 	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
 	push

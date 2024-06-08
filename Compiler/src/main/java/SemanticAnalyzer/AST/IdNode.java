@@ -131,6 +131,8 @@ IdNode extends PrimaryNode{
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
+        // TODO: acordarse de re-establecer framepointer si es una función
+        // TODO: Si es una función desapilar todo el RA creado por la llamada, cargando el valor de retorno en $v0
         return textCode;
     }
 
