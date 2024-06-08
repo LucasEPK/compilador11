@@ -310,16 +310,16 @@ public class Struct extends Commons {
         String methodsText = "";
         Map<String,Methods> methods = this.methods;
         Methods currentMethod = null;
+        //Debo agregar el constructor tambien
+        methodsText += "\t.word "+nameWithNoSpaces+"_";
+        methodsText += "constructor\n";
         for (String methodName : methods.keySet()){
             currentMethod = methods.get(methodName);
             // Escribo los metodos de la vtable
             methodsText += "\t.word "+nameWithNoSpaces+"_";
             methodsText += currentMethod.genVtables();
         }
-        //Debo agregar el constructor tambien
 
-        methodsText += "\t.word "+nameWithNoSpaces+"_";
-        methodsText += "constructor\n";
 
         if (methodsText.equals("")) { // Si la clase no tiene metodos
             generatedText = ""; // Borramos la vtable
