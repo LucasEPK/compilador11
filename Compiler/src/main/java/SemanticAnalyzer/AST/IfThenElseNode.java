@@ -137,9 +137,40 @@ public class IfThenElseNode extends  SentenceNode implements Commons {
         return tabsString;
     }
 
+    /**
+     * Genera codigo MIPS para if
+     * @return codigo generado del if
+     * @author Lucas Moyano
+     * */
     @Override
     public String generateCode() {
         String textCode = "";
+
+        textCode += "\t# Condicional if\n";
+        textCode += ifNode.generateCode(); // Acá se genera la condición
+
+        if (elseNode == null) { // Si no tiene else
+            // Generamos el codigo para if sin else
+            textCode += "\t# If\n";
+            textCode += "\tbne $v0, 1, default_if_skip\t# Si la condición es falsa (acumulador!=1) se skipea el then\n" +
+                    "\t# Acá va el cuerpo (then)\n";
+            textCode += thenNode.generateCode(); // Acá se genera el cuerpo del if
+            textCode += "\tdefault_if_skip:\n";
+        } else { // Si tiene else
+            // Generamos el codigo para if con else
+            textCode += "\t# If con un else\n";
+
+            textCode += "\tbne $v0, 1, default_if_else_skip\t# Si la condición es falsa (acumulador!=1) se skipea el then y se va al else\n" +
+                    "\t# Acá va el cuerpo (then)\n";
+            textCode += thenNode.generateCode(); // Acá se genera el cuerpo del if
+            textCode += "\tj default_if_else_fin\t\t# Acá se salta al fin del ifelse porque sino ejecutariamos codigo del else\n" +
+                    "\tdefault_if_else_skip:\n" +
+                    "\t# Acá va el cuerpo (else)\n";
+            textCode += elseNode.generateCode(); // Acá se genera el cuerpo del else
+            textCode += "\tdefault_if_else_fin:\n";
+        }
+
+
         return textCode;
     }
 }
