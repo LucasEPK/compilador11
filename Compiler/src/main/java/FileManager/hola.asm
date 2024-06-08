@@ -10,12 +10,26 @@
 
 .data
 # Vtables
+Object_vtable:
+	.word Object_constructor
+
+Int_vtable:
+	.word Int_constructor
+
 Str_vtable:
 	.word Str_length
 	.word Str_concat
+	.word Str_constructor
+
+Bool_vtable:
+	.word Bool_constructor
+
+Char_vtable:
+	.word Char_constructor
 
 Array_vtable:
 	.word Array_length
+	.word Array_constructor
 
 IO_vtable:
 	.word IO_out_str
@@ -30,9 +44,11 @@ IO_vtable:
 	.word IO_in_int
 	.word IO_in_bool
 	.word IO_in_char
+	.word IO_constructor
 
 Hola_vtable:
 	.word Hola_m1
+	.word Hola_constructor
 
 	 divisionErrorMessage: .asciiz "ERROR: DIVISION POR CERO"
 

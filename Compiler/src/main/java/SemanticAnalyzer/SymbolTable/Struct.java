@@ -316,6 +316,10 @@ public class Struct extends Commons {
             methodsText += "\t.word "+nameWithNoSpaces+"_";
             methodsText += currentMethod.genVtables();
         }
+        //Debo agregar el constructor tambien
+
+        methodsText += "\t.word "+nameWithNoSpaces+"_";
+        methodsText += "constructor\n";
 
         if (methodsText.equals("")) { // Si la clase no tiene metodos
             generatedText = ""; // Borramos la vtable
