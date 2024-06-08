@@ -54,7 +54,32 @@ Hola_vtable:
 
 .text
 .globl main
-main:
+j main
+IO_:
+IO_in_char:
+IO_in_bool:
+IO_in_int:
+IO_in_str:
+IO_out_array_char:
+IO_out_array_bool:
+IO_out_array_str:
+IO_out_array_int:
+IO_out_char:
+IO_out_bool:
+IO_out_int:
+IO_out_str:
+Array_:
+Array_length:
+Bool_:
+Char_:
+Str_:
+Str_length:
+Str_concat:
+Int_:
+Object_:
+Hola_.:
+Hola_m1:
+main:	# METODO START ----------------------------------------------------------
 	default_while:
 	# Condición while
 
@@ -72,19 +97,6 @@ main:
 	# Fin condición while
 	bne $v0, 1, default_while_fin	#si la condición del while no es verdadera salta todo el while
 	# Cuerpo while
-
-	#Generando código de ExpBin
-
-	#Generando código de left
-	li $v0, 2
-	move $t9, $v0
-	push #Pusheo valor de left en el stack 
-
-	#Generando código de right
-	li $v0, 2
-
-	#Generando código de operación
-	jal default_sum
 	# Fin cuerpo while
 	j default_while	# vuelve al pricipio del while a chequear la condición
 	default_while_fin:

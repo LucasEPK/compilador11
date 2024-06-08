@@ -116,7 +116,7 @@ public class CodeGenerator {
     private void writeText() {
         code += ".text\n" +
                 ".globl main\n" +
-                "main:\n";
+                "j main\n";
 
         code += ast.generateCode();
 

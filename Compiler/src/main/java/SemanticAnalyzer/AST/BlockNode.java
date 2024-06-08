@@ -7,6 +7,7 @@ import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Clase representate un bloque de codigo de un metodo
@@ -379,8 +380,18 @@ public class BlockNode extends SentenceNode implements Commons {
     @Override
     public String generateCode() {
         String textCode = "";
-        for(SentenceNode sentence : sentenceList){
-            textCode += sentence.generateCode();
+
+        if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label
+            // Este codigo diferencia el start entre todos los otros metodos
+            if (this.getStruct().equals("start")) {
+                textCode = "main:\t# METODO START ----------------------------------------------------------\n";
+            } else {
+                textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
+            }
+
+            for (SentenceNode sentence : sentenceList) {
+                textCode += sentence.generateCode();
+            }
         }
 
         return textCode;
