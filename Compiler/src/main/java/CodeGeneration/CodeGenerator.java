@@ -116,9 +116,9 @@ public class CodeGenerator {
     private void writeText() {
         code += ".text\n" +
                 ".globl main\n" +
-                "main:\n";
+                "j main\n";
 
-        code += ast.generateCode();
+        code += ast.generateCode(this);
 
         code += "\t# Termino ejecución\n" +
                 "\tli $v0, 10\n" +
@@ -321,5 +321,9 @@ public class CodeGenerator {
 
     public String getCode() {
         return code;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
     }
 }

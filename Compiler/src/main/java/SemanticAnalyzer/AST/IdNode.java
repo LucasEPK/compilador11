@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.Methods;
@@ -128,7 +129,7 @@ IdNode extends PrimaryNode{
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         return textCode;
     }

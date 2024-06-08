@@ -1,12 +1,17 @@
 package SemanticAnalyzer.AST;
 
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import SemanticAnalyzer.SymbolTable.Methods;
+import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Clase representate un bloque de codigo de un metodo
@@ -376,12 +381,48 @@ public class BlockNode extends SentenceNode implements Commons {
         return tabsString;
     }
 
+    /**
+     * Acá se genera codigo MIPS para todas las funciones, agregandole labels
+     * y después se recorren todas las sentencias del bloque para generar el codigo adentro de ellos
+     * @return codigo de las funciones
+     * @author Lucas Moyano
+     * */
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
-        for(SentenceNode sentence : sentenceList){
-            textCode += sentence.generateCode();
+
+        if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label
+            // Este codigo diferencia el start y el constructor entre todos los otros metodos
+            if (this.getStruct().equals("start")) { // Es el metodo start
+                textCode = "main:\t# METODO START ----------------------------------------------------------\n";
+            } else {
+                if (this.getMethod().equals(".")) { // Es un constructor
+                    textCode = this.getStruct() + "_constructor:\n";
+                } else { // Es un metodo común
+                    textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
+                }
+            }
+
+            // Si es un bloque sentencia no debería tener variables declaradas adentro
+            // Obtengo las variables declaradas desde la tabla de simbolos
+            SymbolTable symbolTable = codeGenerator.getSymbolTable();
+            Map<String, Variable> declaredVariables = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+
+            textCode += "\t# Declaracion de variables\n";
+            // Recorro la lista de todas las variables
+            Variable currentVariable = null;
+            for (String varName : declaredVariables.keySet()){
+                currentVariable = declaredVariables.get(varName);
+                textCode += currentVariable.generateCode();
+            }
+            textCode += "\t# FIN declaracion de variables\n";
         }
+
+
+        for (SentenceNode sentence : sentenceList) {
+            textCode += sentence.generateCode(codeGenerator);
+        }
+
 
         return textCode;
     }

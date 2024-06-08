@@ -54,7 +54,86 @@ Hola_vtable:
 
 .text
 .globl main
-main:
+j main
+IO_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_in_char:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_in_bool:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_in_int:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_in_str:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_array_char:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_array_bool:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_array_str:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_array_int:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_char:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_bool:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_int:
+	# Declaracion de variables
+	# FIN declaracion de variables
+IO_out_str:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Array_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Array_length:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Bool_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Char_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Str_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Str_length:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Str_concat:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Int_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Object_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Hola_constructor:
+	# Declaracion de variables
+	# FIN declaracion de variables
+Hola_m1:
+	# Declaracion de variables
+	# FIN declaracion de variables
+main:	# METODO START ----------------------------------------------------------
+	# Declaracion de variables
+	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
+	push
+	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
+	push
+	# FIN declaracion de variables
 	default_while:
 	# Condición while
 

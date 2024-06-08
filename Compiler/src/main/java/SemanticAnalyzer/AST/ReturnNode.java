@@ -1,6 +1,7 @@
 package SemanticAnalyzer.AST;
 
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.StructNotFound;
 import SemanticAnalyzer.SymbolTable.Struct;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
@@ -90,7 +91,7 @@ public class ReturnNode extends SentenceNode implements Commons {
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         return textCode;
     }

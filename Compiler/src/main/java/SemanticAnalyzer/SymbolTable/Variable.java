@@ -126,4 +126,15 @@ public class Variable extends Commons {
     public String genVtables() {
         return "";
     }
+
+    /**
+     * Genero codigo MIPS para declaración de variables
+     * @return codigo de una variable declarada
+     * @author Lucas Moyano
+     * */
+    public String generateCode() {
+        String textCode = "\tli $t9, 0 # Reservamos un espacio en el stack para esta variable;\n" +
+                "\tpush\n";
+        return textCode;
+    }
 }

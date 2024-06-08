@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import CodeGeneration.CodeGenerator;
 import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
@@ -83,7 +84,7 @@ public class LiteralNode extends Operands {
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
 
         switch (getType()){

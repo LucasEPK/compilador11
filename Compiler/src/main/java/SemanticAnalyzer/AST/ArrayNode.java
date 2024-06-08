@@ -1,5 +1,6 @@
 package SemanticAnalyzer.AST;
 
+import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.ArrayLengthException;
 import Exceptions.SemanticExceptions.AST.NoPrimitiveType;
 import Exceptions.SemanticExceptions.AST.VariableNoIsArray;
@@ -139,7 +140,7 @@ public class ArrayNode extends PrimaryNode{
     }
 
     @Override
-    public String generateCode() {
+    public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         return textCode;
     }

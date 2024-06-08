@@ -1085,6 +1085,24 @@ public class SymbolTable extends Commons {
         return generatedText;
     }
 
+    /**
+     * Busco las variables declaradas en el metodo y struct dados
+     * @param methodName nombre del metodo que tiene las variables que nos interesan
+     * @param structName nombre del struct que tiene las variables que nos interesan
+     * @return la lista de variables declaradas en el metodo especifico
+     * @author Lucas Moyano
+     * */
+    public Map<String,Variable> getStructMethodDeclaredVariables(String structName, String methodName) {
+
+        if (structName.equals("start")) { // Esto se hace porque start está separado de los otros metodos
+            return start.getDefinedVar();
+        } else { // Acá buscamos metodos generales
+            Struct specificStruct = structs.get(structName);
+            Methods specificMethod = specificStruct.findMethod(methodName);
+            return specificMethod.getDefinedVar();
+        }
+    }
+
     public Struct getCurrentStruct() {
         return currentStruct;
     }
