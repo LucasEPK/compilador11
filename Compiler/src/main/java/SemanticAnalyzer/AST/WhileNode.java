@@ -90,9 +90,24 @@ public class WhileNode extends SentenceNode {
 
     }
 
+    /**
+     * Genera codigo mips para el while
+     * @return codigo mips del while
+     * @author Lucas Moyano
+     * */
     @Override
     public String generateCode() {
-        String textCode = "";
+        String textCode = "\tdefault_while:\n" +
+                "\t# Condición while\n";
+        textCode += whileNode.generateCode() +
+                "\t# Fin condición while\n";
+        textCode += "\tbne $v0, 1, default_while_fin\t#si la condición del while no es verdadera salta todo el while\n" +
+                "\t# Cuerpo while\n";
+        textCode += doNode.generateCode() +
+                "\t# Fin cuerpo while\n";
+        textCode += "\tj default_while\t# vuelve al pricipio del while a chequear la condición\n" +
+                "\tdefault_while_fin:\n";
+
         return textCode;
     }
 }

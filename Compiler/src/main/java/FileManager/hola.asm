@@ -39,19 +39,39 @@ Hola_vtable:
 .text
 .globl main
 main:
+	default_while:
+	# Condición while
 
 	#Generando código de ExpBin
 
 	#Generando código de left
-	li $v0, 4
 	move $t9, $v0
 	push #Pusheo valor de left en el stack 
 
 	#Generando código de right
-	li $v0, 0
+	li $v0, 2
 
 	#Generando código de operación
 	jal default_equal
+	# Fin condición while
+	bne $v0, 1, default_while_fin	#si la condición del while no es verdadera salta todo el while
+	# Cuerpo while
+
+	#Generando código de ExpBin
+
+	#Generando código de left
+	li $v0, 2
+	move $t9, $v0
+	push #Pusheo valor de left en el stack 
+
+	#Generando código de right
+	li $v0, 2
+
+	#Generando código de operación
+	jal default_sum
+	# Fin cuerpo while
+	j default_while	# vuelve al pricipio del while a chequear la condición
+	default_while_fin:
 	# Termino ejecución
 	li $v0, 10
 	syscall
