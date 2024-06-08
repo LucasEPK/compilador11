@@ -128,11 +128,7 @@ IdNode extends PrimaryNode{
         return tabsString;
     }
 
-    @Override
-    public String generateCode(CodeGenerator codeGenerator) {
-        String textCode = "";
-        return textCode;
-    }
+
 
     /**
      * Método que consolida un nodo Id de tipo self
@@ -411,6 +407,58 @@ IdNode extends PrimaryNode{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String generateCode(CodeGenerator codeGenerator) {
+        String textCode = "";
+
+
+
+        //Segun el tipo de id, genero el código correspondiente
+        if(this.idType == IdType.SELF){
+            textCode += selfGenerate(codeGenerator);
+        } else if(this.idType == IdType.CONSTRUCTOR){
+            textCode += constructorGenerate(codeGenerator);
+        } else if (this.idType == IdType.METHOD) {
+            textCode += methodGenerate(codeGenerator);
+        } else if (this.idType == IdType.VARIABLE) {
+            textCode += variableGenerate(codeGenerator);
+        } else if (this.idType == IdType.STATIC_METHOD) {
+            textCode += staticMethodGenerate(codeGenerator);
+        }
+
+        //Si hay un encadenado a la derecha, genero el código de este
+        if(this.right != null){
+            textCode += this.right.generateCode(codeGenerator);
+        }
+
+        return textCode;
+    }
+
+    private String selfGenerate(CodeGenerator codeGenerator){
+        String selfCode = "";
+        return selfCode;
+    }
+
+    private String constructorGenerate(CodeGenerator codeGenerator){
+        String constructorCode = "";
+        return constructorCode;
+    }
+
+    private String methodGenerate(CodeGenerator codeGenerator){
+        String methodCode = "";
+        return methodCode;
+    }
+
+    private String variableGenerate(CodeGenerator codeGenerator){
+        String variableCode = "";
+        return variableCode;
+    }
+
+    private String staticMethodGenerate(CodeGenerator codeGenerator){
+        String staticMethodCode = "";
+        return staticMethodCode;
     }
 
 }
