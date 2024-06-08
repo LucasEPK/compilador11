@@ -131,6 +131,9 @@ Hola_m1:
 	li $v0, 3
 	la $t9,$v0 #cargo en $t9 el valor de retorno
 	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return adress
+	jr $ra #Vuelvo al return adress
+	 #Fin Return
 main:	# METODO START ----------------------------------------------------------
 	# Declaracion de variables
 	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
