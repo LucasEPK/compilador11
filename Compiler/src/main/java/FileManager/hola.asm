@@ -127,6 +127,10 @@ Hola_constructor:
 Hola_m1:
 	# Declaracion de variables
 	# FIN declaracion de variables
+	# Return
+	li $v0, 3
+	la $t9,$v0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
 main:	# METODO START ----------------------------------------------------------
 	# Declaracion de variables
 	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
