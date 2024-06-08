@@ -128,11 +128,44 @@ IdNode extends PrimaryNode{
         return tabsString;
     }
 
+    /**
+     * Acá generamos codigo mips para funciones y variables
+     * @return codigo generado para la funcion/variable
+     * @author Lucas Moyano
+     * */
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
-        // TODO: acordarse de re-establecer framepointer si es una función
-        // TODO: Si es una función desapilar todo el RA creado por la llamada, cargando el valor de retorno en $v0
+        SymbolTable symbolTable = codeGenerator.getSymbolTable();
+        Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
+
+        if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) {
+            // TODO: Acá debería estar el codigo de la función
+            // Acá desapilamos todo el RA formado por esta función
+            int totalParams = currentMethod.getParamsOfMethod().size();
+            int totalVariables = currentMethod.getDefinedVar().size();
+            textCode += "\t# Desapilamos todo el RA de la función llamada\n";
+            // Pop del valor de retorno y guardado en $v0
+            textCode += "\tpop\t# Pop del valor de retorno\n"+
+                    "\tla $v0, ($t9)\n";
+            for(int i=0; i<totalVariables; i++) { // Pop de las variables
+                textCode += "\tpop\t# Pop de variable "+i+"\n";
+            }
+            // Pop del puntero de retorno de la función llamada
+            textCode += "\tpop\t# Pop de puntero de retorno $ra de la función llamada\n";
+
+            // Pop del framepointer que perdimos y reestableciemiento del framepointer
+            textCode += "\tpop\t# Pop del framepointer anterior que perdimos\n" +
+                    "\tadd $fp, $zero, $t9\t# Volvemos a cargar el framepointer correcto\n";
+
+            // Pop del puntero al objeto
+            textCode += "\tpop\t# Pop de puntero al objeto\n";
+
+            for(int i=0; i<totalParams; i++) { // Pop de los parametros
+                textCode += "\tpop\t# Pop de parametro "+i+"\n";
+            }
+            textCode += "\t# FIN desapilado de todo el RA de la función llamada\n";
+        }
         return textCode;
     }
 

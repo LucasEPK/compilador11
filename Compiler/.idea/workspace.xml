@@ -11,8 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.asm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.asm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ru" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IdNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/IdNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/SymbolTable/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/SymbolTable/SymbolTable.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,31 +56,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
-    &quot;Application.xd.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MiClaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lucas Estudio/Documents/code/Compiladores/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/AST/passing&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.Test.executor": "Run",
+    "Application.xd.executor": "Run",
+    "JUnit.MiClaseTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "activationRegister",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/home/yeu/Documentos/Compiladores/compilador11/Compiler/src/test/java",
+    "last_opened_file_path": "C:/Users/Lucas Estudio/Documents/code/Compiladores/compilador11/Compiler/src/main/java/Testing/Tests/SemanticTests/AST/passing",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Lucas Estudio\Documents\code\Compiladores\compilador11\Compiler\src\main\java\Testing\Tests\SemanticTests\AST\passing" />
@@ -198,7 +200,7 @@
       <workItem from="1717767086709" duration="4422000" />
       <workItem from="1717799900178" duration="5514000" />
       <workItem from="1717851398489" duration="7353000" />
-      <workItem from="1717871114188" duration="1838000" />
+      <workItem from="1717871114188" duration="4970000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />
