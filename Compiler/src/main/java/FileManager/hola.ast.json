@@ -216,6 +216,24 @@
 					}
 ,
 					"right": 					{
+						"nombre": "Literal",
+						"value": "1",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v1",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
 						"nombre": "ExpBin",
 						"left": 						{
 							"nombre": "Id",

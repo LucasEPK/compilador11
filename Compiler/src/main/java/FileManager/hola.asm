@@ -334,6 +334,35 @@ main:	# METODO START ----------------------------------------------------------
 	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
 	push
 	# FIN declaracion de variables
+	# Asignacion de variable
+	# Desapilamos todo el RA de la función llamada
+	pop	# Pop del valor de retorno
+	la $v0, ($t9)
+	pop	# Pop de variable 0
+	pop	# Pop de variable 1
+	pop	# Pop de puntero de retorno $ra de la función llamada
+	pop	# Pop del framepointer anterior que perdimos
+	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
+	pop	# Pop de puntero al objeto
+	# FIN desapilado de todo el RA de la función llamada
+	# FIN asignacion de variable
+	# Asignacion de variable
+	li $v0, 1
+	sw $v0, -8($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
+	# FIN asignacion de variable
+	# Asignacion de variable
+
+	#Generando código de ExpBin
+
+	#Generando código de left
+	move $t9, $v0
+	push #Pusheo valor de left en el stack 
+
+	#Generando código de right
+
+	#Generando código de operación
+	jal default_sum
+	# FIN asignacion de variable
 	default_while:
 	# Condición while
 
