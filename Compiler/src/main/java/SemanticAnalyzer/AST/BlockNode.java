@@ -388,11 +388,12 @@ public class BlockNode extends SentenceNode implements Commons {
             } else {
                 textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
             }
-
-            for (SentenceNode sentence : sentenceList) {
-                textCode += sentence.generateCode();
-            }
         }
+
+        for (SentenceNode sentence : sentenceList) {
+            textCode += sentence.generateCode();
+        }
+
 
         return textCode;
     }
