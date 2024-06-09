@@ -3,10 +3,7 @@ package SemanticAnalyzer.AST;
 
 import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
-import SemanticAnalyzer.SymbolTable.Methods;
-import SemanticAnalyzer.SymbolTable.Struct;
-import SemanticAnalyzer.SymbolTable.SymbolTable;
-import SemanticAnalyzer.SymbolTable.Variable;
+import SemanticAnalyzer.SymbolTable.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -390,6 +387,12 @@ public class BlockNode extends SentenceNode implements Commons {
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
+        boolean isConstructor = false;
+        SymbolTable symbolTable = codeGenerator.getSymbolTable();
+        // Obtengo las variables declaradas desde la tabla de simbolos
+        Map<String, Variable> declaredVariables = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+        // Obtengo los atributos declarados desde la tabla de simbolos
+        Map<String, Attributes> structAttributes = symbolTable.getStructAttributes(this.getStruct());
 
         if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label o variables declaradas
             // Este codigo diferencia el start y el constructor entre todos los otros metodos
@@ -398,6 +401,7 @@ public class BlockNode extends SentenceNode implements Commons {
             } else {
                 if (this.getMethod().equals(".")) { // Es un constructor
                     textCode = this.getStruct() + "_constructor:\n";
+                    isConstructor = true;
                 } else { // Es un metodo común
                     textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
                 }
@@ -413,9 +417,7 @@ public class BlockNode extends SentenceNode implements Commons {
                     "\t# FIN actualizacion de framepointer\n\n";
 
             // Si es un bloque sentencia no debería tener variables declaradas adentro
-            // Obtengo las variables declaradas desde la tabla de simbolos
-            SymbolTable symbolTable = codeGenerator.getSymbolTable();
-            Map<String, Variable> declaredVariables = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+
 
             textCode += "\t# Declaracion de variables\n";
             // Recorro la lista de todas las variables
@@ -424,12 +426,56 @@ public class BlockNode extends SentenceNode implements Commons {
                 currentVariable = declaredVariables.get(varName);
                 textCode += currentVariable.generateCode();
             }
+            // Declaro atributos al final del stack de variables
+            if(isConstructor) { // si es un constructor
+                textCode += "\t# Declaracion de atributos\n";
+                // Recorro la lista de todos los atributos y reservo espacio en el stack
+                Variable currentAttributes = null;
+                for (String attrName : structAttributes.keySet()) {
+                    currentAttributes = structAttributes.get(attrName);
+                    textCode += currentAttributes.generateCode();
+                }
+            }
             textCode += "\t# FIN declaracion de variables\n";
         }
 
 
         for (SentenceNode sentence : sentenceList) {
             textCode += sentence.generateCode(codeGenerator);
+        }
+
+        if(isConstructor) { // Esto hace que si es un constructor que devuelva el CIR a quien lo llamó
+            int totalStructAttributes = structAttributes.size();
+            int totalDeclaredVariables = declaredVariables.size();
+            int bytesToAllocate = 4*(totalStructAttributes+1);
+            textCode += "\tli $v0, 9\t# Aloco memoria en el heap\n" +
+                    "\tli $a0, "+bytesToAllocate+"\t# x bytes en memoria\n" +
+                    "\tsyscall\t\t# Con esto tenemos la referencia en $v0\n" +
+                    "\tla $t1, "+this.getStruct()+"_vtable\t# Guardamos la dirección de la vtable en la primera posicion del heap\n" +
+                    "\tsw $t1, 0($v0)\n";
+            // Guardo el valor de los atributos en el heap
+            for(int i=0; i<totalStructAttributes; i++){
+                // Meto el valor asignado de la variable en el acumulador
+                int variableStackPos = -4 * (totalDeclaredVariables+i+1);
+                int attributeHeapPos = 4 * (i+2);
+                textCode += "\tlw $t0, "+variableStackPos+"($fp)\t# Meto el valor asignado del atributo desde el stack al acumulador ($v0)\n";
+                textCode += "\tsw $t0, "+attributeHeapPos+"($v0)\t# Meto el valor del atributo en su posición del heap\n";
+            }
+            // Acá hacemos que el constructor retorne el CIR
+            textCode += "\t# Return de CIR\n";
+
+            //Generamos el codigo del return
+            //Lo guardamos en nuestro registro de activacion
+            //En el tope de la pila
+            textCode += "\tla $t9,($v0) #cargo en $t9 el valor de retorno\n";
+            textCode += "\tpush #Lo pusheo al stack\n";
+
+            //Debo hacer un jump a la direccion de retorno
+            //Para eso debo cargar la direccion de retorno en $ra
+            textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+            textCode += "\tjr $ra #Vuelvo al return address\n";
+
+            textCode += "\t #Fin Return de CIR\n";
         }
 
 

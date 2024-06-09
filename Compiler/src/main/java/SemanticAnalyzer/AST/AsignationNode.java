@@ -121,7 +121,6 @@ public class AsignationNode extends SentenceNode implements Commons {
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "\t# Asignacion de variable\n";
-        // TODO: chequear con tabla de simbolos en que lugar del stack está
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
         // TODO: si es un new, hacer CIR
 
@@ -138,6 +137,10 @@ public class AsignationNode extends SentenceNode implements Commons {
                 }
                 currentVariablePos += 1;
             }
+
+            if (this.getMethod().equals(".")) { // si estamos en un constructor
+                // TODO: buscar en atributos
+            }
         } else { // Esto pasa cuando si tiene encadenado
             textCode += left.generateCode(codeGenerator);
         }
@@ -149,6 +152,10 @@ public class AsignationNode extends SentenceNode implements Commons {
                 int variableStackPos = -4 * (currentVariablePos+1);
                 textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
             }
+        }
+
+        if (this.getMethod().equals(".")) { // Si estamos en un constructor
+            // TODO: asignar atributos
         }
         textCode += "\t# FIN asignacion de variable\n";
         return textCode;

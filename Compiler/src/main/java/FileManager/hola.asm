@@ -61,7 +61,19 @@ IO_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, IO_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 IO_in_char:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -204,7 +216,19 @@ Array_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, Array_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 Array_length:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -226,7 +250,19 @@ Bool_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, Bool_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 Char_constructor:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -237,7 +273,19 @@ Char_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, Char_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 Str_constructor:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -248,7 +296,19 @@ Str_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, Str_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 Str_length:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -281,7 +341,19 @@ Int_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, Int_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 Object_constructor:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -292,7 +364,19 @@ Object_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
+	# Declaracion de atributos
 	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, Object_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	# Return de CIR
+	la $t9,($v0) #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+	 #Fin Return de CIR
 main:	# METODO START ----------------------------------------------------------
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
