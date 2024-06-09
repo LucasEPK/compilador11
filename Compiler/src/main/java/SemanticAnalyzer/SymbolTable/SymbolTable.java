@@ -1103,6 +1103,23 @@ public class SymbolTable extends Commons {
         }
     }
 
+    /**
+     * Busco el metodo en el struct indicado
+     * @param methodName nombre del metodo que buscamos
+     * @param structName nombre del struct que tiene el metodo que buscamos
+     * @return el metodo que buscamos
+     * @author Lucas Moyano
+     * */
+    public Methods getStructMethod(String structName, String methodName) {
+        if (structName.equals("start")) { // Esto se hace porque start está separado de los otros metodos
+            return start;
+        } else { // Acá buscamos metodos generales
+            Struct specificStruct = structs.get(structName);
+            Methods specificMethod = specificStruct.findMethod(methodName);
+            return specificMethod;
+        }
+    }
+
     public Struct getCurrentStruct() {
         return currentStruct;
     }

@@ -61,6 +61,19 @@ public abstract class PrimaryNode extends Operands {
         }
     }
 
+    /**
+     * Función que indica si un primario tiene encadenado
+     * @return si tiene encadenado o no
+     * @author Lucas Moyano
+     * */
+    public boolean isChained() {
+        if (right != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public String toJson(int tabs) {
         return null;

@@ -157,139 +157,20 @@
 		},
 		{
 			"nombre": "Block",
-			"class": "Hola",
-			"method": ".",
-			"sentences": [
-			]
-		},
-		{
-			"nombre": "Block",
-			"class": "Hola",
-			"method": "m1",
-			"sentences": [
-				{
-					"nombre": "Return",
-					"type": "Int",
-					"return": 
- 					{
-						"nombre": "Literal",
-						"value": "3",
-						"type": "Int"
-					}
-
-				}
-			]
-		},
-		{
-			"nombre": "Block",
 			"class": "start",
 			"method": "start",
 			"sentences": [
 				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "olaVar",
-						"type": "Hola",
-						"arguments": [
-						]
-					}
-,
+					"nombre": "ExpUn",
+					"operator": "++",
 					"right": 					{
 						"nombre": "Id",
-						"value": "Hola",
-						"type": "Hola",
-						"arguments": [
-						]
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v1",
+						"value": "i",
 						"type": "Int",
 						"arguments": [
 						]
 					}
-,
-					"right": 					{
-						"nombre": "ExpBin",
-						"left": 						{
-							"nombre": "Id",
-							"value": "v1",
-							"type": "Int",
-							"arguments": [
-							]
-						}
-,
-						"operator": "+",
-						"right": 						{
-							"nombre": "Id",
-							"value": "olaVar",
-							"type": "Int",
-							"chained": 							{
-								"nombre": "Id",
-								"value": "m1",
-								"type": "Int",
-								"arguments": [
-								]
-							}
-,
-							"arguments": [
-							]
-						}
 
-					}
-
-				}
-,
-				{
-					"nombre": "While",
-					"Condición": 					{
-						"nombre": "ExpBin",
-						"left": 						{
-							"nombre": "Id",
-							"value": "v1",
-							"type": "Int",
-							"arguments": [
-							]
-						}
-,
-						"operator": "==",
-						"right": 						{
-							"nombre": "Literal",
-							"value": "2",
-							"type": "Int"
-						}
-
-					}
-,
-					"do": 					{
-						"nombre": "Block",
-						"class": "start",
-						"method": "start",
-						"sentences": [
-							{
-								"nombre": "ExpBin",
-								"left": 								{
-									"nombre": "Literal",
-									"value": "2",
-									"type": "Int"
-								}
-,
-								"operator": "+",
-								"right": 								{
-									"nombre": "Literal",
-									"value": "2",
-									"type": "Int"
-								}
-
-							}
-						]
-					}
 				}
 			]
 		}

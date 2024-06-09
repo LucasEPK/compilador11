@@ -251,25 +251,6 @@
 			"paramF": [],
 			"variables": []
 		}
-	},
- 	 {
-		"nombre": "Hola",
-		"heredaDe": "Object",
-		"atributos": [],
-		"metodos": [
-			{
-				"nombre": "m1",
-				"static": false,
-				"retorno": "Int",
-				"posicion": 0,
-				"paramF": [],
-				"variables": []
-			}
-		],
-		"constructor": {
-			"paramF": [],
-			"variables": []
-		}
 	}
 ],
 	"start": {
@@ -278,14 +259,9 @@
 			"posicion": 0,
 			"variables": [
 					{
-					"nombre": "olaVar",
-					"tipo": "Hola",
-					"posicion": 0
-					},
-					{
-					"nombre": "v1",
+					"nombre": "i",
 					"tipo": "Int",
-					"posicion": 1
+					"posicion": 0
 					}
 			]
 	}
