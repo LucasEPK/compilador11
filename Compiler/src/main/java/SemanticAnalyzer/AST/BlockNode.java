@@ -580,7 +580,7 @@ public class BlockNode extends SentenceNode implements Commons {
                     case "out_char":
                         textCode += "\t# Funcion out_char\n" +
                                 "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
-                                "\tli $v0, 4 #Cargo en $v0 el syscall de char \n" +
+                                "\tli $v0, 11 #Cargo en $v0 el syscall de char \n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion out_char\n";
                         textCode += addPredefinedReturn();
@@ -617,13 +617,13 @@ public class BlockNode extends SentenceNode implements Commons {
                         break;
                     case "in_char":
                         textCode += "\t# Funcion in_char\n" +
-                                "\tla $v0, 8 #Cargo en $v0 el syscall de char \n" +
+                                "\tla $v0, 12 #Cargo en $v0 el syscall de char \n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion in_char\n";
                         //Generamos el codigo del return
                         //Lo guardamos en nuestro registro de activacion
                         //En el tope de la pila
-                        textCode += "\tla $t9,($a0) #cargo en $t9 el valor de retorno (para char esta en $a0)\n";
+                        textCode += "\tla $t9,($v0) #cargo en $t9 el valor de retorno (para char esta en $v0)\n";
                         textCode += "\tpush #Lo pusheo al stack\n";
                         //Debo hacer un jump a la direccion de retorno
                         //Para eso debo cargar la direccion de retorno en $ra
@@ -631,14 +631,20 @@ public class BlockNode extends SentenceNode implements Commons {
                         textCode += "\tjr $ra #Vuelvo al return address\n";
                         break;
                     case "in_str":
+                        //Para un in de Str, se debe crear un espacio en memoria para guardar el string
+                        textCode += "\t.data\n" +
+                                    "\tinput_string: .space  1025 #reservo espacio\n" +
+                                    "\t.text\n";
                         textCode += "\t# Funcion in_str\n" +
-                                "\tli $v0, 8 #Cargo en $v0 el syscall de char \n" +
+                                "\tli $v0, 8 #Cargo en $v0 el syscall de str \n" +
+                                "\tla $a0, input_string #Cargo en $a0 la dirección de la variable donde se guardará el string\n" +
+                                "\tli $a1, 1025 #Cargo en $a1 la cantidad de bytes que se pueden leer\n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion in_str\n";
                         //Generamos el codigo del return
                         //Lo guardamos en nuestro registro de activacion
                         //En el tope de la pila
-                        textCode += "\tla $t9,($a0) #cargo en $t9 el valor de retorno (para str esta en $a0)\n";
+                        textCode += "\tla $t9,input_string #cargo en $t9 el valor de retorno (para str esta input_string\n";
                         textCode += "\tpush #Lo pusheo al stack\n";
                         //Debo hacer un jump a la direccion de retorno
                         //Para eso debo cargar la direccion de retorno en $ra
