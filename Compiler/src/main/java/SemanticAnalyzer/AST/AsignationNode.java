@@ -160,7 +160,7 @@ public class AsignationNode extends SentenceNode implements Commons {
         // Meto el valor asignado de la variable en la posicion correcta del stack
         int variableStackPos = -4 * (currentVariablePos+1);
         textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
-        
+
 
         textCode += "\t# FIN asignacion de variable\n";
         return textCode;

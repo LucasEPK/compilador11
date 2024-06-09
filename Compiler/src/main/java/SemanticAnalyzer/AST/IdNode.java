@@ -151,7 +151,12 @@ IdNode extends PrimaryNode{
                 }
             } // TODO: hacer el codigo para paso de parametros de variables
             // TODO: agregar puntero a self
-            // TODO: Acá debería estar el codigo de la función
+            // Acá se salta a la función llamada
+            if (idType == IdType.CONSTRUCTOR) {
+                textCode += "\tjal " + this.getToken().getLexeme() + "_constructor\n";
+            } else {
+                textCode += "\tjal "+this.getStruct()+"_" + this.getToken().getLexeme() + "\n";
+            } // TODO: salto con encadenados
             // Acá desapilamos todo el RA formado por esta función
             int totalVariables = currentMethod.getDefinedVar().size();
             textCode += "\t# Desapilamos todo el RA de la función llamada\n";

@@ -157,16 +157,541 @@
 		},
 		{
 			"nombre": "Block",
-			"class": "Bruh",
-			"method": ".",
+			"class": "Fibonacci",
+			"method": "sucesion_fib",
 			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "i",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "0",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "j",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "0",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "suma",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "0",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "While",
+					"Condición": 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Id",
+							"value": "i",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
+						"operator": "<=",
+						"right": 						{
+							"nombre": "Id",
+							"value": "n",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+
+					}
+,
+					"do": 					{
+						"nombre": "Block",
+						"class": "Fibonacci",
+						"method": "sucesion_fib",
+						"sentences": [
+							{
+								"nombre": "IfThenElse",
+								"Condición": 								{
+									"nombre": "ExpBin",
+									"left": 									{
+										"nombre": "Id",
+										"value": "i",
+										"type": "Int",
+										"arguments": [
+										]
+									}
+,
+									"operator": "==",
+									"right": 									{
+										"nombre": "Literal",
+										"value": "0",
+										"type": "Int"
+									}
+
+								}
+,
+								"then": 								{
+									"nombre": "Block",
+									"class": "Fibonacci",
+									"method": "sucesion_fib",
+									"sentences": [
+										{
+											"nombre": "Id",
+											"value": "imprimo_numero",
+											"type": "void",
+											"arguments": [
+												{
+													"nombre": "Id",
+													"value": "i",
+													"type": "Int",
+													"arguments": [
+													]
+												}
+											]
+										}
+,
+										{
+											"nombre": "Id",
+											"value": "imprimo_sucesion",
+											"type": "void",
+											"arguments": [
+												{
+													"nombre": "Id",
+													"value": "suma",
+													"type": "Int",
+													"arguments": [
+													]
+												}
+											]
+										}
+									]
+								},
+								"else": 								{
+									"nombre": "IfThenElse",
+									"Condición": 									{
+										"nombre": "ExpBin",
+										"left": 										{
+											"nombre": "Id",
+											"value": "i",
+											"type": "Int",
+											"arguments": [
+											]
+										}
+,
+										"operator": "==",
+										"right": 										{
+											"nombre": "Literal",
+											"value": "1",
+											"type": "Int"
+										}
+
+									}
+,
+									"then": 									{
+										"nombre": "Block",
+										"class": "Fibonacci",
+										"method": "sucesion_fib",
+										"sentences": [
+											{
+												"nombre": "Id",
+												"value": "imprimo_numero",
+												"type": "void",
+												"arguments": [
+													{
+														"nombre": "Id",
+														"value": "i",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+												]
+											}
+,
+											{
+												"nombre": "Asignation",
+												"left": 												{
+													"nombre": "Id",
+													"value": "suma",
+													"type": "Int",
+													"arguments": [
+													]
+												}
+,
+												"right": 												{
+													"nombre": "ExpBin",
+													"left": 													{
+														"nombre": "Id",
+														"value": "suma",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+,
+													"operator": "+",
+													"right": 													{
+														"nombre": "Id",
+														"value": "i",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+
+												}
+
+											}
+,
+											{
+												"nombre": "Id",
+												"value": "imprimo_sucesion",
+												"type": "void",
+												"arguments": [
+													{
+														"nombre": "Id",
+														"value": "suma",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+												]
+											}
+										]
+									},
+									"else": 									{
+										"nombre": "Block",
+										"class": "Fibonacci",
+										"method": "sucesion_fib",
+										"sentences": [
+											{
+												"nombre": "Id",
+												"value": "imprimo_numero",
+												"type": "void",
+												"arguments": [
+													{
+														"nombre": "Id",
+														"value": "i",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+												]
+											}
+,
+											{
+												"nombre": "Asignation",
+												"left": 												{
+													"nombre": "Id",
+													"value": "suma",
+													"type": "Int",
+													"arguments": [
+													]
+												}
+,
+												"right": 												{
+													"nombre": "ExpBin",
+													"left": 													{
+														"nombre": "Id",
+														"value": "suma",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+,
+													"operator": "+",
+													"right": 													{
+														"nombre": "Id",
+														"value": "j",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+
+												}
+
+											}
+,
+											{
+												"nombre": "Asignation",
+												"left": 												{
+													"nombre": "Id",
+													"value": "j",
+													"type": "Int",
+													"arguments": [
+													]
+												}
+,
+												"right": 												{
+													"nombre": "Id",
+													"value": "suma",
+													"type": "Int",
+													"arguments": [
+													]
+												}
+
+											}
+,
+											{
+												"nombre": "Id",
+												"value": "imprimo_sucesion",
+												"type": "void",
+												"arguments": [
+													{
+														"nombre": "Id",
+														"value": "suma",
+														"type": "Int",
+														"arguments": [
+														]
+													}
+												]
+											}
+										]
+									}
+								}
+
+							}
+,
+							{
+								"nombre": "ExpUn",
+								"operator": "++",
+								"right": 								{
+									"nombre": "Id",
+									"value": "i",
+									"type": "Int",
+									"arguments": [
+									]
+								}
+
+							}
+						]
+					}
+				}
+,
+				{
+					"nombre": "Return",
+					"type": "Int",
+					"return": 
+ 					{
+						"nombre": "Id",
+						"value": "suma",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+
+				}
 			]
 		},
 		{
 			"nombre": "Block",
-			"class": "Bruh",
-			"method": "bruhFn",
+			"class": "Fibonacci",
+			"method": ".",
 			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "i",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "0",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "j",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "0",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "suma",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "0",
+						"type": "Int"
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Fibonacci",
+			"method": "imprimo_numero",
+			"sentences": [
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_str",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Literal",
+								"value": "f_",
+								"type": "Str"
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_int",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "num",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_str",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Literal",
+								"value": "=",
+								"type": "Str"
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Fibonacci",
+			"method": "imprimo_sucesion",
+			"sentences": [
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_int",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "s",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_str",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Literal",
+								"value": "\n",
+								"type": "Str"
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
 			]
 		},
 		{
@@ -178,16 +703,44 @@
 					"nombre": "Asignation",
 					"left": 					{
 						"nombre": "Id",
-						"value": "ola",
-						"type": "Bruh",
+						"value": "fib",
+						"type": "Fibonacci",
 						"arguments": [
 						]
 					}
 ,
 					"right": 					{
 						"nombre": "Id",
-						"value": "Bruh",
-						"type": "Bruh",
+						"value": "Fibonacci",
+						"type": "Fibonacci",
+						"arguments": [
+						]
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "n",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Id",
+						"value": "IO",
+						"type": "Int",
+						"chained": 						{
+							"nombre": "Id",
+							"value": "in_int",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+,
 						"arguments": [
 						]
 					}
@@ -196,29 +749,34 @@
 ,
 				{
 					"nombre": "Id",
-					"value": "ola",
+					"value": "IO",
 					"type": "void",
 					"chained": 					{
 						"nombre": "Id",
-						"value": "bruhFn",
+						"value": "out_int",
 						"type": "void",
 						"arguments": [
 							{
-								"nombre": "Literal",
-								"value": "1",
-								"type": "Int"
-							}
+								"nombre": "Id",
+								"value": "fib",
+								"type": "Int",
+								"chained": 								{
+									"nombre": "Id",
+									"value": "sucesion_fib",
+									"type": "Int",
+									"arguments": [
+										{
+											"nombre": "Id",
+											"value": "n",
+											"type": "Int",
+											"arguments": [
+											]
+										}
+									]
+								}
 ,
-							{
-								"nombre": "Literal",
-								"value": "2",
-								"type": "Int"
-							}
-,
-							{
-								"nombre": "Literal",
-								"value": "3",
-								"type": "Int"
+								"arguments": [
+								]
 							}
 						]
 					}
