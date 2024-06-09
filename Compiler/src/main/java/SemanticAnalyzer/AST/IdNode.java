@@ -141,6 +141,7 @@ IdNode extends PrimaryNode{
         Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
 
         if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
+            // TODO: hacer estaticos
             int totalParams = 0;
             if(this.arguments != null){ // Esto se hace para los que tienen parametros nomás
                 totalParams = this.arguments.size();
@@ -150,7 +151,11 @@ IdNode extends PrimaryNode{
                     textCode += "\tpush\t# Push de parametros "+i+"\n";
                 }
             } // TODO: hacer el codigo para paso de parametros de variables
-            // TODO: agregar puntero a self
+
+            // TODO: agregar puntero a self para encadenados
+            textCode += "\tlw $t9, 8($fp)\t# Caso recursivo, se agrega el mismo self del llamador\n"+
+                    "\tpush\t# Push de puntero al objeto\n";
+
             // Acá se salta a la función llamada
             if (idType == IdType.CONSTRUCTOR) {
                 textCode += "\tjal " + this.getToken().getLexeme() + "_constructor\n";

@@ -47,5 +47,6 @@ start{
 		Int n;
 		fib = new Fibonacci();
 		n = IO.in_int();
+		(fib.sucesion_fib(n));
 		(IO.out_int(fib.sucesion_fib(n)));
 }
