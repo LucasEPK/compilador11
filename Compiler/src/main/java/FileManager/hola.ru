@@ -1,5 +1,5 @@
 struct Bruh{
-
+    Int xd1;
 }
 impl Bruh {
     .(){

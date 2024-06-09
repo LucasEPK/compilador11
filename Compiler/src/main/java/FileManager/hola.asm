@@ -392,12 +392,16 @@ Bruh_constructor:
 
 	# Declaracion de variables
 	# Declaracion de atributos
+	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
+	push
 	# FIN declaracion de variables
 	li $v0, 9	# Aloco memoria en el heap
-	li $a0, 4	# x bytes en memoria
+	li $a0, 8	# x bytes en memoria
 	syscall		# Con esto tenemos la referencia en $v0
 	la $t1, Bruh_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
 	sw $t1, 0($v0)
+	lw $t0, -4($fp)	# Meto el valor asignado del atributo desde el stack al acumulador ($v0)
+	sw $t0, 8($v0)	# Meto el valor del atributo en su posición del heap
 	# Return de CIR
 	la $t9,($v0) #cargo en $t9 el valor de retorno
 	push #Lo pusheo al stack
@@ -456,6 +460,7 @@ main:	# METODO START ----------------------------------------------------------
 	# Desapilamos el RA completo de la función llamada
 	pop	# Pop del valor de retorno
 	la $v0, ($t9)
+	pop	# Pop de atributo 0
 	pop	# Pop de puntero de retorno $ra de la función llamada
 	pop	# Pop del framepointer anterior que perdimos
 	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
@@ -479,20 +484,11 @@ main:	# METODO START ----------------------------------------------------------
 	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
 	pop	# Pop de puntero al objeto
 	# FIN desapilado del RA completo de la función llamada
-	#Guardamos el CIR en $s4
-	la $s4, ($v0)
-	lw $t9, 8($fp)	# Caso recursivo, se agrega el mismo self del llamador
-	push	# Push de puntero al objeto
-	jal start_IO	# Salto a una función sin encadenado
-	# Desapilamos el RA completo de la función llamada
-	pop	# Pop del valor de retorno
-	la $v0, ($t9)
-	pop	# Pop de variable 0
-	pop	# Pop de puntero de retorno $ra de la función llamada
-	pop	# Pop del framepointer anterior que perdimos
-	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
-	pop	# Pop de puntero al objeto
-	# FIN desapilado del RA completo de la función llamada
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, IO_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
 	#Guardamos el CIR en $s4
 	la $s4, ($v0)
 	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado

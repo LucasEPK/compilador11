@@ -255,7 +255,15 @@
  	 {
 		"nombre": "Bruh",
 		"heredaDe": "Object",
-		"atributos": [],
+		"atributos": [
+			{
+			"nombre": "xd1",
+			"tipo": "Int",
+			"public": true,
+			"inherited": false,
+			"posicion": 0
+			}
+		],
 		"metodos": [
 			{
 				"nombre": "bruhFn",

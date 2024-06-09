@@ -147,8 +147,7 @@ IdNode extends PrimaryNode{
             }
         }
 
-        if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
-            // TODO: hacer estaticos
+        if (idType == IdType.METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
 
             // Guardamos el CIR en $s4
             textCode += "\t#Guardamos el CIR en $s4\n"+
@@ -162,7 +161,7 @@ IdNode extends PrimaryNode{
                     this.arguments.get(i).generateCode(codeGenerator);
                     textCode += "\tpush\t# Push de parametros "+i+"\n";
                 }
-            } // TODO: hacer el codigo para paso de parametros de variables
+            }
 
             // Agrega un puntero a self al stack
             if (this.lastCalledType != null) {
@@ -243,6 +242,16 @@ IdNode extends PrimaryNode{
                 int variableStackPos = -4 * (currentVariablePos+1);
                 textCode += "\tlw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
 
+            } else {
+                if (idType == IdType.STATIC_METHOD) {
+
+                    // Genera un CIR temporal para el metodo statico
+                    textCode += "\tli $v0, 9\t# Aloco memoria en el heap\n" +
+                            "\tli $a0, 4\t# x bytes en memoria\n" +
+                            "\tsyscall\t\t# Con esto tenemos la referencia en $v0\n" +
+                            "\tla $t1, "+this.getToken().getLexeme()+"_vtable\t# Guardamos la dirección de la vtable en la primera posicion del heap\n" +
+                            "\tsw $t1, 0($v0)\n";
+                }
             }
 
         }
