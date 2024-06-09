@@ -149,7 +149,7 @@ IdNode extends PrimaryNode{
                     this.arguments.get(i).generateCode(codeGenerator);
                     textCode += "\tpush\t# Push de parametros "+i+"\n";
                 }
-            }
+            } // TODO: hacer el codigo para paso de parametros de variables
             // TODO: agregar puntero a self
             // TODO: Acá debería estar el codigo de la función
             // Acá desapilamos todo el RA formado por esta función
