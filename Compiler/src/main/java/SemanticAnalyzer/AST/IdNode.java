@@ -10,6 +10,7 @@ import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Clase que representa los id y structsIds en el AST
@@ -128,7 +129,69 @@ IdNode extends PrimaryNode{
         return tabsString;
     }
 
+    /**
+     * Acá generamos codigo mips para funciones y variables
+     * @return codigo generado para la funcion/variable
+     * @author Lucas Moyano
+     * */
+    @Override
+    public String generateCode(CodeGenerator codeGenerator) {
+        String textCode = "";
+        SymbolTable symbolTable = codeGenerator.getSymbolTable();
+        Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
 
+        if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
+            // TODO: agregar parametros al stack
+            // TODO: agregar puntero a self
+            // TODO: Acá debería estar el codigo de la función
+            // Acá desapilamos todo el RA formado por esta función
+            int totalParams = currentMethod.getParamsOfMethod().size();
+            int totalVariables = currentMethod.getDefinedVar().size();
+            textCode += "\t# Desapilamos todo el RA de la función llamada\n";
+            // Pop del valor de retorno y guardado en $v0
+            textCode += "\tpop\t# Pop del valor de retorno\n"+
+                    "\tla $v0, ($t9)\n";
+            for(int i=0; i<totalVariables; i++) { // Pop de las variables
+                textCode += "\tpop\t# Pop de variable "+i+"\n";
+            }
+            // Pop del puntero de retorno de la función llamada
+            textCode += "\tpop\t# Pop de puntero de retorno $ra de la función llamada\n";
+
+            // Pop del framepointer que perdimos y reestableciemiento del framepointer
+            textCode += "\tpop\t# Pop del framepointer anterior que perdimos\n" +
+                    "\tadd $fp, $zero, $t9\t# Volvemos a cargar el framepointer correcto\n";
+
+            // Pop del puntero al objeto
+            textCode += "\tpop\t# Pop de puntero al objeto\n";
+
+            for(int i=0; i<totalParams; i++) { // Pop de los parametros
+                textCode += "\tpop\t# Pop de parametro "+i+"\n";
+            }
+            textCode += "\t# FIN desapilado de todo el RA de la función llamada\n";
+        } else {
+
+            if(idType == IdType.VARIABLE){
+                String currentVarName = this.getToken().getLexeme();
+                int currentVariablePos = 0;
+                // Buscamos la posición de la variable en la lista de variables declaradas
+                Map<String,Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+                // Recorro la lista de todas las variables
+                for (String varName : variableList.keySet()){
+                    if (varName.equals(currentVarName)){
+                        break;
+                    }
+                    currentVariablePos += 1;
+                }
+
+                // Meto el valor asignado de la variable en la posicion correcta del stack
+                int variableStackPos = -4 * (currentVariablePos+1);
+                textCode += "\tlw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
+
+            }
+
+        }
+        return textCode;
+    }
 
     /**
      * Método que consolida un nodo Id de tipo self
@@ -407,58 +470,6 @@ IdNode extends PrimaryNode{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String generateCode(CodeGenerator codeGenerator) {
-        String textCode = "";
-
-
-
-        //Segun el tipo de id, genero el código correspondiente
-        if(this.idType == IdType.SELF){
-            textCode += selfGenerate(codeGenerator);
-        } else if(this.idType == IdType.CONSTRUCTOR){
-            textCode += constructorGenerate(codeGenerator);
-        } else if (this.idType == IdType.METHOD) {
-            textCode += methodGenerate(codeGenerator);
-        } else if (this.idType == IdType.VARIABLE) {
-            textCode += variableGenerate(codeGenerator);
-        } else if (this.idType == IdType.STATIC_METHOD) {
-            textCode += staticMethodGenerate(codeGenerator);
-        }
-
-        //Si hay un encadenado a la derecha, genero el código de este
-        if(this.right != null){
-            textCode += this.right.generateCode(codeGenerator);
-        }
-
-        return textCode;
-    }
-
-    private String selfGenerate(CodeGenerator codeGenerator){
-        String selfCode = "";
-        return selfCode;
-    }
-
-    private String constructorGenerate(CodeGenerator codeGenerator){
-        String constructorCode = "";
-        return constructorCode;
-    }
-
-    private String methodGenerate(CodeGenerator codeGenerator){
-        String methodCode = "";
-        return methodCode;
-    }
-
-    private String variableGenerate(CodeGenerator codeGenerator){
-        String variableCode = "";
-        return variableCode;
-    }
-
-    private String staticMethodGenerate(CodeGenerator codeGenerator){
-        String staticMethodCode = "";
-        return staticMethodCode;
     }
 
 }

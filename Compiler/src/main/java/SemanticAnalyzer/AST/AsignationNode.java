@@ -6,6 +6,9 @@ import Exceptions.SemanticExceptions.AST.InvalidNilPrimitive;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import Exceptions.SemanticExceptions.AST.VoidAsignation;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.Variable;
+
+import java.util.Map;
 
 /**
  * Clase representate la asignación en nustro AST
@@ -117,7 +120,37 @@ public class AsignationNode extends SentenceNode implements Commons {
 
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
-        String textCode = "";
+        String textCode = "\t# Asignacion de variable\n";
+        // TODO: chequear con tabla de simbolos en que lugar del stack está
+        SymbolTable symbolTable = codeGenerator.getSymbolTable();
+        // TODO: si es un new, hacer CIR
+
+        int currentVariablePos = 0; // Con esto se obtiene la posicion de la variable en la lista de variables declaradas
+        if(!((IdNode)left).isChained()) { // Si no tiene encadenado:
+            String leftName = left.getToken().getLexeme();
+
+            // Buscamos la posición de la variable en la lista de variables declaradas
+            Map<String,Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+            // Recorro la lista de todas las variables
+            for (String varName : variableList.keySet()){
+                if (varName.equals(leftName)){
+                    break;
+                }
+                currentVariablePos += 1;
+            }
+        } else { // Esto pasa cuando si tiene encadenado
+            textCode += left.generateCode(codeGenerator);
+        }
+
+        textCode += right.generateCode(codeGenerator);
+        if(right instanceof LiteralNode){ // Si estamos asignando un literal
+            // Meto el valor asignado de la variable en la posicion correcta del stack
+            if( !((LiteralNode)right).getType().equals("Str")){ // Esto se debe a que Str tiene metodos, osea que necesita de un CIR
+                int variableStackPos = -4 * (currentVariablePos+1);
+                textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
+            }
+        }
+        textCode += "\t# FIN asignacion de variable\n";
         return textCode;
     }
 }

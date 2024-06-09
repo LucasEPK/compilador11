@@ -391,7 +391,7 @@ public class BlockNode extends SentenceNode implements Commons {
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
 
-        if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label
+        if ( !isSentenceBlock ) { // Esto chequea que los bloques que son sentencias no tengan un label o variables declaradas
             // Este codigo diferencia el start y el constructor entre todos los otros metodos
             if (this.getStruct().equals("start")) { // Es el metodo start
                 textCode = "main:\t# METODO START ----------------------------------------------------------\n";
@@ -402,6 +402,15 @@ public class BlockNode extends SentenceNode implements Commons {
                     textCode = this.getStruct() + "_" + this.getMethod() + ":\n";
                 }
             }
+
+            // Esta parte guarda el framepointer anterior en el stack y mete el $ra actual en el stack y apunta el $fp a ese $ra
+            textCode += "\t# Actualizacion de framepointer\n" +
+                    "\tla $t9, ($fp)\t\t# Metemos el framepointer anterior en el stack\n" +
+                    "\tpush\n" +
+                    "\tla $t9, ($ra)\t\t# Metemos el return address en el stack\n" +
+                    "\tpush\n" +
+                    "\taddi $fp, $sp, 4\t# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra\n" +
+                    "\t# FIN actualizacion de framepointer\n\n";
 
             // Si es un bloque sentencia no debería tener variables declaradas adentro
             // Obtengo las variables declaradas desde la tabla de simbolos
