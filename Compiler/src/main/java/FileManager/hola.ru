@@ -10,5 +10,5 @@ impl Bruh {
 start{
     Bruh xd;
     xd = new Bruh();
-    (xd.bruhFn());
+    (IO.in_int());
 }

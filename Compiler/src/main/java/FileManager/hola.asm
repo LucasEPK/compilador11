@@ -429,6 +429,8 @@ main:	# METODO START ----------------------------------------------------------
 	push
 	# FIN declaracion de variables
 	# Asignacion de variable
+	#Guardamos el CIR en $s4
+	la $s4, ($v0)
 	lw $t9, 8($fp)	# Caso recursivo, se agrega el mismo self del llamador
 	push	# Push de puntero al objeto
 	jal Bruh_constructor	# Salto a un constructor
@@ -443,10 +445,25 @@ main:	# METODO START ----------------------------------------------------------
 	# FIN desapilado de todo el RA de la función llamada
 	sw $v0, -4($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
 	# FIN asignacion de variable
-	lw $v0, -4($fp)	# Meto el valor asignado de la variable del stack en el acumulador ($v0)
+	#Guardamos el CIR en $s4
+	la $s4, ($v0)
 	lw $t9, 8($fp)	# Caso recursivo, se agrega el mismo self del llamador
 	push	# Push de puntero al objeto
-	jal Bruh_bruhFn	# Salto a la función desde un encadenado
+	jal start_IO	# Salto a una función sin encadenado
+	# Desapilamos todo el RA de la función llamada
+	pop	# Pop del valor de retorno
+	la $v0, ($t9)
+	pop	# Pop de variable 0
+	pop	# Pop de puntero de retorno $ra de la función llamada
+	pop	# Pop del framepointer anterior que perdimos
+	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
+	pop	# Pop de puntero al objeto
+	# FIN desapilado de todo el RA de la función llamada
+	#Guardamos el CIR en $s4
+	la $s4, ($v0)
+	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado
+	push	# Push de puntero al objeto
+	jal IO_in_int	# Salto a la función desde un encadenado
 	# Desapilamos todo el RA de la función llamada
 	pop	# Pop del valor de retorno
 	la $v0, ($t9)

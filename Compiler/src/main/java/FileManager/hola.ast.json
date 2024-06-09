@@ -196,12 +196,12 @@
 ,
 				{
 					"nombre": "Id",
-					"value": "xd",
-					"type": "void",
+					"value": "IO",
+					"type": "Int",
 					"chained": 					{
 						"nombre": "Id",
-						"value": "bruhFn",
-						"type": "void",
+						"value": "in_int",
+						"type": "Int",
 						"arguments": [
 						]
 					}

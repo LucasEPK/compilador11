@@ -142,6 +142,11 @@ IdNode extends PrimaryNode{
 
         if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
             // TODO: hacer estaticos
+
+            // Guardamos el CIR en $s4
+            textCode += "\t#Guardamos el CIR en $s4\n"+
+                    "\tla $s4, ($v0)\n";
+
             int totalParams = 0;
             if(this.arguments != null){ // Esto se hace para los que tienen parametros nomás
                 totalParams = this.arguments.size();
@@ -152,10 +157,16 @@ IdNode extends PrimaryNode{
                 }
             } // TODO: hacer el codigo para paso de parametros de variables
 
-            // TODO: agregar puntero a self para encadenados
-            textCode += "\tlw $t9, 8($fp)\t# Caso recursivo, se agrega el mismo self del llamador\n"+
-                    "\tpush\t# Push de puntero al objeto\n";
-
+            // Agrega un puntero a self al stack
+            if (this.lastCalledType != null) {
+                // Caso en que llamamos una función afuera de la clase con un encadenado
+                textCode += "\tla $t9, ($s4)\t# Caso base, se agrega el cir que tenemos en $v0 por el encadenado\n" +
+                        "\tpush\t# Push de puntero al objeto\n";
+            } else {
+                // Caso en que estamos llamando una función de la misma clase
+                textCode += "\tlw $t9, 8($fp)\t# Caso recursivo, se agrega el mismo self del llamador\n" +
+                        "\tpush\t# Push de puntero al objeto\n";
+            }
             // Acá se salta a la función llamada
             if (idType == IdType.CONSTRUCTOR) {
                 textCode += "\tjal " + this.getToken().getLexeme() + "_constructor\t# Salto a un constructor\n";
