@@ -417,7 +417,7 @@ public class BlockNode extends SentenceNode implements Commons {
                     "\t# FIN actualizacion de framepointer\n\n";
 
             // Si es un bloque sentencia no debería tener variables declaradas adentro
-
+            textCode += createFunctionsPredefinedClass();
 
             textCode += "\t# Declaracion de variables\n";
             // Recorro la lista de todas las variables
@@ -481,6 +481,199 @@ public class BlockNode extends SentenceNode implements Commons {
 
         return textCode;
     }
+
+    private String createFunctionsPredefinedClass(){
+
+        String textCode = "";
+        //Segun el tipo de estructura y metodo, genero el codigo correspondiente
+        switch (this.struct){
+            case "String":
+               switch (this.method){
+                   case "length":
+                       textCode += "\t# Funcion length\n" +
+                               "\tla $t0, 12($fp) #Cargo el valor del argumento (esta en 12($fp))\n" +
+                               "\tli $t1,0 #Contador de longitud\n" +
+                               "\tloop_length:\n" +
+                               "\tlb $t2, 0($t0) #Cargo el valor de la posicion actual\n" +
+                               "\tbeq $t2 $zero, end_length #Si es 0, termino\n" +
+                               "\taddi $t1, $t1, 1 #Incremento el contador\n" +
+                               "\taddi $t0, $t0, 1 #Incremento el puntero\n" +
+                               "\tj loop_length\n" +
+                               "\tend_length:\n";
+
+                       //Generamos el codigo del return
+
+                       textCode += "\tla $t9,($t0) #cargo en $t9 el valor de retorno (para int esta en $v0)\n";
+                       textCode += "\tpush #Lo pusheo al stack\n";
+                       //Debo hacer un jump a la direccion de retorno
+                       //Para eso debo cargar la direccion de retorno en $ra
+                       textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                       textCode += "\tjr $ra #Vuelvo al return address\n";
+
+                       textCode +="\t# Fin funcion length\n";
+                       break;
+                   case "concat":
+                       textCode += "\tla $t0, 16($fp) #Cargo el primer parámetro\n";
+                       textCode += "\tla $t1, 12($fp) #Cargo el segundo parámetro\n";
+                       textCode += "\t.data\n";
+                       textCode += "\tconcatenated_string: .space  256 #reservo espacio\n";
+                       textCode += "\t.text\n";
+                       textCode += "\tla $t2, concatenated_string #Cargo la dirección de la variable concatenada\n";
+                       textCode += "\tcopy_str1:\n";
+                       textCode += "\tlb $t3, 0($t0) #Cargo el valor de la posición actual\n";
+                       textCode += "\tbeq $t3 $zero, copy_str2 #Si es 0, termino\n";
+                       textCode += "\tsb $t3, 0($t2) #Guardo el valor en la posición actual de la variable concatenada\n";
+                       textCode += "\taddi $t0, $t0, 1 #Incremento el puntero\n";
+                       textCode += "\taddi $t2, $t2, 1 #Incremento el puntero\n";
+                       textCode += "\tj copy_str1\n";
+
+                       textCode += "\tcopy_str2:\n";
+                       textCode += "\tlb $t3, 0($t1) #Cargo el valor de la posición actual\n";
+                       textCode += "\tbeq $t3 $zero, end_concat #Si es 0, termino\n";
+                       textCode += "\tsb $t3, 0($t2) #Guardo el valor en la posición actual de la variable concatenada\n";
+                       textCode += "\taddi $t1, $t1, 1 #Incremento el puntero\n";
+                       textCode += "\taddi $t2, $t2, 1 #Incremento el puntero\n";
+                       textCode += "\tj copy_str2\n";
+                       textCode += "\tend_concat:\n";
+                       textCode += "\tsb $zero, 0($t2) #Guardo el 0 al final de la cadena\n";
+                       //Generamos el codigo del return
+                       //Lo guardamos en nuestro registro de activacion
+                       //En el tope de la pila
+                       textCode += "\tla $t9,($t2) #cargo en $t9 el valor de retorno (para int esta en $v0)\n";
+                       textCode += "\tpush #Lo pusheo al stack\n";
+                       //Debo hacer un jump a la direccion de retorno
+                       //Para eso debo cargar la direccion de retorno en $ra
+                       textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                       textCode += "\tjr $ra #Vuelvo al return address\n";
+                       break;
+               }
+                break;
+            case "IO":
+                switch (this.method){
+                    case "out_int":
+                        //El parámetro de los out, siempre esta en 12($fp)
+                        // puntero a frame pointer anterior, puntero a objeto, primer param
+                        // 4 + 4 + 4 = 12
+                        textCode += "\t# Funcion out_int\n" +
+                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tli $v0, 1 #Cargo en $v0 el syscall de int \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion out_int\n";
+                        textCode += addPredefinedReturn();
+                        break;
+                    case "out_Str":
+                        textCode += "\t# Funcion out_Str\n" +
+                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tli $v0, 4 #Cargo en $v0 el syscall de string \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion out_Str\n";
+                        textCode += addPredefinedReturn();
+                        break;
+                    case "out_bool":
+                        textCode += "\t# Funcion out_bool\n" +
+                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tli $v0, 1 #Cargo en $v0 el syscall de bool (representado por int) \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion out_bool\n";
+                        textCode += addPredefinedReturn();
+                        break;
+                    case "out_char":
+                        textCode += "\t# Funcion out_char\n" +
+                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tli $v0, 4 #Cargo en $v0 el syscall de char \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion out_char\n";
+                        textCode += addPredefinedReturn();
+                        break;
+                    case "in_int":
+                        textCode += "\t# Funcion in_int\n" +
+                                "\tli $v0, 5 #Cargo en $v0 el syscall de int \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion in_int\n";
+                        //Generamos el codigo del return
+                        //Lo guardamos en nuestro registro de activacion
+                        //En el tope de la pila
+                        textCode += "\tla $t9,($v0) #cargo en $t9 el valor de retorno (para int esta en $v0)\n";
+                        textCode += "\tpush #Lo pusheo al stack\n";
+                        //Debo hacer un jump a la direccion de retorno
+                        //Para eso debo cargar la direccion de retorno en $ra
+                        textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                        textCode += "\tjr $ra #Vuelvo al return address\n";
+                        break;
+                    case "in_bool":
+                        textCode += "\t# Funcion in_bool\n" +
+                                "\tli $v0, 5 #Cargo en $v0 el syscall de int \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion in_bool\n";
+                        //Generamos el codigo del return
+                        //Lo guardamos en nuestro registro de activacion
+                        //En el tope de la pila
+                        textCode += "\tla $t9,($v0) #cargo en $t9 el valor de retorno (para bool esta en $v0)\n";
+                        textCode += "\tpush #Lo pusheo al stack\n";
+                        //Debo hacer un jump a la direccion de retorno
+                        //Para eso debo cargar la direccion de retorno en $ra
+                        textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                        textCode += "\tjr $ra #Vuelvo al return address\n";
+                        break;
+                    case "in_char":
+                        textCode += "\t# Funcion in_char\n" +
+                                "\tla $v0, 8 #Cargo en $v0 el syscall de char \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion in_char\n";
+                        //Generamos el codigo del return
+                        //Lo guardamos en nuestro registro de activacion
+                        //En el tope de la pila
+                        textCode += "\tla $t9,($a0) #cargo en $t9 el valor de retorno (para char esta en $a0)\n";
+                        textCode += "\tpush #Lo pusheo al stack\n";
+                        //Debo hacer un jump a la direccion de retorno
+                        //Para eso debo cargar la direccion de retorno en $ra
+                        textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                        textCode += "\tjr $ra #Vuelvo al return address\n";
+                        break;
+                    case "in_str":
+                        textCode += "\t# Funcion in_str\n" +
+                                "\tli $v0, 8 #Cargo en $v0 el syscall de char \n" +
+                                "\tsyscall\n" +
+                                "\t# Fin funcion in_str\n";
+                        //Generamos el codigo del return
+                        //Lo guardamos en nuestro registro de activacion
+                        //En el tope de la pila
+                        textCode += "\tla $t9,($a0) #cargo en $t9 el valor de retorno (para str esta en $a0)\n";
+                        textCode += "\tpush #Lo pusheo al stack\n";
+                        //Debo hacer un jump a la direccion de retorno
+                        //Para eso debo cargar la direccion de retorno en $ra
+                        textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                        textCode += "\tjr $ra #Vuelvo al return address\n";
+                        break;
+                    //Todo out_array_...
+                }
+                break;
+            case "Array":
+                //ToDo: Agregar funciones de Array
+                break;
+        }
+
+        return textCode;
+
+    }
+
+    private String addPredefinedReturn(){
+        String textCode = "";
+
+        //Generamos el codigo del return
+        //Lo guardamos en nuestro registro de activacion
+        //En el tope de la pila
+        textCode += "\tli $t9,0 #cargo en $t9 el valor de retorno\n";
+        textCode += "\tpush #Lo pusheo al stack\n";
+
+        //Debo hacer un jump a la direccion de retorno
+        //Para eso debo cargar la direccion de retorno en $ra
+        textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+        textCode += "\tjr $ra #Vuelvo al return address\n";
+
+        return textCode;
+    }
+
 
     /**
      * Esta función se encarga de agregar la sentencia dada a la lista
