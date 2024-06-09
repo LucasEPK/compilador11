@@ -1120,6 +1120,21 @@ public class SymbolTable extends Commons {
         }
     }
 
+    /**
+     * Busco los atributos del struct
+     * @param structName nombre del struct que tiene el metodo que buscamos
+     * @return los atributos del struct
+     * @author Lucas Moyano
+     * */
+    public Map<String, Attributes> getStructAttributes(String structName) {
+        if (structName.equals("start")) { // Esto se hace porque start no tiene clase
+            return null;
+        } else {
+            Struct specificStruct = structs.get(structName);
+            return specificStruct.getAttributes();
+        }
+    }
+
     public Struct getCurrentStruct() {
         return currentStruct;
     }

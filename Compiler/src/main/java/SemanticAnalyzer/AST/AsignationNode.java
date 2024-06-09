@@ -5,6 +5,7 @@ import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.InvalidNilPrimitive;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import Exceptions.SemanticExceptions.AST.VoidAsignation;
+import SemanticAnalyzer.SymbolTable.Attributes;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 import SemanticAnalyzer.SymbolTable.Variable;
 
@@ -121,7 +122,6 @@ public class AsignationNode extends SentenceNode implements Commons {
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "\t# Asignacion de variable\n";
-        // TODO: chequear con tabla de simbolos en que lugar del stack está
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
         // TODO: si es un new, hacer CIR
 
@@ -131,12 +131,26 @@ public class AsignationNode extends SentenceNode implements Commons {
 
             // Buscamos la posición de la variable en la lista de variables declaradas
             Map<String,Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+            boolean variableFound = false; // Este booleano sirve para cuando estamos en un constructor saber si encontramos la variable declarada
             // Recorro la lista de todas las variables
             for (String varName : variableList.keySet()){
                 if (varName.equals(leftName)){
+                    variableFound = true;
                     break;
                 }
                 currentVariablePos += 1;
+            }
+
+            // Buscamos si es un atributo
+            if (this.getMethod().equals(".") && !variableFound) { // si estamos en un constructor y no encontramos la variable declarada
+                Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getStruct());
+                // Recorro la lista de todos los atributos hasta encontrar el atributo buscado
+                for (String attrName : attributeList.keySet()) {
+                    if (attrName.equals(leftName)){
+                        break;
+                    }
+                    currentVariablePos += 1;
+                }
             }
         } else { // Esto pasa cuando si tiene encadenado
             textCode += left.generateCode(codeGenerator);
@@ -150,6 +164,7 @@ public class AsignationNode extends SentenceNode implements Commons {
                 textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
             }
         }
+
         textCode += "\t# FIN asignacion de variable\n";
         return textCode;
     }

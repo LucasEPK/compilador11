@@ -148,6 +148,7 @@ IdNode extends PrimaryNode{
             int totalParams = currentMethod.getParamsOfMethod().size();
             int totalVariables = currentMethod.getDefinedVar().size();
             textCode += "\t# Desapilamos todo el RA de la función llamada\n";
+            // TODO: acá cuando desapilamos probablemente haya que chequear si el metodo que se llamo era un constructor, porque si lo era hay que desapilar también los atributos
             // Pop del valor de retorno y guardado en $v0
             textCode += "\tpop\t# Pop del valor de retorno\n"+
                     "\tla $v0, ($t9)\n";
@@ -183,7 +184,7 @@ IdNode extends PrimaryNode{
                     currentVariablePos += 1;
                 }
 
-                // Meto el valor asignado de la variable en la posicion correcta del stack
+                // Meto el valor asignado de la variable en el acumulador
                 int variableStackPos = -4 * (currentVariablePos+1);
                 textCode += "\tlw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
 

@@ -157,6 +157,66 @@
 		},
 		{
 			"nombre": "Block",
+			"class": "Bruh",
+			"method": ".",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v1",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "1",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "11",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "v2",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "2",
+						"type": "Int"
+					}
+
+				}
+			]
+		},
+		{
+			"nombre": "Block",
 			"class": "start",
 			"method": "start",
 			"sentences": [
