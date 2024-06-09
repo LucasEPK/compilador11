@@ -3,10 +3,7 @@ package SemanticAnalyzer.AST;
 import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import LexicalAnalyzer.Token;
-import SemanticAnalyzer.SymbolTable.Methods;
-import SemanticAnalyzer.SymbolTable.Struct;
-import SemanticAnalyzer.SymbolTable.SymbolTable;
-import SemanticAnalyzer.SymbolTable.Variable;
+import SemanticAnalyzer.SymbolTable.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,10 +179,19 @@ IdNode extends PrimaryNode{
             // Acá desapilamos todo el RA formado por esta función
             int totalVariables = currentMethod.getDefinedVar().size();
             textCode += "\t# Desapilamos todo el RA de la función llamada\n";
-            // TODO: acá cuando desapilamos probablemente haya que chequear si el metodo que se llamo era un constructor, porque si lo era hay que desapilar también los atributos
             // Pop del valor de retorno y guardado en $v0
             textCode += "\tpop\t# Pop del valor de retorno\n"+
                     "\tla $v0, ($t9)\n";
+
+            // Desapilamos los atributos si es un constructor
+            if (idType == IdType.CONSTRUCTOR) {
+                Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getToken().getLexeme());
+                int totalAttributes = attributeList.size();
+                for (int i=0; i< totalAttributes; i++) {
+                    textCode += "\tpop\t# Pop de atributo "+i+"\n";
+                }
+            }
+
             for(int i=0; i<totalVariables; i++) { // Pop de las variables
                 textCode += "\tpop\t# Pop de variable "+i+"\n";
             }
