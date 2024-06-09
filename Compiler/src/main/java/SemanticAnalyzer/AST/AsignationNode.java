@@ -152,6 +152,7 @@ public class AsignationNode extends SentenceNode implements Commons {
                 }
             }
         } else { // Esto pasa cuando si tiene encadenado
+            // TODO: asignación con encadenado
             textCode += left.generateCode(codeGenerator);
         }
 

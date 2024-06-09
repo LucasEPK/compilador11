@@ -253,72 +253,16 @@
 		}
 	},
  	 {
-		"nombre": "Fibonacci",
+		"nombre": "Bruh",
 		"heredaDe": "Object",
-		"atributos": [
-			{
-			"nombre": "suma",
-			"tipo": "Int",
-			"public": true,
-			"inherited": false,
-			"posicion": 0
-			},
-			{
-			"nombre": "i",
-			"tipo": "Int",
-			"public": true,
-			"inherited": false,
-			"posicion": 1
-			},
-			{
-			"nombre": "j",
-			"tipo": "Int",
-			"public": true,
-			"inherited": false,
-			"posicion": 2
-			}
-		],
+		"atributos": [],
 		"metodos": [
 			{
-				"nombre": "sucesion_fib",
+				"nombre": "bruhFn",
 				"static": false,
-				"retorno": "Int",
+				"retorno": "void",
 				"posicion": 0,
-				"paramF": [
-						{
-						"nombre": "n",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"variables": []
-			},
-			{
-				"nombre": "imprimo_numero",
-				"static": false,
-				"retorno": "void",
-				"posicion": 1,
-				"paramF": [
-						{
-						"nombre": "num",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
-				"variables": []
-			},
-			{
-				"nombre": "imprimo_sucesion",
-				"static": false,
-				"retorno": "void",
-				"posicion": 2,
-				"paramF": [
-						{
-						"nombre": "s",
-						"tipo": "Int",
-						"posicion": 0
-						}
-				],
+				"paramF": [],
 				"variables": []
 			}
 		],
@@ -334,14 +278,9 @@
 			"posicion": 0,
 			"variables": [
 					{
-					"nombre": "fib",
-					"tipo": "Fibonacci",
+					"nombre": "xd",
+					"tipo": "Bruh",
 					"posicion": 0
-					},
-					{
-					"nombre": "n",
-					"tipo": "Int",
-					"posicion": 1
 					}
 			]
 	}

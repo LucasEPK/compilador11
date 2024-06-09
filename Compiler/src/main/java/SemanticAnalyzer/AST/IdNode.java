@@ -158,10 +158,16 @@ IdNode extends PrimaryNode{
 
             // Acá se salta a la función llamada
             if (idType == IdType.CONSTRUCTOR) {
-                textCode += "\tjal " + this.getToken().getLexeme() + "_constructor\n";
+                textCode += "\tjal " + this.getToken().getLexeme() + "_constructor\t# Salto a un constructor\n";
             } else {
-                textCode += "\tjal "+this.getStruct()+"_" + this.getToken().getLexeme() + "\n";
-            } // TODO: salto con encadenados
+                if (this.getLastCalledType() != null) { // Acá chequeamos si es un encadenado
+                    // salto con encadenados
+                    textCode += "\tjal "+this.getLastCalledType()+"_" + this.getToken().getLexeme() + "\t# Salto a la función desde un encadenado\n";
+                } else { // si no es un encadenado:
+                    textCode += "\tjal "+this.getStruct()+"_" + this.getToken().getLexeme() + "\t# Salto a una función sin encadenado\n";
+                }
+            }
+
             // Acá desapilamos todo el RA formado por esta función
             int totalVariables = currentMethod.getDefinedVar().size();
             textCode += "\t# Desapilamos todo el RA de la función llamada\n";
@@ -211,6 +217,10 @@ IdNode extends PrimaryNode{
 
             }
 
+        }
+
+        if (this.isChained()){
+            textCode += this.getRight().generateCode(codeGenerator);
         }
         return textCode;
     }
