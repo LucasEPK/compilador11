@@ -124,7 +124,7 @@ public class AsignationNode extends SentenceNode implements Commons {
         // TODO: chequear con tabla de simbolos en que lugar del stack está
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
         // TODO: si es un new, hacer CIR
-        textCode += left.generateCode(codeGenerator);
+
         int currentVariablePos = 0; // Con esto se obtiene la posicion de la variable en la lista de variables declaradas
         if(!((IdNode)left).isChained()) { // Si no tiene encadenado:
             String leftName = left.getToken().getLexeme();
@@ -138,6 +138,8 @@ public class AsignationNode extends SentenceNode implements Commons {
                 }
                 currentVariablePos += 1;
             }
+        } else { // Esto pasa cuando si tiene encadenado
+            textCode += left.generateCode(codeGenerator);
         }
 
         textCode += right.generateCode(codeGenerator);

@@ -10,6 +10,7 @@ import SemanticAnalyzer.SymbolTable.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Clase que representa los id y structsIds en el AST
@@ -139,7 +140,7 @@ IdNode extends PrimaryNode{
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
         Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
 
-        if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) {
+        if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
             // TODO: agregar parametros al stack
             // TODO: agregar puntero a self
             // TODO: Acá debería estar el codigo de la función
@@ -167,6 +168,27 @@ IdNode extends PrimaryNode{
                 textCode += "\tpop\t# Pop de parametro "+i+"\n";
             }
             textCode += "\t# FIN desapilado de todo el RA de la función llamada\n";
+        } else {
+
+            if(idType == IdType.VARIABLE){
+                String currentVarName = this.getToken().getLexeme();
+                int currentVariablePos = 0;
+                // Buscamos la posición de la variable en la lista de variables declaradas
+                Map<String,Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+                // Recorro la lista de todas las variables
+                for (String varName : variableList.keySet()){
+                    if (varName.equals(currentVarName)){
+                        break;
+                    }
+                    currentVariablePos += 1;
+                }
+
+                // Meto el valor asignado de la variable en la posicion correcta del stack
+                int variableStackPos = -4 * (currentVariablePos+1);
+                textCode += "\tlw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
+
+            }
+
         }
         return textCode;
     }
