@@ -167,6 +167,13 @@
 			"class": "Bruh",
 			"method": "bruhFn",
 			"sentences": [
+				{
+					"nombre": "Id",
+					"value": "bruhFn",
+					"type": "void",
+					"arguments": [
+					]
+				}
 			]
 		},
 		{
@@ -192,6 +199,22 @@
 						]
 					}
 
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "xd",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "bruhFn",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"arguments": [
+					]
 				}
 ,
 				{

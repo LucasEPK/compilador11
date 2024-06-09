@@ -263,7 +263,18 @@
 				"retorno": "void",
 				"posicion": 0,
 				"paramF": [],
-				"variables": []
+				"variables": [
+					{
+					"nombre": "v1",
+					"tipo": "Int",
+					"posicion": 0
+					},
+					{
+					"nombre": "v2",
+					"tipo": "Int",
+					"posicion": 1
+					}
+				]
 			}
 		],
 		"constructor": {

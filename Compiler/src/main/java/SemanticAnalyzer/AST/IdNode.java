@@ -135,7 +135,17 @@ IdNode extends PrimaryNode{
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
-        Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
+        Methods currentMethod;
+        // Buscamos el metodo que llamamos en la tabla de simbolos
+        if (this.getLastCalledType() != null) { // Si es un encadenado, necesitamos saber cual clase lo ha invocado
+            currentMethod = symbolTable.getStructMethod(this.getLastCalledType(), this.getToken().getLexeme());
+        } else { // Si no es un encadenado entonces estamos haciendo un call a la función dentro de su clase
+            if (idType == IdType.CONSTRUCTOR) { // Esto se hace porque sino con el constructor hace cualquier cosa y tira error
+                currentMethod = symbolTable.getStructMethod(this.getToken().getLexeme(), ".");
+            } else {
+                currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getToken().getLexeme());
+            }
+        }
 
         if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
             // TODO: hacer estaticos
@@ -176,9 +186,9 @@ IdNode extends PrimaryNode{
                 }
             }
 
-            // Acá desapilamos todo el RA formado por esta función
-            int totalVariables = currentMethod.getDefinedVar().size();
-            textCode += "\t# Desapilamos todo el RA de la función llamada\n";
+            // Acá desapilamos el RA completo formado por esta función
+
+            textCode += "\t# Desapilamos el RA completo de la función llamada\n";
             // Pop del valor de retorno y guardado en $v0
             textCode += "\tpop\t# Pop del valor de retorno\n"+
                     "\tla $v0, ($t9)\n";
@@ -192,6 +202,7 @@ IdNode extends PrimaryNode{
                 }
             }
 
+            int totalVariables = currentMethod.getDefinedVar().size();
             for(int i=0; i<totalVariables; i++) { // Pop de las variables
                 textCode += "\tpop\t# Pop de variable "+i+"\n";
             }
@@ -210,7 +221,7 @@ IdNode extends PrimaryNode{
                     textCode += "\tpop\t# Pop de parametro " + i + "\n";
                 }
             }
-            textCode += "\t# FIN desapilado de todo el RA de la función llamada\n";
+            textCode += "\t# FIN desapilado del RA completo de la función llamada\n";
         } else {
 
             if(idType == IdType.VARIABLE){
