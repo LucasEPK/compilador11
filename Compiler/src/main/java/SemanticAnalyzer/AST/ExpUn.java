@@ -112,12 +112,12 @@ public class ExpUn extends ExpOp {
 
         switch (operator){
             case "--":
-                textCode += "addiu $v0,$v0, -1 #--\n";
+                textCode += "\taddiu $v0,$v0, -1 #--\n";
             case "++":
-                textCode += "addiu $v0,$v0, 1 #++\n";
+                textCode += "\taddiu $v0,$v0, 1 #++\n";
                 break;
             case "!":
-                textCode += "xori $v0,$v0,1 #!\n";
+                textCode += "\txori $v0,$v0,1 #!\n";
         }
 
 
