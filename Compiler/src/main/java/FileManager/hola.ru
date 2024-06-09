@@ -3,16 +3,14 @@ struct Bruh{
 }
 impl Bruh{
 .(){
-    Int v1;
-    Int v2;
+}
+fn bruhFn(Int xd, Int xd2, Int xd3) -> void {
 
-    v1 = 1;
-    xd = 11;
-    v2 = 2;
 }
 }
 
 start{
-    Int i;
-    (++i);
+    Bruh ola;
+    ola = new Bruh();
+    (ola.bruhFn(1,2,3));
 }

@@ -141,11 +141,18 @@ IdNode extends PrimaryNode{
         Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
 
         if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
-            // TODO: agregar parametros al stack
+            int totalParams = 0;
+            if(this.arguments != null){ // Esto se hace para los que tienen parametros nomás
+                totalParams = this.arguments.size();
+                // Acá se agregan parametros al stack si son literales
+                for(int i=0; i<totalParams; i++) { // Push de los parametros
+                    this.arguments.get(i).generateCode(codeGenerator);
+                    textCode += "\tpush\t# Push de parametros "+i+"\n";
+                }
+            }
             // TODO: agregar puntero a self
             // TODO: Acá debería estar el codigo de la función
             // Acá desapilamos todo el RA formado por esta función
-            int totalParams = currentMethod.getParamsOfMethod().size();
             int totalVariables = currentMethod.getDefinedVar().size();
             textCode += "\t# Desapilamos todo el RA de la función llamada\n";
             // TODO: acá cuando desapilamos probablemente haya que chequear si el metodo que se llamo era un constructor, porque si lo era hay que desapilar también los atributos
@@ -165,8 +172,10 @@ IdNode extends PrimaryNode{
             // Pop del puntero al objeto
             textCode += "\tpop\t# Pop de puntero al objeto\n";
 
-            for(int i=0; i<totalParams; i++) { // Pop de los parametros
-                textCode += "\tpop\t# Pop de parametro "+i+"\n";
+            if(this.arguments != null) { // Esto se hace para los que tienen parametros nomás
+                for (int i = 0; i < totalParams; i++) { // Pop de los parametros
+                    textCode += "\tpop\t# Pop de parametro " + i + "\n";
+                }
             }
             textCode += "\t# FIN desapilado de todo el RA de la función llamada\n";
         } else {
@@ -183,6 +192,8 @@ IdNode extends PrimaryNode{
                     }
                     currentVariablePos += 1;
                 }
+
+                // TODO: acá quizas deba fijarme si es un constructor
 
                 // Meto el valor asignado de la variable en el acumulador
                 int variableStackPos = -4 * (currentVariablePos+1);

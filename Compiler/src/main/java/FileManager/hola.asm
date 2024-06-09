@@ -48,6 +48,7 @@ IO_vtable:
 
 Bruh_vtable:
 	.word Bruh_constructor
+	.word Bruh_bruhFn
 
 	 divisionErrorMessage: .asciiz "ERROR: DIVISION POR CERO"
 
@@ -390,32 +391,16 @@ Bruh_constructor:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
-	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
-	push
-	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
-	push
 	# Declaracion de atributos
 	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
 	push
 	# FIN declaracion de variables
-	# Asignacion de variable
-	li $v0, 1
-	sw $v0, -4($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
-	# FIN asignacion de variable
-	# Asignacion de variable
-	li $v0, 11
-	sw $v0, -12($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
-	# FIN asignacion de variable
-	# Asignacion de variable
-	li $v0, 2
-	sw $v0, -8($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
-	# FIN asignacion de variable
 	li $v0, 9	# Aloco memoria en el heap
 	li $a0, 8	# x bytes en memoria
 	syscall		# Con esto tenemos la referencia en $v0
 	la $t1, Bruh_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
 	sw $t1, 0($v0)
-	lw $t0, -12($fp)	# Meto el valor asignado del atributo desde el stack al acumulador ($v0)
+	lw $t0, -4($fp)	# Meto el valor asignado del atributo desde el stack al acumulador ($v0)
 	sw $t0, 8($v0)	# Meto el valor del atributo en su posición del heap
 	# Return de CIR
 	la $t9,($v0) #cargo en $t9 el valor de retorno
@@ -423,6 +408,17 @@ Bruh_constructor:
 	lw $ra,0($fp) #Recupero el return address
 	jr $ra #Vuelvo al return address
 	 #Fin Return de CIR
+Bruh_bruhFn:
+	# Actualizacion de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualizacion de framepointer
+
+	# Declaracion de variables
+	# FIN declaracion de variables
 main:	# METODO START ----------------------------------------------------------
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -436,8 +432,18 @@ main:	# METODO START ----------------------------------------------------------
 	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
 	push
 	# FIN declaracion de variables
+	# Asignacion de variable
+	# Desapilamos todo el RA de la función llamada
+	pop	# Pop del valor de retorno
+	la $v0, ($t9)
+	pop	# Pop de variable 0
+	pop	# Pop de puntero de retorno $ra de la función llamada
+	pop	# Pop del framepointer anterior que perdimos
+	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
+	pop	# Pop de puntero al objeto
+	# FIN desapilado de todo el RA de la función llamada
+	# FIN asignacion de variable
 	lw $v0, -4($fp)	# Meto el valor asignado de la variable del stack en el acumulador ($v0)
-addiu $v0,$v0, 1 #++
 	# Termino ejecución
 	li $v0, 10
 	syscall

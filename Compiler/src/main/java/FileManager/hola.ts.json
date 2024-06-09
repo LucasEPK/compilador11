@@ -264,7 +264,32 @@
 			"posicion": 0
 			}
 		],
-		"metodos": [],
+		"metodos": [
+			{
+				"nombre": "bruhFn",
+				"static": false,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [
+						{
+						"nombre": "xd",
+						"tipo": "Int",
+						"posicion": 0
+						},
+						{
+						"nombre": "xd2",
+						"tipo": "Int",
+						"posicion": 1
+						},
+						{
+						"nombre": "xd3",
+						"tipo": "Int",
+						"posicion": 2
+						}
+				],
+				"variables": []
+			}
+		],
 		"constructor": {
 			"paramF": [],
 			"variables": []
@@ -277,8 +302,8 @@
 			"posicion": 0,
 			"variables": [
 					{
-					"nombre": "i",
-					"tipo": "Int",
+					"nombre": "ola",
+					"tipo": "Bruh",
 					"posicion": 0
 					}
 			]
