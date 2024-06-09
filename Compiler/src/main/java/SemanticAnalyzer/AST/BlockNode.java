@@ -458,7 +458,7 @@ public class BlockNode extends SentenceNode implements Commons {
                 // Meto el valor asignado de la variable en el acumulador
                 int variableStackPos = -4 * (totalDeclaredVariables+i+1);
                 int attributeHeapPos = 4 * (i+2);
-                textCode += "\tlw $t0, "+variableStackPos+"($fp)\t# Meto el valor asignado del atributo desde el stack al acumulador ($v0)\n";
+                textCode += "\tlw $t0, "+variableStackPos+"($fp)\t# Meto el valor asignado del atributo desde el stack a $t0\n";
                 textCode += "\tsw $t0, "+attributeHeapPos+"($v0)\t# Meto el valor del atributo en su posición del heap\n";
             }
             // Acá hacemos que el constructor retorne el CIR

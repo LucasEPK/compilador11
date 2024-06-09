@@ -48,7 +48,8 @@ IO_vtable:
 
 Bruh_vtable:
 	.word Bruh_constructor
-	.word Bruh_bruhFn
+	.word Bruh_m1
+	.word Bruh_m2
 
 	 divisionErrorMessage: .asciiz "ERROR: DIVISION POR CERO"
 
@@ -87,6 +88,14 @@ IO_in_char:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion in_char
+	la $v0, 12 #Cargo en $v0 el syscall de char 
+	syscall
+	# Fin funcion in_char
+	la $t9,($v0) #cargo en $t9 el valor de retorno (para char esta en $v0)
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_bool:
@@ -98,6 +107,14 @@ IO_in_bool:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion in_bool
+	li $v0, 5 #Cargo en $v0 el syscall de int 
+	syscall
+	# Fin funcion in_bool
+	la $t9,($v0) #cargo en $t9 el valor de retorno (para bool esta en $v0)
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_int:
@@ -109,6 +126,14 @@ IO_in_int:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion in_int
+	li $v0, 5 #Cargo en $v0 el syscall de int 
+	syscall
+	# Fin funcion in_int
+	la $t9,($v0) #cargo en $t9 el valor de retorno (para int esta en $v0)
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_in_str:
@@ -120,6 +145,19 @@ IO_in_str:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	.data
+	input_string: .space  1025 #reservo espacio
+	.text
+	# Funcion in_str
+	li $v0, 8 #Cargo en $v0 el syscall de str 
+	la $a0, input_string #Cargo en $a0 la dirección de la variable donde se guardará el string
+	li $a1, 1025 #Cargo en $a1 la cantidad de bytes que se pueden leer
+	syscall
+	# Fin funcion in_str
+	la $t9,input_string #cargo en $t9 el valor de retorno (para str esta input_string
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_array_char:
@@ -175,6 +213,15 @@ IO_out_char:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion out_char
+	la $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))
+	li $v0, 11 #Cargo en $v0 el syscall de char 
+	syscall
+	# Fin funcion out_char
+	li $t9,0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_bool:
@@ -186,6 +233,15 @@ IO_out_bool:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion out_bool
+	la $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))
+	li $v0, 1 #Cargo en $v0 el syscall de bool (representado por int) 
+	syscall
+	# Fin funcion out_bool
+	li $t9,0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_int:
@@ -197,6 +253,15 @@ IO_out_int:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion out_int
+	la $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))
+	li $v0, 1 #Cargo en $v0 el syscall de int 
+	syscall
+	# Fin funcion out_int
+	li $t9,0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 IO_out_str:
@@ -408,7 +473,7 @@ Bruh_constructor:
 	lw $ra,0($fp) #Recupero el return address
 	jr $ra #Vuelvo al return address
 	 #Fin Return de CIR
-Bruh_bruhFn:
+Bruh_m1:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
 	push
@@ -418,25 +483,56 @@ Bruh_bruhFn:
 	# FIN actualizacion de framepointer
 
 	# Declaracion de variables
-	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
-	push
-	li $t9, 0 # Reservamos un espacio en el stack para esta variable;
-	push
 	# FIN declaracion de variables
+	# Asignacion de variable
+	li $v0, 1
+	sw $v0, -4($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
+	# FIN asignacion de variable
 	#Guardamos el CIR en $s4
 	la $s4, ($v0)
+	push	# Push de parametros 0
 	lw $t9, 8($fp)	# Caso recursivo, se agrega el mismo self del llamador
 	push	# Push de puntero al objeto
-	jal Bruh_bruhFn	# Salto a una función sin encadenado
+	jal Bruh_m2	# Salto a una función sin encadenado
 	# Desapilamos el RA completo de la función llamada
 	pop	# Pop del valor de retorno
 	la $v0, ($t9)
-	pop	# Pop de variable 0
-	pop	# Pop de variable 1
 	pop	# Pop de puntero de retorno $ra de la función llamada
 	pop	# Pop del framepointer anterior que perdimos
 	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
 	pop	# Pop de puntero al objeto
+	pop	# Pop de parametro 0
+	# FIN desapilado del RA completo de la función llamada
+Bruh_m2:
+	# Actualizacion de framepointer
+	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
+	push
+	la $t9, ($ra)		# Metemos el return address en el stack
+	push
+	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
+	# FIN actualizacion de framepointer
+
+	# Declaracion de variables
+	# FIN declaracion de variables
+	li $v0, 9	# Aloco memoria en el heap
+	li $a0, 4	# x bytes en memoria
+	syscall		# Con esto tenemos la referencia en $v0
+	la $t1, IO_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
+	sw $t1, 0($v0)
+	#Guardamos el CIR en $s4
+	la $s4, ($v0)
+	push	# Push de parametros 0
+	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado
+	push	# Push de puntero al objeto
+	jal IO_out_int	# Salto a la función desde un encadenado
+	# Desapilamos el RA completo de la función llamada
+	pop	# Pop del valor de retorno
+	la $v0, ($t9)
+	pop	# Pop de puntero de retorno $ra de la función llamada
+	pop	# Pop del framepointer anterior que perdimos
+	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
+	pop	# Pop de puntero al objeto
+	pop	# Pop de parametro 0
 	# FIN desapilado del RA completo de la función llamada
 main:	# METODO START ----------------------------------------------------------
 	# Actualizacion de framepointer
@@ -473,27 +569,7 @@ main:	# METODO START ----------------------------------------------------------
 	la $s4, ($v0)
 	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado
 	push	# Push de puntero al objeto
-	jal Bruh_bruhFn	# Salto a la función desde un encadenado
-	# Desapilamos el RA completo de la función llamada
-	pop	# Pop del valor de retorno
-	la $v0, ($t9)
-	pop	# Pop de variable 0
-	pop	# Pop de variable 1
-	pop	# Pop de puntero de retorno $ra de la función llamada
-	pop	# Pop del framepointer anterior que perdimos
-	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
-	pop	# Pop de puntero al objeto
-	# FIN desapilado del RA completo de la función llamada
-	li $v0, 9	# Aloco memoria en el heap
-	li $a0, 4	# x bytes en memoria
-	syscall		# Con esto tenemos la referencia en $v0
-	la $t1, IO_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
-	sw $t1, 0($v0)
-	#Guardamos el CIR en $s4
-	la $s4, ($v0)
-	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado
-	push	# Push de puntero al objeto
-	jal IO_in_int	# Salto a la función desde un encadenado
+	jal Bruh_m1	# Salto a la función desde un encadenado
 	# Desapilamos el RA completo de la función llamada
 	pop	# Pop del valor de retorno
 	la $v0, ($t9)

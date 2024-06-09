@@ -151,7 +151,7 @@ IdNode extends PrimaryNode{
 
             // Guardamos el CIR en $s4
             textCode += "\t#Guardamos el CIR en $s4\n"+
-                    "\tla $s4, ($v0)\n";
+                    "\tla $s4, ($v0)\t#Guardamos el CIR en $s4\n";
 
             int totalParams = 0;
             if(this.arguments != null){ // Esto se hace para los que tienen parametros nomás
@@ -225,22 +225,38 @@ IdNode extends PrimaryNode{
 
             if(idType == IdType.VARIABLE){
                 String currentVarName = this.getToken().getLexeme();
+                boolean variableFound = false;
                 int currentVariablePos = 0;
                 // Buscamos la posición de la variable en la lista de variables declaradas
                 Map<String,Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
                 // Recorro la lista de todas las variables
                 for (String varName : variableList.keySet()){
                     if (varName.equals(currentVarName)){
+                        variableFound = true;
                         break;
                     }
                     currentVariablePos += 1;
                 }
 
-                // TODO: acá quizas deba fijarme si es un constructor
-
-                // Meto el valor asignado de la variable en el acumulador
-                int variableStackPos = -4 * (currentVariablePos+1);
-                textCode += "\tlw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
+                if (variableFound) {
+                    // Meto el valor asignado de la variable en el acumulador
+                    int variableStackPos = -4 * (currentVariablePos + 1);
+                    textCode += "\tlw $v0, " + variableStackPos + "($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
+                } else {
+                    // Acá nos fijamos los atributos del CIR
+                    textCode += "\tlw $t0, 8($fp)\t\t# Cargamos el CIR en $t0\n";
+                    Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getStruct()); //TODO: esto si no estamos en la misma clase va a explotar mepa
+                    int totalAttributes = attributeList.size();
+                    int currentAttributePos = 0;
+                    for (String attrName : attributeList.keySet()) {
+                        if (attrName.equals(currentVarName)) {
+                            break;
+                        }
+                        currentAttributePos += 1;
+                    }
+                    int attributeCIRpos = 4 * (currentAttributePos + 1);
+                    textCode += "\tlw $v0, "+attributeCIRpos+"($t0)\n";
+                }
 
             } else {
                 if (idType == IdType.STATIC_METHOD) {

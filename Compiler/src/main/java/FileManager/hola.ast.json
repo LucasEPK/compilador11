@@ -165,12 +165,66 @@
 		{
 			"nombre": "Block",
 			"class": "Bruh",
-			"method": "bruhFn",
+			"method": "m1",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "Literal",
+						"value": "1",
+						"type": "Int"
+					}
+
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "m2",
+					"type": "void",
+					"arguments": [
+						{
+							"nombre": "Id",
+							"value": "xd",
+							"type": "Int",
+							"arguments": [
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Bruh",
+			"method": "m2",
 			"sentences": [
 				{
 					"nombre": "Id",
-					"value": "bruhFn",
+					"value": "IO",
 					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_int",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "v1",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
 					"arguments": [
 					]
 				}
@@ -185,7 +239,7 @@
 					"nombre": "Asignation",
 					"left": 					{
 						"nombre": "Id",
-						"value": "xd",
+						"value": "bruh1",
 						"type": "Bruh",
 						"arguments": [
 						]
@@ -203,28 +257,12 @@
 ,
 				{
 					"nombre": "Id",
-					"value": "xd",
+					"value": "bruh1",
 					"type": "void",
 					"chained": 					{
 						"nombre": "Id",
-						"value": "bruhFn",
+						"value": "m1",
 						"type": "void",
-						"arguments": [
-						]
-					}
-,
-					"arguments": [
-					]
-				}
-,
-				{
-					"nombre": "Id",
-					"value": "IO",
-					"type": "Int",
-					"chained": 					{
-						"nombre": "Id",
-						"value": "in_int",
-						"type": "Int",
 						"arguments": [
 						]
 					}
