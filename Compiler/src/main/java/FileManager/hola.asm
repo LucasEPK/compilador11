@@ -293,6 +293,13 @@ Object_constructor:
 
 	# Declaracion de variables
 	# FIN declaracion de variables
+	# Return
+	li $v0, 3
+	la $t9,$v0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return adress
+	jr $ra #Vuelvo al return adress
+	 #Fin Return
 main:	# METODO START ----------------------------------------------------------
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack

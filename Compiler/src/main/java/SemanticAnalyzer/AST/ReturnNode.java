@@ -93,6 +93,25 @@ public class ReturnNode extends SentenceNode implements Commons {
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
+        textCode += "\t# Return\n";
+
+        //Debemos generar el codigo del returnValueNode
+        if(returnValueNode != null){
+            textCode += returnValueNode.generateCode(codeGenerator);
+        }
+
+        //Generamos el codigo del return
+        //Lo guardamos en nuestro registro de activacion
+        //En el tope de la pila
+        textCode += "\tla $t9,($v0) #cargo en $t9 el valor de retorno\n";
+        textCode += "\tpush #Lo pusheo al stack\n";
+
+        //Debo hacer un jump a la direccion de retorno
+        //Para eso debo cargar la direccion de retorno en $ra
+        textCode += "\tlw $ra,0($fp) #Recupero el return adress\n";
+        textCode += "\tjr $ra #Vuelvo al return adress\n";
+
+        textCode += "\t #Fin Return\n";
         return textCode;
     }
 }
