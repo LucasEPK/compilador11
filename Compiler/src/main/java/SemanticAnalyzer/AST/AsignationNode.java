@@ -5,6 +5,7 @@ import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.InvalidNilPrimitive;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import Exceptions.SemanticExceptions.AST.VoidAsignation;
+import SemanticAnalyzer.SymbolTable.Attributes;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 import SemanticAnalyzer.SymbolTable.Variable;
 
@@ -130,16 +131,26 @@ public class AsignationNode extends SentenceNode implements Commons {
 
             // Buscamos la posición de la variable en la lista de variables declaradas
             Map<String,Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+            boolean variableFound = false; // Este booleano sirve para cuando estamos en un constructor saber si encontramos la variable declarada
             // Recorro la lista de todas las variables
             for (String varName : variableList.keySet()){
                 if (varName.equals(leftName)){
+                    variableFound = true;
                     break;
                 }
                 currentVariablePos += 1;
             }
 
-            if (this.getMethod().equals(".")) { // si estamos en un constructor
-                // TODO: buscar en atributos
+            // Buscamos si es un atributo
+            if (this.getMethod().equals(".") && !variableFound) { // si estamos en un constructor y no encontramos la variable declarada
+                Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getStruct());
+                // Recorro la lista de todos los atributos hasta encontrar el atributo buscado
+                for (String attrName : attributeList.keySet()) {
+                    if (attrName.equals(leftName)){
+                        break;
+                    }
+                    currentVariablePos += 1;
+                }
             }
         } else { // Esto pasa cuando si tiene encadenado
             textCode += left.generateCode(codeGenerator);
@@ -154,9 +165,6 @@ public class AsignationNode extends SentenceNode implements Commons {
             }
         }
 
-        if (this.getMethod().equals(".")) { // Si estamos en un constructor
-            // TODO: asignar atributos
-        }
         textCode += "\t# FIN asignacion de variable\n";
         return textCode;
     }

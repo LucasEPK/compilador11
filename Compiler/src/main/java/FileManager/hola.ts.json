@@ -251,6 +251,24 @@
 			"paramF": [],
 			"variables": []
 		}
+	},
+ 	 {
+		"nombre": "Bruh",
+		"heredaDe": "Object",
+		"atributos": [
+			{
+			"nombre": "xd",
+			"tipo": "Int",
+			"public": true,
+			"inherited": false,
+			"posicion": 0
+			}
+		],
+		"metodos": [],
+		"constructor": {
+			"paramF": [],
+			"variables": []
+		}
 	}
 ],
 	"start": {
