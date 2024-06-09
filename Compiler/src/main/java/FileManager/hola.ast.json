@@ -160,58 +160,19 @@
 			"class": "Bruh",
 			"method": ".",
 			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Bruh",
+			"method": "bruhFn",
+			"sentences": [
 				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v1",
-						"type": "Int",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "1",
-						"type": "Int"
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "xd",
-						"type": "Int",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "11",
-						"type": "Int"
-					}
-
-				}
-,
-				{
-					"nombre": "Asignation",
-					"left": 					{
-						"nombre": "Id",
-						"value": "v2",
-						"type": "Int",
-						"arguments": [
-						]
-					}
-,
-					"right": 					{
-						"nombre": "Literal",
-						"value": "2",
-						"type": "Int"
-					}
-
+					"nombre": "Id",
+					"value": "bruhFn",
+					"type": "void",
+					"arguments": [
+					]
 				}
 			]
 		},
@@ -221,16 +182,55 @@
 			"method": "start",
 			"sentences": [
 				{
-					"nombre": "ExpUn",
-					"operator": "++",
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "xd",
+						"type": "Bruh",
+						"arguments": [
+						]
+					}
+,
 					"right": 					{
 						"nombre": "Id",
-						"value": "i",
-						"type": "Int",
+						"value": "Bruh",
+						"type": "Bruh",
 						"arguments": [
 						]
 					}
 
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "xd",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "bruhFn",
+						"type": "void",
+						"arguments": [
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "Int",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "in_int",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"arguments": [
+					]
 				}
 			]
 		}

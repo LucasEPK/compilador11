@@ -257,14 +257,34 @@
 		"heredaDe": "Object",
 		"atributos": [
 			{
-			"nombre": "xd",
+			"nombre": "xd1",
 			"tipo": "Int",
 			"public": true,
 			"inherited": false,
 			"posicion": 0
 			}
 		],
-		"metodos": [],
+		"metodos": [
+			{
+				"nombre": "bruhFn",
+				"static": false,
+				"retorno": "void",
+				"posicion": 0,
+				"paramF": [],
+				"variables": [
+					{
+					"nombre": "v1",
+					"tipo": "Int",
+					"posicion": 0
+					},
+					{
+					"nombre": "v2",
+					"tipo": "Int",
+					"posicion": 1
+					}
+				]
+			}
+		],
 		"constructor": {
 			"paramF": [],
 			"variables": []
@@ -277,8 +297,8 @@
 			"posicion": 0,
 			"variables": [
 					{
-					"nombre": "i",
-					"tipo": "Int",
+					"nombre": "xd",
+					"tipo": "Bruh",
 					"posicion": 0
 					}
 			]

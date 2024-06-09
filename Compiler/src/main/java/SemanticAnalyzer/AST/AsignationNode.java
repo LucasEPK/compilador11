@@ -123,7 +123,6 @@ public class AsignationNode extends SentenceNode implements Commons {
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "\t# Asignacion de variable\n";
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
-        // TODO: si es un new, hacer CIR
 
         int currentVariablePos = 0; // Con esto se obtiene la posicion de la variable en la lista de variables declaradas
         if(!((IdNode)left).isChained()) { // Si no tiene encadenado:
@@ -153,19 +152,19 @@ public class AsignationNode extends SentenceNode implements Commons {
                 }
             }
         } else { // Esto pasa cuando si tiene encadenado
+            // TODO: asignación con encadenado
             textCode += left.generateCode(codeGenerator);
         }
 
         textCode += right.generateCode(codeGenerator);
-        if(right instanceof LiteralNode){ // Si estamos asignando un literal
-            // Meto el valor asignado de la variable en la posicion correcta del stack
-            if( !((LiteralNode)right).getType().equals("Str")){ // Esto se debe a que Str tiene metodos, osea que necesita de un CIR
-                int variableStackPos = -4 * (currentVariablePos+1);
-                textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
-            }
-        }
+
+        // Meto el valor asignado de la variable en la posicion correcta del stack
+        int variableStackPos = -4 * (currentVariablePos+1);
+        textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
+
 
         textCode += "\t# FIN asignacion de variable\n";
         return textCode;
     }
+
 }

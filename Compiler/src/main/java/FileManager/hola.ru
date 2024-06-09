@@ -1,18 +1,18 @@
 struct Bruh{
-    Int xd;
+    Int xd1;
 }
-impl Bruh{
-.(){
-    Int v1;
-    Int v2;
-
-    v1 = 1;
-    xd = 11;
-    v2 = 2;
+impl Bruh {
+    .(){
+    }
+    fn bruhFn() -> void {
+        Int v1;
+        Int v2;
+        (bruhFn());
+    }
 }
-}
-
 start{
-    Int i;
-    (++i);
+    Bruh xd;
+    xd = new Bruh();
+    (xd.bruhFn());
+    (IO.in_int());
 }

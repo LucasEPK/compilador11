@@ -3,10 +3,7 @@ package SemanticAnalyzer.AST;
 import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.*;
 import LexicalAnalyzer.Token;
-import SemanticAnalyzer.SymbolTable.Methods;
-import SemanticAnalyzer.SymbolTable.Struct;
-import SemanticAnalyzer.SymbolTable.SymbolTable;
-import SemanticAnalyzer.SymbolTable.Variable;
+import SemanticAnalyzer.SymbolTable.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,20 +135,73 @@ IdNode extends PrimaryNode{
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "";
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
-        Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod()); // TODO: cuando sea encadenado acá habría que pasarle el verdadero struct y method, como está ahora no funca probablemente
+        Methods currentMethod;
+        // Buscamos el metodo que llamamos en la tabla de simbolos
+        if (this.getLastCalledType() != null) { // Si es un encadenado, necesitamos saber cual clase lo ha invocado
+            currentMethod = symbolTable.getStructMethod(this.getLastCalledType(), this.getToken().getLexeme());
+        } else { // Si no es un encadenado entonces estamos haciendo un call a la función dentro de su clase
+            if (idType == IdType.CONSTRUCTOR) { // Esto se hace porque sino con el constructor hace cualquier cosa y tira error
+                currentMethod = symbolTable.getStructMethod(this.getToken().getLexeme(), ".");
+            } else {
+                currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getToken().getLexeme());
+            }
+        }
 
-        if (idType == IdType.METHOD || idType == IdType.STATIC_METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
-            // TODO: agregar parametros al stack
-            // TODO: agregar puntero a self
-            // TODO: Acá debería estar el codigo de la función
-            // Acá desapilamos todo el RA formado por esta función
-            int totalParams = currentMethod.getParamsOfMethod().size();
-            int totalVariables = currentMethod.getDefinedVar().size();
-            textCode += "\t# Desapilamos todo el RA de la función llamada\n";
-            // TODO: acá cuando desapilamos probablemente haya que chequear si el metodo que se llamo era un constructor, porque si lo era hay que desapilar también los atributos
+        if (idType == IdType.METHOD || idType == IdType.CONSTRUCTOR) { // Si es un metodo:
+
+            // Guardamos el CIR en $s4
+            textCode += "\t#Guardamos el CIR en $s4\n"+
+                    "\tla $s4, ($v0)\n";
+
+            int totalParams = 0;
+            if(this.arguments != null){ // Esto se hace para los que tienen parametros nomás
+                totalParams = this.arguments.size();
+                // Acá se agregan parametros al stack si son literales
+                for(int i=0; i<totalParams; i++) { // Push de los parametros
+                    this.arguments.get(i).generateCode(codeGenerator);
+                    textCode += "\tpush\t# Push de parametros "+i+"\n";
+                }
+            }
+
+            // Agrega un puntero a self al stack
+            if (this.lastCalledType != null) {
+                // Caso en que llamamos una función afuera de la clase con un encadenado
+                textCode += "\tla $t9, ($s4)\t# Caso base, se agrega el cir que tenemos en $v0 por el encadenado\n" +
+                        "\tpush\t# Push de puntero al objeto\n";
+            } else {
+                // Caso en que estamos llamando una función de la misma clase
+                textCode += "\tlw $t9, 8($fp)\t# Caso recursivo, se agrega el mismo self del llamador\n" +
+                        "\tpush\t# Push de puntero al objeto\n";
+            }
+            // Acá se salta a la función llamada
+            if (idType == IdType.CONSTRUCTOR) {
+                textCode += "\tjal " + this.getToken().getLexeme() + "_constructor\t# Salto a un constructor\n";
+            } else {
+                if (this.getLastCalledType() != null) { // Acá chequeamos si es un encadenado
+                    // salto con encadenados
+                    textCode += "\tjal "+this.getLastCalledType()+"_" + this.getToken().getLexeme() + "\t# Salto a la función desde un encadenado\n";
+                } else { // si no es un encadenado:
+                    textCode += "\tjal "+this.getStruct()+"_" + this.getToken().getLexeme() + "\t# Salto a una función sin encadenado\n";
+                }
+            }
+
+            // Acá desapilamos el RA completo formado por esta función
+
+            textCode += "\t# Desapilamos el RA completo de la función llamada\n";
             // Pop del valor de retorno y guardado en $v0
             textCode += "\tpop\t# Pop del valor de retorno\n"+
                     "\tla $v0, ($t9)\n";
+
+            // Desapilamos los atributos si es un constructor
+            if (idType == IdType.CONSTRUCTOR) {
+                Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getToken().getLexeme());
+                int totalAttributes = attributeList.size();
+                for (int i=0; i< totalAttributes; i++) {
+                    textCode += "\tpop\t# Pop de atributo "+i+"\n";
+                }
+            }
+
+            int totalVariables = currentMethod.getDefinedVar().size();
             for(int i=0; i<totalVariables; i++) { // Pop de las variables
                 textCode += "\tpop\t# Pop de variable "+i+"\n";
             }
@@ -165,10 +215,12 @@ IdNode extends PrimaryNode{
             // Pop del puntero al objeto
             textCode += "\tpop\t# Pop de puntero al objeto\n";
 
-            for(int i=0; i<totalParams; i++) { // Pop de los parametros
-                textCode += "\tpop\t# Pop de parametro "+i+"\n";
+            if(this.arguments != null) { // Esto se hace para los que tienen parametros nomás
+                for (int i = 0; i < totalParams; i++) { // Pop de los parametros
+                    textCode += "\tpop\t# Pop de parametro " + i + "\n";
+                }
             }
-            textCode += "\t# FIN desapilado de todo el RA de la función llamada\n";
+            textCode += "\t# FIN desapilado del RA completo de la función llamada\n";
         } else {
 
             if(idType == IdType.VARIABLE){
@@ -184,12 +236,28 @@ IdNode extends PrimaryNode{
                     currentVariablePos += 1;
                 }
 
+                // TODO: acá quizas deba fijarme si es un constructor
+
                 // Meto el valor asignado de la variable en el acumulador
                 int variableStackPos = -4 * (currentVariablePos+1);
                 textCode += "\tlw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
 
+            } else {
+                if (idType == IdType.STATIC_METHOD) {
+
+                    // Genera un CIR temporal para el metodo statico
+                    textCode += "\tli $v0, 9\t# Aloco memoria en el heap\n" +
+                            "\tli $a0, 4\t# x bytes en memoria\n" +
+                            "\tsyscall\t\t# Con esto tenemos la referencia en $v0\n" +
+                            "\tla $t1, "+this.getToken().getLexeme()+"_vtable\t# Guardamos la dirección de la vtable en la primera posicion del heap\n" +
+                            "\tsw $t1, 0($v0)\n";
+                }
             }
 
+        }
+
+        if (this.isChained()){
+            textCode += this.getRight().generateCode(codeGenerator);
         }
         return textCode;
     }
