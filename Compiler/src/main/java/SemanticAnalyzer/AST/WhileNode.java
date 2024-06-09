@@ -2,6 +2,7 @@ package SemanticAnalyzer.AST;
 
 import CodeGeneration.CodeGenerator;
 import Exceptions.SemanticExceptions.AST.NoBooleanCondition;
+import LexicalAnalyzer.Token;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
 
 /**
@@ -98,16 +99,17 @@ public class WhileNode extends SentenceNode {
      * */
     @Override
     public String generateCode(CodeGenerator codeGenerator) {
-        String textCode = "\tdefault_while:\n" +
+        Token conditionToken = whileNode.getToken();
+        String textCode = "\tdefault_while_l" + conditionToken.getRow() + "c" + conditionToken.getColumn()  + ":\n" +
                 "\t# Condición while\n";
         textCode += whileNode.generateCode(codeGenerator) +
                 "\t# Fin condición while\n";
-        textCode += "\tbne $v0, 1, default_while_fin\t#si la condición del while no es verdadera salta todo el while\n" +
+        textCode += "\tbne $v0, 1, default_while_fin_l" + conditionToken.getRow() + "c" + conditionToken.getColumn()  + "\t#si la condición del while no es verdadera salta todo el while\n" +
                 "\t# Cuerpo while\n";
         textCode += doNode.generateCode(codeGenerator) +
                 "\t# Fin cuerpo while\n";
-        textCode += "\tj default_while\t# vuelve al pricipio del while a chequear la condición\n" +
-                "\tdefault_while_fin:\n";
+        textCode += "\tj default_while_l" + conditionToken.getRow() + "c" + conditionToken.getColumn()  + "\t# vuelve al pricipio del while a chequear la condición\n" +
+                "\tdefault_while_fin_l" + conditionToken.getRow() + "c" + conditionToken.getColumn()  + ":\n";
 
         return textCode;
     }
