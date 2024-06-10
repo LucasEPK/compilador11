@@ -169,7 +169,8 @@ public class AsignationNode extends SentenceNode implements Commons {
             // Meto el valor asignado del atributo en la posicion correcta del heap
             int attributeStackPos = 4 * (currentAttributePos + 1);
             textCode += "\tlw $t0, 8($fp)\t# Cargamos el CIR en $t0\n"+
-                    "\tsw $v0, " + attributeStackPos + "($t0)\t# Meto el valor asignado del atributo en la posicion correcta del heap\n";
+                    "\tsw $v0, " + attributeStackPos + "($t0)\t# Meto el valor asignado del atributo en la posicion correcta del heap\n"+
+                    "\tla $v0, ($t0)\t# Cargamos el CIR en $v0 para ser guardado por funciones\n";//TODO: si en vez de un atributo, ponemos una variable, puede que se rompa xd
         }
 
         textCode += "\t# FIN asignacion de variable\n";
