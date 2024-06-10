@@ -123,7 +123,9 @@ public class AsignationNode extends SentenceNode implements Commons {
     public String generateCode(CodeGenerator codeGenerator) {
         String textCode = "\t# Asignacion de variable\n";
         SymbolTable symbolTable = codeGenerator.getSymbolTable();
+        boolean isAttribute = false;
 
+        int currentAttributePos = 0;
         int currentVariablePos = 0; // Con esto se obtiene la posicion de la variable en la lista de variables declaradas
         if(!((IdNode)left).isChained()) { // Si no tiene encadenado:
             String leftName = left.getToken().getLexeme();
@@ -146,9 +148,10 @@ public class AsignationNode extends SentenceNode implements Commons {
                 // Recorro la lista de todos los atributos hasta encontrar el atributo buscado
                 for (String attrName : attributeList.keySet()) {
                     if (attrName.equals(leftName)){
+                        isAttribute = true;
                         break;
                     }
-                    currentVariablePos += 1;
+                    currentAttributePos += 1;
                 }
             }
         } else { // Esto pasa cuando si tiene encadenado
@@ -158,10 +161,16 @@ public class AsignationNode extends SentenceNode implements Commons {
 
         textCode += right.generateCode(codeGenerator);
 
-        // Meto el valor asignado de la variable en la posicion correcta del stack
-        int variableStackPos = -4 * (currentVariablePos+1);
-        textCode += "\tsw $v0, "+variableStackPos+"($fp)\t# Meto el valor asignado de la variable en el lugar de la variable del stack\n";
-
+        if (!isAttribute) {
+            // Meto el valor asignado de la variable en la posicion correcta del stack
+            int variableStackPos = -4 * (currentVariablePos + 1);
+            textCode += "\tsw $v0, " + variableStackPos + "($fp)\t# Meto el valor asignado de la variable en la posicion correcta del stack\n";
+        } else {
+            // Meto el valor asignado del atributo en la posicion correcta del heap
+            int attributeStackPos = 4 * (currentAttributePos + 1);
+            textCode += "\tlw $t0, 8($fp)\t# Cargamos el CIR en $t0\n"+
+                    "\tsw $v0, " + attributeStackPos + "($t0)\t# Meto el valor asignado del atributo en la posicion correcta del heap\n";
+        }
 
         textCode += "\t# FIN asignacion de variable\n";
         return textCode;

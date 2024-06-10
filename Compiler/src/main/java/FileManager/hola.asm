@@ -465,8 +465,8 @@ Bruh_constructor:
 	syscall		# Con esto tenemos la referencia en $v0
 	la $t1, Bruh_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
 	sw $t1, 0($v0)
-	lw $t0, -4($fp)	# Meto el valor asignado del atributo desde el stack al acumulador ($v0)
-	sw $t0, 8($v0)	# Meto el valor del atributo en su posición del heap
+	lw $t0, -4($fp)	# Meto el valor asignado del atributo desde el stack a $t0
+	sw $t0, 4($v0)	# Meto el valor del atributo en su posición del heap
 	# Return de CIR
 	la $t9,($v0) #cargo en $t9 el valor de retorno
 	push #Lo pusheo al stack
@@ -486,10 +486,13 @@ Bruh_m1:
 	# FIN declaracion de variables
 	# Asignacion de variable
 	li $v0, 1
-	sw $v0, -4($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
+	sw $v0, -4($fp)	# Meto el valor asignado de la variable en la posicion correcta del stack
 	# FIN asignacion de variable
 	#Guardamos el CIR en $s4
-	la $s4, ($v0)
+	la $s4, ($v0)	#Guardamos el CIR en $s4
+	lw $t0, 8($fp)		# Cargamos el CIR en $t0
+	lw $v0, 4($t0)
+	la $t9, ($v0)	# Cargamos el argumento en $t9
 	push	# Push de parametros 0
 	lw $t9, 8($fp)	# Caso recursivo, se agrega el mismo self del llamador
 	push	# Push de puntero al objeto
@@ -520,9 +523,12 @@ Bruh_m2:
 	la $t1, IO_vtable	# Guardamos la dirección de la vtable en la primera posicion del heap
 	sw $t1, 0($v0)
 	#Guardamos el CIR en $s4
-	la $s4, ($v0)
+	la $s4, ($v0)	#Guardamos el CIR en $s4
+	lw $t0, 8($fp)		# Cargamos el CIR en $t0
+	lw $v0, 8($t0)
+	la $t9, ($v0)	# Cargamos el argumento en $t9
 	push	# Push de parametros 0
-	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado
+	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $s4 por el encadenado
 	push	# Push de puntero al objeto
 	jal IO_out_int	# Salto a la función desde un encadenado
 	# Desapilamos el RA completo de la función llamada
@@ -549,7 +555,7 @@ main:	# METODO START ----------------------------------------------------------
 	# FIN declaracion de variables
 	# Asignacion de variable
 	#Guardamos el CIR en $s4
-	la $s4, ($v0)
+	la $s4, ($v0)	#Guardamos el CIR en $s4
 	lw $t9, 8($fp)	# Caso recursivo, se agrega el mismo self del llamador
 	push	# Push de puntero al objeto
 	jal Bruh_constructor	# Salto a un constructor
@@ -562,12 +568,12 @@ main:	# METODO START ----------------------------------------------------------
 	add $fp, $zero, $t9	# Volvemos a cargar el framepointer correcto
 	pop	# Pop de puntero al objeto
 	# FIN desapilado del RA completo de la función llamada
-	sw $v0, -4($fp)	# Meto el valor asignado de la variable en el lugar de la variable del stack
+	sw $v0, -4($fp)	# Meto el valor asignado de la variable en la posicion correcta del stack
 	# FIN asignacion de variable
 	lw $v0, -4($fp)	# Meto el valor asignado de la variable del stack en el acumulador ($v0)
 	#Guardamos el CIR en $s4
-	la $s4, ($v0)
-	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $v0 por el encadenado
+	la $s4, ($v0)	#Guardamos el CIR en $s4
+	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $s4 por el encadenado
 	push	# Push de puntero al objeto
 	jal Bruh_m1	# Salto a la función desde un encadenado
 	# Desapilamos el RA completo de la función llamada
