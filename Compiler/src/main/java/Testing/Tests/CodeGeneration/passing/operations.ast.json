@@ -1,0 +1,384 @@
+{
+	"nombre": "/home/yeu/Documentos/compilador11/Compiler/src/main/java/Testing/Tests/CodeGeneration/passing/operations.ru",
+	"clases": [
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_char",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_bool",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_int",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "in_str",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_char",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_bool",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_str",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_array_int",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_char",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_bool",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_int",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "IO",
+			"method": "out_str",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Array",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Array",
+			"method": "length",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Bool",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Char",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Str",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Str",
+			"method": "length",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Str",
+			"method": "concat",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Int",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "Object",
+			"method": ".",
+			"sentences": [
+			]
+		},
+		{
+			"nombre": "Block",
+			"class": "start",
+			"method": "start",
+			"sentences": [
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "a",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "2",
+							"type": "Int"
+						}
+,
+						"operator": "+",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "9",
+							"type": "Int"
+						}
+
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "b",
+						"type": "Bool",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "ExpBin",
+							"left": 							{
+								"nombre": "Literal",
+								"value": "true",
+								"type": "Bool"
+							}
+,
+							"operator": "&&",
+							"right": 							{
+								"nombre": "Literal",
+								"value": "false",
+								"type": "Bool"
+							}
+
+						}
+,
+						"operator": "||",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "true",
+							"type": "Bool"
+						}
+
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "c",
+						"type": "Int",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "2",
+							"type": "Int"
+						}
+,
+						"operator": "*",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+
+					}
+
+				}
+,
+				{
+					"nombre": "Asignation",
+					"left": 					{
+						"nombre": "Id",
+						"value": "d",
+						"type": "Bool",
+						"arguments": [
+						]
+					}
+,
+					"right": 					{
+						"nombre": "ExpBin",
+						"left": 						{
+							"nombre": "Literal",
+							"value": "5",
+							"type": "Int"
+						}
+,
+						"operator": ">",
+						"right": 						{
+							"nombre": "Literal",
+							"value": "3",
+							"type": "Int"
+						}
+
+					}
+
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_int",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "a",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_bool",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "b",
+								"type": "Bool",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_int",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "c",
+								"type": "Int",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+,
+				{
+					"nombre": "Id",
+					"value": "IO",
+					"type": "void",
+					"chained": 					{
+						"nombre": "Id",
+						"value": "out_bool",
+						"type": "void",
+						"arguments": [
+							{
+								"nombre": "Id",
+								"value": "d",
+								"type": "Bool",
+								"arguments": [
+								]
+							}
+						]
+					}
+,
+					"arguments": [
+					]
+				}
+			]
+		}
+	]
+}
