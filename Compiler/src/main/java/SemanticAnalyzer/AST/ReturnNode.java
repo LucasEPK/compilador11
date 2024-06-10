@@ -108,8 +108,8 @@ public class ReturnNode extends SentenceNode implements Commons {
 
         //Debo hacer un jump a la direccion de retorno
         //Para eso debo cargar la direccion de retorno en $ra
-        textCode += "\tlw $ra,0($fp) #Recupero el return adress\n";
-        textCode += "\tjr $ra #Vuelvo al return adress\n";
+        textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+        textCode += "\tjr $ra #Vuelvo al return address\n";
 
         textCode += "\t #Fin Return\n";
         return textCode;

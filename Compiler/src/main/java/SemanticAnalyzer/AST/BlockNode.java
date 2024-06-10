@@ -478,6 +478,26 @@ public class BlockNode extends SentenceNode implements Commons {
             textCode += "\t #Fin Return de CIR\n";
         }
 
+        Methods currentMethod = symbolTable.getStructMethod(this.getStruct(), this.getMethod());
+        // Esto se hace porque sino los que retornan void y no tienen return, no van a volver nunca a la función que lo llamó
+        if(currentMethod.getGiveBack() != null && currentMethod.getGiveBack().getToken() != null) {
+            String methodGiveBackName = currentMethod.getGiveBack().getToken().getLexeme();
+            if(methodGiveBackName.equals("void")){
+                textCode += "\t# Return de un void\n";
+
+                //Generamos el codigo del return
+                //Lo guardamos en nuestro registro de activacion
+                //En el tope de la pila
+                textCode += "\tli $t9, 0 #cargo en $t9 el valor de retorno\n";
+                textCode += "\tpush #Lo pusheo al stack\n";
+
+                //Debo hacer un jump a la direccion de retorno
+                //Para eso debo cargar la direccion de retorno en $ra
+                textCode += "\tlw $ra,0($fp) #Recupero el return address\n";
+                textCode += "\tjr $ra #Vuelvo al return address\n\n";
+
+            }
+        }
 
         return textCode;
     }

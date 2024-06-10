@@ -508,6 +508,12 @@ Bruh_m1:
 	pop	# Pop de puntero al objeto
 	pop	# Pop de parametro 0
 	# FIN desapilado del RA completo de la función llamada
+	# Return de un void
+	li $t9, 0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+
 Bruh_m2:
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
@@ -541,6 +547,12 @@ Bruh_m2:
 	pop	# Pop de puntero al objeto
 	pop	# Pop de parametro 0
 	# FIN desapilado del RA completo de la función llamada
+	# Return de un void
+	li $t9, 0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
+
 main:	# METODO START ----------------------------------------------------------
 	# Actualizacion de framepointer
 	la $t9, ($fp)		# Metemos el framepointer anterior en el stack
