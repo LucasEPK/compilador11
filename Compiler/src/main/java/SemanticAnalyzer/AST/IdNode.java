@@ -158,15 +158,16 @@ IdNode extends PrimaryNode{
                 totalParams = this.arguments.size();
                 // Acá se agregan parametros al stack si son literales
                 for(int i=0; i<totalParams; i++) { // Push de los parametros
-                    this.arguments.get(i).generateCode(codeGenerator);
-                    textCode += "\tpush\t# Push de parametros "+i+"\n";
+                    textCode += this.arguments.get(i).generateCode(codeGenerator);
+                    textCode += "\tla $t9, ($v0)\t# Cargamos el argumento en $t9\n"+
+                            "\tpush\t# Push de parametros "+i+"\n";
                 }
             }
 
             // Agrega un puntero a self al stack
             if (this.lastCalledType != null) {
                 // Caso en que llamamos una función afuera de la clase con un encadenado
-                textCode += "\tla $t9, ($s4)\t# Caso base, se agrega el cir que tenemos en $v0 por el encadenado\n" +
+                textCode += "\tla $t9, ($s4)\t# Caso base, se agrega el cir que tenemos en $s4 por el encadenado\n" +
                         "\tpush\t# Push de puntero al objeto\n";
             } else {
                 // Caso en que estamos llamando una función de la misma clase
