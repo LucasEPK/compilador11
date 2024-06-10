@@ -581,8 +581,8 @@ public class BlockNode extends SentenceNode implements Commons {
                                 "\t# Fin funcion out_int\n";
                         textCode += addPredefinedReturn();
                         break;
-                    case "out_Str":
-                        textCode += "\t# Funcion out_Str\n" +
+                    case "out_str":
+                        textCode += "\t# Funcion out_str\n" +
                                 "\tlw $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
                                 "\tli $v0, 4 #Cargo en $v0 el syscall de string \n" +
                                 "\tsyscall\n" +

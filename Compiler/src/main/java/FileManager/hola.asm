@@ -274,6 +274,15 @@ IO_out_str:
 	addi $fp, $sp, 4	# Colocamos el frame pointer apuntando al tope de la pila, adonde está guardado $ra
 	# FIN actualizacion de framepointer
 
+	# Funcion out_str
+	lw $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))
+	li $v0, 4 #Cargo en $v0 el syscall de string 
+	syscall
+	# Fin funcion out_Str
+	li $t9,0 #cargo en $t9 el valor de retorno
+	push #Lo pusheo al stack
+	lw $ra,0($fp) #Recupero el return address
+	jr $ra #Vuelvo al return address
 	# Declaracion de variables
 	# FIN declaracion de variables
 Array_constructor:
