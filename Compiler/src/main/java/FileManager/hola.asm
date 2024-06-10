@@ -486,7 +486,8 @@ Bruh_m1:
 	# FIN declaracion de variables
 	# Asignacion de variable
 	li $v0, 1
-	sw $v0, -4($fp)	# Meto el valor asignado de la variable en la posicion correcta del stack
+	lw $t0, 8($fp)	# Cargamos el CIR en $t0
+	sw $v0, 4($t0)	# Meto el valor asignado del atributo en la posicion correcta del heap
 	# FIN asignacion de variable
 	#Guardamos el CIR en $s4
 	la $s4, ($v0)	#Guardamos el CIR en $s4

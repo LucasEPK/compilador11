@@ -143,7 +143,7 @@ public class AsignationNode extends SentenceNode implements Commons {
             }
 
             // Buscamos si es un atributo
-            if (this.getMethod().equals(".") && !variableFound) { // si estamos en un constructor y no encontramos la variable declarada
+            if ( !variableFound) { // si no encontramos la variable declarada
                 Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getStruct());
                 // Recorro la lista de todos los atributos hasta encontrar el atributo buscado
                 for (String attrName : attributeList.keySet()) {
