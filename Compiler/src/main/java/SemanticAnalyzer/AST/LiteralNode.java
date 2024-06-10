@@ -100,13 +100,13 @@ public class LiteralNode extends Operands {
                 break;
             case "Str":
                 textCode += ".data\n";
-                textCode += "\tStr_l" + getToken().getRow() + "c" + getToken().getColumn() + ": .ascizz " + getToken().getLexeme() + "\n";
+                textCode += "\tStr_l" + getToken().getRow() + "c" + getToken().getColumn() + ": .asciiz " + getToken().getLexeme() + "\n";
                 textCode += ".text\n";
                 textCode += "\tla $v0, Str_l" + getToken().getRow() + "c" + getToken().getColumn() + "\n";
                 break;
             case "Char":
                 textCode += ".data\n";
-                textCode += "\tChar_l" + getToken().getRow() + "c" + getToken().getColumn() + ": .ascizz " + getToken().getLexeme() + "\n";
+                textCode += "\tChar_l" + getToken().getRow() + "c" + getToken().getColumn() + ": .asciiz " + getToken().getLexeme() + "\n";
                 textCode += ".text\n";
                 textCode += "\tla $v0, Str_l" + getToken().getRow() + "c" + getToken().getColumn() + "\n";
                 break;
