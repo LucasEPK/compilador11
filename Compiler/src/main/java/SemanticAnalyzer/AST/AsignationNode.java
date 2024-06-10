@@ -161,7 +161,7 @@ public class AsignationNode extends SentenceNode implements Commons {
 
         textCode += right.generateCode(codeGenerator);
 
-        if (!isAttribute) {
+        if (!isAttribute || this.getMethod().equals(".")) { // Chequeamos que sea un constructor porque sino no anda xd
             // Meto el valor asignado de la variable en la posicion correcta del stack
             int variableStackPos = -4 * (currentVariablePos + 1);
             textCode += "\tsw $v0, " + variableStackPos + "($fp)\t# Meto el valor asignado de la variable en la posicion correcta del stack\n";

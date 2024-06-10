@@ -728,21 +728,15 @@ Fibonacci_constructor:
 	# FIN declaracion de variables
 	# Asignacion de variable
 	li $v0, 0
-	lw $t0, 8($fp)	# Cargamos el CIR en $t0
-	sw $v0, 8($t0)	# Meto el valor asignado del atributo en la posicion correcta del heap
-	la $v0, ($t0)	# Cargamos el CIR en $v0 para ser guardado por funciones
+	sw $v0, -4($fp)	# Meto el valor asignado de la variable en la posicion correcta del stack
 	# FIN asignacion de variable
 	# Asignacion de variable
 	li $v0, 0
-	lw $t0, 8($fp)	# Cargamos el CIR en $t0
-	sw $v0, 12($t0)	# Meto el valor asignado del atributo en la posicion correcta del heap
-	la $v0, ($t0)	# Cargamos el CIR en $v0 para ser guardado por funciones
+	sw $v0, -4($fp)	# Meto el valor asignado de la variable en la posicion correcta del stack
 	# FIN asignacion de variable
 	# Asignacion de variable
 	li $v0, 0
-	lw $t0, 8($fp)	# Cargamos el CIR en $t0
-	sw $v0, 4($t0)	# Meto el valor asignado del atributo en la posicion correcta del heap
-	la $v0, ($t0)	# Cargamos el CIR en $v0 para ser guardado por funciones
+	sw $v0, -4($fp)	# Meto el valor asignado de la variable en la posicion correcta del stack
 	# FIN asignacion de variable
 	li $v0, 9	# Aloco memoria en el heap
 	li $a0, 16	# x bytes en memoria
