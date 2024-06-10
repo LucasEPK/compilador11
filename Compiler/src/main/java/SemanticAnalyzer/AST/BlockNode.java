@@ -511,7 +511,7 @@ public class BlockNode extends SentenceNode implements Commons {
                switch (this.method){
                    case "length":
                        textCode += "\t# Funcion length\n" +
-                               "\tla $t0, 12($fp) #Cargo el valor del argumento (esta en 12($fp))\n" +
+                               "\tlw $t0, 12($fp) #Cargo el valor del argumento (esta en 12($fp))\n" +
                                "\tli $t1,0 #Contador de longitud\n" +
                                "\tloop_length:\n" +
                                "\tlb $t2, 0($t0) #Cargo el valor de la posicion actual\n" +
@@ -533,8 +533,8 @@ public class BlockNode extends SentenceNode implements Commons {
                        textCode +="\t# Fin funcion length\n";
                        break;
                    case "concat":
-                       textCode += "\tla $t0, 16($fp) #Cargo el primer parámetro\n";
-                       textCode += "\tla $t1, 12($fp) #Cargo el segundo parámetro\n";
+                       textCode += "\tlw $t0, 16($fp) #Cargo el primer parámetro\n";
+                       textCode += "\tlw $t1, 12($fp) #Cargo el segundo parámetro\n";
                        textCode += "\t.data\n";
                        textCode += "\tconcatenated_string: .space  256 #reservo espacio\n";
                        textCode += "\t.text\n";
@@ -575,7 +575,7 @@ public class BlockNode extends SentenceNode implements Commons {
                         // puntero a frame pointer anterior, puntero a objeto, primer param
                         // 4 + 4 + 4 = 12
                         textCode += "\t# Funcion out_int\n" +
-                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tlw $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
                                 "\tli $v0, 1 #Cargo en $v0 el syscall de int \n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion out_int\n";
@@ -583,7 +583,7 @@ public class BlockNode extends SentenceNode implements Commons {
                         break;
                     case "out_Str":
                         textCode += "\t# Funcion out_Str\n" +
-                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tlw $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
                                 "\tli $v0, 4 #Cargo en $v0 el syscall de string \n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion out_Str\n";
@@ -591,7 +591,7 @@ public class BlockNode extends SentenceNode implements Commons {
                         break;
                     case "out_bool":
                         textCode += "\t# Funcion out_bool\n" +
-                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tlw $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
                                 "\tli $v0, 1 #Cargo en $v0 el syscall de bool (representado por int) \n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion out_bool\n";
@@ -599,7 +599,7 @@ public class BlockNode extends SentenceNode implements Commons {
                         break;
                     case "out_char":
                         textCode += "\t# Funcion out_char\n" +
-                                "\tla $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
+                                "\tlw $a0, 12($fp) #Cargo el valor del argumento a imprimir (esta en 12($fp))\n" +
                                 "\tli $v0, 11 #Cargo en $v0 el syscall de char \n" +
                                 "\tsyscall\n" +
                                 "\t# Fin funcion out_char\n";
