@@ -239,24 +239,43 @@ IdNode extends PrimaryNode{
                     currentVariablePos += 1;
                 }
 
+                boolean attributeFound = false;
+
                 if (variableFound) {
                     // Meto el valor asignado de la variable en el acumulador
                     int variableStackPos = -4 * (currentVariablePos + 1);
                     textCode += "\tlw $v0, " + variableStackPos + "($fp)\t# Meto el valor asignado de la variable del stack en el acumulador ($v0)\n";
                 } else {
                     // Acá nos fijamos los atributos del CIR
-                    textCode += "\tlw $t0, 8($fp)\t\t# Cargamos el CIR en $t0\n";
                     Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getStruct()); //TODO: esto si no estamos en la misma clase va a explotar mepa
                     int totalAttributes = attributeList.size();
                     int currentAttributePos = 0;
                     for (String attrName : attributeList.keySet()) {
                         if (attrName.equals(currentVarName)) {
+                            attributeFound = true;
                             break;
                         }
                         currentAttributePos += 1;
                     }
-                    int attributeCIRpos = 4 * (currentAttributePos + 1);
-                    textCode += "\tlw $v0, "+attributeCIRpos+"($t0)\n";
+
+                    if (attributeFound) { // Si es un atributo lo guardamos en el heap
+                        textCode += "\tlw $t0, 8($fp)\t\t# Cargamos el CIR en $t0\n";
+                        int attributeCIRpos = 4 * (currentAttributePos + 1);
+                        textCode += "\tlw $v0, " + attributeCIRpos + "($t0)\n";
+                    } else { // Sino, es un argumento, no hay de otra
+                        Methods method = symbolTable.getStructMethod(this.getStruct(), this.getMethod());
+                        Map<String, Variable> argumentsList = method.getParamsOfMethod();
+                        int totalArguments = argumentsList.size();
+                        int currentArgumentPos = 0;
+                        for (String argName : argumentsList.keySet()) {
+                            if (argName.equals(currentVarName)) {
+                                break;
+                            }
+                            currentArgumentPos += 1;
+                        }
+                        int argumentStackPos = 4 * (((totalArguments-1) - currentArgumentPos) + 3);
+                        textCode += "\tlw $v0, "+argumentStackPos+"($fp)\n";
+                    }
                 }
 
             } else {

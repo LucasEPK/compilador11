@@ -488,6 +488,7 @@ Bruh_m1:
 	li $v0, 1
 	lw $t0, 8($fp)	# Cargamos el CIR en $t0
 	sw $v0, 4($t0)	# Meto el valor asignado del atributo en la posicion correcta del heap
+	la $v0, ($t0)	# Cargamos el CIR en $v0 para ser guardado por funciones
 	# FIN asignacion de variable
 	#Guardamos el CIR en $s4
 	la $s4, ($v0)	#Guardamos el CIR en $s4
@@ -525,8 +526,7 @@ Bruh_m2:
 	sw $t1, 0($v0)
 	#Guardamos el CIR en $s4
 	la $s4, ($v0)	#Guardamos el CIR en $s4
-	lw $t0, 8($fp)		# Cargamos el CIR en $t0
-	lw $v0, 8($t0)
+	lw $v0, 12($fp)
 	la $t9, ($v0)	# Cargamos el argumento en $t9
 	push	# Push de parametros 0
 	la $t9, ($s4)	# Caso base, se agrega el cir que tenemos en $s4 por el encadenado
