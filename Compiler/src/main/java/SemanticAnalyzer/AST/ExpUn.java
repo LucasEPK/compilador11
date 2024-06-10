@@ -6,7 +6,11 @@ import Exceptions.SemanticExceptions.AST.InvalidLogicalComparation;
 import Exceptions.SemanticExceptions.AST.NeedToBeInt;
 import Exceptions.SemanticExceptions.AST.TypesDontMatch;
 import LexicalAnalyzer.Token;
+import SemanticAnalyzer.SymbolTable.Attributes;
 import SemanticAnalyzer.SymbolTable.SymbolTable;
+import SemanticAnalyzer.SymbolTable.Variable;
+
+import java.util.Map;
 
 /**
  * Clase representate una expresión unaria en nuestro AST
@@ -120,6 +124,55 @@ public class ExpUn extends ExpOp {
                 textCode += "\txori $v0,$v0,1 #!\n";
         }
 
+        // Acá lo que hacemos es asignarle a la variable/atributo que cambiamos ese valor (es practicamente el codigo de asignación)
+        SymbolTable symbolTable = codeGenerator.getSymbolTable();
+        boolean isAttribute = false;
+
+        int currentAttributePos = 0;
+        int currentVariablePos = 0; // Con esto se obtiene la posicion de la variable en la lista de variables declaradas
+        if(!((IdNode)right).isChained()) { // Si no tiene encadenado:
+            String rightName = right.getToken().getLexeme();
+
+            // Buscamos la posición de la variable en la lista de variables declaradas
+            Map<String, Variable> variableList = symbolTable.getStructMethodDeclaredVariables(this.getStruct(), this.getMethod());
+            boolean variableFound = false; // Este booleano sirve para cuando estamos en un constructor saber si encontramos la variable declarada
+            // Recorro la lista de todas las variables
+            for (String varName : variableList.keySet()){
+                if (varName.equals(rightName)){
+                    variableFound = true;
+                    break;
+                }
+                currentVariablePos += 1;
+            }
+
+            // Buscamos si es un atributo
+            if ( !variableFound) { // si no encontramos la variable declarada
+                Map<String, Attributes> attributeList = symbolTable.getStructAttributes(this.getStruct());
+                // Recorro la lista de todos los atributos hasta encontrar el atributo buscado
+                for (String attrName : attributeList.keySet()) {
+                    if (attrName.equals(rightName)){
+                        isAttribute = true;
+                        break;
+                    }
+                    currentAttributePos += 1;
+                }
+            }
+        } else { // Esto pasa cuando si tiene encadenado
+            // TODO: asignación con encadenado
+            textCode += right.generateCode(codeGenerator);
+        }
+
+        if (!isAttribute || this.getMethod().equals(".")) { // Chequeamos que sea un constructor porque sino no anda xd
+            // Meto el valor asignado de la variable en la posicion correcta del stack
+            int variableStackPos = -4 * (currentVariablePos + 1);
+            textCode += "\tsw $v0, " + variableStackPos + "($fp)\t# Meto el valor asignado de la variable en la posicion correcta del stack\n";
+        } else {
+            // Meto el valor asignado del atributo en la posicion correcta del heap
+            int attributeStackPos = 4 * (currentAttributePos + 1);
+            textCode += "\tlw $t0, 8($fp)\t# Cargamos el CIR en $t0\n"+
+                    "\tsw $v0, " + attributeStackPos + "($t0)\t# Meto el valor asignado del atributo en la posicion correcta del heap\n"+
+                    "\tla $v0, ($t0)\t# Cargamos el CIR en $v0 para ser guardado por funciones\n";//TODO: si en vez de un atributo, ponemos una variable, puede que se rompa xd
+        }
 
         return textCode;
 

@@ -706,6 +706,9 @@ Fibonacci_sucesion_fib:
 	lw $t0, 8($fp)		# Cargamos el CIR en $t0
 	lw $v0, 8($t0)
 	addiu $v0,$v0, 1 #++
+	lw $t0, 8($fp)	# Cargamos el CIR en $t0
+	sw $v0, 8($t0)	# Meto el valor asignado del atributo en la posicion correcta del heap
+	la $v0, ($t0)	# Cargamos el CIR en $v0 para ser guardado por funciones
 	# Fin cuerpo while
 	j default_while_l8c11	# vuelve al pricipio del while a chequear la condición
 	default_while_fin_l8c11:

@@ -11,7 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="996ce09d-32dd-4f18-9d7c-09934dc8ef60" name="Changes" comment="solucioné vista de error de comentarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/BlockNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.asm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.asm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileManager/hola.ast.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileManager/hola.ast.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpUn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SemanticAnalyzer/AST/ExpUn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +201,7 @@
       <workItem from="1717851398489" duration="7353000" />
       <workItem from="1717871114188" duration="11723000" />
       <workItem from="1717954063758" duration="23570000" />
-      <workItem from="1718016317865" duration="6607000" />
+      <workItem from="1718016317865" duration="7337000" />
     </task>
     <task id="LOCAL-00001" summary="solucioné vista de error de comentarios">
       <option name="closed" value="true" />
